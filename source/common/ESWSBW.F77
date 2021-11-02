@@ -1,0 +1,18 @@
+CODE SEGMENT ESWSBW
+C----------
+C COMMON $Id: ESWSBW.F77 2494 2018-09-12 20:34:17Z lancedavid $
+C----------
+C
+      INTEGER NBWHST
+C
+      INTEGER IBWHST(2,20)
+C
+      COMMON /ESWSBW/ IBWHST,NBWHST
+C
+C----------
+C  VARIABLE DEFINITIONS:
+C----------
+C  IBWHST --
+C  NBWHST --
+C
+C-----END SEGMENT

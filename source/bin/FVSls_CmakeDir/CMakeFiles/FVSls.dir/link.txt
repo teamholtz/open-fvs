@@ -1,0 +1,1 @@
+/opt/homebrew/bin/gfortran  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk CMakeFiles/FVSls.dir/Users/lucaswells/Projects/open-fvs/trunk/base/main.f.o -o FVSls 
