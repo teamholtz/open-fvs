@@ -1,7 +1,8 @@
       SUBROUTINE BMPPGT (IPNT, ILIMIT)
-C----------
-C WWPB $Id: bmppgt.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+      
+***********************************************************************
+*  **BMPPGT--WWPB   DATE OF LAST REVISION:  07/03/94
+*----------------------------------------------------------------------
 *  Purpose:
 *     Get the damage code information for the given stand.
 *  This is part of the Parallel Processing Extension, and freely 

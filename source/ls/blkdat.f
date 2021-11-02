@@ -1,7 +1,7 @@
       BLOCK DATA BLKDAT
       IMPLICIT NONE
 C----------
-C LS $Id: blkdat.f 3751 2021-08-19 15:02:28Z lancedavid $
+C LS $Id: blkdat.f 0000 2018-02-15 00:00:00Z gary.dixon24@gmail.com $
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
@@ -122,31 +122,31 @@ C----------
      & 'RL ',   'RE ',   'YB ',   'BW ',   'SM ',   'BM ',   'AB ',
      & 'WA ',   'WO ',   'SW ',   'BR ',   'CK ',   'RO ',   'BO ',
      & 'NP ',   'BH ',   'PH ',   'SH ',   'BT ',   'QA ',   'BP ',
-     & 'PB ',   '   ',   'BN ',   'WN ',   'HH ',   'BK ',   'OH ',
+     & 'PB ',   'CH ',   'BN ',   'WN ',   'HH ',   'BK ',   'NC ',
      & 'BE ',   'ST ',   'MM ',   'AH ',   'AC ',   'HK ',   'DW ',
      & 'HT ',   'AP ',   'BG ',   'SY ',   'PR ',   'CC ',   'PL ',
      & 'WI ',   'BL ',   'DM ',   'SS ',   'MA '/
 C
       DATA FIAJSP /
      & '105',   '130',   '125',   '125',   '129',   '094',   '091',
-     & '012',   '095',   '071',   '241',   '261',   '299',   '068',
+     & '012',   '095',   '071',   '241',   '261',   '298',   '068',
      & '543',   '544',   '742',   '317',   '316',   '762',   '972',
      & '975',   '977',   '371',   '951',   '318',   '314',   '531',
      & '541',   '802',   '804',   '823',   '826',   '833',   '837',
      & '809',   '402',   '403',   '407',   '743',   '746',   '741',
-     & '375',   '   ',   '601',   '602',   '701',   '901',   '998',
+     & '375',   '   ',   '601',   '602',   '701',   '901',   '   ',
      & '313',   '315',   '319',   '391',   '421',   '462',   '491',
      & '500',   '660',   '693',   '731',   '761',   '763',   '760',
      & '920',   '922',   '923',   '931',   '935'/
 C
       DATA PLNJSP /
      & 'PIBA2 ','PISY  ','PIRE  ','PIRE  ','PIST  ','PIGL  ','PIAB  ',
-     & 'ABBA  ','PIMA  ','LALA  ','THOC2 ','TSCA  ','2TN   ','JUVI  ',
+     & 'ABBA  ','PIMA  ','LALA  ','THOC2 ','TSCA  ','2TE   ','JUVI  ',
      & 'FRNI  ','FRPE  ','PODE3 ','ACSA2 ','ACRU  ','PRSE2 ','ULAM  ',
      & 'ULRU  ','ULTH  ','BEAL2 ','TIAM  ','ACSA3 ','ACNI5 ','FAGR  ',
      & 'FRAM2 ','QUAL  ','QUBI  ','QUMA2 ','QUMU  ','QURU  ','QUVE  ',
      & 'QUEL  ','CACO15','CAGL8 ','CAOV2 ','POGR4 ','POTR5 ','POBA2 ',
-     & 'BEPA  ','      ','JUCI  ','JUNI  ','OSVI  ','ROPS  ','2TB   ',
+     & 'BEPA  ','      ','JUCI  ','JUNI  ','OSVI  ','ROPS  ','      ',
      & 'ACNE2 ','ACPE  ','ACSP2 ','CACA18','CADE12','CEOC  ','COFL2 ',
      & 'CRATA ','MALUS ','NYSY  ','PLOC  ','PRPE2 ','PRVI  ','PRUNU ',
      & 'SALIX ','SANI  ','SAERF ','SAAL5 ','SOAM3 '/
@@ -157,29 +157,29 @@ C
      &  'TA1','WC1','EH1','OS1','RC1','BA1','GA1','EC1','SV1',
      &  'RM1','BC1','AE1','RL1','RE1','YB1','BW1','SM1','BM1','AB1',
      &  'WA1','WO1','SW1','BR1','CK1','RO1','BO1','NP1','BH1','PH1',
-     &  'SH1','BT1','QA1','BP1','PB1','__1','BN1','WN1','HH1','BK1',
-     &  'OH1','BE1','ST1','MM1','AH1','AC1','HK1','DW1','HT1','AP1',
+     &  'SH1','BT1','QA1','BP1','PB1','CH1','BN1','WN1','HH1','BK1',
+     &  'NC1','BE1','ST1','MM1','AH1','AC1','HK1','DW1','HT1','AP1',
      &  'BG1','SY1','PR1','CC1','PL1','WI1','BL1','DM1','SS1','MA1',
      &  'JP2','SC2','RN2','RP2','WP2','WS2','NS2','BF2','BS2',
      &  'TA2','WC2','EH2','OS2','RC2','BA2','GA2','EC2','SV2',
      &  'RM2','BC2','AE2','RL2','RE2','YB2','BW2','SM2','BM2','AB2',
      &  'WA2','WO2','SW2','BR2','CK2','RO2','BO2','NP2','BH2','PH2',
-     &  'SH2','BT2','QA2','BP2','PB2','__2','BN2','WN2','HH2','BK2',
-     &  'OH2','BE2','ST2','MM2','AH2','AC2','HK2','DW2','HT2','AP2',
+     &  'SH2','BT2','QA2','BP2','PB2','CH2','BN2','WN2','HH2','BK2',
+     &  'NC2','BE2','ST2','MM2','AH2','AC2','HK2','DW2','HT2','AP2',
      &  'BG2','SY2','PR2','CC2','PL2','WI2','BL2','DM2','SS2','MA2',
      &  'JP3','SC3','RN3','RP3','WP3','WS3','NS3','BF3','BS3',
      &  'TA3','WC3','EH3','OS3','RC3','BA3','GA3','EC3','SV3',
      &  'RM3','BC3','AE3','RL3','RE3','YB3','BW3','SM3','BM3','AB3',
      &  'WA3','WO3','SW3','BR3','CK3','RO3','BO3','NP3','BH3','PH3',
-     &  'SH3','BT3','QA3','BP3','PB3','__3','BN3','WN3','HH3','BK3',
-     &  'OH3','BE3','ST3','MM3','AH3','AC3','HK3','DW3','HT3','AP3',
+     &  'SH3','BT3','QA3','BP3','PB3','CH3','BN3','WN3','HH3','BK3',
+     &  'NC3','BE3','ST3','MM3','AH3','AC3','HK3','DW3','HT3','AP3',
      &  'BG3','SY3','PR3','CC3','PL3','WI3','BL3','DM3','SS3','MA3'/
 C----------
 C=================================
 C     SPECIES LIST FOR LAKE STATES
 C=================================
 C     1 = JACK PINE (JP)
-C     2 = SCOTS PINE (SC)
+C     2 = SCOTCH PINE (SC)
 C     3 = RED PINE NATURAL (RN)
 C     4 = RED PINE PLANTATION (RP)
 C     5 = EASTERN WHITE PINE (WP)
@@ -188,9 +188,9 @@ C     7 = NORWAY SPRUCE (NS)
 C     8 = BALSAM FIR (BF)
 C     9 = BLACK SPRUCE (BS)
 C    10 = TAMARACK (TA)
-C    11 = ARBORVITAE (WC)
+C    11 = NORTHERN WHITE-CEDAR (WC)
 C    12 = EASTERN HEMLOCK (EH)
-C    13 = OTHER SOFTWOOD (OS)
+C    13 = OTHER SOFTWOOD SPECIES (OS)
 C    14 = EASTERN REDCEDAR (RC)
 C    15 = BLACK ASH (BA)
 C    16 = GREEN ASH (GA)
@@ -221,29 +221,29 @@ C    40 = BIGTOOTH ASPEN (BT)
 C    41 = QUAKING ASPEN (QA)
 C    42 = BALSAM POPLAR (BP)
 C    43 = PAPER BIRCH (PB)
-C    44 = ---
+C    44 = COMMERCIAL HARDWOOD SPECIES (CH)
 C    45 = BUTTERNUT (BN)
 C    46 = BLACK WALNUT (WN)
-C    47 = HOPHORNBEAM (HH)
+C    47 = EASTERN HOPHORNBEAM (HH)
 C    48 = BLACK LOCUST (BK)
-C    49 = OTHER HARDWOOD (OH)
+C    49 = NON-COMMERCIAL HARDWOOD SPECIES (NC)
 C    50 = BOXELDER (BE)
 C    51 = STRIPED MAPLE (ST)
 C    52 = MOUNTAIN MAPLE (MM)
 C    53 = AMERICAN HORNBEAM (AH)
 C    54 = AMERICAN CHESTNUT (AC)
-C    55 = COMMON HACKBERRY (HK)
+C    55 = HACKBERRY (HK)
 C    56 = FLOWERING DOGWOOD (DW)
-C    57 = HAWTHORN (HT)
-C    58 = APPLE (AP)
+C    57 = HAWTHORN SPECIES(HT)
+C    58 = APPLE SPECIES (AP)
 C    59 = BLACKGUM (BG)
-C    60 = AMERICAN SYCAMORE (SY)
+C    60 = SYCAMORE (SY)
 C    61 = PIN CHERRY (PR)
 C    62 = CHOKECHERRY (CC)
-C    63 = PLUMS (PL)
-C    64 = WILLOW (WI)
+C    63 = PLUMS, CHERRIES (PL)
+C    64 = WILLOW SPECIES(WI)
 C    65 = BLACK WILLOW (BL)
-C    66 = MISSOURI RIVER WILLOW (DM)
+C    66 = DIAMOND WILLOW (DM)
 C    67 = SASSAFRAS (SS)
 C    68 = AMERICAN MOUNTAIN ASH (MA)
 C----------
@@ -296,6 +296,22 @@ C
      & -5.1435,  -2.7758,  -5.1435,  -3.2510,  -4.7903,  -5.2776,
      & -5.1435,  -5.1435,  -3.2510,  -5.7928,  -5.7928,  -5.1435,
      & -4.5018,  -5.1435/
+C
+C
+      DATA BB0/68*0.0/
+      DATA BB1/68*0.0/
+      DATA BB2/68*0.0/
+      DATA BB3/68*0.0/
+      DATA BB4/68*0.0/
+      DATA BB5/68*0.0/
+      DATA BB6/68*0.0/
+      DATA BB7/68*0.0/
+      DATA BB8/68*0.0/
+      DATA BB9/68*0.0/
+      DATA BB10/68*0.0/
+      DATA BB11/68*0.0/
+      DATA BB12/68*0.0/
+      DATA BB13/68*0.0/
 C
       DATA REGNBK/2.999/
 C

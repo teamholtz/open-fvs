@@ -1,6 +1,6 @@
       SUBROUTINE MISCPF(PRFCUT)
 ***********************************************************************
-C MISTOE $Id: miscpf.f 2451 2018-07-11 18:10:16Z gedixon $
+C MISTOE $Id: miscpf.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
 *----------------------------------------------------------------------
 *  Purpose:
 *     Processes the MISTPREF mistletoe cutting preference keyword.

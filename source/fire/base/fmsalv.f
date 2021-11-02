@@ -1,7 +1,7 @@
       SUBROUTINE FMSALV (IYR,SALVTPA)
       IMPLICIT NONE
 C----------
-C FIRE-BASE $Id: fmsalv.f 2462 2018-07-26 14:39:59Z gedixon $
+C  $Id: fmsalv.f 2359 2018-05-18 17:35:04Z lancedavid $
 C----------
 C     SINGLE-STAND VERSION
 C     CALLED FROM: CUTS

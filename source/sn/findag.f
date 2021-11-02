@@ -2,7 +2,7 @@
      &                  HTMAX2,DEBUG)
       IMPLICIT NONE
 C----------
-C SN $Id: findag.f 2455 2018-07-19 19:58:41Z gedixon $
+C SN $Id: essubh.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C  THIS ROUTINE FINDS EFFECTIVE TREE AGE BASED ON INPUT VARIABLE(S)
 C  CALLED FROM **CRATET

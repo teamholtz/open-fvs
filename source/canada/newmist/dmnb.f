@@ -1,7 +1,7 @@
       SUBROUTINE DMNB (RQ, D, CNB)
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: dmnb.f 3787 2021-09-13 22:47:08Z donrobinson $
+C  $Id: dmnb.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 C **DMNB -- NISI  Date of last revision: 12/19/03
 C----------------------------------------------------------------------
@@ -136,22 +136,22 @@ C tree. The point has only 1 likelihood: P(1)= 1.0.
 
       CUR = 1
       DO 100 j = RQ - 1, RQ
-
+        
         IF (j .EQ. 0) THEN
-
+        
           NB(CUR,1) = 1.0
           EMark(CUR) = 1
-
+          
         ELSE
-
+        
           mu = CrArea(j) * D 
           var = DMCLMP * mu
-
+          
           CALL BNDIST(mu, var, erflg, DSTLEN, NB(0,CUR),
      >                 EMark(CUR))
-
+          
         END IF 
-
+        
         CUR = 2
         PRV = 1
 
@@ -174,12 +174,12 @@ C disk, 'CUR' the outer. Recall that in the RQ=1 case, the 'PRV' disk
 C is a point.
 
         TopEnd = EMark(CUR)
-
+        
         DO 210 k = 0,TopEnd
-          x = 0.
+          x = 0.             
           DO 220 j = k,MIN0(k+EMark(PRV),DSTLEN)
-            YD = DBLE(NB(j, CUR)) * DBLE(NB(j-k, PRV))
-            IF (YD .GT. 1.0E-25) x = x + REAL(YD,4)
+            YD = NB(j, CUR) * NB(j-k, PRV)
+            IF (YD .GT. 1.0E-25) x = x + YD
   220     CONTINUE
           CNB(k) = x
   210   CONTINUE
@@ -189,13 +189,13 @@ C Create the cumulative probability by sums.
       DO 300 k = 1, TopEnd
         CNB(k) = CNB(k-1) + CNB(k) 
   300 CONTINUE
-
+      
 C Adjust distribution to account for forbidden values. ie: make it
 C all sum to 1.
-
+                           
       x = 1.0 / CNB(TopEnd)
       DO 400 k = 0, TopEnd
-        CNB(k) = CNB(k) * x 
+	  CNB(k) = CNB(k) * x 
   400 CONTINUE
       
       RETURN

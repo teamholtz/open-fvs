@@ -1,7 +1,7 @@
       SUBROUTINE DMRANN (SEL)
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: dmrann.f 3787 2021-09-13 22:47:08Z donrobinson $
+C  $Id: dmrann.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 C **DMRANN -- NISI  Date of last revision: April 12 1994 
 C----------------------------------------------------------------------
@@ -26,7 +26,7 @@ C Other routines called:
 C
 C     [none]
 C
-C Argument list (and ENTRY point) definitions:
+C Argument list (and ENTRY point) definitions:                        
 C
 C     INTEGER   SEL   (O) Uniform random number.
 C     LOGICAL   LSET  (I) Logical value specifying whether the
@@ -56,7 +56,7 @@ C Argument list (including ENTRY point) variables.
       REAL      SEED
 
       DMS1=DMOD(16807D0*DMS0,2147483647D0)
-      SEL=REAL(DMS1/2147483648D0,4)
+      SEL=DMS1/2147483648D0
       DMS0=DMS1
       RETURN
 

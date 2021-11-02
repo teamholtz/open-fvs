@@ -1,7 +1,7 @@
       SUBROUTINE OPRDAT (JEXOPT,KODE)
       IMPLICIT NONE
 C----------
-C METRIC-BASE $Id: oprdat.f 3806 2021-09-14 18:50:24Z donrobinson $
+C  $Id: oprdat.f 2361 2018-05-18 17:40:40Z lancedavid $
 C----------
 C
 C     READS A FILE OF "MORE ACTIVITIES" AND SCHEDULES THEM FOR
@@ -18,17 +18,9 @@ COMMONS
 C
 C
       INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
-C
-C
       INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'METRIC.F77'
 C
 C
@@ -44,23 +36,24 @@ C
       IF (JEXOPT.LE.0) RETURN
 
 C     PICK UP READING WHERE EVER THE FILE POINTER IS AT THE TIME...
+C     THIS APPROACH OFFERS SOME GREAT EFFICIENCIES WHEN CALLED BY THE PPE
 
       IPASS = 0
       NADD  = 0
       NFAIL = 0
    10 CONTINUE
       READ (JEXOPT,'(A)',END=30) WKSTR1
-      IF (TRIM(WKSTR1).EQ.TRIM(NPLT)) THEN
+      IF (INDEX(WKSTR1,TRIM(NPLT)).EQ.1) THEN
    15   CONTINUE
         READ (JEXOPT,'(A)',END=30) WKSTR1
         IF (WKSTR1(1:3).NE.'End') THEN
           READ (WKSTR1,*) IACTK,IDT,NPRMS,(PRMS(I),I=1,
      >                    MIN(NPRMS,MXADDP))
           IF (IDT.GE.IY(ICYC)) THEN
-            CALL MCNVRT(IACTK,1,PRMS,CPRMS)
+            CALL MCNVRT(IACTK,1,CPRMS)
             DO I = 1,NPRMS
-              PRMS(I) = PRMS(I) * CPRMS(I)
-            ENDDO
+               PRMS(I) = PRMS(I) * CPRMS(I)
+	      ENDDO
             CALL OPADD (IDT,IACTK,0,NPRMS,PRMS,KODE)
             IF (KODE .EQ. 0) THEN
               NADD  = NADD+1

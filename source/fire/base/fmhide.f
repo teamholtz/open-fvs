@@ -1,7 +1,7 @@
       SUBROUTINE FMHIDE (ISTD, IYR)
       IMPLICIT NONE
 C----------
-C FIRE-BASE $Id: fmhide.f 2561 2018-11-17 00:28:06Z lancedavid $
+C  $Id: fmhide.f 2359 2018-05-18 17:35:04Z lancedavid $
 C----------
 C
 C     CALLED FROM: FMMAIN 
@@ -26,6 +26,7 @@ C.... PARAMETER STATEMENTS.
 C.... PARAMETER INCLUDE FILES.
 
       INCLUDE 'PRGPRM.F77'
+C      INCLUDE 'PPEPRM.F77'
       INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.

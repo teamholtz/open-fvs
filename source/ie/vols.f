@@ -1,7 +1,7 @@
       SUBROUTINE VOLS
       IMPLICIT NONE
 C----------
-C IE $Id: vols.f 2944 2020-02-03 22:59:12Z lancedavid $
+C NI $Id: vols.f 2132 2018-03-06 22:32:41Z gedixon $
 C----------
 C
 C  THIS SUBROUTINE CALCULATES TREE VOLUMES TO THREE MERCHANTABILITY
@@ -84,12 +84,15 @@ C-----------
       HT2TD(I,J)=0.
       ENDDO
       ENDDO
-      IF (ITRN.GT.0) THEN 
-        SPCCC=0.0
-        SPCAC=0.0
-        SPCMC=0.0
-        SPCBV=0.0
-      ENDIF
+      IF (ITRN.LE.0) GOTO 2
+      DO 1 I=1,MAXSP
+      DO 1 J=1,3
+      SPCCC(I,J)=0.0
+      SPCAC(I,J)=0.0
+      SPCMC(I,J)=0.0
+      SPCBV(I,J)=0.0
+    1 CONTINUE
+    2 CONTINUE
       IPASS=1
       ILOW=1
       IHI=ITRN

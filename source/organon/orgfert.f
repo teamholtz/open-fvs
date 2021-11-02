@@ -1,6 +1,3 @@
-C----------
-C ORGANON $Id: orgfert.f 2453 2018-07-12 22:20:53Z gedixon $
-C----------
 The following code segment was inserted into base/src/ffert.f by Jeff. It doesn't belong there, but it illustrates
 his thinking on what needed to be done. I think it needs to be thought out a little more.
 In the initial overhaul of what Jeff did, I'm leaving this out of the OC and OP variants, for the following reasons:

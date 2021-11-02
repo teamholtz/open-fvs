@@ -1,6 +1,6 @@
       SUBROUTINE RDIN(PASKEY,ARRAY,LNOTBK,LKECHO)
 C----------
-C RD $Id: rdinca.f 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDIN--CA                     LAST REVISION:  03/24/15
 C----------
 C
 C  Purpose :

@@ -1,7 +1,7 @@
       BLOCK DATA BWEBK
       IMPLICIT NONE
 C----------
-C WSBWE $Id: bwebk.f 2460 2018-07-24 14:41:48Z gedixon $
+C  **BWEBK--NI          DATE OF LAST REVISION:  07/14/10
 C----------
 C
 C     BLOCKDATA FOR THE  BUDWORM MODEL.

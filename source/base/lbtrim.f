@@ -1,7 +1,7 @@
       SUBROUTINE LBTRIM (MAE,MAELNK)
       IMPLICIT NONE
 C----------
-C BASE $Id: lbtrim.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: lbtrim.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     CALLED FROM PPEVMI, DELETE ACTIVITY GROUPS THAT MIGHT CREATE

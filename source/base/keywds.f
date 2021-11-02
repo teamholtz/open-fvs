@@ -1,7 +1,7 @@
       BLOCK DATA KEYWDS
       IMPLICIT NONE
 C----------
-C BASE $Id: keywds.f 3751 2021-08-19 15:02:28Z lancedavid $
+C  $Id: keywds.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
@@ -24,7 +24,7 @@ C
      >     'REWIND','NOSUM','DEBUG'/
       DATA (TABLE(I),I=21,40) /
      >     'ECHOSUM','ADDFILE','THINAUTO','THINBTA','THINATA',
-     >     'THINBBA','THINABA','THINPRSC','THINDBH','xSALVAGE',
+     >     'THINBBA','THINABA','THINPRSC','THINDBH','SALVAGE',
      >     'SPLABEL','AGPLABEL','COMPUTE','FERTILIZ','THINHT',
      >     'STATS','TOPKILL','HTGSTOP','MCFDLN','BFFDLN'/
       DATA (TABLE(I),I=41,60) /
@@ -45,8 +45,8 @@ C
       DATA (TABLE(I),I=101,120) /
      >     'RDIN','MANAGED','YARDLOSS','FMIN','STRCLASS','MODTYPE',
      >     'FVSSTAND','PRUNE','SVS','FIXDG','FIXHTG','THINSDI',
-     >     'LOCATE','        ','THINCC','ECON','DATABASE',
-     >     '        ','DEFECT','        '/
+     >     'LOCATE','BGCIN','THINCC','ECON','DATABASE',
+     >     'SYSTEM','DEFECT','CRUZFILE'/
       DATA (TABLE(I),I=121,135) /
      >     'STANDCN','THINMIST','TREESZCP','THINRDEN','SPGROUP ',
      >     'BMIN','DATASCRN','SETPTHIN','THINPT','VOLEQNUM',
@@ -54,5 +54,5 @@ C
       DATA (TABLE(I),I=136,150) /
      >     'THINRDSL','MORTMSB','SETSITE','CLIMATE','SDICALC',
      >     'THINQFA','PTGROUP ','ORGANON','SPLEAVE','CCADJ',
-     >     'PRMFROST','        ','        ','        ','        '/
+     >     '        ','        ','        ','        ','        '/
       END

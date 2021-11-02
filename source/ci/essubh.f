@@ -2,8 +2,8 @@
      &  GENTIM,TRAGE)
       IMPLICIT NONE
 C----------
-C CI $Id: essubh.f 2441 2018-07-05 22:31:42Z gedixon $
-C----------
+C CI $Id: essubh.f 0000 2018-02-14 00:00:00Z gedixon $
+C
 C  ASSIGNS HEIGHTS TO SUBSEQUENT AND PLANTED TREE RECORDS
 C  CREATED BY THE ESTABLISHMENT MODEL.
 C----------

@@ -1,6 +1,6 @@
 CODE SEGMENT COLCOM
 C----------
-C LPMPB $Id: COLCOM.F77 2450 2018-07-11 17:28:41Z gedixon $
+C  **COLCOM        DATE OF LAST REVISION:  07/02/10
 C----------
 C
 C Revision History

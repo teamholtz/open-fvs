@@ -1,8 +1,8 @@
       SUBROUTINE ESPXCS
       IMPLICIT NONE
 C----------
-C EM $Id: espxcs.f 2447 2018-07-10 16:31:11Z gedixon $
-C----------
+C  **ESPXCS--EM   DATE OF LAST REVISION:   03/26/09
+C
 C     PREDICT THE PROBABILITY OF EXCESS SPECIES
 C----------
 C

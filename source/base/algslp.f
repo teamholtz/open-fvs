@@ -1,7 +1,7 @@
       FUNCTION ALGSLP (XX,X,Y,N)
       IMPLICIT NONE
 C----------
-C BASE $Id: algslp.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: algslp.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     PART OF THE PROGNOSIS MODEL FOR STAND DEVELOPMENT.

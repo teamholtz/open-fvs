@@ -2,7 +2,7 @@
      >                   ICNTRL,KODE)
       IMPLICIT NONE
 C----------
-C BASE $Id: myopen.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: myopen.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     THIS ROUTINE CONTAINS MACHINE-DEPENDENT FILE OPEN COMMANDS

@@ -1,7 +1,7 @@
       SUBROUTINE SICHG(ISISP,SSITE,SIAGE)
       IMPLICIT NONE
 C----------
-C PN $Id: sichg.f 2454 2018-07-18 23:01:17Z gedixon $
+C  **SICHG--PN   DATE OF LAST REVISION:  04/22/10
 C----------
 COMMONS
 C

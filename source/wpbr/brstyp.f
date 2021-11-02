@@ -1,8 +1,8 @@
       SUBROUTINE BRSTYP
       IMPLICIT NONE
-C----------
-C WPBR $Id: brstyp.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **BRSTYP       DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C  BRSTYP assigns stock types to individual tree records based on
 C  parameters specified with the STOCK keyword.

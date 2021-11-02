@@ -1,7 +1,7 @@
       SUBROUTINE BWERAWS
       IMPLICIT NONE
 C-----------
-C WSBWE $Id: bweraws.f 2460 2018-07-24 14:41:48Z gedixon $
+C **BWERAWS                 DATE OF LAST REVISION:  09/05/13
 C-----------
 C Part of the General Defoliator (GenDefol) model
 C

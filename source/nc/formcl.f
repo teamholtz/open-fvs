@@ -1,7 +1,7 @@
       SUBROUTINE FORMCL(ISPC,IFOR,D,FC)
       IMPLICIT NONE
 C----------
-C NC $Id: formcl.f 3758 2021-08-25 22:42:32Z lancedavid $
+C NC $Id: formcl.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C
 C THIS PROGRAM CALCULATES FORM FACTORS FOR CALCULATING CUBIC AND
@@ -28,19 +28,18 @@ C  4=SISKIYOU(611)      5=HOOPA(705)          6=SIMPSON(800)
 C  7=BLM COOS BAY(712)
 C
 C  SPECIES ORDER: (ISPC)
-C  1=OC  2=SP  3=DF  4=WF  5=M   6=IC  7=BO  8=TO  9=RF 10=PP 11=OH, 12=RW
+C  1=OC  2=SP  3=DF  4=WF  5=M   6=IC  7=BO  8=TO  9=RF 10=PP 11=OH
 C----------
 C  SISKIYOU  FORM CLASS VALUES
 C----------
       DATA SISKFC/
-     & 91., 96., 90., 98., 98., 89., 98., 91., 92., 93., 95., 82.,
-     & 84., 91., 86., 90., 88., 89., 98., 91., 83., 89., 86., 82.,
-     & 79., 85., 81., 86., 84., 77., 98., 82., 80., 83., 78., 79.,
-     & 78., 83., 80., 85., 81., 73., 98., 80., 80., 81., 76., 78.,
-     & 78., 82., 80., 85., 80., 72., 98., 79., 79., 80., 75., 78./
-
+     & 91., 96., 90., 98., 98., 89., 98., 91., 92., 93., 95.,
+     & 84., 91., 86., 90., 88., 89., 98., 91., 83., 89., 86.,
+     & 79., 85., 81., 86., 84., 77., 98., 82., 80., 83., 78.,
+     & 78., 83., 80., 85., 81., 73., 98., 80., 80., 81., 76.,
+     & 78., 82., 80., 85., 80., 72., 98., 79., 79., 80., 75./
       DATA BLM712/
-     & 74., 76., 76., 78., 72., 66., 72., 74., 78., 80., 70., 75./
+     & 74., 76., 76., 78., 72., 66., 72., 74., 78., 80., 70./
 C----------
 C  FOR REGION 6 FORESTS, LOAD THE FORM CLASS USING TABLE VALUES.
 C  IF A FORM CLASS HAS BEEN ENTERED VIA KEYWORD, USE IT INSTEAD.

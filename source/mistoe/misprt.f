@@ -1,6 +1,6 @@
       SUBROUTINE MISPRT
 ***********************************************************************
-C MISTOE $Id: misprt.f 2561 2018-11-17 00:28:06Z lancedavid $
+*  **MISPRT--    Date of last revision:  04/21/09
 *----------------------------------------------------------------------
 *  Purpose:
 *     Produces dwarf mistletoe infection information and mortality
@@ -174,7 +174,7 @@ C MISTOE $Id: misprt.f 2561 2018-11-17 00:28:06Z lancedavid $
 *        subroutine MISIN0.
 *     07-MAR-08; Lance R. David (FHTET)
 *        Moved local variables to common, necessary for output table 
-*        control that need to be maintained for each stand.
+*        control that need to be maintained for each stand in PPE mode.
 *        Variables moved are: DMFLAG, PRTTBL, LSORT4, MISTBL and ISVSP4
 *  21-APR-09; Lance R. David (FMSC)
 *        Variables IMOUT_ moved to MISCOM.(thanks to Don Robinson)

@@ -1,8 +1,8 @@
       SUBROUTINE BRECAN(IBRN,HITE,SSTAR,SSTHT,PROP,PIMX,EXPC)
       IMPLICIT NONE
-C----------
-C WPBR $Id: brecan.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **BRECAN       DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C  BRECAN calculates the number of new cankers expected for a
 C  tree for one year.  When a new canker is placed into the

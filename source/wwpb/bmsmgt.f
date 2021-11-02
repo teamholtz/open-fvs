@@ -1,7 +1,5 @@
       SUBROUTINE BMSMGT (IYR)
-C----------
-C WWPB $Id: bmsmgt.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+      
 c     CALLED FROM BMDRV
 ***********************************************************************
 * **BMSMGT    Date of last revision:  June 22, 1994

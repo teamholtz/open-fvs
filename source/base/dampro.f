@@ -1,7 +1,7 @@
       SUBROUTINE DAMPRO
       IMPLICIT NONE
 C----------
-C BASE $Id: dampro.f 3784 2021-09-13 22:10:48Z donrobinson $
+C  $Id: dampro.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C  THIS SUBROUTINE CONTROLS THE PROCESSING DAMAGE AND SEVERITY CODES 
@@ -23,7 +23,7 @@ C
  
       CONTINUE
       
-C      WRITE(JOSTND,*) ' IN DAMPRO: IRECRD=',IRECRD,' ITRN=',ITRN,
+C      WRITE(16,*) ' IN DAMPRO: IRECRD=',IRECRD,' ITRN=',ITRN,
 C     > ' IREC1=',IREC1,' IREC2=',IREC2
 
 C     Set looping indices to process live tree records.
@@ -33,14 +33,14 @@ C     Indices for dead trees will be set and processed next.
       I2 = IREC1
 
   100 CONTINUE
-C      WRITE(JOSTND,*) ' IN DAMPRO: I1=',I1,' I2=',I2      
+C      WRITE(16,*) ' IN DAMPRO: I1=',I1,' I2=',I2      
 
       DO II = I1, I2
         DO I = 1,6
           ICODES(I) = DAMSEV(I,II)
         END DO
 
-C        WRITE(JOSTND,*) 'IN DAMPRO: ICODES(I) =    ',(ICODES(I),I=1,6),
+C        WRITE(16,*) 'IN DAMPRO: ICODES(I) =    ',(ICODES(I),I=1,6),
 C     &  ' IDTREE, ISP, DBH =',IDTREE(II),ISP(II),DBH(II),
 C     &  ' IMC = ',IMC(II)
 
@@ -61,7 +61,7 @@ C     If dead trees are present, set indices and process.
         GO TO 100
       ENDIF
 
-C     write(JOSTND,*) 'EXIT ROUTINE DAMPRO'
+C     write(16,*) 'EXIT ROUTINE DAMPRO'
       
       RETURN
       END

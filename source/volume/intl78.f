@@ -1,5 +1,5 @@
 C----------
-C VOLUME $Id: intl78.f 2458 2018-07-22 19:09:30Z gedixon $
+C VOLUME $Id: INTL78.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
 C----------
 !== last modified  03-29-2004
       SUBROUTINE INTL78 (DBHOB, HT1PRD, VOL,ERRFLAG)

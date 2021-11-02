@@ -1,7 +1,7 @@
       SUBROUTINE DBSTRLS(IWHO,KODE,TEM)
       IMPLICIT NONE
 C----------
-C DBS $Id: dbstrls.f 3240 2020-09-30 19:57:47Z lancedavid $
+C DBS $Id: dbstrls.f 2357 2018-05-18 17:26:03Z lancedavid $
 C----------
 C     PURPOSE: TO OUTPUT THE TREELIST DATA TO THE DATABASE
 C
@@ -44,9 +44,7 @@ COMMONS
 C
       CHARACTER*8 TID,CSPECIES
       CHARACTER*2000 SQLStmtStr
-      CHARACTER*20 TABLENAME,DTYPE,CREATENAM
-      CHARACTER*5 NTCUFT,NMCUFT,NBDFT
-      CHARACTER*8 NAMDCF,NAMDBF
+      CHARACTER*20 TABLENAME,DTYPE
       INTEGER IWHO,I,JYR,IP,ITPLAB,IRCODE,IDMR,ICDF,IBDF,IPTBAL,KODE
       INTEGER ISPC,I1,I2,I3
       INTEGER*4 IDCMP1,IDCMP2
@@ -65,69 +63,14 @@ C     IS THIS OUTPUT A REDIRECT OF THE REPORT THEN SET KODE TO 0
 C     ALWAYS CALL CASE TO MAKE SURE WE HAVE AN UP TO DATE CASE NUMBER
 
       CALL DBSCASE(1)
-
-C     For CS, LS, NE and SN, the table name is FVS_TreeList_East and the following
-C     Column names change from: TCuFt, MCuFt, BdFt to MCuFt, SCuFt, SBdFt
-
       IF(TRIM(DBMSOUT).EQ.'EXCEL') THEN
-        IF (VARACD.EQ.'CS' .OR. VARACD.EQ.'LS' .OR. VARACD.EQ.'SN' .OR.
-     -      VARACD.EQ.'NE') THEN
-          TABLENAME = '[FVS_TreeList_East$]'
-          CREATENAM =  'FVS_TreeList_East'
-          NTCUFT  = 'MCuFt'
-          NMCUFT  = 'SCuFt'
-          NBDFT   = 'SBdFt'
-          NAMDCF  = 'Ht2TDMCF'
-          NAMDBF  = 'Ht2TDSCF'
-        ELSE
-          TABLENAME = '[FVS_TreeList$]'
-          CREATENAM =  'FVS_TreeList'
-          NTCUFT  = 'TCuFt'
-          NMCUFT  = 'MCuFt'
-          NBDFT   = 'BdFt'
-          NAMDCF  = 'Ht2TDCF '
-          NAMDBF  = 'Ht2TDBF '
-        ENDIF
+        TABLENAME = '[FVS_TreeList$]'
         DTYPE = 'Number'
       ELSEIF(TRIM(DBMSOUT).EQ.'ACCESS') THEN
-        IF (VARACD.EQ.'CS' .OR. VARACD.EQ.'LS' .OR. VARACD.EQ.'SN' .OR.
-     -      VARACD.EQ.'NE') THEN
-          TABLENAME = 'FVS_TreeList_East'
-          CREATENAM = 'FVS_TreeList_East'
-          NTCUFT  = 'MCuFt'
-          NMCUFT  = 'SCuFt'
-          NBDFT   = 'SBdFt'
-          NAMDCF  = 'Ht2TDMCF'
-          NAMDBF  = 'Ht2TDSCF'
-        ELSE
-          TABLENAME = 'FVS_TreeList'
-          CREATENAM = 'FVS_TreeList'
-          NTCUFT  = 'TCuFt'
-          NMCUFT  = 'MCuFt'
-          NBDFT   = 'BdFt'
-          NAMDCF  = 'Ht2TDCF '
-          NAMDBF  = 'Ht2TDBF '
-        ENDIF
+        TABLENAME = 'FVS_TreeList'
         DTYPE = 'Double'
       ELSE
-        IF (VARACD.EQ.'CS' .OR. VARACD.EQ.'LS' .OR. VARACD.EQ.'SN' .OR.
-     -      VARACD.EQ.'NE') THEN
-          TABLENAME = 'FVS_TreeList_East'
-          CREATENAM = 'FVS_TreeList_East'
-          NTCUFT  = 'MCuFt'
-          NMCUFT  = 'SCuFt'
-          NBDFT   = 'SBdFt'
-          NAMDCF  = 'Ht2TDMCF'
-          NAMDBF  = 'Ht2TDSCF'
-        ELSE
-          TABLENAME = 'FVS_TreeList'
-          CREATENAM = 'FVS_TreeList'
-          NTCUFT  = 'TCuFt'
-          NMCUFT  = 'MCuFt'
-          NBDFT   = 'BdFt'
-          NAMDCF  = 'Ht2TDCF '
-          NAMDBF  = 'Ht2TDBF '
-        ENDIF
+        TABLENAME = 'FVS_TreeList'
         DTYPE = 'real'
       ENDIF
 
@@ -153,8 +96,8 @@ C     IF NOT, THEN WE NEED TO CREATE IT
       ENDIF
       IF(IRCODE.EQ.1) THEN
         IF(TRIM(DBMSOUT).EQ."ACCESS") THEN
-          SQLStmtStr='CREATE TABLE '// TRIM(CREATENAM) //
-     -             ' (CaseID Text not null,'//
+          SQLStmtStr='CREATE TABLE FVS_TreeList('//
+     -             'CaseID Text not null,'//
      -             'StandID Text null,'//
      -             'Year int null,'//
      -             'PrdLen int null,'//
@@ -175,21 +118,21 @@ C     IF NOT, THEN WE NEED TO CREATE IT
      -             'MistCD int null,'//
      -             'BAPctile double null,'//
      -             'PtBAL double null,'//
-     -             NTCUFT // ' double null,'//
-     -             NMCUFT // ' double null,'//
-     -             NBDFT  // ' double null,'//
+     -             'TCuFt double null,'//
+     -             'MCuFt double null,'//
+     -             'BdFt double null,'//
      -             'MDefect int null,'//
      -             'BDefect int null,'//
      -             'TruncHt int null,'//
      -             'EstHt double null,'//
      -             'ActPt int null,'//
-     -             NAMDCF // ' real null,'//
-     -             NAMDBF // ' real null,'//
+     -             'Ht2TDCF real null,'//
+     -             'Ht2TDBF real null,'//
      -             'TreeAge double null)'
 
         ELSEIF(TRIM(DBMSOUT).EQ."EXCEL") THEN
-          SQLStmtStr='CREATE TABLE '// TRIM(CREATENAM) //
-     -             ' (CaseID Text null,'//
+          SQLStmtStr='CREATE TABLE FVS_TreeList('//
+     -             'CaseID Text null,'//
      -             'StandID Text null,'//
      -             'Year INT null,'//
      -             'PrdLen int null,'//
@@ -210,20 +153,20 @@ C     IF NOT, THEN WE NEED TO CREATE IT
      -             'MistCD int null,'//
      -             'BAPctile Number null,'//
      -             'PtBAL Number null,'//
-     -             NTCUFT // ' Number null,'//
-     -             NMCUFT // ' Number null,'//
-     -             NBDFT  // ' Number null,'//
+     -             'TCuFt Number null,'//
+     -             'MCuFt Number null,'//
+     -             'BdFt Number null,'//
      -             'MDefect int null,'//
      -             'BDefect int null,'//
      -             'TruncHt int null,'//
      -             'EstHt Number null,'//
      -             'ActPt int null,'//
-     -             NAMDCF // ' real null,'//
-     -             NAMDBF // ' real null,'//
+     -             'Ht2TDCF real null,'//
+     -             'Ht2TDBF real null,'//
      -             'TreeAge Number null)'
         ELSE
-          SQLStmtStr='CREATE TABLE '// TRIM(CREATENAM) //
-     -             ' (CaseID char(36),'//
+          SQLStmtStr='CREATE TABLE FVS_TreeList('//
+     -             'CaseID char(36),'//
      -             'StandID char(26),'//
      -             'Year int null,'//
      -             'PrdLen int null,'//
@@ -244,19 +187,18 @@ C     IF NOT, THEN WE NEED TO CREATE IT
      -             'MistCD int null,'//
      -             'BAPctile real null,'//
      -             'PtBAL real null,'//
-     -             NTCUFT // ' real null,'//
-     -             NMCUFT // ' real null,'//
-     -             NBDFT  // ' real null,'//
+     -             'TCuFt real null,'//
+     -             'MCuFt real null,'//
+     -             'BdFt real null,'//
      -             'MDefect int null,'//
      -             'BDefect int null,'//
      -             'TruncHt int null,'//
      -             'EstHt real null,'//
      -             'ActPt int null,'//
-     -             NAMDCF // ' real null,'//
-     -             NAMDBF // ' real null,'//
+     -             'Ht2TDCF real null,'//
+     -             'Ht2TDBF real null,'//
      -             'TreeAge real null)'
         ENDIF
-
         iRet = fvsSQLCloseCursor(StmtHndlOut)
         iRet = fvsSQLExecDirect(StmtHndlOut,trim(SQLStmtStr),
      -                int(len_trim(SQLStmtStr),SQLINTEGER_KIND))
@@ -320,7 +262,7 @@ C           BEEN SET, IN WHICH CASE IT IS EQUAL TO CURRENT HEIGHT
             ELSE
               ESTHT = HT(I)
             ENDIF
-
+            
 C           DETERMINE TREE AGE
 
             IF (LBIRTH(I)) THEN
@@ -328,7 +270,7 @@ C           DETERMINE TREE AGE
             ELSE
               TREAGE = 0
             ENDIF
-
+ 
 C           GET DG INPUT
 
             DGI=DG(I)
@@ -356,10 +298,9 @@ C
      -           ' (CaseID,StandID,Year,PrdLen,',
      -           'TreeId,TreeIndex,Species,TreeVal,SSCD,PtIndex,TPA,',
      -           'MortPA,DBH,DG,',
-     -           'HT,HTG,PctCr,CrWidth,MistCD,BAPctile,PtBAL,',
-     -           NTCUFT,',',NMCUFT,',',NBDFT,',',
-     -           'MDefect,BDefect,TruncHt,EstHt,ActPt,',
-     -           NAMDCF,',',NAMDBF,',','TreeAge) VALUES(''',
+     -           'HT,HTG,PctCr,CrWidth,MistCD,BAPctile,PtBAL,TCuFt,',
+     -           'MCuFt,BdFt,MDefect,BDefect,TruncHt,',
+     -           'EstHt,ActPt,Ht2TDCF,Ht2TDBF,TreeAge) VALUES(''',
      -           CASEID,''',''',TRIM(NPLT),
      -           ''',',JYR,',',IFINT,",'",ADJUSTL(TID),"',",I,",'",
      -           trim(CSPECIES),"',",IMC(I),',',ISPECL(I),',',ITRE(I),
@@ -400,23 +341,13 @@ C       DECODE DEFECT AND ROUND OFF POINT BAL.
         IBDF= DEFECT(I)-((DEFECT(I)/100)*100)
         IPTBAL=NINT(PTBALT(I))
 
-C       DETERMINE ESTIMATED HEIGHT
-C       ESTIMATED HEIGHT IS NORMAL HEIGHT, UNLESS THE IT WAS NOT
-C       BEEN SET, IN WHICH CASE IT IS EQUAL TO CURRENT HEIGHT
-
-        IF (NORMHT(I) .NE. 0) THEN
-          ESTHT = (REAL(NORMHT(I))+5)/100
-        ELSE
-          ESTHT = HT(I)
-        ENDIF
-
 C       DETERMINE TREE AGE
 
         IF (LBIRTH(I)) THEN
           TREAGE = ABIRTH(I)
         ELSE
           TREAGE = 0
-        ENDIF
+        ENDIF        
 
 C       CYCLE 0, PRINT INPUT DG ONLY, UNLESS DIRECTED TO PRINT ESTIMATES.
         DGI=DG(I)
@@ -439,19 +370,18 @@ C
         ELSE
           CSPECIES=ADJUSTL(TRIM(PLNJSP(ISP(I))))
         ENDIF
-C
+C       
         IF(ISPOUT6.EQ.1)CSPECIES=ADJUSTL(TRIM(JSP(ISP(I))))
         IF(ISPOUT6.EQ.2)CSPECIES=ADJUSTL(TRIM(FIAJSP(ISP(I))))
         IF(ISPOUT6.EQ.3)CSPECIES=ADJUSTL(TRIM(PLNJSP(ISP(I))))
-
+        
         WRITE(SQLStmtStr,*)'INSERT INTO ',TABLENAME,
      -       ' (CaseID,StandID,Year,PrdLen,',
      -       'TreeId,TreeIndex,Species,TreeVal,SSCD,PtIndex,TPA,',
      -       'MortPA,DBH,DG,',
-     -       'HT,HTG,PctCr,CrWidth,MistCD,BAPctile,PtBAL,',
-     -       NTCUFT,',',NMCUFT,',',NBDFT,',',
-     -       'MDefect,BDefect,TruncHt,EstHt,ActPt,',
-     -       NAMDCF,',',NAMDBF,',','TreeAge) VALUES(''',
+     -       'HT,HTG,PctCr,CrWidth,MistCD,BAPctile,PtBAL,TCuFt,',
+     -       'MCuFt,BdFt,MDefect,BDefect,TruncHt,',
+     -       'EstHt,ActPt,Ht2TDCF,Ht2TDBF,TreeAge) VALUES(''',
      -       CASEID,''',''',TRIM(NPLT),
      -       ''',',JYR,',',IFINT,",'",ADJUSTL(TID),"',",I,
      -       ",'",trim(CSPECIES),"',",IMC(I),',',ISPECL(I),',',ITRE(I),
@@ -460,17 +390,17 @@ C
      -       CFV(I),',',WK1(I),',',BFV(I),',',ICDF,',',IBDF,',',
      -       ((ITRUNC(I)+5)/100),',',ESTHT,',',IPVEC(ITRE(I)),
      -       ',',HT2TD(I,2),',',HT2TD(I,1),',',TREAGE,')'
-
+        
         iRet = fvsSQLCloseCursor(StmtHndlOut)
-
+        
         iRet = fvsSQLExecDirect(StmtHndlOut,trim(SQLStmtStr),
      -            int(len_trim(SQLStmtStr),SQLINTEGER_KIND))
-
+        
         IF (iRet.NE.SQL_SUCCESS) ITREELIST = 0
         CALL DBSDIAGS(SQL_HANDLE_STMT,StmtHndlOut,
      -              'DBSTRLS:Inserting Row: '//trim(SQLStmtStr))
 
       ENDDO
-  100 CONTINUE
+  100 CONTINUE          
       iRet = fvsSQLFreeHandle(SQL_HANDLE_STMT, StmtHndlOut)
       END

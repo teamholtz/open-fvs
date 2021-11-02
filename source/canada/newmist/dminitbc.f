@@ -1,7 +1,7 @@
       SUBROUTINE DMINIT
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: dminitbc.f 2461 2018-07-24 18:00:57Z gedixon $
+C  $Id: dminitbc.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 C **DMINIT--NI  DATE OF LAST REVISION: 02/22/96
 C----------

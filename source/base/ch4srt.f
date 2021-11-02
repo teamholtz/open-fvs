@@ -1,7 +1,7 @@
       SUBROUTINE CH4SRT (N,A,INDEX,LSEQ)
       IMPLICIT NONE
 C----------
-C BASE $Id: ch4srt.f 2944 2020-02-03 22:59:12Z lancedavid $
+C  $Id: ch4srt.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C  CHARACTER*4 INDEX SORT.
@@ -38,9 +38,8 @@ C----------
 C  LOAD IND WITH VALUES FROM 1 TO N.
 C----------
       IF (LSEQ) THEN
-        DO I=1,N
-          INDEX(I)=I
-        ENDDO
+      DO 10 I=1,N
+   10 INDEX(I)=I
       ENDIF
 C----------
 C  RETURN IF FEWER THAN TWO ELEMENTS IN ARRAY A.

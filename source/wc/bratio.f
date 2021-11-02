@@ -1,7 +1,7 @@
       FUNCTION BRATIO(IS,D,H)
       IMPLICIT NONE
 C----------
-C WC $Id: bratio.f 3758 2021-08-25 22:42:32Z lancedavid $
+C WC $Id: bratio.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C
 C  FUNCTION TO COMPUTE BARK RATIOS.  THIS ROUTINE IS VARIANT SPECIFIC
@@ -13,13 +13,13 @@ C  13=SP,14=WP,15=PP,16=DF,17=RW,18=RC,19=WH,20=MH,21=BM,22=RA,23=WA,
 C  24=PB,25=GC,26=AS,27=CW,28=WO,29=J,30=LL,31=WB,32=KP,33=PY,34=DG
 C  35=HT,36=CH,37=WI,38=---,39=OT
 C----------
-      REAL BARKB(4,14),H,D,BRATIO,DIB
+      REAL BARKB(4,13),H,D,BRATIO,DIB
       INTEGER JBARK(39),IS
       REAL RDANUW
 C
       DATA JBARK/
      &  2,  2,  2,  2,  2,  2,  2,  5,  5,  10,
-     & 10,  4,  4,  4,  3,  1,  14, 11, 12,  11,
+     & 10,  4,  4,  4,  3,  1,  5, 11, 12,  11,
      &  6,  9,  9,  6,  7,  9,  9,  8, 11,  10,
      & 13, 13, 13,  9,  9,  9,  9,  1, 10/
 C----------
@@ -40,8 +40,7 @@ C----------
      & 108.,  0.9     ,  1.0     , 1.,
      & 242.,  0.949670,  1.0     , 1.,
      & 263.,  0.933710,  1.0     , 1.,
-     & 101.,  0.933290,  1.0     , 1.,
-     & 211.,  0.7012  ,  1.04862 , 1./
+     & 101.,  0.933290,  1.0     , 1./
 C----------
 C  BARK COEFS
 C  202,15,122,116,81 FROM WALTERS ET.AL. RES BULL 50

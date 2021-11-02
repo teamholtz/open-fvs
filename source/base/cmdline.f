@@ -1,6 +1,5 @@
-C----------
-C BASE $Id: cmdline.f 3838 2021-10-13 00:49:14Z donrobinson $
-C----------
+c $Id: cmdline.f 2355 2018-05-18 17:21:33Z lancedavid $
+
 c     This is a collection of routines that provide an interface to
 c     elements of the FVS command line parameters, including the stop/
 c     restart facilities. These routines are most useful with the shared
@@ -9,33 +8,7 @@ c
 c     Note that not all of the routines are designed to be part of the API
 
 c     Created in 2011 and 2012 by Nick Crookston, RMRS-Moscow
-c     In 2019 additional interface routines were added to allow for C functions
-c     that are part of the API to call fortran functions with character strings.
-c     The fortran routines that can be called by C have an upper case C added to 
-c     the routine name. See apisubs.c for the C functions that are used to call 
-c     the fortran routines. Only routines with character data have both languages.
 
-      
-#ifdef CMPgcc
-      subroutine fvsSetCmdLineC(theCmdLine,lenCL,IRTNCD)
-     -           bind(c, name="fvsSetCmdLineC") 
-      use iso_c_binding      
-      implicit none
-
-      integer(c_int), bind(c) :: lenCL,IRTNCD
-      character(c_char), dimension(255), bind(c) :: theCmdLine      
-
-      integer i
-      character passCmdLine*255
-      
-      do i=1,lenCL
-        passCmdLine(i:i)=theCmdLine(i)
-      enddo
-      call fvsSetCmdLine(passCmdLine,lenCL,IRTNCD)
-      return
-      end
-#endif
-      
       subroutine fvsSetCmdLine(theCmdLine,lenCL,IRTNCD)
       implicit none
 

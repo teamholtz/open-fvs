@@ -2,7 +2,7 @@
      &                   IDSDAT,KDT,IP)
       IMPLICIT NONE
 C----------
-C ESTB $Id: esetpr.f 2448 2018-07-10 17:04:02Z gedixon $
+C  **ESETPR DATE OF LAST REVISION:  07/25/08
 C----------
 C
 C     SET SITE PREPARATION FOR THE REGENERATION MODEL.

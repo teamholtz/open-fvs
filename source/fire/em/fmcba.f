@@ -1,7 +1,7 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
       IMPLICIT NONE
 C----------
-C FIRE-EM $Id: fmcba.f 2561 2018-11-17 00:28:06Z lancedavid $
+C FIRE-EM $Id: fmcba.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C     SINGLE-STAND VERSION
 C     CALLED FROM: FMMAIN
@@ -50,6 +50,8 @@ C
       INCLUDE 'FMCOM.F77'
 C
 C
+Cppe      INCLUDE 'PPEPRM.F77'
+Cppe      INCLUDE 'PPCNTL.F77'
 COMMONS
 C----------
 C  LOCAL VARIABLES DECLARATIONS

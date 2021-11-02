@@ -1,6 +1,6 @@
       SUBROUTINE BWEBMS (TRFBMS,ICVOPT)
 C----------
-C WSBWE $Id: bwebmsbc.f 2460 2018-07-24 14:41:48Z gedixon $
+C  **BWEBMS--IB   DATE OF LAST REVISION:  08/10/99
 C            SEI 14-July-2008
 C----------
 C

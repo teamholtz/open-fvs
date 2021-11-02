@@ -1,7 +1,5 @@
       SUBROUTINE BMPHER (IYR)
-C----------
-C WWPB $Id: bmpher.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+
 C     CALLED FROM:  BMDRV      
 C     ENTRY POINTS: BMAPH
 C     CALLS:        SPLAAR

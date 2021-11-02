@@ -1,6 +1,3 @@
-C----------
-C VOLUME $Id: clkcoef_mod.f 2458 2018-07-22 19:09:30Z gedixon $
-C----------
       MODULE CLKCOEF_MOD
 
 !     Module to store clark equation coefficients

@@ -1,9 +1,9 @@
-C----------
-C VOLUME $Id: r3d2hv.f 2458 2018-07-22 19:09:30Z gedixon $
-C----------
 !== last modified  12-3-2008
       SUBROUTINE R3D2HV(VOLEQU,UNT,HTTOT,HT1PRD,DBHOB,DRC,FCLASS,
      >                  HTTFLL,VOL,ERRFLAG)
+C----------
+C VOLUME $Id: r2d2hv.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
+C----------
 
 
 C--  THIS SUBROUTINE DETERMINES THE VOLUME OF A TREE

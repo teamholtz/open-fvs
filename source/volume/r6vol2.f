@@ -1,6 +1,3 @@
-C----------
-C VOLUME $Id: r6vol2.f 2458 2018-07-22 19:09:30Z gedixon $
-C----------
 !== last modified  03-29-2004
       SUBROUTINE R6VOL2(VOLEQ,DBHOB,HT,VOL,ERRFLAG)
 C  CREATED:   06-05-91

@@ -1,7 +1,10 @@
       SUBROUTINE FMCONS(FMOIS,BTYPE,PLAREA,IYR,ICALL,PSMOKE,PSBURN)
       IMPLICIT NONE
+C
+C  $Id: fmcons.f 2290 2018-05-16 15:53:09Z gedixon $
+C
 C----------
-C CANADA-FIRE-BC $Id: fmcons.f 3785 2021-09-13 22:24:56Z donrobinson $
+C  **FMCONS   FIRE-BC
 C----------
 *     CALLED FROM: FMBURN
 *                  FMPOFL
@@ -30,6 +33,7 @@ C.... PARAMETER STATEMENTS.
 C.... PARAMETER INCLUDE FILES.
 
       INCLUDE 'PRGPRM.F77'
+C      INCLUDE 'PPEPRM.F77'
       INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.
@@ -49,7 +53,6 @@ C.... VARIABLE DECLARATIONS.
       LOGICAL DEBUG
       INTEGER ICALL,IYR,IL,KODE,IM,IP,IPM
       REAL    PSMOKE,PLAREA,CONS,DIARED,PRDUF,PSBURN
-      INTEGER IDANUW
       REAL    ACTWFC, ACTFFC, FFC, WFC, BUI, TA2KGM2
       REAL    DMC, PLGBURN
 
@@ -70,10 +73,6 @@ C
      &             33*20.0/
 
       DATA EMFACL /4*21.3,4*25.1/
-C----------
-C  DUMMY ARGUMENT NOT USED WARNING SUPPRESSION SECTION
-C----------
-      IDANUW = FMOIS
 C-----------
 C  CHECK FOR DEBUG.
 C-----------
@@ -91,11 +90,11 @@ C
       ENDIF
 
 C     MULTIPLIER FOR CHANGING TONS/ACRE TO KG/M2
-C     TA2KGM2 = (TItoTM / ACRtoHA) * (1000. / 10000.)
+C      TA2KGM2 = (TItoTM / ACRtoHA) * (1000. / 10000.)
       TA2KGM2 = (0.90718 / 0.4046945) * (1000. / 10000.)
 
-C     BD = 80.0
-C     DC = 300
+C      BD = 80.0
+C      DC = 300
       BUI = 90
 
 C     TRANSFORM DUFF % MOISTURE CONTENT INTO DUFF MOISTURE CODE
@@ -139,7 +138,7 @@ C
         ENDDO
       ENDDO
 
-C     LETS SEPARATE OUT THE CALCULATIONS:
+C     LET'S SEPARATE OUT THE CALCULATIONS:
 
 C     FIRST, BURN UNPILED FUELS, IF A 'NATURAL' OR PRESCRIBED FIRE:
 
@@ -440,7 +439,7 @@ c     IPM: smoke size; IP: unpiled/piled; IL: fuel class; IM: moisture type
         ENDDO
 
 C       Only calculate smoke from live stuff if it is a 'proper' fire.
-C       We are not burning live stuff from a fuel treatment fire.
+C       We aren't burning live stuff from a fuel treatment fire.
 
         IF (BTYPE .EQ. 0) THEN
           DO IL=1,2

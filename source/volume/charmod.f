@@ -1,6 +1,3 @@
-C----------
-C VOLUME $Id: charmod.f 2458 2018-07-22 19:09:30Z gedixon $
-C----------
       MODULE CHARMOD
 
 !     Module to store utility type definitions

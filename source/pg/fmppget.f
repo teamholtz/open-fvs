@@ -1,11 +1,12 @@
       SUBROUTINE FMPPGET (WK3, IPNT, ILIMIT)
       IMPLICIT NONE
 C----------
-C PG $Id: fmppget.f 2561 2018-11-17 00:28:06Z lancedavid $
+C  $Id: fmppget.f 2362 2018-05-18 17:43:47Z lancedavid $
 C----------
 C  Purpose:
 C     Get (read) the Fire Model data for a given stand from DA file.
 C
+C     This is part of the Parallel Processing Extension.
 C----------------------------------------------------------------------
 C
 C  Call list definitions:

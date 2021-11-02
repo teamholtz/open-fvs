@@ -1,7 +1,7 @@
       SUBROUTINE COMPRS (NCLAS,PN1)
       IMPLICIT NONE
 C----------
-C BASE $Id: comprs.f 2944 2020-02-03 22:59:12Z lancedavid $
+C BASE $Id: comprs.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     TREE LIST COMPRESSION ROUTINE FOR THE PROGNOSIS
@@ -277,12 +277,11 @@ C
 C     C) SCALE EIGENVECTOR BY SIGMA X(K)
 C
       JK=0
-      DO J=1,NRANK
-        DO K=1,NRANK
-          JK=JK+1
-          EIVECT(JK)=EIVECT(JK)/STDDEV(K)
-        ENDDO
-      ENDDO
+      DO 80 J=1,NRANK
+      DO 80 K=1,NRANK
+      JK=JK+1
+      EIVECT(JK)=EIVECT(JK)/STDDEV(K)
+   80 CONTINUE
 C
 C     (D) ADD A NORMALIZED SCORE FOR EACH TREE RECORD TO THE INITIAL
 C         SCORE.  GIVE THE INITIAL SCORE AN ADDITIONAL OVERALL WEIGHT.
@@ -291,24 +290,24 @@ C         -4 (ON NORMALIZED SCALE).
 C         ALSO, CREATE A NEW SCORE BASED ON THE SECOND PRINCIPAL
 C         COMPONENT.
 C
-      DO I=1,ITRN
-        HTI  =REAL(HT(I)-RMEANS(1))
-        XICRI=REAL(REAL(ICR(I))-RMEANS(2))
-        X    =REAL(REAL(IMC(I))-RMEANS(3))
-        DBHI =REAL(WK4(I)-RMEANS(4))
-        DGI  =REAL(DG(I)-RMEANS(5))
-        TERM1=  REAL((HTI  *EIVECT(1)) +
-     >          (XICRI*EIVECT(2)) +
-     >          (X    *EIVECT(3)) +
-     >          (DBHI *EIVECT(4)) +
-     >          (DGI  *EIVECT(5)) + 4.)
-        WK3(I)=  WK3(I) + TERM1
-        WK4(I)= REAL((HTI  *EIVECT(6)) +
-     >          (XICRI*EIVECT(7)) +
-     >          (X    *EIVECT(8)) +
-     >          (DBHI *EIVECT(9)) +
-     >          (DGI  *EIVECT(10)))
-      ENDDO
+      DO 90 I=1,ITRN
+      HTI  =REAL(HT(I)-RMEANS(1))
+      XICRI=REAL(REAL(ICR(I))-RMEANS(2))
+      X    =REAL(REAL(IMC(I))-RMEANS(3))
+      DBHI =REAL(WK4(I)-RMEANS(4))
+      DGI  =REAL(DG(I)-RMEANS(5))
+      TERM1=  REAL((HTI  *EIVECT(1)) +
+     >        (XICRI*EIVECT(2)) +
+     >        (X    *EIVECT(3)) +
+     >        (DBHI *EIVECT(4)) +
+     >        (DGI  *EIVECT(5)) + 4.)
+      WK3(I)=  WK3(I) + TERM1
+      WK4(I)= REAL((HTI  *EIVECT(6)) +
+     >        (XICRI*EIVECT(7)) +
+     >        (X    *EIVECT(8)) +
+     >        (DBHI *EIVECT(9)) +
+     >        (DGI  *EIVECT(10)))
+   90 CONTINUE
 C
 C     STEP4:  SORT 'IND' ON 'WK3' USING RDPSRT (DESCENDING ORDER)
 C

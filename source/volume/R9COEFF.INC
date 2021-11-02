@@ -1,6 +1,3 @@
-C----------
-C VOLUME $Id: R9COEFF.INC 2458 2018-07-22 19:09:30Z gedixon $
-C----------
 C  Region 9 Profile Model Coefficients
 C  Coefficients updated 01/31/2011
 C  Mike VanDyck refited Yellow Birch coefficient A and B (07/01/2013).

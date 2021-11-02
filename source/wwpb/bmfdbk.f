@@ -1,7 +1,5 @@
       SUBROUTINE BMFDBK (IYR)
-C----------
-C WWPB $Id: bmfdbk.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+
 C CALLED BY: BMDRV
 C CALLS: nothing
 

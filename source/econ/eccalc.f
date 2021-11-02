@@ -1,6 +1,6 @@
       subroutine ECCALC(IY, ICYC, JSP, MGMID, NPLT, ITITLE)
 C----------
-C ECON $Id: eccalc.f 2944 2020-02-03 22:59:12Z lancedavid $
+C ECON $Id: eccalc.f 2358 2018-05-18 17:29:05Z lancedavid $
 C----------
 C Author Fred Martin, WA DNR,
 C Calculates costs & revenues associated with the FVS/ECON extension.
@@ -1173,6 +1173,7 @@ C  ITITLE - STDIDENT title
      &                                hrvRevDur(i,j,k,:), hrvRvnTime(l))
          end do
       end function sevHrvRevenues
+
 
 !    !Computes appreciation of annual costs and revenues for computing sev over an infinite time horizon 
       subroutine calcAnnCostRevSEV()

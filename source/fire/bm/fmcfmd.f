@@ -1,7 +1,7 @@
       SUBROUTINE FMCFMD (IYR, FMD)
       IMPLICIT NONE
 C----------
-C FIRE-BM $Id: fmcfmd.f 2462 2018-07-26 14:39:59Z gedixon $
+C FIRE-BM $Id: fmcfmd.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 *     SINGLE-STAND VERSION
 *     CALLED FROM: FMBURN

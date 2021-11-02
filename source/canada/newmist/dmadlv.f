@@ -1,10 +1,10 @@
-      SUBROUTINE DMADLV(SrcInd, Cnt, SFld, IFld, MshHt, Dist,
+      SUBROUTINE DMADLV(SrcInd, Cnt, SFld, IFld,  MshHt, Dist,
      &                      Level, Shd, Shd0, II, EB)
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: dmadlv.f 3787 2021-09-13 22:47:08Z donrobinson $
+C  $Id: dmadlv.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
-C  **DMADLV --  DATE OF LAST REVISION: 02/26/96
+C  **DMADLV --  DATE OF LAST REVISION: 02/26/96        
 C----------
 C  Purpose:
 C    Computes part (one of many "levels", hence the name) of the DM
@@ -28,7 +28,7 @@ C
 C     DMBSHD
 C     DMRANN
 C
-C Argument list definitions:
+C Argument list definitions:                        
 C
 C     INTEGER SrcInd  (I) Treelist index for the source tree.
 C     INTEGER Cnt     (I) Number of these trees. This will only be
@@ -89,17 +89,19 @@ C Common block variables and parameters:
 C
 C     DMOPQ2  DMCOM
 C     DMRDMX  DMCOM
-C     MXHT    DMCOM
-C     MAXOFF  DMCOM
-C     MXTRAJ  DMCOM
-C     MXTHRX  DMCOM
+C     MXHT    DMCOM    
+C     MAXOFF  DMCOM     
+C     MXTRAJ  DMCOM    
+C     MXTHRX  DMCOM    
 C     MXTHRZ  DMCOM
 C     ORIGIN  DMCOM
-C     RADIUS  DMCOM
+C     RADIUS  DMCOM            
 C     XX      DMCOM
-C     ZZ      DMCOM
-C     ISP     ARRAYS
+C     ZZ      DMCOM 
+C     ISP     ARRAYS  
 C
+C
+
       INCLUDE 'PRGPRM.F77'
       INCLUDE 'ARRAYS.F77'
       INCLUDE 'DMCOM.F77'
@@ -115,8 +117,8 @@ C Subroutine arguments.
       REAL      Level
       REAL      Shd(MXHT)
       REAL      Shd0(MXHT)
-      INTEGER   II
-      INTEGER   EB
+	INTEGER   II
+	INTEGER   EB
 
       DIMENSION SFld(MXHT)
       DIMENSION IFld(MXHT)
@@ -290,12 +292,12 @@ C same offset relative to the target.
                       Loss = VecWt * Op
                       SFld(h) = SFld(h) + Cnt * Loss
                     ELSE
-                      IF (II .EQ. 1 .AND.
+	                IF (II .EQ. 1 .AND.
      >                    CShd(k, m, XX) .LT. (Dist-EB)) THEN
                         Loss = VecWt * Shd(h)
-                      ELSE
+	                ELSE
                         Loss = VecWt * Shd0(h)
-                      ENDIF
+	                ENDIF
                       VecWt = VecWt - Loss
                     END IF
                   END IF
@@ -303,8 +305,8 @@ C same offset relative to the target.
 
 C If the trajectory walk does not end at or before the ground (h=1),
 C then "rain down" the remainder based on the last XX position 'x'.
-C The value of 'x' is carried over from the last available position.
-
+C The value of 'x' is carried over from the last available position.        
+         
                 IF ((m .EQ. VecLen(k)) .AND. (i .EQ. LFZInd)
      >              .AND. (LFZInd .GT. 1)) THEN
                   DO w = i, 1, -1
@@ -323,12 +325,12 @@ C The value of 'x' is carried over from the last available position.
                         Loss = VecWt * Op
                         SFld(w) = SFld(w) + Cnt * Loss
                       ELSE
-                      IF (II .EQ. 1 .AND.
+	                IF (II .EQ. 1 .AND.
      >                    CShd(k, m, XX) .LT. (Dist-EB)) THEN
                           Loss = VecWt * Shd(h)
-                        ELSE
+	                  ELSE
                           Loss = VecWt * Shd0(h)
-                        ENDIF
+	                  ENDIF
                         VecWt = VecWt - Loss
                       END IF
                     END IF

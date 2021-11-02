@@ -1,7 +1,7 @@
       SUBROUTINE DMOPTS
       IMPLICIT NONE      
 C----------
-C CANADA-NEWMIST $Id: dmopts.f 2461 2018-07-24 18:00:57Z gedixon $
+C  $Id: dmopts.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 C **DMOPTS -- NISI  Date of last revision: April 10 1994 
 C----------------------------------------------------------------------

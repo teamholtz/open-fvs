@@ -1,7 +1,7 @@
       SUBROUTINE COVOLP (DEBUG,JOSTND,NTREES,INDEX,CRAREA,COVER,CCCOEF)
       IMPLICIT NONE
 C----------
-C BASE $Id: covolp.f 2526 2018-10-13 15:15:00Z nickcrookston $
+C  $Id: covolp.f 1930 2017-04-03 19:53:50Z mshettles521 $
 C----------
 C
 C     N.L.CROOKSTON - RMRS MOSCOW - OCTOBER 1997
@@ -26,12 +26,13 @@ C       OF THE TREE RECORDS %CC IS BEING CALCULATED FOR.
       LOGICAL DEBUG 
          
       COVER = 0.
-      SUM = 0.
-      
+
       IF (DEBUG) WRITE (JOSTND,'('' IN COVOLP, NTREES ='',I4)') 
      >           NTREES
 
       IF (NTREES.EQ.0) GOTO 30
+
+      SUM = 0.
 
       IF (INDEX(1).EQ.0) THEN
          DO I=1,NTREES

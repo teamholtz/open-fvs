@@ -1,7 +1,7 @@
       SUBROUTINE BWEWEA
       IMPLICIT NONE
 C-----------
-C WSBWE $Id: bwewea.f 2460 2018-07-24 14:41:48Z gedixon $
+C **BWEWEA                  DATE OF LAST REVISION:  09/19/14
 C-----------
 C
 C GET WEATHER PARAMETERS FOR THE CURRENT YEAR

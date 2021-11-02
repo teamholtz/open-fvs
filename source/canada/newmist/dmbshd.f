@@ -1,7 +1,7 @@
       SUBROUTINE DMBSHD (iCS, iz, ix, ivLen, ivCnt)
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: dmbshd.f 2461 2018-07-24 18:00:57Z gedixon $
+C  $Id: dmbshd.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 C  **DMBSHD -- NISI  Date of last revision: April 7 1994
 C----------------------------------------------------------------------

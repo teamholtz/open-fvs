@@ -1,7 +1,7 @@
       SUBROUTINE FMCROW
       IMPLICIT NONE
 C----------
-C FIRE-NC $Id: fmcrow.f 3758 2021-08-25 22:42:32Z lancedavid $
+C  **FMCROW  FIRE-NC DATE OF LAST REVISION:  12/12/11
 C----------
 C     CALLED FROM: FMSDIT, FMPRUN
 C     CALLS        RDPSRT
@@ -68,10 +68,9 @@ C     8 = TANOAK                   -                17
 C     9 = RED FIR                  grand fir         4
 C    10 = PONDEROSA PINE           -                13
 C    11 = OTHER HARDWOOD           tanoak           17
-C    12 = COAST REDWOOD                              3
 
-      DATA ISPMAP / 3, 15, 3, 4, 10, 20, 21, 17, 4, 13,
-     >             17, 19/
+      DATA ISPMAP / 3,15, 3, 4,10,20,21,17, 4,13,
+     >             17/
 C
 C     CHECK FOR DEBUG
 C

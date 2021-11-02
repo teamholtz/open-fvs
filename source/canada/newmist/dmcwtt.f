@@ -1,7 +1,7 @@
       SUBROUTINE DMCW(DMTRCW)
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: dmcwtt.f 2461 2018-07-24 18:00:57Z gedixon $
+C  $Id: dmcwtt.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 C **DMCW --NISI Date of last revision: 08/05/94
 C This module has been made by modifing the COVER MODEL module CVCW

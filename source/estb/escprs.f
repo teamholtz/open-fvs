@@ -1,7 +1,7 @@
       SUBROUTINE ESCPRS (ITRGT,DEBUG)
       IMPLICIT NONE
 C----------
-C ESTB $Id: escprs.f 2448 2018-07-10 17:04:02Z gedixon $
+C  **ESCPRS DATE OF LAST REVISION:   06/21/11
 C----------
 C
 COMMONS

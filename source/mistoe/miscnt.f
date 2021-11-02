@@ -1,6 +1,6 @@
       SUBROUTINE MISCNT(MSPCNT)
 ***********************************************************************
-C MISTOE $Id: miscnt.f 2451 2018-07-11 18:10:16Z gedixon $
+C MISTOE $Id: miscnt.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
 *----------------------------------------------------------------------
 *  Purpose:
 *     Counts the number of tree records with any mistletoe infection

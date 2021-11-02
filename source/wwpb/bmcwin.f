@@ -1,7 +1,5 @@
       SUBROUTINE BMCWIN (ISTD,IYR)
-C----------
-C WWPB $Id: bmcwin.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+
 *     CALLED FROM:  BMDRV
 *     CALLS   GPGET2
 *             GPADD 

@@ -1,8 +1,8 @@
       SUBROUTINE BRTOUT
       IMPLICIT NONE
-C----------
-C WPBR $Id: brtout.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **BRTOUT       DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C  BRTOUT writes the treelist summary to output file.
 C----------------------------------------------------------------------

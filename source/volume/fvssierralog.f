@@ -1,8 +1,8 @@
-C----------
-C VOLUME $Id: fvssierralog.f 3758 2021-08-25 22:42:32Z lancedavid $
-C----------
       SUBROUTINE FVSSIERRALOG(VN,VM,VMAX,ISPC,D,H,BARK,LCONE,CTKFLG)
       IMPLICIT NONE
+C----------
+C VOLUME $Id: fvssierralog.f 2364 2018-05-18 17:49:31Z lancedavid $
+C----------
 C  This routine 
 
 COMMONS
@@ -24,7 +24,7 @@ C
 C
 C  WESTERN SIERRA LOG RULES
 C
-      GO TO (801,802,803,804,805,806,807,808,809,810,811,803),ISPC
+      GO TO (801,802,803,804,805,806,807,808,809,810,811),ISPC
 C----------
 C  OTHER CONIFER
 C----------

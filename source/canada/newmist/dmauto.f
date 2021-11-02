@@ -1,7 +1,7 @@
       SUBROUTINE DMAUTO (TrgDMR, RQ, D, S)
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: dmauto.f 3816 2021-09-15 23:34:54Z donrobinson $
+C  $Id: dmauto.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 C **DMAUTO -- NISI  Date of last revision: April 7 1994 
 C--------------------------------------------------------------------
@@ -115,7 +115,7 @@ C done somewhere else?
 
       DTot = 0.
       DO 200 i = 0, 6
-        S(i) = 0.0
+	  S(i) = 0.0
         DTot = DTot + D(i)
   200 CONTINUE
 

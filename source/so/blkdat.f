@@ -1,7 +1,7 @@
       BLOCK DATA BLKDAT
       IMPLICIT NONE
 C----------
-C SO $Id: blkdat.f 3751 2021-08-19 15:02:28Z lancedavid $
+C  SO $Id
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
@@ -174,43 +174,39 @@ C     COMMON STATEMENT FOR PLOT VARIABLES.
 C----------
 C     SPECIES LIST FOR SORNEC-33 VARIANT.
 C
-C     1 = WESTERN WHITE PINE        (WP)   PINUS MONTICOLA
-C     2 = SUGAR PINE                (SP)   PINUS LAMBERTIANA
-C     3 = DOUGLAS-FIR               (DF)   PSEUDOTSUGA MENZIESII
-C     4 = WHITE FIR                 (WF)   ABIES CONCOLOR (SO - WF/GF)
-C     5 = MOUNTAIN HEMLOCK          (MH)   TSUGA MERTENSIANA
-C     6 = INCENSE CEDAR             (IC)   CALOCEDRUS DECURRENS
-C     7 = LODGEPOLE PINE            (LP)   PINUS CONTORTA
-C     8 = ENGELMANN SPRUCE          (ES)   PICEA ENGELMANNII
-C     9 = SHASTA RED FIR            (SH)   ABIES xSHASTENSIS(FROM CA)
-C    10 = PONDEROSA PINE            (PP)   PINUS PONDEROSA
-C    11 = WESTERN JUNIPER           (WJ)   JUNIPERUS OCCIDENTALIS
-C    12 = GRAND FIR                 (GF)   ABIES GRANDIS (SO - WF/GF)
-C    13 = SUBALPINE FIR             (AF)   ABIES LASIOCARPA
-C    14 = PACIFIC SILVER FIR        (SF)   ABIES AMABILIS (FROM EC)
-C    15 = NOBLE FIR                 (NF)   ABIES PROCERA (FROM WC)
-C    16 = WHITEBARK PINE            (WB)   PINUS ALBICAULIS (FROM TT)
-C    17 = WESTERN LARCH             (WL)   LARIX OCCIDENTALIS (FROM EC)
-C    18 = WESTERN REDCEDAR          (RC)   THUJA PLICATA (FROM EC)
-C    19 = WESTERN HEMLOCK           (WH)   TSUGA HETEROPHYLLA (FROM WC)
-C    20 = PACIFIC YEW               (PY)   TAXUS BREVIFOLIA (FROM WC)
-C    21 = WHITE ALDER               (WA)   ALNUS RHOMBIFOLIA (FROM WC)
-C    22 = RED ALDER                 (RA)   ALNUS RUBRA (FROM WC)
-C    23 = BIGLEAF MAPLE             (BM)   ACER MACROPHYLLUM (FROM WC)
-C    24 = QUAKING ASPEN             (AS)   POPULUS TREMULOIDES (FROM UT)
-C    25 = BLACK COTTONWOOD          (CW)   POPULUS BALSAMIFERA SSP. 
-C                                          TRICHOCARPA (FROM WC)
-C    26 = BITTER CHERRY             (CH)   PRUNUS EMARGINATA (FROM WC)
-C    27 = OREGON WHITE OAK          (WO)   QUERCUS GARRYANA (FROM CA)
-C    28 = WILLOW                    (WI)   SALIX (FROM WC)
-C    29 = GIANT CHINQUAPIN          (GC)   CHRYSOLEPIS CHRYSOPHYLLA 
-C                                          var. CHRYSOPHYLLA (FROM WC)
-C    30 = CURL-LEAF MOUNTAIN MAHOGANY (MC) CERCOCARPUS LEDIFOLIUS 
-C                                          (FROM WC)
-C    31 = BIRCHLEAF MOUNTAIN MAHOGANY (MB) CERCOCARPUS MONTANUS VAR 
-C                                          GLABER (FROM WC)
-C    32 = OTHER SOFTWOOD            (OS)   DOUGLAS-FIR (DF) (FROM SO)
-C    33 = OTHER HARDWOOD            (OH)   MISC. HARDWOOD (FROM WC)
+C     1 = WESTERN WHITE PINE          (WP)   PINUS MONTICOLA
+C     2 = SUGAR PINE                  (SP)   PINUS LAMBERTIANA
+C     3 = DOUGLAS-FIR                 (DF)   PSEUDOTSUGA MENZIESII
+C     4 = WHITE FIR                   (WF)   ABIES CONCOLOR (SO - WF/GF)
+C     5 = MOUNTAIN HEMLOCK            (MH)   TSUGA MERTENSIANA
+C     6 = INCENSE CEDAR               (IC)   LIBOCEDRUS DECURRENS
+C     7 = LODGEPOLE PINE              (LP)   PINUS CONTORTA
+C     8 = ENGELMANN SPRUCE            (ES)   PICEA ENGELMANNII
+C     9 = SHASTA RED FIR              (SH)   ABIES MAGNIFICA (SHASTENSIS)(FROM CA)
+C    10 = PONDEROSA PINE              (PP)   PINUS PONDEROSA
+C    11 = WESTERN JUNIPER             (WJ)   JUNIPERUS OCCIDENTALIS
+C    12 = GRAND FIR                   (GF)   ABIES GRANDIS (SO - WF/GF)
+C    13 = SUBALPINE FIR               (AF)   ABIES LASIOCARPA
+C    14 = PACIFIC SILVER FIR          (SF)   ABIES AMABILIS (FROM EC)
+C    15 = NOBLE FIR                   (NF)   ABIES PROCERA (FROM WC)
+C    16 = WHITEBARK PINE              (WB)   PINUS ALBICAULIS (FROM TT)
+C    17 = WESTERN LARCH               (WL)   LARIX OCCIDENTALIS (FROM EC)
+C    18 = WESTERN REDCEDAR            (RC)   THUJA PLICATA (FROM EC)
+C    19 = WESTERN HEMLOCK             (WH)   TSUGA HETEROPHYLLA (FROM WC)
+C    20 = PACIFIC YEW                 (PY)   TAXUS BREVIFOLIA (FROM WC)
+C    21 = WHITE ALDER                 (WA)   ALNUS RHOMBIFOLIA (FROM WC)
+C    22 = RED ALDER                   (RA)   ALNUS RUBRA (FROM WC)
+C    23 = BIGLEAF MAPLE               (BM)   ACER MACROPHYLLUM (FROM WC)
+C    24 = QUAKING ASPEN               (AS)   POPULUS TREMULOIDES (FROM UT)
+C    25 = BLACK COTTONWOOD            (CW)   POPULUS TRICHOCARPA (FROM WC)
+C    26 = BITTER CHERRY               (CH)   PRUNUS EMARGINATA (FROM WC)
+C    27 = OREGON WHITE OAK            (WO)   QUERCUS GARRYANA (FROM CA)
+C    28 = WILLOW                      (WI)   SALIX sp. (FROM WC)
+C    29 = GIANT CHINQUAPIN            (GC)   CHRYSOLEPIS CHRYSOPHYLLA (FROM WC)
+C    30 = CURL-LEAF MOUNTAIN MAHOGANY (MC)   CERCOCARPUS LEDIFOLIUS (FROM WC)
+C    31 = BIRCHLEAF MOUNTAIN MAHOGANY (MB)   CERCOCARPUS ALNIFOLIUS (FROM WC)
+C    32 = OTHER SOFTWOODS             (OS)   DOUGLAS-FIR (DF) (FROM SO)
+C    33 = OTHER HARDWOODS             (OH)   MISCELLANEOUS HARDWOOD (FROM WC)
 
 C----------
       DATA JSP /
@@ -232,7 +228,7 @@ C
      & 'PIAL  ','LAOC  ','THPL  ','TSHE  ','TABR2 ',
      & 'ALRH2 ','ALRU2 ','ACMA3 ','POTR5 ','POBAT ',
      & 'PREM  ','QUGA4 ','SALIX ','CHCHC4','CELE3 ',
-     & 'CEMOG ','2TE   ','2TD   '/
+     & 'CEMOM4','2TE   ','2TD   '/
 C
       DATA JTYPE /130,170,250,260,280,290,310,320,330,420,
      &            470,510,520,530,540,550,570,610,620,640,
@@ -441,6 +437,127 @@ C
      &  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
      &  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
      &  0.0000,-12.0763,  0.0000/
+C
+C
+      DATA BB0/
+     &0.37504453, 128.89522,   0.0,  -0.30935,     22.8741,
+     &  -0.30935, -0.0968, 2.75780,      0.00,   128.89522,
+     &       0.0,-0.30935,-0.07831,  -0.30935,     -564.38,
+     &       0.0,     0.0,     0.0,  -1.73070,      0.6192,
+     & 0.6192,    59.5864,  0.6192,       0.0,      0.6192,
+     & 0.6192,      6.413,  0.6192,   0.6192,       0.6192,
+     & 0.6192,        0.0,  0.6192/
+C
+      DATA BB1/
+     & 0.92503,-0.016959,  -0.37496,   1.2383,   0.950234,
+     &  1.2383,  0.02679,   0.83312,  1.51744,  -0.016959,
+     &     0.0,   1.2383,    0.0149,   1.2383,     22.250,
+     &     0.0,  1.46897,    1.3283,   0.1394,    -5.3394,
+     & -5.3394,  0.79530,   -5.3394,      0.0,    -5.3394,
+     & -5.3394,    0.322,   -5.3394,  -5.3394,    -5.3394,
+     & -5.3394, -0.37496,   -5.3394/
+C
+      DATA BB2/
+     & -0.0207959,     1.23114, 1.36164,   0.001762, -0.00206465,
+     &   0.001762, -0.00009309,0.015701,1.41512E-6,      1.23114,
+     &        0.0,    0.001762,-4.0818E-5, 0.001762,     0.04995,
+     &        0.0,   0.0092466, -0.0174,    -0.0616,      240.29,
+     &     240.29,     0.00194,  240.29,        0.0,      240.29,
+     &     240.29,         0.0,  240.29,     240.29,      240.29,
+     &     240.29,     1.36164,  240.29/
+C
+       DATA BB3/
+     & -2.4881068,   -0.7864, -0.00243434,    -5.4E-6,       0.5,
+     &    -5.4E-6,       0.0,    22.71944, -0.0440853,   -0.7864,
+     &        0.0,   -5.4E-6,         0.0,    -5.4E-6,       6.8,
+     &        0.0,-0.00023957,     1.4711,     0.0137,    3368.9,
+     &     3368.9,  -0.000740,     3368.9,        0.0,    3368.9,
+     &     3368.9,        0.0,     3368.9,     3368.9,    3368.9,
+     &     3368.9,-0.00243434,     3368.9/
+C
+      DATA BB4/
+     &    0.0   ,   2.49717,    -79.97,  2.046E-7,  1.365566,
+     &  2.046E-7,       0.0, -0.63557 ,-3.04951E6,   2.49717,
+     &       0.0,  2.046E-7,       0.0,  2.046E-7,   2843.21,
+     &       0.0, 1.1122E-6,       0.0,   0.00192, 0.0000000,
+     &  0.000000,    0.9198,  0.000000,       0.0,  0.000000,
+     &      0.00,       0.0,    0.0000,    0.0000,    0.0000,
+     &    0.0000,    -79.97,    0.0000/
+C
+      DATA BB5/
+     &       0.0,-0.0045042,   -0.2828, -4.04E-13,  2.045963,
+     & -4.04E-13,       0.0,       0.0,5.72474E-4,-0.0045042,
+     &       0.0, -4.04E-13,       0.0, -4.04E-13,  34735.54,
+     &       0.0,  -0.12528,       0.0,   0.00007, 0.0000000,
+     &  0.000000,  0.000000,  0.000000,       0.0,  0.000000,
+     &    0.0000,       0.0,    0.0000,    0.0000,    0.0000,
+     &    0.0000,   -0.2828,    0.0000/
+C
+      DATA BB6/
+     &       0.0,  0.33022 ,   1.87947,   -6.2056,       0.0,
+     &   -6.2056,       0.0,       0.0,       0.0,   0.33022,
+     &       0.0,   -6.2056,       0.0,   -6.2056,  0.000000,
+     &       0.0,  0.039636,       0.0,    1.8219, 0.0000000,
+     &  0.000000,  0.000000,   0.00000,       0.0,  0.000000,
+     &    0.0000,       0.0,    0.0000,    0.0000,    0.0000,
+     &    0.0000,   1.87947,    0.0000/
+C
+      DATA BB7/
+     &       0.0,    100.43, -0.022399,     2.097,      0.0,
+     &     2.097,       0.0,       0.0,       0.0,   100.43,
+     &       0.0,     2.097,       0.0,     2.097, 0.000000,
+     &       0.0,-0.0004278,       0.0,  0.199298, 0.0000000,
+     & 0.0000000,  0.000000,  0.000000,       0.0,  0.000000,
+     &    0.0000,       0.0,    0.0000,    0.0000,    0.0000,
+     &    0.0000, -0.022399,    0.0000/
+C
+      DATA BB8/
+     &       0.0,       0.0,  0.966998,  -0.09411,       0.0,
+     &  -0.09411,       0.0,       0.0,       0.0,       0.0,
+     &       0.0,  -0.09411,       0.0,  -0.09411,  0.000000,
+     &       0.0, 1.7039E-6,       0.0,   0.00438, 0.0000000,
+     &  0.000000,  0.000000,  0.000000,       0.0,  0.000000,
+     &    0.0000,       0.0,    0.0000,    0.0000,    0.0000,
+     &    0.0000,  0.966998,    0.0000/
+C
+       DATA BB9/
+     &      0.0,        0.0,       0.0,-.00004382,       0.0,
+     & -0.00004382,     0.0,       0.0,       0.0,       0.0,
+     &       0.0,-.00004382,       0.0,-0.00004382,       0.0,
+     &       0.0,     73.57,       0.0,       0.0,       0.0,
+     &       0.0,       0.0,       0.0,       0.0,       0.0,
+     &       0.0,       0.0,       0.0,       0.0,       0.0,
+     &       0.0,       0.0,       0.0/
+C
+      DATA BB10/
+     &       0.0,       0.0,       0.0, 2.007E-11,       0.0,
+     & 2.007E-11,       0.0,       0.0,       0.0,       0.0,
+     &       0.0, 2.007E-11,       0.0, 2.007E-11,       0.0,
+     &       0.0,  -0.12528,       0.0,       0.0,       0.0,
+     &       0.0,       0.0,       0.0,       0.0,       0.0,
+     &       0.0,       0.0,       0.0,       0.0,       0.0,
+     &       0.0,       0.0,       0.0/
+C
+      DATA BB11/
+     &       0.0,       0.0,       0.0,-2.054E-17,       0.0,
+     &-2.054E-17,       0.0,       0.0,       0.0,       0.0,
+     &       0.0,-2.054E-17,       0.0,-2.054E-17,       0.0,
+     &       0.0,  0.039636,       0.0,       0.0,       0.0,
+     &       0.0,       0.0,       0.0,       0.0,       0.0,
+     &       0.0,       0.0,       0.0,       0.0,       0.0,
+     &       0.0,       0.0,       0.0/
+C
+      DATA BB12/
+     &       0.0,       0.0,       0.0,    -84.73,       0.0,
+     &    -84.73,       0.0,       0.0,       0.0,       0.0,
+     &       0.0,    -84.73,       0.0,    -84.73,       0.0,
+     &       0.0,-0.0004278,       0.0,       0.0,       0.0,
+     &       0.0,       0.0,       0.0,       0.0,       0.0,
+     &       0.0,       0.0,       0.0,       0.0,       0.0,
+     &       0.0,       0.0,       0.0/
+C
+      DATA BB13/
+     &  16*0.0, 1.7039E-6, 16*0.0/
 C
       DATA REGNBK/2.999/
 C

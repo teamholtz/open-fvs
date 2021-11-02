@@ -1,7 +1,5 @@
       SUBROUTINE BMSALV (IYR)
-C----------
-C WWPB $Id: bmsalv.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+      
 c     CALLED FROM BMDRV
 c     CALLS:  BMSLSH 
 ***********************************************************************

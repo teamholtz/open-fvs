@@ -1,7 +1,7 @@
       BLOCK DATA BLKDAT
       IMPLICIT NONE
 C----------
-C CS $Id: blkdat.f 3751 2021-08-19 15:02:28Z lancedavid $
+C CS $Id: blkdat.f 2357 2018-05-18 17:26:03Z lancedavid $
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
@@ -121,7 +121,7 @@ C  COMMON STATEMENT FOR PLOT VARIABLES.
 C----------
       DATA JSP /
      & 'RC ',   'JU ',   'SP ',   'VP ',   'LP ',   'OS ',   'WP ',
-     & 'WN ',   'BN ',   'TL ',   'TS ',   'WT ',   'BG ',   '   ',
+     & 'WN ',   'BN ',   'TL ',   'TS ',   'WT ',   'BG ',   'HS ',
      & 'SH ',   'SL ',   'MH ',   'PH ',   'HI ',   'WH ',   'BH ',
      & 'PE ',   'BI ',   'AB ',   'BA ',   'PA ',   'UA ',   'EC ',
      & 'RM ',   'BE ',   'SV ',   'BC ',   'AE ',   'SG ',   'HK ',
@@ -129,14 +129,14 @@ C----------
      & 'SM ',   'AS ',   'WA ',   'GA ',   'WO ',   'RO ',   'SK ',
      & 'BO ',   'SO ',   'BJ ',   'CK ',   'SW ',   'BR ',   'SN ',
      & 'PO ',   'DO ',   'CO ',   'PN ',   'CB ',   'QI ',   'OV ',
-     & 'WK ',   'NK ',   'WL ',   'QS ',   '   ',   'SS ',   'OB ',
+     & 'WK ',   'NK ',   'WL ',   'QS ',   'UH ',   'SS ',   'OB ',
      & 'CA ',   'PS ',   'HL ',   'BP ',   'BT ',   'QA ',   'BK ',
-     & '   ',   'SY ',   'BY ',   'RB ',   'SU ',   'WI ',   'BL ',
-     & 'OH ',   'AH ',   'RD ',   'DW ',   'HT ',   'KC ',   'OO ',
+     & 'OL ',   'SY ',   'BY ',   'RB ',   'SU ',   'WI ',   'BL ',
+     & 'NC ',   'AH ',   'RD ',   'DW ',   'HT ',   'KC ',   'OO ',
      & 'CT ',   'MV ',   'MB ',   'HH ',   'SD '/
 C
       DATA FIAJSP /
-     & '068',   '057',   '110',   '132',   '131',   '299',   '129',
+     & '068',   '057',   '110',   '132',   '131',   '298',   '129',
      & '602',   '601',   '690',   '694',   '691',   '693',   '   ',
      & '407',   '405',   '409',   '403',   '400',   '401',   '402',
      & '404',   '408',   '531',   '543',   '545',   '546',   '742',
@@ -148,11 +148,11 @@ C
      & '827',   '828',   '831',   '834',   '   ',   '931',   '331',
      & '450',   '521',   '552',   '741',   '743',   '746',   '901',
      & '   ',   '731',   '221',   '373',   '611',   '920',   '922',
-     & '998',   '391',   '471',   '491',   '500',   '571',   '641',
+     & '   ',   '391',   '471',   '491',   '500',   '571',   '641',
      & '651',   '653',   '680',   '701',   '711'/
 C
       DATA PLNJSP /
-     &'JUVI  ','JUNIP ','PIEC2 ','PIVI2 ','PITA  ','2TN   ','PIST  ',
+     &'JUVI  ','JUNIP ','PIEC2 ','PIVI2 ','PITA  ','2TE   ','PIST  ',
      &'JUNI  ','JUCI  ','NYSSA ','NYBI  ','NYAQ2 ','NYSY  ','      ',
      &'CAOV2 ','CALA21','CAAL27','CAGL8 ','CARYA ','CAAQ2 ','CACO15',
      &'CAIL2 ','CATE9 ','FAGR  ','FRNI  ','FRPR  ','FRQU  ','PODE3 ',
@@ -164,63 +164,63 @@ C
      &'QUNI  ','QUNU  ','QUPH  ','QUSH  ','      ','SAAL5 ','AEGL  ',
      &'CATAL ','DIVI5 ','GLTR  ','POBA2 ','POGR4 ','POTR5 ','ROPS  ',
      &'      ','PLOC  ','TADI2 ','BENI  ','LIST2 ','SALIX ','SANI  ',
-     &'2TB   ','CACA18','CECA4 ','COFL2 ','CRATA ','GYDI  ','MAPO  ',
+     &'      ','CACA18','CECA4 ','COFL2 ','CRATA ','GYDI  ','MAPO  ',
      &'MAAC  ','MAVI2 ','MORUS ','OSVI  ','OXAR  '/
 C
       DATA JTYPE /122*0/
 C
       DATA NSP /'RC1','JU1','SP1','VP1','LP1','OS1','WP1','WN1','BN1',
-     > 'TL1','TS1','WT1','BG1','__1','SH1','SL1','MH1','PH1','HI1',
+     > 'TL1','TS1','WT1','BG1','HS1','SH1','SL1','MH1','PH1','HI1',
      > 'WH1','BH1','PE1','BI1','AB1','BA1','PA1','UA1','EC1','RM1','BE1'
      >,'SV1','BC1','AE1','SG1','HK1','WE1','EL1','SI1','RL1','RE1',
      > 'YP1','BW1','SM1','AS1','WA1','GA1','WO1','RO1','SK1','BO1',
      > 'SO1','BJ1','CK1','SW1','BR1','SN1','PO1','DO1','CO1','PN1',
-     > 'CB1','QI1','OV1','WK1','NK1','WL1','QS1','__1','SS1','OB1',
-     > 'CA1','PS1','HL1','BP1','BT1','QA1','BK1','__1','SY1','BY1',
-     > 'RB1','SU1','WI1','BL1','OH1','AH1','RD1','DW1','HT1','KC1',
+     > 'CB1','QI1','OV1','WK1','NK1','WL1','QS1','UH1','SS1','OB1',
+     > 'CA1','PS1','HL1','BP1','BT1','QA1','BK1','OL1','SY1','BY1',
+     > 'RB1','SU1','WI1','BL1','NC1','AH1','RD1','DW1','HT1','KC1',
      > 'OO1','CT1','MV1','MB1','HH1','SD1','RC2','JU2','SP2','VP2',
-     > 'LP2','OS2','WP2','WN2','BN2','TL2','TS2','WT2','BG2','__2',
+     > 'LP2','OS2','WP2','WN2','BN2','TL2','TS2','WT2','BG2','HS2',
      > 'SH2','SL2','MH2','PH2','HI2','WH2','BH2','PE2','BI2','AB2',
      > 'BA2','PA2','UA2','EC2','RM2','BE2','SV2','BC2','AE2','SG2',
      > 'HK2','WE2','EL2','SI2','RL2','RE2','YP2','BW2','SM2','AS2',
      > 'WA2','GA2','WO2','RO2','SK2','BO2','SO2','BJ2','CK2','SW2',
      > 'BR2','SN2','PO2','DO2','CO2','PN2','CB2','QI2','OV2','WK2',
-     > 'NK2','WL2','QS2','__2','SS2','OB2','CA2','PS2','HL2','BP2',
-     > 'BT2','QA2','BK2','__2','SY2','BY2','RB2','SU2','WI2','BL2',
-     > 'OH2','AH2','RD2','DW2','HT2','KC2','OO2','CT2','MV2','MB2',
+     > 'NK2','WL2','QS2','UH2','SS2','OB2','CA2','PS2','HL2','BP2',
+     > 'BT2','QA2','BK2','OL2','SY2','BY2','RB2','SU2','WI2','BL2',
+     > 'NC2','AH2','RD2','DW2','HT2','KC2','OO2','CT2','MV2','MB2',
      > 'HH2','SD2','RC3','JU3','SP3','VP3','LP3','OS3','WP3','WN3',
-     > 'BN3','TL3','TS3','WT3','BG3','__3','SH3','SL3','MH3','PH3',
+     > 'BN3','TL3','TS3','WT3','BG3','HS3','SH3','SL3','MH3','PH3',
      > 'HI3','WH3','BH3','PE3','BI3','AB3','BA3','PA3','UA3','EC3',
      > 'RM3','BE3','SV3','BC3','AE3','SG3','HK3','WE3','EL3','SI3',
      > 'RL3','RE3','YP3','BW3','SM3','AS3','WA3','GA3','WO3','RO3',
      > 'SK3','BO3','SO3','BJ3','CK3','SW3','BR3','SN3','PO3','DO3',
-     > 'CO3','PN3','CB3','QI3','OV3','WK3','NK3','WL3','QS3','__3',
-     > 'SS3','OB3','CA3','PS3','HL3','BP3','BT3','QA3','BK3','__3',
-     > 'SY3','BY3','RB3','SU3','WI3','BL3','OH3','AH3','RD3','DW3',
+     > 'CO3','PN3','CB3','QI3','OV3','WK3','NK3','WL3','QS3','UH3',
+     > 'SS3','OB3','CA3','PS3','HL3','BP3','BT3','QA3','BK3','OL3',
+     > 'SY3','BY3','RB3','SU3','WI3','BL3','NC3','AH3','RD3','DW3',
      > 'HT3','KC3','OO3','CT3','MV3','MB3','HH3','SD3'/
 C----------
 C=====================================
 C     SPECIES LIST FOR CENTRAL STATES
 C=====================================
 C     1 = EASTERN REDCEDAR (RC)
-C     2 = JUNIPER (JU)
+C     2 = JUNIPER SPECIES (JU)
 C     3 = SHORTLEAF PINE (SP)
 C     4 = VIRGINIA PINE (VP)
 C     5 = LOBLOLLY PINE (LP)
-C     6 = OTHER SOFTWOOD (OS)
+C     6 = OTHER SOFTWOOD SPECIES (OS)
 C     7 = EASTERN WHITE PINE (WP)
 C     8 = BLACK WALNUT (WN)
 C     9 = BUTTERNUT (BN)
-C    10 = TUPELO (TL)
+C    10 = TUPELO SPECIES(TL)
 C    11 = SWAMP TUPELO (TS)
 C    12 = WATER TUPELO (WT)
-C    13 = BLACKGUM (BG)
-C    14 = ---
+C    13 = BLACKGUM / BLACK TUPELO (BG)
+C    14 = SELECT HICKORY (HS)
 C    15 = SHAGBARK HICKORY (SH)
 C    16 = SHELLBARK HICKORY (SL)
 C    17 = MOCKERNUT HICKORY (MH)
 C    18 = PIGNUT HICKORY (PH)
-C    19 = HICKORY (HI)
+C    19 = HICKORY SPECIES (HI)
 C    20 = WATER HICKORY (WH)
 C    21 = BITTERNUT HICKORY (BH)
 C    22 = PECAN (PE)
@@ -236,16 +236,16 @@ C    31 = SILVER MAPLE (SV)
 C    32 = BLACK CHERRY (BC)
 C    33 = AMERICAN ELM (AE)
 C    34 = SUGARBERRY (SG)
-C    35 = COMMON HACKBERRY (HK)
+C    35 = HACKBERRY (HK)
 C    36 = WINGED ELM (WE)
-C    37 = ELM (EL)
+C    37 = ELM SPECIES (EL)
 C    38 = SIBERIAN ELM (SI)
 C    39 = SLIPPERY (RED) ELM (RL)
 C    40 = ROCK ELM (RE)
-C    41 = TULIPTREE (YP)
+C    41 = YELLOW-POPLAR (YP)
 C    42 = AMERICAN BASSWOOD (BW)
 C    43 = SUGAR MAPLE (SM)
-C    44 = ASH (AS)
+C    44 = ASH SPECIES(AS)
 C    45 = WHITE ASH (WA)
 C    46 = GREEN ASH (GA)
 C    47 = WHITE OAK (WO)
@@ -259,7 +259,7 @@ C    54 = SWAMP WHITE OAK (SW)
 C    55 = BUR OAK (BR)
 C    56 = SWAMP CHESTNUT OAK (SN)
 C    57 = POST OAK (PO)
-C    58 = BOTTOMLAND POST OAK (DO)
+C    58 = DELTA POST OAK (DO)
 C    59 = CHESTNUT OAK (CO)
 C    60 = PIN OAK (PN)
 C    61 = CHERRYBARK OAK (CB)
@@ -268,8 +268,8 @@ C    63 = OVERCUP OAK (OV)
 C    64 = WATER OAK (WK)
 C    65 = NUTTALL OAK (NK)
 C    66 = WILLOW OAK (WL)
-C    67 = SHUMARD'S OAK (QS)
-C    68 = ---
+C    67 = SHUMARD OAK (QS)
+C    68 = OTHER UPLAND HARDWOOD SPECIES (UH)
 C    69 = SASSAFRAS (SS)
 C    70 = OHIO BUCKEYE (OB)
 C    71 = CATALPA (CA)
@@ -279,24 +279,24 @@ C    74 = BALSAM POPLAR (BP)
 C    75 = BIGTOOTH ASPEN (BT)
 C    76 = QUAKING ASPEN (QA)
 C    77 = BLACK LOCUST (BK)
-C    78 = ---
+C    78 = OTHER LOWLAND SPECIES (OL)
 C    79 = SYCAMORE (SY)
-C    80 = BALD CYPRESS (BY)
+C    80 = BALDCYPRESS (BY)
 C    81 = RIVER BIRCH (RB)
 C    82 = SWEETGUM (SU)
-C    83 = WILLOW (WI)
+C    83 = WILLOW SPECIES(WI)
 C    84 = BLACK WILLOW (BL)
-C    85 = OTHER HARDWOOD (OH)
+C    85 = NON-COMMERCIAL HARDWOOD SPECIES (NC)
 C    86 = AMERICAN HORNBEAM (AH)
 C    87 = EASTERN REDBUD (RD)
 C    88 = FLOWERING DOGWOOD (DW)
-C    89 = HAWTHORN (HT)
+C    89 = HAWTHORN SPECIES(HT)
 C    90 = KENTUCKY COFFEETREE (KC)
 C    91 = OSAGE-ORANGE (OO)
-C    92 = CUCUMBER TREE (CT)
+C    92 = CUCUMBERTREE (CT)
 C    93 = SWEETBAY (MV)
-C    94 = MULBERRY  (MB)
-C    95 = HOPHORNBEAM (HH)
+C    94 = MULBERRY SPECIES (MB)
+C    95 = EASTERN HOPHORNBEAM (HH)
 C    96 = SOURWOOD (SD)
 C----------
 C  SIGMAR ARE THE ERROR TERMS FOR DIAMETER GROWTH.  THESE COEFFICIENTS
@@ -362,6 +362,22 @@ C
      & -5.2776,  -6.2684,  -4.0872,  -5.1719,  -5.7928,  -5.7928,
      & -5.1435,  -3.0833,  -2.5539,  -2.7758,  -5.1435,  -4.7206,
      & -3.0833,  -5.2030,  -4.1423,  -3.1993,  -3.0833,  -3.7450/
+C
+C
+      DATA BB0/96*0.0/
+      DATA BB1/96*0.0/
+      DATA BB2/96*0.0/
+      DATA BB3/96*0.0/
+      DATA BB4/96*0.0/
+      DATA BB5/96*0.0/
+      DATA BB6/96*0.0/
+      DATA BB7/96*0.0/
+      DATA BB8/96*0.0/
+      DATA BB9/96*0.0/
+      DATA BB10/96*0.0/
+      DATA BB11/96*0.0/
+      DATA BB12/96*0.0/
+      DATA BB13/96*0.0/
 C
       DATA REGNBK/2.999/
 C

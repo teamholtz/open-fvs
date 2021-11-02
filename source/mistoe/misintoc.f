@@ -1,6 +1,6 @@
       SUBROUTINE MISINT
 ***********************************************************************
-C MISTOE $Id: misintoc.f 3758 2021-08-25 22:42:32Z lancedavid $
+C MISTOE $Id: misint.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
 *----------------------------------------------------------------------
 *  Purpose:
 *     Mistletoe parameter initialization routine. This routine is
@@ -68,7 +68,7 @@ C.... Species character representations
      &    'KP','LP','CP','LM','JP','SP','WP','PP','MP','GP',
      &    'WJ','BR','GS','PY','OS','LO','CY','BL','EO','WO',
      &    'BO','VO','IO','BM','BU','RA','MA','GC','DG','FL',
-     &    'WN','TO','SY','AS','CW','WI','CN','CL','OH', 'RW'/
+     &    'WN','TO','SY','AS','CW','WI','CN','CL','OH'/
 
 C.... Species affected by mistletoe
 
@@ -77,7 +77,7 @@ C.... Species affected by mistletoe
      &    1,   1,   0,   1,   1,   1,   1,   1,   0,   0,
      &    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
      &    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-     &    0,   0,   0,   0,   0,   0,   0,   0,   0,   0/
+     &    0,   0,   0,   0,   0,   0,   0,   0,   0/
 
 C.... Diameter growth rates
 
@@ -131,7 +131,6 @@ C.... Diameter growth rates
 
       DATA ((ADGP(I,J),J=1,7),I=41,MAXSP)
      &  /1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
-     &   1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
      &   1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
      &   1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
      &   1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
@@ -216,7 +215,6 @@ C.... set here.
      &   1.0,1.0,1.0,1.0,1.0,1.0,1.0,
      &   1.0,1.0,1.0,1.0,1.0,1.0,1.0,
      &   1.0,1.0,1.0,1.0,1.0,1.0,1.0,
-     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0,
      &   1.0,1.0,1.0,1.0,1.0,1.0,1.0/
 
 C.... Mortality coefficients
@@ -269,9 +267,8 @@ C.... Mortality coefficients
      &   0.0,      0.0,      0.0,
      &   0.0,      0.0,      0.0/
 
-      DATA ((APMC(I,J),J=1,3),I=41,MAXSP)
+      DATA ((APMC(I,J),J=1,3),I=41,49)
      &  /0.0,      0.0,      0.0,
-     &   0.0,      0.0,      0.0,
      &   0.0,      0.0,      0.0,
      &   0.0,      0.0,      0.0,
      &   0.0,      0.0,      0.0,

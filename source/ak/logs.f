@@ -1,7 +1,7 @@
       SUBROUTINE LOGS(DBH,HT,IBCD,BDMIN,ISP,STMP,BV)
       IMPLICIT NONE
 C----------
-C AK $Id: logs.f 3617 2021-05-28 17:02:44Z lancedavid $
+C AK $Id: logs.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
 C----------
 C  REGION 5 BOARD FOOT VOLUME MODELS.
 C  TAPER EQUATIONS BY G.S.BIGING
@@ -15,41 +15,20 @@ C
 C
 C
 COMMONS
+C----------
+      INTEGER ISP,IBCD,IMAP(MAXSP),JSP,IDU,ITEM,J,N,NLOGS
+      REAL BV,STMP,BDMIN,HT,DBH,TPCF1(6),TPCF2(6),XPS(6),SF(4,2)
+      REAL TRIM,SLN,X,D,HI
+      REAL B1,B2,DIBAHI,BVL,DTOP,Z1,HTM,S1,AH,DU,FRAC
+      REAL TBV,QTLN
 C
-C----------
-C  VARIABLE DECLARATIONS:
-C----------
-
-      INTEGER IBCD,IDU,ISP,ITEM,J,JSP,N,NLOGS
-
-      INTEGER IMAP(MAXSP)
-
-      REAL AH,B1,B2,BDMIN,BV,BVL,D,DBH,DIBAHI,DTOP,DU,FRAC,HI,HT
-      REAL HTM,QTLN,S1,SLN,STMP,TBV,TRIM,X,Z1
-
-      REAL SF(4,2),TPCF1(6),TPCF2(6),XPS(6)
-
-C----------
-C  DATA STATEMENTS:
-C----------
       DATA TPCF1/
      & 1.01959, 1.06932, 1.07134, 1.02929, 1.09262, 1.07588/
-
       DATA TPCF2/
      & 0.33567, 0.41563, 0.47216, 0.33401, 0.36530, 0.35378/
-
       DATA XPS/
      & 0.95204, 0.92368, 0.89659, 0.95411, 0.94976, 0.95222/
-
-C     MAPPING OF SPECIES TO ABOVE COEFFICIENTS
-C     SPECIES ORDER:
-C                 1   2   3   4   5   6   7   8   9   10  11  12
-C                 SF  AF  YC  TA  WS  LS  BE  SS  LP  RC  WH  MH
-C
-C                 13  14  15  16  17  18  19  20  21  22  23
-C                 OS  AD  RA  PB  AB  BA  AS  CW  WI  SU  OH
-      DATA IMAP / 4,  6,  3,  1,  1,  1,  1,  1,  1,   2,  1,  5,
-     &            3,  1,  1,  1,  1,  1,  1,  1,  1,   1,  1 /
+      DATA IMAP  / 1, 2, 4, 5, 1, 3, 1, 1, 6, 1, 1, 1, 3/
 C----------
 C  DEFINE NOMINAL SCALING STANDARDS: SLN=STANDARD LOG LENGTH;
 C  TRIM=KERF.  
@@ -68,10 +47,9 @@ C  INITIALIZE VOLUME ESTIMATE.
 C----------
       BV=0.0
 C----------
-C   VOLUMES FOR SPECIES (AK OLD: 5 AND 7) ARE CALCULATED FROM FORMULA.
-C                       (AK NEW: 11 AND 9)
+C   VOLUMES FOR SPECIES 5 AND 7 ARE CALCULATED FROM FORMULA.
 C----------
-      IF (ISP .EQ. 11) THEN
+      IF (ISP .EQ. 5) THEN
 C----------
 C       GIANT SEQUOIA FROM WENSEL AND SCHOENHEIDE
 C----------
@@ -79,7 +57,7 @@ C----------
         BV=EXP(BVL)
         RETURN
       ENDIF
-      IF (ISP .EQ. 9) THEN
+      IF (ISP .EQ. 7) THEN
 C----------
 C       BLACK OAK EQ FROM PNW 414
 C       EQN IS IN CUBIC FEET, APPLY BF/CF RATIO   R.JOHNSON
@@ -119,7 +97,7 @@ C----------
       ITEM=1
    60 CONTINUE  
       DO 70 J=1,NLOGS
-        HI = REAL(J)*S1+AH
+        HI = FLOAT(J)*S1+AH
         DU = DIBAHI(HI,HT,TPCF1(JSP),TPCF2(JSP),DBH,XPS(JSP))
         FRAC=((S1-TRIM)/16.0)
         IF(DU.LE.9.0) THEN
@@ -144,7 +122,7 @@ C----------
       QTLN= HTM-AH
       NLOGS=2
       IF(QTLN.LT.(1.5*SLN))NLOGS=1
-      S1=QTLN/REAL(NLOGS)
+      S1=QTLN/FLOAT(NLOGS)
       GO TO 60
   100 CONTINUE
       RETURN

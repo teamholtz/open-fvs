@@ -1,8 +1,8 @@
       SUBROUTINE BRGI(IIAG,HHT,GIBR,TBSUM)
       IMPLICIT NONE
-C----------
-C WPBR $Id: brgi.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **BRGI         DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C  BRGI calculates the growth index and sum target for individual white
 C  pine trees (currently used for all species).

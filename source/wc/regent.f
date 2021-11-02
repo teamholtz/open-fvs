@@ -1,7 +1,7 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
       IMPLICIT NONE
 C----------
-C WC $Id: regent.f 3758 2021-08-25 22:42:32Z lancedavid $
+C WC $Id: regent.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C  THIS SUBROUTINE COMPUTES HEIGHT AND DIAMETER INCREMENTS FOR
 C  SMALL TREES.  THE **SMHTGF ROUTINE IS CALLED TO CALCULATE
@@ -77,18 +77,18 @@ C----------
       REAL CORTEM(MAXSP)
       INTEGER NUMCAL(MAXSP)
       REAL XMAX(MAXSP),XMIN(MAXSP)
-      REAL DGMAX(MAXSP),DIAM(MAXSP),DGMIN(MAXSP)
+      REAL DGMAX(MAXSP),DIAM(MAXSP)
       INTEGER IRDMAP(MAXSP)
       REAL AB(6)
       INTEGER IREFI,ISPEC,KOUT,KK
-      REAL H,BARK,HTGR,ZZRAN,XWT
-      REAL CON,XMX,XMN,DGMX,D,CR,RAN,BACHLO,BRATIO,HK,DK,DKK
+      REAL H,BARK,HTGR,ZZRAN,X1,XPPMLT,XWT
+      REAL CON,XMX,XMN,DGMX,D,CR,RAN,BACHLO,BRATIO,HK,DK
       REAL DDS,HTNEW,SCALE3,CORNEW,SNP,SNX,SNY,EDH,P,TERM
       REAL REGYR,FNT,SCALE,SCALE2,CCF,AVHT,XRHGRO,XRDGRO
       INTEGER ITRNIN,ISPC,I1,I2,I3,I,IPCCF,K,L,N,MODE
       REAL DDUM
       CHARACTER SPEC*2
-      REAL AX,BX,DGSM,DGR,DGR5,HG5,LTHG,XDWT
+      REAL DGR,DGR5,HG5
 C----------
 C IRDMAP IS A POINTER TO THE DIAMETER EQUATION COEF FOR EACH SPEC
 C----------
@@ -110,12 +110,11 @@ C         CO   WO  J   LL  WB   KP  PY   DG   HW  BC  WI  DUM  DUM
       DATA AB/ 1.11436, -0.011493, 0.43015E-4,
      &        -0.72221E-7, 0.5607E-10, -0.1641E-13 /
       DATA DGMAX/ 39*5.0 /
-      DATA XMAX/ 10*4.0,3.0,5*4.0,10.0,22*4.0 /
+      DATA XMAX/ 10*4.0,3.0,28*4.0 /
       DATA XMIN/ 10*2.0,1.0,28*2.0 /
       DATA REGYR/10.0 /
       DATA DIAM/ 7*0.3, 2*0.2, 0.3, 4*0.4, 0.5, 0.3, 13*0.2,
      &           0.3, 2*0.4, 7*0.2 /
-      DATA DGMIN/ 16*3.0, 7.0, 22*3.0 /
 C-----------
 C  CHECK FOR DEBUG.
 C-----------
@@ -239,32 +238,33 @@ C-----------
       DGR=DGR5
       HK=H+HTGR
       DK=D+DGR
-
-      IF(DEBUG) WRITE(JOSTND,*)'1ST-K = ',K,',    ISPC = ',ISPC,
-     &  ',    HK = ',HK, ',    DK = ',DK, ',    HTGR = ',HTGR, 
-     &  ',    DGR = ',DGR, ',    FINT = ',FINT
-
+      IF(DEBUG) WRITE(JOSTND,*)'1ST-K,ISPC,HK,DK,HTGR,DGR,FINT= ',
+     &K,ISPC,HK,DK,HTGR,DGR,FINT
       CALL SMHGDG(I,ISPC,HK,DK,HG5,DGR5,ICYC,JOSTND,DEBUG,MODE)
       HTGR=HTGR+HG5
       DGR=DGR+DGR5
       HK=H+HTGR
       DK=D+DGR
-
-      IF(DEBUG) WRITE(JOSTND,*)' 2ND-K = ',K,',    ISPC = ',ISPC,
-     &  ',    HK = ',HK, ',    DK = ',DK,',    HTGR = ',HTGR,
-     &  ',    DGR = ',DGR
-
+      IF(DEBUG) WRITE(JOSTND,*)' 2ND-K,ISPC,HTGR,DGR,DK,HK= ',
+     &K,ISPC,HTGR,DGR,DK,HK 
     3 CONTINUE
       ZZRAN = 0.0
       IF(DGSD.GE.1.0) ZZRAN=BACHLO(0.0,1.0,RANN)
       IF((ZZRAN .GT. 0.5) .OR. (ZZRAN .LT. -2.0)) GO TO 3
 C
-      IF(DEBUG)WRITE(JOSTND,*)' ZZRAN = ',ZZRAN,',    XRHGRO = ',
-     &  XRHGRO,',    SCALE = ',SCALE,',    FNT = ',FNT,
-     &',    CON = ',CON,',    WK4(I)= ',WK4(I)
+      IF(DEBUG)WRITE(JOSTND,*)' ZZRAN,XRHGRO,SCALE,FNT,CON,WK4(I)= ',
+     &ZZRAN,XRHGRO,SCALE,FNT,CON,WK4(I)
 C
       HTGR =(HTGR+ZZRAN*0.1)*XRHGRO*SCALE*CON*WK4(I)
       IF(HTGR .LT. 0.1) HTGR = 0.1
+C----------
+C     GET A MULTIPLIER FOR THIS TREE FROM PPREGT TO ACCOUNT FOR
+C     THE DENSITY EFFECTS OF NEIGHBORING TREES.
+C----------
+      X1=0.
+      XPPMLT=0.
+      CALL PPREGT (XPPMLT,X1,X1,X1,X1)
+      HTGR = HTGR + XPPMLT
 C-------------
 C     COMPUTE WEIGHTS FOR THE LARGE AND SMALL TREE HEIGHT INCREMENT
 C     ESTIMATES.  IF DBH IS LESS THAN OR EQUAL TO XMN, THE LARGE TREE
@@ -275,23 +275,11 @@ C----------
 C----------
 C     COMPUTE WEIGHTED HEIGHT INCREMENT FOR NEXT TRIPLE.
 C----------
-      IF(ISPC .EQ. 17) THEN
-        LTHG = HTG(K) ! LTHG USED TO TRACK VALUE PRE MODIFICATION
-        IF(.NOT. LESTB) HTGR=(HTGR+HTG(K))/2.0
-
-        HTG(K)=HTGR*(1.0-XWT) + XWT*HTG(K)
-
-        IF(DEBUG)WRITE(JOSTND,*)'IN REGENT - RW DEBUG: ',
-     &    ' LESTB=', LESTB,' D=',D,' XWT=',XWT,' HTGR=',HTGR,
-     &    ' LTHG=',LTHG,' HTG FINAL=', HTG(K)
-      END IF
-
       HTG(K)=HTGR*(1.0-XWT) + XWT*HTG(K)
-
       IF(HTG(K) .LT. .1) HTG(K) = .1
 C
-      IF(DEBUG)WRITE(JOSTND,*)' XWT = ',XWT,',    HTGR = ',HTGR,
-     &  ',    HTG(K) = ',HTG(K),',    I = ',I,',    K = ',K
+      IF(DEBUG)WRITE(JOSTND,*)' XWT,HTGR,HTG(K),I,K,XPPMLT= ',
+     &XWT,HTGR,HTG(K),I,K,XPPMLT
 C----------
 C CHECK FOR SIZE CAP COMPLIANCE.
 C----------
@@ -306,12 +294,9 @@ C     ASSIGN DBH AND COMPUTE DBH INCREMENT FOR TREES WITH DBH LESS
 C     THAN 3 INCHES (COMPUTE 10-YEAR DBH INCREMENT REGARDLESS OF
 C     PROJECTION PERIOD LENGTH).
 C----------
-      IF(D.GE.DGMIN(ISPC)) GO TO 23
+      IF(D.GE.3.0) GO TO 23
       HK=H + HTG(K)
-
-      IF(DEBUG)WRITE(JOSTND,*)' K = ',K,',    HK = ',HK,
-     &  ',    H = ',H,',    HTG(K)= ',HTG(K)
-
+      IF(DEBUG)WRITE(JOSTND,*)' K,HK,H,HTG(K)= ',K,HK,H,HTG(K)
       IF(HK .LT. 4.5) THEN
         DG(K)=0.0
         DBH(K)=D+0.001*HK
@@ -320,105 +305,27 @@ C----------
 C       SCALE DG TO AN FNT BASIS SINCE DDS IS SCALED TO A 10 YEAR
 C       BASIS BELOW
 C----------
-        IF(ISPC.EQ.17) THEN
-C       WYKOFF EQUATION
-          BX=HT2(ISPC)
-
-          IF(IABFLG(ISPC).EQ.1) THEN
-            AX=HT1(ISPC)
-          ELSE
-            AX=AA(ISPC)
-          END IF
-
-          DK=(BX/(ALOG(HK-4.5)-AX))-1.0
-
-          IF(H .LE. 4.5) THEN
-            DKK=D
-          ELSE
-            DKK=(BX/(ALOG(H-4.5)-AX))-1.0
-          END IF
-
-          IF(DEBUG) THEN
-            WRITE(JOSTND,*)'WKY EQN DUBBING: ISPC = ', ISPC,
-     &       ',    H = ',H,',    HK = ', HK,',    DK = ', DK,
-     &       ',    DKK= ',DKK
-            WRITE(JOSTND,*)'ISPC = ', ISPC, ',    LHTDRG = ',
-     &      LHTDRG(ISPC),',    IABFLG= ',IABFLG(ISPC)
-          END IF
-
-C       CURTIS ARNEY EQUATION
-          IF(.NOT.LHTDRG(ISPC) .OR. 
-     &     (LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.1))THEN
-            CALL HTDBH (IFOR,ISPC,DK,HK,1)
-
-            IF(H .LE. 4.5) THEN
-              DKK=D
-            ELSE
-              CALL HTDBH (IFOR,ISPC,DKK,H,1)
-            END IF
-
-           IF(DEBUG) THEN
-             WRITE(JOSTND,*)'INVCA EQN DUBBING: IFOR = ',IFOR,
-     &         ',    ISPC = ',ISPC, ',    H = ',H, ',    HK = ',HK,
-     &         ',    DK = ',DK, ',    DKK = ',DKK
-
-             WRITE(JOSTND,*)'ISPC = ', ISPC, ',    LHTDRG = ',
-     &         LHTDRG(ISPC),',    IABFLG= ',IABFLG(ISPC)
-           END IF
-         END IF
-          
-        ELSE
-          DG(K)=DGR*SCALE*WK4(I)
-        END IF
+        DG(K)=DGR*SCALE*WK4(I)
 C----------
 C       IF CALLED FROM **ESTAB** ASSIGN DIAMETER
-C       REDWOOD IS HANDLED IN A DIFFERENT WAY THAN
-C       OTHER SPECIES IN WC.
 C----------
         IF(LESTB) THEN
-          IF(ISPC .EQ. 17) THEN
-            DBH(K)=DK
-            IF(DBH(K).LT.DIAM(ISPC)) DBH(K)=DIAM(ISPC)
-            DBH(K)=DBH(K)+0.001*HK
-            DG(K)=DBH(K)
-          ELSE
-            DBH(K)=DG(K)
-            IF(DBH(K).LT.DIAM(ISPC) .OR. HK.LT.4.5) DBH(K)=DIAM(ISPC)
-          ENDIF
+          DBH(K)=DG(K)
+          IF(DBH(K).LT.DIAM(ISPC) .OR. HK.LT.4.5) DBH(K)=DIAM(ISPC)
         ELSE
 C----------
 C         APPLY USER SUPPLIED MULTIPLIERS, AND CHECK TO SEE IF
 C         COMPUTED VALUE IS WITHIN BOUNDS.
 C----------
           BARK=BRATIO(ISPC,D,H)
-
-          IF(DEBUG)WRITE(JOSTND,*)' BARK = ',BARK,
-     &      ',    XRDGRO = ',XRDGRO
-
+          IF(DEBUG)WRITE(JOSTND,*)' BARK,XRDGRO= ',BARK,XRDGRO
           IF((D.LT.0.).OR.(DG(K).LT.0.))THEN
             DG(K)=HTG(K)*0.2*BARK*XRDGRO
             DBH(K)=D+DG(K)
           ELSE
-            IF(ISPC.EQ.17) THEN
-              XDWT=(D-XMN)/(7.0-XMN)
-              IF(D.LE.XMN) XDWT=0.0
-              DGSM=(DK-DKK)*BARK*XRDGRO
-              IF(DGSM .LT. 0.0) DGSM=0.0
-              DDS=DGSM*(2.0*BARK*D+DGSM)*SCALE2
-              DGSM=SQRT((D*BARK)**2.0+DDS)-BARK*D
-              IF(DEBUG)WRITE(JOSTND,*)'IN REGENT - RW/GS DEBUG',
-     &          ' D=',D,' XDWT=',XDWT,' DKK=', DKK,' DK=',DK,
-     &          ' BARK=', BARK,' DGSM=',DGSM,' LTDG=', DG(K)
-              DG(K)=DGSM*(1.0-XDWT)+DG(K)*XDWT 
-              IF(DEBUG)WRITE(JOSTND,*)'IN REGENT - RW/GS DEBUG',
-     &          ' DGSM FINAL=', DG(K)
-              GO TO 200
-            END IF
             DG(K)=DG(K)*BARK*XRDGRO
-          END IF
-
-          IF(DEBUG)WRITE(JOSTND,*)' K = ',K,',    DBH(K) = ',DBH(K),
-     &      ',    DG(K) = ',DG(K)
+          ENDIF
+          IF(DEBUG)WRITE(JOSTND,*)' K,DBH(K),DG(K)= ',K,DBH(K),DG(K)
 C
           IF(DG(K) .LT. 0.0) DG(K)=0.1
           IF(DG(K) .GT. DGMX) DG(K)=DGMX
@@ -429,27 +336,20 @@ C         OF DG TO BE CONSISTENT WITH GRADD.
 C----------
           DDS=DG(K)*(2.0*BARK*D+DG(K))*SCALE2
           DG(K)=SQRT((D*BARK)**2.0+DDS)-BARK*D
-        END IF
-  200   CONTINUE
+        ENDIF
         IF((DBH(K)+DG(K)).LT.DIAM(ISPC))THEN
           DG(K)=DIAM(ISPC)-DBH(K)
-        END IF
-      END IF
-
-        IF(DEBUG)THEN
-          WRITE(JOSTND,*)' SCALE2 = ',SCALE2,',    SCALE = ',SCALE,
-     &      ',    YR = ',YR,',    FNT = ',FNT,',    FINT = ',FINT
-
-          HTNEW=HT(K)+HTG(K)
-
-          WRITE(JOSTND,9987) K,ISPC,HT(K),HTG(K),HTNEW,DBH(K),DG(K)
- 9987     FORMAT(' IN REGENT, K=',I4,',  ISPC=',I3,'  CUR HT=',F7.2,
+        ENDIF
+      ENDIF
+      IF(DEBUG)THEN
+        WRITE(JOSTND,*)' SCALE2,SCALE,YR,FNT,FINT= ',
+     &  SCALE2,SCALE,YR,FNT,FINT
+        HTNEW=HT(K)+HTG(K)
+        WRITE(JOSTND,9987) K,ISPC,HT(K),HTG(K),HTNEW,DBH(K),DG(K)
+ 9987   FORMAT(' IN REGENT, K=',I4,',  ISPC=',I3,'  CUR HT=',F7.2,
      &       ',  HT INC=',F7.4,',  NEW HT=',F7.2,',  CUR DBH=',F10.5,
      &       ',  DBH INC=',F7.4)
-        END IF
-        
-        
-
+      ENDIF
 C----------
 C  CHECK FOR TREE SIZE CAP COMPLIANCE
 C----------
@@ -524,27 +424,19 @@ C----------
       DGR=DGR5
       HK=H+HTGR
       DK=D+DGR
-
-      IF(DEBUG) WRITE(JOSTND,*)'1ST-K = ',K,',    ISPC = ',ISPC,
-     &  ',    HK = ',HK,',    DK = ',DK,',    HTGR = ',HTGR,
-     &  ',    DGR = ',DGR,',    FINT = ',FINT
-
+      IF(DEBUG) WRITE(JOSTND,*)'1ST-K,ISPC,HK,DK,HTGR,DGR,FINT= ',
+     &K,ISPC,HK,DK,HTGR,DGR,FINT
       CALL SMHGDG(I,ISPC,HK,DK,HG5,DGR5,ICYC,JOSTND,DEBUG,MODE)
       HTGR=HTGR+HG5
       DGR=DGR+DGR5
       HK=H+HTGR
       DK=D+DGR
-
-      IF(DEBUG) WRITE(JOSTND,*)'2ND-K = ',K,',    ISPC = ',ISPC,
-     &  ',    HK = ',HK,',    DK = ',DK,',    HTGR = ',HTGR,
-     &  ',    DGR = ',DGR,',    SCALE3 = ',SCALE3
-
+      IF(DEBUG) WRITE(JOSTND,*)' 2ND-K,ISPC,HTGR,DGR,DK,HK,SCALE3= ',
+     &K,ISPC,HTGR,DGR,DK,HK,SCALE3
       EDH=HTGR*RHCON(ISPC)
       IF(EDH .LT. 0.1) EDH=0.1
-
       IF(DEBUG)WRITE(JOSTND,9990) EDH
  9990 FORMAT(' IN REGENT-EDH = ',2F10.4)
-
       P=PROB(I)
       IF(HTG(I).LT.0.001) GO TO 60
       TERM=HTG(I) * SCALE3
@@ -616,10 +508,6 @@ C----------
  9994 FORMAT(/'INITIAL SCALE FACTORS FOR THE SMALL TREE'/
      >      'HEIGHT INCREMENT MODEL',
      >       ((T48,11(F5.2,1X)/)))
-C----------
-C OUTPUT CALIBRATION TO DATABASE.
-C----------
-      CALL DBSCALIB(2,CORTEM,NUMCAL,CORTEM) ! LAST ARG IGNORED
 C----------
 C OUTPUT CALIBRATION TERMS IF CALBSTAT KEYWORD WAS PRESENT.
 C----------

@@ -1,7 +1,7 @@
       SUBROUTINE RDEND
       IMPLICIT NONE
 C----------
-C RD $Id: rdend.f 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDEND       LAST REVISION:  08/28/14 
 C----------
 C
 C  Purpose :

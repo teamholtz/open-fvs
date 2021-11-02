@@ -1,6 +1,6 @@
       SUBROUTINE ECINIT
 C----------
-C ECON $Id: ecinit.f 2447 2018-07-10 16:31:11Z gedixon $
+C **ECINIT--ECON  DATE OF LAST REVISION: 09/02/2010
 C----------
 C Author Fred Martin, WA DNR,
 ! Initializes defaults for ECON extension variables at beginning of each simulation.

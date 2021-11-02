@@ -1,7 +1,7 @@
       SUBROUTINE STATS
       IMPLICIT NONE
 C----------
-C BASE $Id: stats.f 2879 2019-12-07 00:03:48Z lancedavid $
+C BASE $Id: stats.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C  THIS ROUTINE COMPUTES STATISTICS THAT DESCRIBE THE INPUT
 C  DISTRIBUTION OF STAND ATTRIBUTES AMONG SAMPLE PLOTS.  CALLED FROM
@@ -28,15 +28,12 @@ C
 C
 COMMONS
       CHARACTER*16 LABELS(4)
-      CHARACTER*4 SP(MAXSP),SPECCD(MAXSP)
-      REAL TOTCF(MAXSP),SIGLEVEL,
+      REAL TOTCF(MAXSP),
      &   TOTTR(MAXSP),TOTBA(MAXSP),TOTBF(MAXSP),
-     &   SUMT(MAXPLT),SUMBA(MAXPLT),SUMCF(MAXPLT),SUMBF(MAXPLT),
-     &   ITPA(MAXSP),IBA(MAXSP),IBF(MAXSP),ICF(MAXSP),TPA(MAXSP),
-     &   BAREA(MAXSP),BFVOL(MAXSP),CFVOL(MAXSP)
-      INTEGER IFLG(MAXSP),I,ISPC,J,IALP,IERR,NDF,ROWS,CNT,IYEAR,K
+     &   SUMT(MAXPLT),SUMBA(MAXPLT),SUMCF(MAXPLT),SUMBF(MAXPLT)
+      INTEGER IFLG(MAXSP),I,ISPC,J,IALP,IERR,NDF
       REAL P,TBA,TBF,TCF,T,SUM,SUMSQ,ST,XBAR,S,SS,SE,UL,UU,CV
-      REAL SEU,SEP,SCF,SBF,SBA,IDIST(8,4)
+      REAL SEU,SEP,SCF,SBF,SBA
       EQUIVALENCE (WK3,SUMT),(WK3(MAXPLT+1),SUMBA),
      &            (WK4,SUMCF),(WK4(MAXPLT+1),SUMBF),
      &            (WK5,TOTTR),(WK5(MAXSP+1),TOTBA),
@@ -55,19 +52,11 @@ C----------
 C  INITIALIZE.
 C----------
       DO 1 I=1,MAXSP
-      TOTTR(I)= 0.0
-      TOTBA(I)= 0.0
-      TOTBF(I)= 0.0
-      TOTCF(I)= 0.0
-      IFLG(I) = 0
-      ITPA(I) = 0.0
-      IBA(I)  = 0.0
-      IBF(I)  = 0.0
-      ICF(I)  = 0.0
-      TPA(I)  = 0.0
-      BAREA(I)= 0.0
-      BFVOL(I)= 0.0
-      CFVOL(I)= 0.0
+      TOTTR(I)=0.0
+      TOTBA(I)=0.0
+      TOTBF(I)=0.0
+      TOTCF(I)=0.0
+      IFLG(I)=0
     1 CONTINUE
       DO 2 I=1,MAXPLT
       SUMT(I)=0.0
@@ -75,15 +64,6 @@ C----------
       SUMBF(I)=0.0
       SUMCF(I)=0.0
     2 CONTINUE
-      DO I=1,8
-        DO J=1,4
-          IDIST(I,J) = 0.0
-        ENDDO
-      ENDDO
-      SIGLEVEL=0.0
-      ROWS  = 0
-      CNT   = 0
-      IYEAR = 0
 C----------
 C  ACCUMULATE SUMS FOR OVERALL STATISTICS.
 C----------
@@ -122,15 +102,8 @@ C----------
       WRITE(JOSTND,9002)
  9002 FORMAT(/2X,'SPECIES',T18,'BOARD FEET',T31,'CUBIC FEET',
      &  T52,'TREES',T61,'BASAL AREA',/,73('-'))
-      ROWS=0
       DO 40 I=1,MAXSP
       IF(IFLG(I).EQ.0) GO TO 40
-      ROWS=ROWS+1
-      SP(ROWS)=JSP(I)
-      ITPA(ROWS)=TOTTR(I)
-      IBA(ROWS)=TOTBA(I)
-      IBF(ROWS)=TOTBF(I)
-      ICF(ROWS)=TOTCF(I)
       WRITE(JOSTND,9003) JSP(I),NSP(I,1)(1:2),TOTBF(I),TOTCF(I),
      &  TOTTR(I),TOTBA(I)
  9003 FORMAT(1X,A4,'=',A4,T18,F10.1,T31,F10.1,T47,F10.1,T61,F10.1)
@@ -191,15 +164,7 @@ C----------
       SEU=T*SE
       SEP=SEU*100./XBAR
       WRITE(JOSTND,9007)  LABELS(3),XBAR,S,CV,IPTINV,
-     &                   UL,UU,SEP,SEU     
-       IDIST(1,1)=XBAR
-       IDIST(2,1)=S
-       IDIST(3,1)=CV
-       IDIST(4,1)=IPTINV
-       IDIST(5,1)=UL
-       IDIST(6,1)=UU
-       IDIST(7,1)=SEP
-       IDIST(8,1)=SEU
+     &                   UL,UU,SEP,SEU
    70 CONTINUE
 C----------
 C  COMPUTE AND PRINT STATISTICS FOR CUBIC FOOT VOLUME.
@@ -230,14 +195,6 @@ C----------
       SEP=SEU*100./XBAR
       WRITE(JOSTND,9007)  LABELS(2),XBAR,S,CV,IPTINV,
      &                   UL,UU,SEP,SEU
-       IDIST(1,2)=XBAR
-       IDIST(2,2)=S
-       IDIST(3,2)=CV
-       IDIST(4,2)=IPTINV
-       IDIST(5,2)=UL
-       IDIST(6,2)=UU
-       IDIST(7,2)=SEP
-       IDIST(8,2)=SEU
    90 CONTINUE
 C----------
 C  COMPUTE AND PRINT STATISTICS FOR BOARD FOOT VOLUME.
@@ -268,14 +225,6 @@ C----------
       SEP=SEU*100./XBAR
       WRITE(JOSTND,9007) LABELS(1),XBAR,S,CV,IPTINV,
      &                   UL,UU,SEP,SEU
-       IDIST(1,3)=XBAR
-       IDIST(2,3)=S
-       IDIST(3,3)=CV
-       IDIST(4,3)=IPTINV
-       IDIST(5,3)=UL
-       IDIST(6,3)=UU
-       IDIST(7,3)=SEP
-       IDIST(8,3)=SEU
   110 CONTINUE
 C----------
 C  COMPUTE AND PRINT STATISTICS FOR BASAL AREA PER ACRE.
@@ -306,52 +255,5 @@ C----------
       SEP=SEU*100./XBAR
       WRITE(JOSTND,9007) LABELS(4),XBAR,S,CV,IPTINV,
      &                   UL,UU,SEP,SEU
-       IDIST(1,4)=XBAR
-       IDIST(2,4)=S
-       IDIST(3,4)=CV
-       IDIST(4,4)=IPTINV
-       IDIST(5,4)=UL
-       IDIST(6,4)=UU
-       IDIST(7,4)=SEP
-       IDIST(8,4)=SEU
-C----------
-C  POPULATE ARRAYS WITH NON-ZERO VALUES
-C----------
-      CNT=0
-      DO I=1,MAXSP
-         CNT=CNT+1
-         SPECCD(CNT)=SP(I)
-         TPA(CNT)=ITPA(I) 
-         BAREA(CNT)=IBA(I) 
-         BFVOL(CNT)=IBF(I) 
-         CFVOL(CNT)=ICF(I) 
-      ENDDO   
-      
-      IYEAR=IY(1)
-      SIGLEVEL=(1-ALPHA)*100 
-C
-C      CALL DBSSTATS FOR POPULATING THE DATABASE WITH
-C      THE CRUISE STATISTICS INFORMATION
-C     
-      
-      DO I=1,ROWS
-      CALL DBSSTATS(SP(I),TPA(I),BAREA(I),CFVOL(I),
-     &   BFVOL(I),IDIST(1,I),IDIST(2,I),IDIST(3,I),
-     &   IDIST(4,I),SIGLEVEL,IDIST(5,I),IDIST(6,I),IDIST(7,I),
-     &   IDIST(8,I),LABELS(I),1,IYEAR)
-      ENDDO
-      K=3
-      DO I=1,3
-      CALL DBSSTATS(SP(I),TPA(I),BAREA(I),CFVOL(I),
-     &   BFVOL(I),IDIST(1,I),IDIST(2,I),IDIST(3,I),
-     &   IDIST(4,I),SIGLEVEL,IDIST(5,I),IDIST(6,I),IDIST(7,I),
-     &   IDIST(8,I),LABELS(K),2,IYEAR)
-      K=K-1
-      ENDDO
-      CALL DBSSTATS(SP(I),TPA(I),BAREA(I),CFVOL(I),
-     &   BFVOL(I),IDIST(1,I),IDIST(2,I),IDIST(3,I),
-     &   IDIST(4,I),SIGLEVEL,IDIST(5,I),IDIST(6,I),IDIST(7,I),
-     &   IDIST(8,I),LABELS(4),2,IYEAR)
-C 
       RETURN
       END

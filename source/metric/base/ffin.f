@@ -1,7 +1,7 @@
       SUBROUTINE FFIN (JOSTND,IRECNT,KEYWRD,ARRAY,LNOTBK,KARD,LKECHO)
       IMPLICIT NONE
 C----------
-C METRIC-BASE $Id: ffin.f 2464 2018-07-27 15:36:37Z gedixon $
+C  $Id: ffin.f 2361 2018-05-18 17:40:40Z lancedavid $
 C----------
 C
       INCLUDE  'METRIC.F77'

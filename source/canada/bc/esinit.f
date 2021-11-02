@@ -1,7 +1,7 @@
       SUBROUTINE ESINIT
       IMPLICIT NONE
 C----------
-C CANADA-BC $Id: esinit.f 2561 2018-11-17 00:28:06Z lancedavid $
+C  $Id: esinit.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
 C----------
 C     CALLED FROM INITRE, ONLY ONCE, TO INITIALIZE REGEN. MODEL.
 C
@@ -19,6 +19,7 @@ COMMONS
       CHARACTER*40 CNAME
       EQUIVALENCE (NSTK,SUMPRB)
       LOGICAL LTEMP,LKECHO
+      CALL PPEATV (LTEMP)
       DO 10 I=1,MAXSP
       HTADJ(I)=0.0
       XESMLT(I)=1.0
@@ -32,6 +33,7 @@ COMMONS
       LAUTAL=.FALSE.
       LSPRUT=.TRUE.
       IPRINT=1
+      IF(LTEMP) IPRINT=0
       INADV=0
       LOAD=0
       IBLK=0

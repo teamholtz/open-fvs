@@ -1,7 +1,7 @@
       SUBROUTINE BWECUP
       IMPLICIT NONE
 C----------
-C WSBWE $Id: bwecup.f 2460 2018-07-24 14:41:48Z gedixon $
+C  $Id: bwecup.f 1842 2016-06-30 22:20:31Z ldavid $
 C  **BWECUP             DATE OF LAST REVISION:  03/23/17
 C----------
 C

@@ -1,6 +1,6 @@
 CODE SEGMENT BWEBOX
 C----------
-C WSBWE $Id: BWEBOX.F77 2460 2018-07-24 14:41:48Z gedixon $
+C  **BWEBOX        DATE OF LAST REVISION:  08/28/13                           
 C----------
 C
 C Revision History:

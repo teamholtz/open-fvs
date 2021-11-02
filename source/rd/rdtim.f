@@ -1,7 +1,7 @@
       SUBROUTINE RDTIM
       IMPLICIT NONE
 C----------
-C RD $Id: rdtim.f 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDTIM       LAST REVISION:  09/04/14
 C----------
 C
 C  SUBROUTINE FOR SUMMING UP OPROB FOR TIM

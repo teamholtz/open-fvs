@@ -2,7 +2,7 @@
      -  SDH,SDS,YRLAST,KODE)
       IMPLICIT NONE
 C
-C DBSQLITE $Id: dbsfmdsnag.f 3793 2021-09-13 23:58:52Z donrobinson $
+C $Id: dbsfmdsnag.f 2377 2018-06-01 09:28:24Z nickcrookston $
 C
 C     PURPOSE: TO POPULATE A DATABASE WITH THE DETAILED SNAG REPORT
 C              INFORMATION
@@ -30,62 +30,18 @@ C
 C
       INCLUDE 'PLOT.F77'
 C
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_ADDCOLIFABSENT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_BIND_DOUBLE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_BIND_INT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_BIND_TEXT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_CLOSE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLCNT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLDOUBLE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLINT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLISNULL
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLNAME
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLREAL
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLTEXT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLTYPE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_ERRMSG
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_EXEC
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_FINALIZE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_OPEN
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_PREPARE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_RESET
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_STEP
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_TABLEEXISTS
-#if !(_WIN64)
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_ADDCOLIFABSENT' :: FSQL3_ADDCOLIFABSENT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_BIND_DOUBLE'    :: FSQL3_BIND_DOUBLE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_BIND_INT'       :: FSQL3_BIND_INT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_BIND_TEXT'      :: FSQL3_BIND_TEXT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_CLOSE'          :: FSQL3_CLOSE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLCNT'         :: FSQL3_COLCNT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLDOUBLE'      :: FSQL3_COLDOUBLE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLINT'         :: FSQL3_COLINT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLISNULL'      :: FSQL3_COLISNULL
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLNAME'        :: FSQL3_COLNAME
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLREAL'        :: FSQL3_COLREAL
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLTEXT'        :: FSQL3_COLTEXT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLTYPE'        :: FSQL3_COLTYPE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_ERRMSG'         :: FSQL3_ERRMSG
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_EXEC'           :: FSQL3_EXEC
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_FINALIZE'       :: FSQL3_FINALIZE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_OPEN'           :: FSQL3_OPEN
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_PREPARE'        :: FSQL3_PREPARE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_RESET'          :: FSQL3_RESET
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_STEP'           :: FSQL3_STEP
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_TABLEEXISTS'    :: FSQL3_TABLEEXISTS
-#endif
-
 COMMONS
 
-      INTEGER IYEAR,iRet,KODE,YRDEAD,YRLAST,JYR,IDC,JCL
+      INTEGER IYEAR,iRet,KODE,YRDEAD,SVLH,SVLS,YRLAST,JYR,IDC,JCL
       INTEGER ColNumber
-      REAL SDBH, SHTH, SHTS, SDH, SDS, SVLH, SVLS 
-      REAL*8 SDBHB, SHTHB, SHTSB, SDHB, SDSB, SDTB, SVLHB, SVLSB, SVLTB
+      REAL SDBH, SHTH, SHTS, SDH, SDS, SVLHB, SVLSB
+      DOUBLE PRECISION SDBHB, SHTHB, SHTSB, SDHB, SDSB, SDTB, SVLTB
       DIMENSION SVLH(MAXSP,100,6), SVLS(MAXSP,100,6),
      -  SDBH(MAXSP,100,6), SHTH(MAXSP,100,6),SHTS(MAXSP,100,6),
      -  SDH(MAXSP,100,6), SDS(MAXSP,100,6)
       CHARACTER*2000 SQLStmtStr
-      CHARACTER(LEN=8) CSP1,CSP2,CSP3
+      CHARACTER(len=4) CSP
+      CHARACTER(LEN=8) CSPECIES
 
       integer fsql3_tableexists,fsql3_exec,fsql3_bind_int,
      >        fsql3_prepare,fsql3_bind_double,fsql3_finalize,
@@ -105,9 +61,7 @@ COMMONS
      -          'CaseID text not null,'//
      -          'StandID text not null,'//
      -          'Year Int null,'//
-     -          'SpeciesFVS    text null,'//
-     -          'SpeciesPLANTS text null,'//
-     -          'SpeciesFIA    text null,'//
+     -          'Species char null,'//
      -          'DBH_Class int null,'//
      -          'Death_DBH real null,'//
      -          'Current_Ht_Hard real null,'//
@@ -128,13 +82,12 @@ COMMONS
       ENDIF
 
       WRITE(SQLStmtStr,*)'INSERT INTO FVS_SnagDet ',
-     -  '(CaseID,StandID,Year,SpeciesFVS,SpeciesPLANTS,SpeciesFIA,',
-     -  'DBH_Class,Death_DBH,',
-     -  'Current_Ht_Hard,Current_Ht_Soft,Current_Vol_Hard,',
-     -  'Current_Vol_Soft,Total_Volume,Year_Died,Density_Hard,',
-     -  'Density_Soft,Density_Total) VALUES (''',
-     -  CASEID,''',''',TRIM(NPLT),
-     -  ''',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'//CHAR(0)
+     -          '(CaseID,StandID,Year,Species,DBH_Class,Death_DBH,',
+     -          'Current_Ht_Hard,Current_Ht_Soft,Current_Vol_Hard,',
+     -          'Current_Vol_Soft,Total_Volume,Year_Died,Density_Hard,',
+     -          'Density_Soft,Density_Total) VALUES (''',
+     -          CASEID,''',''',TRIM(NPLT),
+     -          ''',?,?,?,?,?,?,?,?,?,?,?,?,?);'//CHAR(0)
       iRet = fsql3_exec(IoutDBref,"Begin;"//CHAR(0))
       iRet = fsql3_prepare(IoutDBref,SQLStmtStr)
       IF (iRet .NE. 0) THEN
@@ -145,10 +98,11 @@ COMMONS
       DO JYR= 1,YRLAST
          DO IDC= 1,MAXSP
             DO JCL= 1,6
-
               SDTB   = SDH(IDC,JYR,JCL) + SDS(IDC,JYR,JCL)
               IF (SDTB .LE. 0) CYCLE
+              CSP = JSP(IDC)
               YRDEAD = IYEAR - JYR + 1
+              SVLTB  = SVLH(IDC,JYR,JCL) + SVLS(IDC,JYR,JCL)
               SDBHB = SDBH(IDC,JYR,JCL)
               SHTHB = SHTH(IDC,JYR,JCL)
               SHTSB = SHTS(IDC,JYR,JCL)
@@ -156,28 +110,30 @@ COMMONS
               SDSB  = SDS (IDC,JYR,JCL)
               SVLHB = SVLH(IDC,JYR,JCL)
               SVLSB = SVLS(IDC,JYR,JCL)
-              SVLTB = SVLHB + SVLSB
-
-C             ASSIGN FVS, PLANTS AND FIA SPECIES CODES
-
-              CSP1 = JSP(IDC)
-              CSP2 = PLNJSP(IDC)
-              CSP3 = FIAJSP(IDC)
+C
+C             DETERMINE PREFERED OUTPUT FORMAT FOR SPECIES CODE
+C             KEYWORD OVER RIDES
+C
+              IF(JSPIN(IDC).EQ.1)THEN
+                CSPECIES=ADJUSTL(JSP(IDC))
+              ELSEIF(JSPIN(IDC).EQ.2)THEN
+                CSPECIES=ADJUSTL(FIAJSP(IDC))
+              ELSEIF(JSPIN(IDC).EQ.3)THEN
+                CSPECIES=ADJUSTL(PLNJSP(IDC))
+              ELSE
+                CSPECIES=ADJUSTL(PLNJSP(IDC))
+              ENDIF
+C
+              IF(ISPOUT23.EQ.1)CSPECIES=ADJUSTL(JSP(IDC))
+              IF(ISPOUT23.EQ.2)CSPECIES=ADJUSTL(FIAJSP(IDC))
+              IF(ISPOUT23.EQ.3)CSPECIES=ADJUSTL(PLNJSP(IDC))
 
               ColNumber=1
-              iRet = fsql3_bind_int(IoutDBref,ColNumber,IYEAR)
+              iRet = fsql3_bind_int(IoutDBref,ColNumber,IYEAR)             
 
               ColNumber=ColNumber+1
-              iRet = fsql3_bind_text(IoutDBref,ColNumber,CSP1,
-     >                                          len_trim(CSP1))
-
-              ColNumber=ColNumber+1
-              iRet = fsql3_bind_text(IoutDBref,ColNumber,CSP2,
-     >                                          len_trim(CSP2))
-
-              ColNumber=ColNumber+1
-              iRet = fsql3_bind_text(IoutDBref,ColNumber,CSP3,
-     >                                          len_trim(CSP3))
+              iRet = fsql3_bind_text(IoutDBref,ColNumber,CSPECIES,
+     >               len_trim(CSPECIES))              
 
               ColNumber=ColNumber+1
               iRet = fsql3_bind_int(IoutDBref,ColNumber,JCL)
@@ -211,10 +167,10 @@ C             ASSIGN FVS, PLANTS AND FIA SPECIES CODES
 
               ColNumber=ColNumber+1
               iRet = fsql3_bind_double(IoutDBref,ColNumber,SDTB)
-
+              
               iRet = fsql3_step(IoutDBref)
               iRet = fsql3_reset(IoutDBref)
-
+  
             ENDDO
          ENDDO
       ENDDO
@@ -223,7 +179,6 @@ C             ASSIGN FVS, PLANTS AND FIA SPECIES CODES
       if (iRet.ne.0) then
          ISDET = 0
       ENDIF
-
       RETURN
 
       END

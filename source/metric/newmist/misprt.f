@@ -1,7 +1,7 @@
       SUBROUTINE MISPRT
-      IMPLICIT NONE
+		  IMPLICIT NONE
 C----------
-C METRIC-NEWMIST $Id: misprt.f 3798 2021-09-14 00:14:52Z donrobinson $
+C  $Id: misprt.f 2361 2018-05-18 17:40:40Z lancedavid $
 C----------
 *  Purpose:
 *     Produces dwarf mistletoe infection information and mortality
@@ -15,13 +15,13 @@ C----------
 *  Local variable definitions:
 *     CFMT:   Character array to hold write formats for DBH class loop.
 *     CSP:    Array to hold 2 char. rep. of top 4 infected species.
-*     DCDMI:  Array - average DMRs inf. trees only by 5cm DBH class.
-*     DCDMR:  Array - average DMRs by 5cm DBH classes.
-*     DCINF:  Array - sums of infected TPA by 2cm DBH classes.
-*     DCMRT:  Array - sums of DM mortality (TPA) by 5cm DBH classes.
-*     DCSUM:  Array - sums of DM ratings (IMIST) by 5cm DBH classes.
-*     DCTPA:  Array - sums of TPA by 5cm DBH classes.
-*     DCTPAX: Array - sums of TPA by 5cm DBH classes, DBH >= DMRMIN.
+*     DCDMI:  Array - average DMRs inf. trees only by 2" DBH class.
+*     DCDMR:  Array - average DMRs by 2" DBH classes.
+*     DCINF:  Array - sums of infected TPA by 2" DBH classes.
+*     DCMRT:  Array - sums of DM mortality (TPA) by 2" DBH classes.
+*     DCSUM:  Array - sums of DM ratings (IMIST) by 2" DBH classes.
+*     DCTPA:  Array - sums of TPA by 2" DBH classes.
+*     DCTPAX: Array - sums of TPA by 2" DBH classes, DBH >= DMRMIN.
 *     DEBUG:  Logical flag to turn debug on or off.
 *     DMFLAG: Logical flag, true if mistletoe is present in the stand.
 *     IJKLM:  Loop counters.
@@ -30,13 +30,13 @@ C----------
 *     I3:     Tree record loop counter.
 *     IACTK:  Passed back from OPGET (unused).
 *     IDATE:  Passed back from OPGET (unused).
-*     IDCLAS: Loop counter for 5cm DBH classes.
+*     IDCLAS: Loop counter for 2" DBH classes.
 *     IDMR:   Current tree mistletoe rating.
 *     INFNO:  Species number of current (infected) species.
 *     INFSPC: Infected species loop counter.
 *     IPRINT: Flag to turn mistletoe output on or off.
 *     ISPC:   Current species number and species loop counter.
-*     ISTAT:  Status used to open output temporary files.
+*     ISVSP4: Array of top 4 most DM infected species by number.
 *     ITREE:  Tree loop counter.
 *     KODE:   Error code returned from MYOPEN.
 *     NAGE:   Current stand age.
@@ -175,7 +175,7 @@ C----------
 *        subroutine MISIN0.
 *     07-MAR-08; Lance R. David (FHTET)
 *        Moved local variables to common, necessary for output table 
-*        control that need to be maintained for each stand.
+*        control that need to be maintained for each stand in PPE mode.
 *        Variables moved are: DMFLAG, PRTTBL, LSORT4, MISTBL and ISVSP4
 *  21-APR-09; Lance R. David (FMSC)
 *        Variables IMOUT_ moved to MISCOM.(thanks to Don Robinson)
@@ -215,9 +215,9 @@ C     Variable declarations.
      &   SDIN56(MAXSP,20),SDTT0(MAXSP),SDTT12(MAXSP),SDTT34(MAXSP),
      &   SDTT56(MAXSP),SORTSP(4),SPDMRS(MAXSP),SPTPAI(MAXSP),
      &   SPTPAT(MAXSP),SPTPAX(MAXSP)
-      REAL DCTPA_M(20), DCMRT_M(20), DCINF_M(20)
-      REAL SPINF4_M(4), SPMRT4_M(4) 
 
+      REAL         SPINF4_M(4),SPMRT4_M(4),DCTPA_M(10),
+     &             DCINF_M(10),DCMRT_M(10)
       CHARACTER*2  CSP(4)
       CHARACTER*3  NLABS(5)
       CHARACTER*42 CFMT(20)
@@ -298,7 +298,7 @@ C     Stand total variable initializations.
       STTPAX = 0.0
       STDMRS = 0.0
 
-C     SPECIES VARIABLE INITIALIZATIONS.
+C     Species variable initializations.
 
       DO I = 1,MAXSP
          SPTPAM(I) = 0.0
@@ -314,9 +314,9 @@ C     SPECIES VARIABLE INITIALIZATIONS.
          SPDMRS(I) = 0.0
       ENDDO
 
-C     SPECIES VARIABLE INITIALIZATIONS (TOP 4 MOST INFECTED SPECIES).
+C     Species variable initializations (top 4 most infected species).
 
-      DO 25 I = 1,4
+      DO I = 1,4
          SORTSP(I) = 0.0
          SPDMR4(I) = 0.0
          SPDMI4(I) = 0.0
@@ -325,10 +325,10 @@ C     SPECIES VARIABLE INITIALIZATIONS (TOP 4 MOST INFECTED SPECIES).
          SPPIN4(I) = 0.0
          SPPMR4(I) = 0.0
          SPPOC4(I) = 0.0
-   25 CONTINUE
+      ENDDO
 
 C     DBH class variable initializations.
-C     20 DBH classes at 5 cm intervals; 0-5, 5-10, 10-15, ..., 95+.
+C     20 DBH classes at 2 inch intervals; 0-3, 3-5, 5-7,..., 37-39, 39+.
 
       DO I = 1,20
          DCTPA(I)  = 0.0
@@ -341,7 +341,7 @@ C     20 DBH classes at 5 cm intervals; 0-5, 5-10, 10-15, ..., 95+.
       ENDDO
 
 C     Species/DBH class variable initializations.
-C     MAXSP species by 20 DBH classes at 5 cm intervals (see above).
+C     11 species by 20 DBH classes at 2 inch intervals (see above).
 
       DO I = 1,MAXSP
          DO J = 1,20
@@ -419,7 +419,6 @@ C           be generated it the species is not currently in the simulation.
             ISPC=IFIX(PRM(1))
             IF(ISPC.NE.0) THEN
                PRTTBL=.TRUE.
-
                MISTBL(ISPC) = (MISFIT(ISPC) .EQ. 1 .AND.
      &                         ISCT(ISPC,1) .GT. 0)
             ELSE
@@ -437,14 +436,12 @@ C              Otherwise defaults to all species.
 
 C     PRINT DETAILED TREELIST AND LIGHT TABLES, CONTINGENT
 C     ON 'DMTABLE' KEYWORD
-C     DR/ESSA Jan-2020: These 2 detailed tables are not yet updated
-C                       as part of the DBSQLITE-DBSMIS
 
-      !IF (LDETAIL) THEN
-      !  CALL DBSMIS5(NYEAR,IDBSKODE)
-      !  CALL DBSMIS6(NYEAR,IDBSKODE)
-      !ENDIF
-      !
+      IF (LDETAIL) THEN
+        CALL DBSMIS5(NYEAR,IDBSKODE)
+        CALL DBSMIS6(NYEAR,IDBSKODE)
+      ENDIF
+
 C     Sort for the top four most infected species only once. This may
 C     happen in the first cycle or it may happen later if infections
 C     were introduced. Anyway, LSORT4 will be FALSE if not sorted yet.
@@ -558,7 +555,7 @@ C     because the (file 3) table only prints the first 10.
          DCSUM(10)  = DCSUM(10)  + DCSUM(IDCLAS)
       ENDDO
 
-C     Calculate average mistletoe ratings by 5cm DBH classes
+C     Calculate average mistletoe ratings by 2 inch DBH classes
 C     using all trees and infected-only trees.
 
       DO IDCLAS = 1,10
@@ -647,13 +644,15 @@ C        implies there are less than 4 infected species in the stand)
      &                                       100.0
   270 CONTINUE
 
-C     TRANSLATE TOP 4 INFECTED SPECIES NUMBERS TO CHAR. STRINGS.
+C       TRANSLATE TOP 4 INFECTED SPECIES NUMBERS TO CHAR. STRINGS.
 
-      DO I = 1,4
-        INFNO = ISVSP4(I)
-        CSP(I) = '**'
-        IF(INFNO.NE.0) CSP(I) = CSPARR(INFNO)
-      ENDDO
+      IF (FSTMIS) THEN
+        DO I = 1,4
+          INFNO = ISVSP4(I)
+          CSP(I) = '**'
+          IF(INFNO.NE.0) CSP(I) = CSPARR(INFNO)
+        ENDDO
+      ENDIF
 
       DO I = 1,4
         SPINF4_M(I) = SPINF4(I)/ACRtoHA
@@ -698,8 +697,8 @@ C     generated when the MISTPRT keyword is used (PRTMIS = true).
 
       IF (FSTMIS) THEN
         FSTMIS=.FALSE.
-        CALL GETID(IDMSOUT(1))
-        CALL GETID(IDMSOUT(2))
+	  CALL GETID(IDMSOUT(1))
+	  CALL GETID(IDMSOUT(2))
 
         CALL GETLUN(IMOUT1)
         CALL GETLUN(IMOUT2)
@@ -743,7 +742,7 @@ C     generated when the MISTPRT keyword is used (PRTMIS = true).
 
         IF (PRTMIS) THEN
 
-          CALL GETID(IDMSOUT(3))
+	    CALL GETID(IDMSOUT(3))
           CALL GETLUN(IMOUT3)
 
           WRITE(IMOUT3,'(2(/1X,I5))') IDMSOUT(3),IDMSOUT(3)
@@ -791,7 +790,7 @@ C     generated when the MISTPRT keyword is used (PRTMIS = true).
         WRITE(IMOUT3,860) IDMSOUT(3),NLABS(3),
      -    ((DCMRT(I)/ACRtoHA),I=1,10)
         WRITE(IMOUT3,861) IDMSOUT(3),NLABS(4),(DCDMR(I),I=1,10)
-        WRITE(IMOUT3,861) IDMSOUT(3),NLABS(5),(DCDMI(I),I=1,10)
+        WRITE(IMOUT3,861) IDMSOUT(3),NLABS(5),(DCDMI(j),j=1,10)
       ENDIF
 
 C     CHECK FOR PRINTING THE DETAILED OUTPUT TABLES.
@@ -804,7 +803,7 @@ C       AND PRINTING DETAIL TABLE HEADINGS.
         IF (FSTTBL) THEN
 
           FSTTBL=.FALSE.
-          CALL GETID(IDMSOUT(4))
+	    CALL GETID(IDMSOUT(4))
           CALL GETLUN(IMOUT4)
 
           WRITE(IMOUT4,'(2(/1X,I5))') IDMSOUT(4),IDMSOUT(4)

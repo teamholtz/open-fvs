@@ -2,8 +2,7 @@
      &                   JOSTND,DEBUG,D,PCT1)
       IMPLICIT NONE
 C----------
-C CANADA-ON $Id: htcalc.f 3788 2021-09-13 23:08:03Z donrobinson $
-C----------
+C  **HTCALC--ON   DATE OF LAST REVISION:  07/11/08
 C  **from LS_NEW: imported to allow age-dubbing for Mowraski volume 
 C----------
 C  THIS SUBROUTINE COMPUTES THE PREDICTED HEIGHT USING SITE INDEX
@@ -41,11 +40,10 @@ C----------
       INCLUDE  "PRGPRM.F77"
 
       LOGICAL DEBUG
-      REAL    LTBHEC(6,127)
-      INTEGER MAPLS(MAXSP)
+      REAL LTBHEC(6,127),MAPLS(MAXSP)
       INTEGER JOSTND,ISPC,IVAR,N,J,I,INDX
-      REAL    HTG1,HTMAX,AGET,H,YRS,SI,B1,B2,B3,B4,B5,BH
-      REAL    D,PCT1,BA,BAL
+      REAL HTG1,HTMAX,AGET,H,YRS,SI,B1,B2,B3,B4,B5,BH
+      REAL D,PCT1,BA,BAL
 C
       DATA MAPLS/
      &  74,  108,   95,   95,  104,   68,   64,   55,   70,   59,
@@ -337,28 +335,24 @@ C 126:NORTHERN WHITE-CEDAR, LAKE STATES
 C 127:EASTERN HEMLOCK, NY, MI, & S.APPALACHIAN
      & 2.1493,     0.9979,     -0.0175,     1.4086,    -0.0008,   0.0/
 C
-      IF(DEBUG)WRITE(JOSTND,*)' IN HTCALC N,IVAR,ISPC,SI,YRS,H,',
+      IF(DEBUG)WRITE(JOSTND,*)' ENTERING HTCALC N,IVAR,ISPC,SI,YRS,H,',
      &'AGET= ',N,IVAR,ISPC,SI,YRS,H,AGET
 C----------
 C   SET COEFFICIENTS
 C----------
-     
       INDX = MAPLS(ISPC) ! based on LS only
-
+      
       B1= LTBHEC(1,INDX)
       B2= LTBHEC(2,INDX)
       B3= LTBHEC(3,INDX)
       B4= LTBHEC(4,INDX)
       B5= LTBHEC(5,INDX)
       BH= LTBHEC(6,INDX)
-
 C----------
 C  CALCULATE MAXIMUM HEIGHT FOR SPECIES, IF CURRENT TREE HEIGHT
 C  H >= HTMAX THEN RETURN
 C----------
       HTMAX=(B1*SI**B2)
-      IF(DEBUG)WRITE(JOSTND,*)' In HTCALC 2: HTMAX=', HTMAX
-      
       IF(HTMAX-H.LE.1.) GO TO 900
 C----------
 C  CALCUALTE TREE AGE IF N<=0
@@ -371,6 +365,7 @@ C----------
 C  IF 0 < N < 2 THEN CALCULATE TREE HEIGHT BASED ON AGE
 C----------
       IF ((N .GT. 0) .AND. (N .LT. 2)) THEN
+C
         H= BH + B1*SI**B2*(1.-EXP(B3*AGET))**(B4*SI**B5)
         GOTO 900
       ENDIF
@@ -393,6 +388,9 @@ C... regenerating trees. HTG1 is annual height growh (ft)
       HTG1 = HTG1*YRS
 
   900 CONTINUE
+C
+      IF(DEBUG)WRITE(JOSTND,*)' HTCALC B1,B2,B3,B4,B5,SI,H,HTG1,AGET=',
+     &B1,B2,B3,B4,B5,SI,H,HTG1,AGET
 C
       RETURN
       END

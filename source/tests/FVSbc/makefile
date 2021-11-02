@@ -1,24 +1,47 @@
 # $Id: makefile 734 2013-03-22 22:39:10Z ncrookston.fs@gmail.com $
 
-all : StandStructure YSM-SkyRanch
+#
+#  the FVSbc test files are not currently being maintained.
+#  remove # before statements to run tests
+#
+# all : climbc mgmtbc wsbw ffe-bc
+ all :
+#
+#climbc : 
+#	@echo Test ClimBC, basic functionality 
+#	-../../bin/FVSbc < ClimBC.rsp
+#	grep -v "\-999" ClimBC.sum      > ClimBC.tmp
+#	grep -v "\-999" ClimBC.sum.save > ClimBC.tmp.save
+#	-diff -w ClimBC.tmp ClimBC.tmp.save
+#	rm ClimBC.tmp ClimBC.tmp.save
+#	@echo Test ClimBC ended
+#	
+#mgmtbc : 
+#	@echo "Test MgmtBC (with blanks in filenames)"
+#	-../../bin/FVSbc < "Mgmt BC.rsp"
+#	grep -v "\-999" "Mgmt BC.sum"      > MgmtBC.tmp
+#	grep -v "\-999" "Mgmt BC.sum.save" > MgmtBC.tmp.save
+#	-diff -w MgmtBC.tmp MgmtBC.tmp.save
+#	rm MgmtBC.tmp MgmtBC.tmp.save
+#	@echo Test MgmtBC ended
+#	
+#wsbw : 
+#	@echo "Test WSBW"
+#	-../../bin/FVSbc < WSBW-A.rsp
+#	grep -v "\-999" WSBW-A.sum      > WSBW-A.tmp
+#	grep -v "\-999" WSBW-A.sum.save > WSBW-A.tmp.save
+#	-diff -w WSBW-A.tmp WSBW-A.tmp.save
+#	rm WSBW-A.tmp WSBW-A.tmp.save
+#	@echo Test WSBW ended
+#
+#ffe-bc : 
+#	@echo "Test FFE-BC"
+#	-../../bin/FVSbc < FFE-BC.rsp
+#	grep -v "\-999" FFE-BC.sum      > FFE-BC.tmp
+#	grep -v "\-999" FFE-BC.sum.save > FFE-BC.tmp.save
+#	-diff -w FFE-BC.tmp FFE-BC.tmp.save
+#	rm FFE-BC.tmp FFE-BC.tmp.save fort.3
+#	@echo Test FFE-BC ended
 
-StandStructure :
-	@echo "Test StandStructure (4 stands)"
-	-../../bin/FVSbc --keywordfile=StandStructure.key
-	grep -v "\-999" StandStructure.sum      > StandStructure.tmp
-	grep -v "\-999" StandStructure.sum.save > StandStructure.tmp.save
-	-diff -w StandStructure.tmp StandStructure.tmp.save
-	rm StandStructure.tmp StandStructure.tmp.save
-	rm StandStructure.out StandStructure.sng
-	@echo "Test StandStructure (4 stands) ended"
 
-YSM-SkyRanch :
-	@echo "Test YSM-SkyRanch (15 stands)"
-	-../../bin/FVSbc --keywordfile=YSM-SkyRanch.key
-	grep -v "\-999" YSM-SkyRanch.sum      > YSM-SkyRanch.tmp
-	grep -v "\-999" YSM-SkyRanch.sum.save > YSM-SkyRanch.tmp.save
-	-diff -w YSM-SkyRanch.tmp YSM-SkyRanch.tmp.save
-	rm YSM-SkyRanch.tmp YSM-SkyRanch.tmp.save
-	rm YSM-SkyRanch.out
-	@echo "Test YSM-SkyRanch (15 stands) ended (Ignore STOP 20)"
 

@@ -1,7 +1,7 @@
       SUBROUTINE RDBBDO
       IMPLICIT NONE
 C----------
-C RD $Id: rdbbdo.f 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDBBDO       LAST REVISION:  08/26/14
 C---------- 
 C
 C  Purpose :

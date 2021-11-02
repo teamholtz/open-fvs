@@ -1,7 +1,7 @@
       SUBROUTINE FMVINIT
       IMPLICIT NONE
 C----------
-C FIRE-CA $Id: fmvinit.f 3758 2021-08-25 22:42:32Z lancedavid $
+C FIRE-CA $Id: fmvinit.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 *  Purpose:
 *      Initialize variant-specific variables for the Fire Model
@@ -269,8 +269,8 @@ c         Brewer spruce
             FALLX(I)   =   0.687
             LSW(I)     = .TRUE.
 
-C         giant sequoia and coast redwood
-          CASE (23,50)
+C         giant sequoia
+          CASE (23)
             V2T(I)     =  21.2 ! use redwood
             LEAFLF(I)  =   5.0
             TFALL(I,0) =   3.0
@@ -460,7 +460,7 @@ C       CLASSES, AND THE FUELPOOL KEYWORD TO REASSIGN CLASS
         SELECT CASE (I)
 
 C         some pines, doug-fir, cedars 
-          CASE (1:3,7,10,14,16,17,21,23,24,50)
+          CASE (1:3,7,10,14,16,17,21,23,24)
             DKRCLS(I)  =   1
 
 C         lodgepole, spruce, hemlock

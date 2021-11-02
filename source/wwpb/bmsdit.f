@@ -1,6 +1,7 @@
       SUBROUTINE BMSDIT
 C----------
-C WWPB $Id: bmsdit.f 2460 2018-07-24 14:41:48Z gedixon $
+C  **BMSDIT  DATE OF LAST REVISION:   09/28/05
+C
 C----------
 C
 C     SET UP ONE STAND FOR PINE BEETLE RUN.

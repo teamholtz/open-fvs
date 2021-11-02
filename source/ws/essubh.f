@@ -2,7 +2,7 @@
      &  GENTIM,TRAGE)
       IMPLICIT NONE
 C----------
-C WS $Id: essubh.f 3758 2021-08-25 22:42:32Z lancedavid $
+C WS $Id: essubh.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C
 C     ASSIGNS HEIGHTS TO SUBSEQUENT AND PLANTED TREE RECORDS
@@ -153,7 +153,7 @@ C----------
 C  HEIGHT OF TALLEST SUBSEQUENT SPECIES: 4=GS, 23=RW
 C----------
       CASE (4,23)
-        HHT = 2.0
+        HHT = 3.0
 C----------
 C  HEIGHT OF TALLEST SUBSEQUENT SPECIES: 5=IC
 C----------

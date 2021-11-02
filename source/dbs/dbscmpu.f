@@ -1,7 +1,7 @@
       SUBROUTINE DBSCMPU
       IMPLICIT NONE
 C
-C DBS $Id: dbscmpu.f 2685 2019-05-30 17:29:01Z lancedavid $
+C DBS $Id: dbscmpu.f 2357 2018-05-18 17:26:03Z lancedavid $
 C
 C     AUTH: D. GAMMEL -- SEM -- JUNE 2002
 C     PURPOSE: TO POPULATE A DATABASE WITH THE COMPUTE TABLE
@@ -49,7 +49,6 @@ C
 C     IF COMPUTE IS NOT TURNED ON OR THE NUMBER OF VARIABLES IS 0
 C     THEN RETURN
 C
-c*      print *,"dbscmpu - NUMKW=",NUMKW
       IF(ICOMPUTE.EQ.0.OR.NUMKW.EQ.0) RETURN
 C
 C     CALL DBSCASE TO MAKE SURE WE HAVE AN UP TO DATE CASEID
@@ -93,8 +92,6 @@ C     CHECK TO SEE IF THE COMPUTE TABLE EXISTS IN DATBASE
 C     IF IT DOES NOT THEN WE NEED TO CREATE IT
 C
       CALL DBSCKNROWS(IRCODE,TABLENAME,NCYC,TRIM(DBMSOUT).EQ.'EXCEL')
-c*      print *,"at DBSCKNROWS - IRCODE=",IRCODE," TABLENAME-",TABLENAME
-
       IF(IRCODE.EQ.2) THEN
         ICOMPUTE = 0
         RETURN
@@ -146,14 +143,14 @@ C
         iRet = fvsSQLExecDirect(StmtHndlOut,trim(SQLStmtStr),
      >            int(len_trim(SQLStmtStr),SQLINTEGER_KIND))
         iRet = fvsSQLNumResultCols(StmtHndlOut,ColumnCount)
-c*        print *,"iRet=",iRet," ColumnCount=",ColumnCount
+c*       print *,"iRet=",iRet," ColumnCount=",ColumnCount
         DO ColNumber = 1,ColumnCount
           iRet = fvsSQLDescribeCol (StmtHndlOut, ColNumber, ColName,
      -         int(LEN(ColName),SQLSMALLINT_KIND), NameLen, DTp,
      -         NColSz, NDecs, Nullable)     
           ColName(NameLen+1:)=' '
-c*          print *,"ColNumber=",ColNumber," iRet=",iRet,
-c*     >    " NameLen=",NameLen," ColName=",ColName
+c*        print *,"ColNumber=",ColNumber," iRet=",iRet,
+c*     >   " NameLen=",NameLen," ColName=",ColName
           IF (ColNumber.GT.3) KWLIST(ColNumber-3) = ColName(:NameLen)
         ENDDO
         NUMKW = ColumnCount - 3
@@ -164,8 +161,6 @@ C     CREATE AND EXECUTE THE INSERT COMMANDS FOR EACH YEAR
 C
       THISYR = -1
       INSRTNUM = 0
-c*      print *,"at INSERT COMMAND - NCYC=",NCYC,
-c*     > "INSRTNUM=",INSRTNUM
       DO ICY=1,NCYC
         I1=IMGPTS(ICY,1)
         I2=IMGPTS(ICY,2)
@@ -197,8 +192,6 @@ c*     > "INSRTNUM=",INSRTNUM
               !CHECK TO SEE IF KEYWORD IS IN LIST ALREADY
               DO I3=1,NUMKW
                 !IF IT IS IN THE LIST THEN ADD THE VALUE TO THE ARRAYS
-c*                print *,"at LIST CHECK - I3=",I3," KWLIST=",
-c*     >          TRIM(KWLIST(I3))," KEYWRD=",TRIM(KEYWRD)
                 IF(TRIM(KWLIST(I3)).EQ.TRIM(KEYWRD)) THEN
                   !NEED TO CHECK FOR DUPLICATES
                   LDUPKW = .FALSE.
@@ -221,10 +214,6 @@ c*     >          TRIM(KWLIST(I3))," KEYWRD=",TRIM(KEYWRD)
             ENDIF
              
             !IF KW NOT IN LIST THEN DETERMINE IF WE WANT TO ALTER TABLE
-c*            print *,"at ALTER TABLE - KWINLIST=",KWINLIST," NUMKW=",
-c*     >      NUMKW," INSRTNUM=",INSRTNUM," IADDCMPU=",IADDCMPU,
-c*     >      " DBMSOUT=",TRIM(DBMSOUT)
-
             IF((.NOT.KWINLIST).AND.TRIM(DBMSOUT).NE.'EXCEL'
      -          .AND.IADDCMPU.LT.1) THEN
               SQLStmtStr='ALTER TABLE '//trim(TABLENAME)//' ADD '//

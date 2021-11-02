@@ -1,8 +1,8 @@
       SUBROUTINE BRTARG
       IMPLICIT NONE
-C----------
-C WPBR $Id: brtarg.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **BRTARG       DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C  BRTARG calculates STAND TARGET, individual tree GROWTH INDEX,
 C  individual tree RUST INDEX, and STAND DEVIATION FACTOR and a

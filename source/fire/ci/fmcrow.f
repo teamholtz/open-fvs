@@ -1,7 +1,7 @@
       SUBROUTINE FMCROW
       IMPLICIT NONE
 C----------
-C FIRE-CI $Id: fmcrow.f 2462 2018-07-26 14:39:59Z gedixon $
+C  **FMCROW  FIRE-NI DATE OF LAST REVISION:  01/10/12
 C----------
 C     CALLED FROM: FMSDIT, FMPRUN
 C     CALLS        RDPSRT

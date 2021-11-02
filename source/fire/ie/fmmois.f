@@ -1,7 +1,7 @@
       SUBROUTINE FMMOIS (FMOIS, MOIS)
       IMPLICIT NONE
 C----------
-C FIRE-IE $Id: fmmois.f 2463 2018-07-26 20:58:10Z gedixon $
+C FIRE-NI $Id: fmmois.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C
 C     CALLED FROM: FMBURN

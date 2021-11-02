@@ -1,11 +1,8 @@
 C----------
-C VOLUME $Id: r5harv.f 3406 2021-02-25 15:01:34Z lancedavid $
+C VOLUME $Id: r5harv.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
 C----------
-!== last modified  10-30-2018
+!== last modified  01-18-2013
 C 01/18/2013 Added calculation for stump VOL(14) and tip VOL(15)
-C 04/13/2017 moved stump and tip vol calc to voinit
-c 08/07/2018 Added species code 64 to the Juniper species for use by FIA equation
-C 10/30/2018 YW CHANGED THE COFB FOR ENGELMAN OAK TO BE SAME AS CA WHITE OAK TO MATCH FIA EQUQTION
       SUBROUTINE  R5HARV (VOLEQ,DBHOB,HTTOT,MTOPP,VOL,BFPFLG,CUPFLG,
      >                    ERRFLAG)
 C FROM THE PNW RESEARCH NOTE PNW-414
@@ -18,7 +15,7 @@ C            REAL     HTTOT       HEIGHT
 C            INTEGER  TOP      IF 4 USES WVOL EQUATIONS
 C                              IF 8 USES SVOL EQUATIONS
 C                              IF 0 USE TO TIP
-C   OUTPUT   REAL  VOL(15)
+C   OUTPUT   REAL  VOL(15) 
 C            INTEGER ERROR     IF ERROR OCCURS VOLUMES SET TO 0.0
 C                              -1 SPEC  ERROR
       CHARACTER*10 VOLEQ
@@ -91,11 +88,9 @@ C NOT TO BE USED
       DATA (COFA(14,I),I=1,4)/0.0,0.0,0.0,0.0/
       DATA (COFB(14,I),I=1,4)/0.0,0.0,0.0,0.0/
       DATA (COFC(14,I),I=1,4)/0.0,0.0,0.0,0.0/
-C ENGLEMANN OAK         79
+C ENGLEMANN OAK         79   
       DATA (COFA(15,I),I=1,4)/.0053866353,2.61268,.31103,0.0/
-C      DATA (COFB(15,I),I=1,4)/0.0,0.0,0.0,0.0/
-C CHANGED THE ABOVE 0 FOR COFB TO USE WHITE OAK TO MATCH FIA EQUATION (YW 2018/10/30)
-      DATA (COFB(15,I),I=1,4) /0.0001880044,1.87346,1.62443,0.0/
+      DATA (COFB(15,I),I=1,4)/0.0,0.0,0.0,0.0/
 c      DATA (COFB(15,I),I=1,4)/0.0006540144,2.24437,0.81358,0.43381/
       DATA (COFC(15,I),I=1,4)/.0191453191,2.40248,.28060,0.0/
 C GIANT SEQUOIA
@@ -103,57 +98,59 @@ C GIANT SEQUOIA
       DATA (COEFSEQC(I),I=1,3) /0.002438339,1.694874,1.098957/
 
 
-
+          
 C CHECK FOR VALID SPECIES AND IF NOT SET VOLUME TO -1 AND RETURN
       DO 10,I=1,15
         VOL(I) = 0
    10 CONTINUE
-
+C
+      CVTS = 0.
+C
       ERRFLAG = 0
       if(dbhob .lt. 1.0)then
          errflag = 3
          goto 999
-      endif
-
+      endif    
+      
       IF (BFPFLG.EQ.1 .OR. CUPFLG.EQ.1) THEN
-        IF(VOLEQ(8:10).EQ.'060'.OR.VOLEQ(8:10).EQ.'064') THEN
+        IF(VOLEQ(8:10).EQ.'060') THEN      
           SPEC = 0
-        ELSEIF(VOLEQ(8:10).EQ.'351') THEN
+        ELSEIF(VOLEQ(8:10).EQ.'351') THEN      
           SPEC = 1
-        ELSEIF(VOLEQ(8:10).EQ.'312') THEN
+        ELSEIF(VOLEQ(8:10).EQ.'312') THEN      
           SPEC = 2
-        ELSEIF(VOLEQ(8:10).EQ.'818') THEN
+        ELSEIF(VOLEQ(8:10).EQ.'818') THEN      
           SPEC = 3
-        ELSEIF(VOLEQ(8:10).EQ.'807') THEN
+        ELSEIF(VOLEQ(8:10).EQ.'807') THEN      
           SPEC = 4
-        ELSEIF(VOLEQ(8:10).EQ.'805') THEN
+        ELSEIF(VOLEQ(8:10).EQ.'805') THEN      
           SPEC = 5
-        ELSEIF(VOLEQ(8:10).EQ.'431') THEN
+        ELSEIF(VOLEQ(8:10).EQ.'431') THEN      
           SPEC = 6
-        ELSEIF(VOLEQ(8:10).EQ.'801') THEN
+        ELSEIF(VOLEQ(8:10).EQ.'801') THEN      
           SPEC = 7
-        ELSEIF(VOLEQ(8:10).EQ.'839') THEN
+        ELSEIF(VOLEQ(8:10).EQ.'839') THEN      
           SPEC = 8
-        ELSEIF(VOLEQ(8:10).EQ.'981') THEN
+        ELSEIF(VOLEQ(8:10).EQ.'981') THEN      
           SPEC = 9
-        ELSEIF(VOLEQ(8:10).EQ.'361') THEN
+        ELSEIF(VOLEQ(8:10).EQ.'361') THEN      
           SPEC = 10
-        ELSEIF(VOLEQ(8:10).EQ.'815') THEN
+        ELSEIF(VOLEQ(8:10).EQ.'815') THEN      
           SPEC = 11
-        ELSEIF(VOLEQ(8:10).EQ.'631') THEN
+        ELSEIF(VOLEQ(8:10).EQ.'631') THEN      
           SPEC = 12
-        ELSEIF(VOLEQ(8:10).EQ.'821') THEN
+        ELSEIF(VOLEQ(8:10).EQ.'821') THEN      
           SPEC = 13
-        ELSEIF(VOLEQ(8:10).EQ.'212') THEN
+        ELSEIF(VOLEQ(8:10).EQ.'212') THEN      
           SPEC = 14
-        ELSEIF(VOLEQ(8:10).EQ.'811') THEN
+        ELSEIF(VOLEQ(8:10).EQ.'811') THEN      
           SPEC = 15
         ELSE
           SPEC = -1
           errflag = 1
           return
         ENDIF
-      ENDIF
+      ENDIF       
 
 C END CHECK
 
@@ -165,7 +162,7 @@ C JUNIPER SPECIES
          IF(D.LT.5 .OR. HTTOT.LT.10) THEN
            CVTS = 0.00272708 * D * D * HTTOT
             V = 0
-        ELSE
+         ELSE
             F = 0.307 + 0.00086*HTTOT - 0.0037*D*HTTOT / (HTTOT - 4.5)
             BA = 0.005454154 * D * D
             CVTS = BA * F * HTTOT * (HTTOT / (HTTOT - 4.5))**2
@@ -175,7 +172,7 @@ C  IF TOP NOT EQUAL TO 0 THEN DEFAULT TO 4 INCH TOP
             ELSE
                V = CVTS
             ENDIF
-        ENDIF
+         ENDIF
          VOL(4) = ANINT(V*10 + 0.5)/10.0
          vol(1) = cvts
 C REDALDER SPECIES
@@ -206,7 +203,7 @@ C**************************************************
         CV4 = TARIF * (BA - 0.087266) / 0.912733
         CV8 = CV4 * (0.983 - 0.983 * 0.65**(DE - 8.6))
 
-        CVT = TARIF * (0.9679 - 0.1051 * 0.5523**(DE - 1.5)) *
+        CVT = TARIF * (0.9679 - 0.1051 * 0.5523**(DE - 1.5)) * 
      >        TERM1 / 0.912733
         CV6 = CV4 * (0.993 - 0.993 * 0.62**(DE - 6.0))
 
@@ -219,9 +216,9 @@ C**************************************************
         ELSEIF (TOPC.lt.3) THEN
            VOL(4) = cvt
         ENDIF
-
+        
         vol(1)=cvt
-
+        
         IF (VOL(4).LE.0.0) THEN
            VOL(4) = 0.0
         ENDIF
@@ -284,7 +281,7 @@ C*************************************************
             ELSEIF (TOPTW.EQ.8) THEN
               VOL(7) = CV4 - CV8
             ELSEIF (TOPTW.EQ.4) THEN
-              VOL(7) = 0.0
+              VOL(7) = 0.0  
             ELSE
               VOL(7) = 0.0
             ENDIF
@@ -300,28 +297,30 @@ C*******************************************
 
       ELSE IF (SPEC.EQ.14) THEN
 
-        VOL(2) = COEFSEQB(1)*(DBHOB**COEFSEQB(2))*HTTOT ** COEFSEQB(3)
-        VOL(4) = COEFSEQC(1)*(DBHOB**COEFSEQC(2))*HTTOT ** COEFSEQC(3)
+        VOL(2) = REAL(COEFSEQB(1)*(DBHOB**COEFSEQB(2))*
+     &           HTTOT ** COEFSEQB(3))
+        VOL(4) = REAL(COEFSEQC(1)*(DBHOB**COEFSEQC(2))*
+     &           HTTOT ** COEFSEQC(3))
         vol(1) = vol(4)
 C************************************************
 C--  MISC HARDWOOD SPECIES                   ****
 C************************************************
-
-      ELSE
+    
+      ELSE 
         TOPC = MTOPP
         D = DBHOB
         BA = D**2 * 0.005454154
-        CV4 = COFA(SPEC,1) * DBHOB**COFA(SPEC,2)*HTTOT**COFA(SPEC,3) *
-     >        IV**COFA(SPEC,4)
-        CV8 = COFB(SPEC,1) * DBHOB**COFB(SPEC,2)*HTTOT**COFB(SPEC,3) *
-     >        IV**COFB(SPEC,4)
+        CV4 = REAL(COFA(SPEC,1) * DBHOB**COFA(SPEC,2)*
+     >        HTTOT**COFA(SPEC,3) * IV**COFA(SPEC,4))
+        CV8 = REAL(COFB(SPEC,1) * DBHOB**COFB(SPEC,2)* 
+     >        HTTOT**COFB(SPEC,3) *IV**COFB(SPEC,4))
         IF (CV4.GT.0.AND.CV8.GT.0) THEN
           CV6 = CV4-((CV4-CV8)*.4)
         ELSE
           CV6=0
         ENDIF
-        CVT = COFC(SPEC,1) * DBHOB**COFC(SPEC,2)*HTTOT**COFC(SPEC,3) *
-     >        IV**COFC(SPEC,4)
+        CVT = REAL(COFC(SPEC,1) * DBHOB**COFC(SPEC,2)*
+     >        HTTOT**COFC(SPEC,3) *IV**COFC(SPEC,4))
         IF (TOPC.ge.3 .and. topc.lt. 5) THEN
            CUFTGROS = CV4
         ELSEIF (TOPC.ge.5 .and. topc.lt.7) THEN
@@ -334,8 +333,12 @@ C************************************************
            CUFTGROS = 0.0
         ENDIF
         VOL(4) = CUFTGROS
-        VOL(7) = CV4-CUFTGROS
         vol(1) = cvt
+C       calculate stump and tip volume
+        VOL(14)=CVTS-CVT
+        IF(VOL(14).LT.0.01) VOL(14)=0.0
+        VOL(15)=CVT-CUFTGROS
+        IF(VOL(15).LT.0.01) VOL(15)=0.0                               
 C END CUFT CALCULATIONS
 C
 C
@@ -413,12 +416,6 @@ c        check for top diameter greater then dbh; no merch volume
       IF(MTOPP .GT. DBHOB) VOL(2) = 0.0
       IF(MTOPP .GT. DBHOB) VOL(10) = 0.0
       IF(MTOPP .GT. DBHOB) VOL(4) = 0.0
-
-C       calculate stump and tip volume
-c        VOL(14)=CVTS-CVT
-c        IF(VOL(14).LT.0.01) VOL(14)=0.0
-c        VOL(15)=CVT-CUFTGROS
-c        IF(VOL(15).LT.0.01) VOL(15)=0.0
 
 
  999  RETURN

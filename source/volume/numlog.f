@@ -1,6 +1,3 @@
-C----------
-C VOLUME $Id: numlog.f 2458 2018-07-22 19:09:30Z gedixon $
-C----------
 !== last modified  4-9-2002
       SUBROUTINE NUMLOG(OPT,EVOD,LMERCH,MAXLEN,MINLEN,TRIM,
      >           NUMSEG)

@@ -1,7 +1,7 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
       IMPLICIT NONE
 C----------
-C WS $Id: regent.f 3758 2021-08-25 22:42:32Z lancedavid $
+C WS $Id: regent.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C  THIS SUBROUTINE COMPUTES HEIGHT AND DIAMETER INCREMENTS FOR
 C  SMALL TREES.  THE HEIGHT INCREMENT MODEL IS APPLIED TO TREES
@@ -86,8 +86,8 @@ C----------
       REAL REGYR,FNT,BACHLO,BRATIO,DGSM,DDS,HTNEW,SCALE3,CORNEW
       REAL SNP,SNX,SNY,EDH,P,TERM,X,VIGOR,DGMX,BKPT,CCF,AVHT,PCTRED
       REAL SCALE,SCALE2,XRHGRO,XRDGRO,CON,XMX,XMN,SI,D,CR,RAN,BAL,H
-      REAL BARK,HTGRR,HTGR,ZZRAN,XWT,HK,BX,AX,DK,DKK,XDWT
-      REAL POTHTG,DAT45,LTHG,DGLT
+      REAL BARK,HTGRR,HTGR,ZZRAN,XPPMLT,XWT,HK,BX,AX,DK,DKK,XDWT
+      REAL POTHTG,DAT45
 C----------
 C     SPECIES LIST FOR WESTERN SIERRAS VARIANT.
 C
@@ -143,6 +143,7 @@ C    FROM EXISTING WS EQUATIONS --
 C      USE 1(SP) FOR 11(WP) AND 24(MH) 
 C      USE 2(DF) FOR 22(BD)
 C      USE 3(WF) FOR 13(SF)
+C      USE 4(GS) FOR 23(RW)
 C      USE 8(PP) FOR 18(MP)
 C      USE 34(TO) FOR 35(GC), 36(AS), 37(CL), 38(MA), AND 39(DG)
 C      USE 31(BO) FOR 28(LO), 29(CY), 30(BL), 32(VO), 33(IO), 40(BM), AND
@@ -158,16 +159,14 @@ C      USE SO30(MC) FOR 41(MC)
 C
 C    FROM UT VARIANT --
 C      USE UT17(GB) FOR 21(GB)
-C
-C    GS AND RW USE NEW RELATIONSHIP FROM CASTLE 2019.
 C----------
 C  DATA STATEMENTS.
 C----------
       DATA XMAX/
-     &  3.5,  3.5,  3.5,  10.0,  3.5,  3.5,  3.5,  3.5,  4.0,  4.0, 
-     &  3.5,  4.0,  3.5,   4.0,  4.0,  4.0,  4.0,  3.5,  4.0,  4.0, 
-     & 199.,  3.5,  10.0,  3.5,  4.0,  4.0,  4.0,  3.5,  3.5,  3.5, 
-     &  3.5,  3.5,   3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5, 
+     &  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  4.0,  4.0, 
+     &  3.5,  4.0,  3.5,  4.0,  4.0,  4.0,  4.0,  3.5,  4.0,  4.0, 
+     & 199.,  3.5,  3.5,  3.5,  4.0,  4.0,  4.0,  3.5,  3.5,  3.5, 
+     &  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5, 
      &  4.0,  3.5,  3.5/
 C
       DATA XMIN/
@@ -178,9 +177,9 @@ C
      &  2.0,  2.0,  1.0/
 C
       DATA SMTMAP/
-     &    1,    2,    2,    0,    1,    1,    2,    1,    0,    0, 
+     &    1,    2,    2,    2,    1,    1,    2,    1,    0,    0, 
      &    1,    0,    2,    0,    0,    0,    0,    1,    0,    0, 
-     &    0,    2,    0,    1,    0,    0,    0,    3,    3,    3, 
+     &    0,    2,    2,    1,    0,    0,    0,    3,    3,    3, 
      &    3,    3,    3,    4,    4,    4,    4,    4,    4,    3, 
      &    0,    1,    3/
 C
@@ -302,7 +301,6 @@ C----------
       BAL=((100.0-PCT(I))/100.0)*BA
       H=HT(I)
       BARK=BRATIO(ISPC,D,H)
-
       IF(LSKIPH) THEN
         HTG(K)=0.0
         GO TO 4
@@ -335,7 +333,7 @@ C----------
 C  ALL OTHER SPECIES
 C----------
       CASE DEFAULT
-        CALL SMHTGF(ISPC,D,CR,BA,BAL,SI,H,JOSTND,DEBUG,HTGRR)
+        CALL SMHTGF(ISPC,D,CR,BA,BAL,SI,HTGRR)
 
         IF(DEBUG)WRITE(JOSTND,*)'AFTER CALL SMHTGF MSP,D,CR,BA,BAL,SI,'
      &  ,'HTGRR =',MSP,D,CR,BA,BAL,SI,HTGRR
@@ -360,7 +358,14 @@ C
       CASE DEFAULT
         HTGR = (HTGR +ZZRAN*0.1)*XRHGRO * SCALE
       END SELECT
+C----------
+C     GET A MULTIPLIER FOR THIS TREE FROM PPREGT TO ACCOUNT FOR
+C     THE DENSITY EFFECTS OF NEIGHBORING TREES.
 C
+      XPPMLT=0.
+      CALL PPREGT (XPPMLT)
+C----------
+      HTGR = HTGR + XPPMLT
 C-------------
 C     COMPUTE WEIGHTS FOR THE LARGE AND SMALL TREE HEIGHT INCREMENT
 C     ESTIMATES.  IF DBH IS LESS THAN OR EQUAL TO XMN, THE LARGE TREE
@@ -373,20 +378,7 @@ C     COMPUTE WEIGHTED HEIGHT INCREMENT FOR NEXT TRIPLE.
 C----------
       IF(DEBUG)WRITE(JOSTND,9985)XWT,HTGR,HTG(K),I,K
  9985 FORMAT('IN REGENT 9985 FORMAT',3(F10.4,2X),2I7)
-      IF(ISPC .EQ. 4 .OR. ISPC .EQ. 23) THEN
-        LTHG = HTG(K)
-        IF(LESTB) THEN
-          HTGR = HTGR
-        ELSE
-          HTGR = (HTGR + LTHG)/2.0
-        ENDIF
-        HTG(K)=HTGR*(1.0-XWT) + XWT*LTHG
-        IF(DEBUG)WRITE(JOSTND,*)'IN REGENT - RW/GS DEBUG: ',' LESTB=',
-     &    LESTB,' D=',D,' XWT=',XWT,' HTGR=',HTGR,' LTHG=',LTHG,
-     &    ' HTG FINAL=', HTG(K)
-      ELSE
-        HTG(K)=HTGR*(1.0-XWT) + XWT*HTG(K)
-      ENDIF
+      HTG(K)=HTGR*(1.0-XWT) + XWT*HTG(K)
       IF(HTG(K) .LT. .1) HTG(K) = .1
 C----------
 C CHECK FOR SIZE CAP COMPLIANCE.
@@ -404,8 +396,6 @@ C     PROJECTION PERIOD LENGTH).
 C----------
       IF(ISPC .EQ. 21)THEN
         BKPT = 99.0
-      ELSE IF(ISPC .EQ. 4 .OR. ISPC .EQ. 23) THEN
-        BKPT = 7.0
       ELSE
         BKPT = 3.0
       ENDIF
@@ -420,7 +410,7 @@ C
 C----------
 C  SPECIES USING EQUATIONS FROM THE CA VARIANT
 C----------
-        CASE(4,9:10,12,14:17,19:20,23,25:27)
+        CASE(9:10,12,14:17,19:20,25:27)
           BX=HT2(ISPC)
           IF(IABFLG(ISPC).EQ.1) THEN
             AX=HT1(ISPC)
@@ -524,7 +514,7 @@ C  OFF, OR IF WYKOFF CALIBRATION DID NOT OCCUR.
 C  NOTE: THIS SIMPLIFIES TO IF(IABFLB(ISPC).EQ.1) BUT IS SHOWN IN IT'S
 C        ENTIRITY FOR CLARITY.
 C----------
-        CASE(4,9:10,12,14:17,19:20,23,25:27,41)
+        CASE(9:10,12,14:17,19:20,25:27,41)
           IF(.NOT.LHTDRG(ISPC) .OR. 
      &       (LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.1))THEN
             CALL HTDBH (IFOR,ISPC,DK,HK,1)
@@ -634,24 +624,16 @@ C         NOTE: LARGE TREE DG IS ON A 10-YR BASIS; SMALL TREE DG IS ON A
 C         FINT-YR BASIS. CONVERT SMALL TREE DG TO A 10-YR BASIS BEFORE
 C         WEIGHTING. DG GETS CONVERTED BACK TO A FINT-YR BASIS IN **GRADD**.
 C----------
-            IF(ISPC.EQ.4 .OR. ISPC.EQ.23) THEN
-              XDWT=(D-XMN)/(BKPT-XMN)
-              IF(D.LE.XMN) XDWT=0.0
-            ELSE
-              XDWT=(D-1.5)/1.5
-              IF(D.LE.1.5) XDWT=0.0
-              IF(D.GE.3.0) XDWT=1.0
-            ENDIF
+            XDWT=(D-1.5)/1.5
+            IF(D.LE.1.5) XDWT=0.0
+            IF(D.GE.3.0) XDWT=1.0
             DGSM=(DK-DKK)*BARK*XRDGRO
             IF(DGSM .LT. 0.0) DGSM=0.0
             DDS=DGSM*(2.0*BARK*D+DGSM)*SCALE2
             DGSM=SQRT((D*BARK)**2.0+DDS)-BARK*D
             IF(DGSM.LT.0.0) DGSM=0.0
-            DGLT=DG(K)
-            DG(K)=DGSM*(1.0-XDWT)+DGLT*XDWT
-            IF(DEBUG)WRITE(JOSTND,*)'IN REGENT',' ISPC=',ISPC,' D=',D,
-     &      ' XDWT=',XDWT,' DKK=', DKK,' DK=',DK,' BARK=', BARK,
-     &      ' DGSM=',DGSM,' DGLT=', DGLT,' DGSM FINAL=',DG(K)
+            DG(K)=DGSM*(1.0-XDWT)+DG(K)*XDWT
+C
           END SELECT
         ENDIF
         IF((DBH(K)+DG(K)).LT.DIAM(ISPC))THEN
@@ -779,7 +761,7 @@ C----------
 C  ALL OTHER SPECIES
 C----------
       CASE DEFAULT
-        CALL SMHTGF(ISPC,D,CR,BA,BAL,SI,H,JOSTND,DEBUG,EDH)
+        CALL SMHTGF(ISPC,D,CR,BA,BAL,SI,EDH)
         IF(DEBUG)WRITE(JOSTND,*)'AFTER CALL SMHTGF MSP,D,CR,BA,BAL,',
      &  'SI,EDH =',MSP,D,CR,BA,BAL,SI,EDH
 C
@@ -858,10 +840,6 @@ C----------
  9994 FORMAT(/'INITIAL SCALE FACTORS FOR THE SMALL TREE'/
      >      'HEIGHT INCREMENT MODEL',
      >       ((T48,11(F5.2,1X)/)))
-C----------
-C OUTPUT CALIBRATION TO DATABASE.
-C----------
-      CALL DBSCALIB(2,CORTEM,NUMCAL,CORTEM) ! LAST ARG IGNORED
 C----------
 C OUTPUT CALIBRATION TERMS IF CALBSTAT KEYWORD WAS PRESENT.
 C----------

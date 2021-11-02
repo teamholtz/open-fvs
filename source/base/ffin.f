@@ -2,7 +2,7 @@
      &                 ICYC,IREAD,LKECHO)
       IMPLICIT NONE
 C----------
-C BASE $Id: ffin.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: ffin.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     PART OF THE FERTILIZER OPTION.  CALLED BY INITRE TO ENTER

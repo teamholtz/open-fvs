@@ -1,7 +1,8 @@
       SUBROUTINE BMOUT (I,IYEAR)
 C----------
-C METRIC-WWPB $Id: bmout.f 2464 2018-07-27 15:36:37Z gedixon $
-C----------
+C   **BMOUT  REPLACES BMOUTM.  CREATED AUGUST-Sept 2005 ANDREW MCMAHAN
+C            DATE OF LAST REVISION:  09/28/05
+C
 C     Westwide Pine Beetle model stand state variables.
 C     Most output variables reflect conditions at the *beginning* of reported year 
 C     (or cycle) *after* WWPBM-specific management activities (sanitize, salvage, 

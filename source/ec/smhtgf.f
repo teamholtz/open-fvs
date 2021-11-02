@@ -1,7 +1,7 @@
       SUBROUTINE SMHTGF (MODE,ICYC,ISPC,H,DTIME,HHT,JOSTND,DEBUG)
       IMPLICIT NONE
 C----------
-C EC $Id: smhtgf.f 2579 2018-12-06 08:39:56Z nickcrookston $
+C  **SMHTGF--EC  DATE OF LAST REVISION:  05/09/12
 C----------
 C  THIS ROUTINE CALCULATES THE HEIGHT GROWTH OF SMALL TREES (D<3.0 IN).
 C  WHEN CALLED FROM ESSUBH (MODE=0), DTIME= TOTAL TREE AGE.
@@ -156,12 +156,7 @@ C----------
           EFFAGE= 0.
           AGEPDT= EFFAGE + DTIME
         ELSEIF(MODE .EQ. 1) THEN
-          EFFAGE= (1.0 - (C1/SI * H)**(1/C4))/C2
-          IF (EFFAGE.GT.0) THEN
-            EFFAGE= ALOG( EFFAGE ) / C3
-          ELSE
-            EFFAGE= 100.
-          ENDIF
+          EFFAGE= ALOG( (1.0 - (C1/SI * H)**(1/C4))/C2 ) / C3
           AGEPDT= EFFAGE + DTIME
         ENDIF
 C

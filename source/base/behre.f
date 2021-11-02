@@ -1,7 +1,7 @@
       FUNCTION BEHRE(L1,L2)
       IMPLICIT NONE
 C----------
-C BASE $Id: behre.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: behre.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C  THIS FUNCTION CALCULATES THE VOLUME OF A SOLID OF REVOLUTION

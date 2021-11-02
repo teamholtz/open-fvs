@@ -1,7 +1,7 @@
       SUBROUTINE CRATET
       IMPLICIT NONE
 C----------
-C WC $Id: cratet.f 3758 2021-08-25 22:42:32Z lancedavid $
+C WC $Id: cratet.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C  THIS SUBROUTINE IS CALLED PRIOR TO PROJECTION.  IT HAS THE
 C  FOLLOWING FUNCTIONS:
@@ -343,7 +343,7 @@ C
         GO TO 115
       ENDIF
 C
-      IF(D .LT. 5.0 .AND. ISPC .NE. 17) THEN
+      IF(D .LT. 5.0) THEN
         IICR=ICR(II)
         IF(IICR.LE.0)IICR=40
         H = HTT1(ISPC,1) + HTT1(ISPC,2)*D

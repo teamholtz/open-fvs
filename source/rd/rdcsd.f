@@ -1,7 +1,7 @@
       SUBROUTINE RDCSD(ISPI,DBHLIM,THRESH,CRIT)
       IMPLICIT NONE
 C----------
-C RD $Id: rdcsd.f 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDCSD       LAST REVISION:  08/28/14     
 C----------
 C
 C  Purpose :

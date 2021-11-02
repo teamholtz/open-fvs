@@ -4,7 +4,7 @@
      &  S3SC,NS,TOTCOV,SCLASS,KODE,NTREES)
       IMPLICIT NONE
 C
-C DBS $Id: dbsstrclass.f 2540 2018-10-26 14:04:54Z lancedavid $
+C DBS $Id: dbsstrclass.f 2357 2018-05-18 17:26:03Z lancedavid $
 C
 C     PURPOSE: TO POPULATE A DATABASE WITH THE STRUCTURE CLASS OUTPUT.
 C     AUTH: S. REBAIN -- FMSC -- AUGUST 2005
@@ -56,6 +56,7 @@ C
       INTEGER S2SC, S3SC, TOTCOV,NS, NTREES
       INTEGER(SQLSMALLINT_KIND)::ColNumber
       REAL S1DBH,S2DBH,S3DBH
+      DOUBLE PRECISION BS1DBH,BS2DBH,BS3DBH
       CHARACTER*2000 SQLStmtStr
       CHARACTER*3 S1MS1,S1MS2,S2MS1,S2MS2,S3MS1,S3MS2
       CHARACTER*4 SCLASS
@@ -179,36 +180,36 @@ C---------
      -              'CaseID char(36) not null,'//
      -              'StandID char(26) null,'//
      -              'Year int null,'//
-     -              'Removal_Code int null,'//
+     -              'Removal_Code real null,'//
      -              'Stratum_1_DBH real null,'//
-     -              'Stratum_1_Nom_Ht int null,'//
-     -              'Stratum_1_Lg_Ht int null,'//
-     -              'Stratum_1_Sm_Ht int null,'//
-     -              'Stratum_1_Crown_Base int null,'//
-     -              'Stratum_1_Crown_Cover int null,'//
+     -              'Stratum_1_Nom_Ht real null,'//
+     -              'Stratum_1_Lg_Ht real null,'//
+     -              'Stratum_1_Sm_Ht real null,'//
+     -              'Stratum_1_Crown_Base real null,'//
+     -              'Stratum_1_Crown_Cover real null,'//
      -              'Stratum_1_Species_1 char(3) null,'//
      -              'Stratum_1_Species_2 char(3) null,'//
-     -              'Stratum_1_Status_Code int null,'//
+     -              'Stratum_1_Status_Code real null,'//
      -              'Stratum_2_DBH real null,'//
-     -              'Stratum_2_Nom_Ht int null,'//
-     -              'Stratum_2_Lg_Ht int null,'//
-     -              'Stratum_2_Sm_Ht int null,'//
-     -              'Stratum_2_Crown_Base int null,'//
-     -              'Stratum_2_Crown_Cover int null,'//
+     -              'Stratum_2_Nom_Ht real null,'//
+     -              'Stratum_2_Lg_Ht real null,'//
+     -              'Stratum_2_Sm_Ht real null,'//
+     -              'Stratum_2_Crown_Base real null,'//
+     -              'Stratum_2_Crown_Cover real null,'//
      -              'Stratum_2_Species_1 char(3) null,'//
      -              'Stratum_2_Species_2 char(3) null,'//
-     -              'Stratum_2_Status_Code int null,'//
+     -              'Stratum_2_Status_Code real null,'//
      -              'Stratum_3_DBH real null,'//
-     -              'Stratum_3_Nom_Ht int null,'//
-     -              'Stratum_3_Lg_Ht int null,'//
-     -              'Stratum_3_Sm_Ht int null,'//
-     -              'Stratum_3_Crown_Base int null,'//
-     -              'Stratum_3_Crown_Cover int null,'//
+     -              'Stratum_3_Nom_Ht real null,'//
+     -              'Stratum_3_Lg_Ht real null,'//
+     -              'Stratum_3_Sm_Ht real null,'//
+     -              'Stratum_3_Crown_Base real null,'//
+     -              'Stratum_3_Crown_Cover real null,'//
      -              'Stratum_3_Species_1 char(3) null,'//
      -              'Stratum_3_Species_2 char(3) null,'//
-     -              'Stratum_3_Status_Code int null,'//
-     -              'Number_of_Strata int null,'//
-     -              'Total_Cover int null,'//
+     -              'Stratum_3_Status_Code real null,'//
+     -              'Number_of_Strata real null,'//
+     -              'Total_Cover real null,'//
      -              'Structure_Class char(4) null)'
         ENDIF
 
@@ -218,6 +219,13 @@ C---------
         CALL DBSDIAGS(SQL_HANDLE_STMT,StmtHndlOut,
      -       'DBSSTRCLASS:Creating Table: '//trim(SQLStmtStr))
       ENDIF
+
+      BS1DBH=0D0
+      BS2DBH=0D0
+      BS3DBH=0D0
+      BS1DBH=S1DBH
+      BS2DBH=S2DBH
+      BS3DBH=S3DBH
 
       WRITE(SQLStmtStr,*)'INSERT INTO ',TABLENAME,'(CaseID,',
      -    'StandID,Year,Removal_Code,Stratum_1_DBH,Stratum_1_Nom_Ht,',
@@ -262,8 +270,8 @@ C
 
       ColNumber=ColNumber+1
       iRet = fvsSQLBindParameter(StmtHndlOut,ColNumber,SQL_PARAM_INPUT,
-     -          SQL_F_FLOAT, SQL_REAL,INT(15,SQLUINTEGER_KIND),
-     -          INT(5,SQLSMALLINT_KIND),S1DBH,int(4,SQLLEN_KIND),
+     -          SQL_F_DOUBLE, SQL_DOUBLE,INT(15,SQLUINTEGER_KIND),
+     -          INT(5,SQLSMALLINT_KIND),BS1DBH,int(4,SQLLEN_KIND),
      -          SQL_NULL_PTR)
 
       ColNumber=ColNumber+1
@@ -304,8 +312,8 @@ C
 
       ColNumber=ColNumber+1
       iRet = fvsSQLBindParameter(StmtHndlOut,ColNumber,SQL_PARAM_INPUT,
-     -          SQL_F_FLOAT, SQL_REAL,INT(15,SQLUINTEGER_KIND),
-     -          INT(5,SQLSMALLINT_KIND),S2DBH,int(4,SQLLEN_KIND),
+     -          SQL_F_DOUBLE, SQL_DOUBLE,INT(15,SQLUINTEGER_KIND),
+     -          INT(5,SQLSMALLINT_KIND),BS2DBH,int(4,SQLLEN_KIND),
      -          SQL_NULL_PTR)
 
       ColNumber=ColNumber+1
@@ -346,8 +354,8 @@ C
 
       ColNumber=ColNumber+1
       iRet = fvsSQLBindParameter(StmtHndlOut,ColNumber,SQL_PARAM_INPUT,
-     -          SQL_F_FLOAT, SQL_REAL,INT(15,SQLUINTEGER_KIND),
-     -          INT(5,SQLSMALLINT_KIND),S3DBH,int(4,SQLLEN_KIND),
+     -          SQL_F_DOUBLE, SQL_DOUBLE,INT(15,SQLUINTEGER_KIND),
+     -          INT(5,SQLSMALLINT_KIND),BS3DBH,int(4,SQLLEN_KIND),
      -          SQL_NULL_PTR)
 
       ColNumber=ColNumber+1

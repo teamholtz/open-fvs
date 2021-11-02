@@ -1,9 +1,6 @@
-## $Id: CMakeLists.txt 3838 2021-10-13 00:49:14Z donrobinson $
+## $Id: CMakeLists.txt 1531 2015-06-08 22:34:53Z rhavis@msn.com $
 
 ## Towards using cmake! NCrookston July 24 2012
-
-## command-line:
-# cmake -G"Visual Studio 10 Win64" .
 
 cmake_minimum_required (VERSION 2.8)
 
@@ -23,8 +20,7 @@ endif()
 ## example 1: Single-variant GLOB: file(GLOB tobuild FVSiec_sourceList.txt)
 ## example 2: All-variant GLOB: file(GLOB tobuild FVS*_sourceList.txt)
 
-#file(GLOB tobuild FVSbc_sourceList.txt)
-file(GLOB tobuild FVSls_sourceList.txt)
+file(GLOB tobuild FVSiec_sourceList.txt)
 
 list(SORT tobuild)
 message(STATUS "tobuild = ${tobuild}")
@@ -97,10 +93,13 @@ message(STATUS "slfn = ${slfn} prgName= ${prgName}")
 
 if (CMAKE_GENERATOR MATCHES "Visual Studio 10")
   add_definitions(-DANSI -DWINDOWS -D_WINDLL)
-  elseif (CMAKE_GENERATOR MATCHES "MinGW Makefiles")
+  link_libraries(odbc32)
+elseif (CMAKE_GENERATOR MATCHES "MinGW Makefiles")
   add_definitions(-DANSI -DWINDOWS -D_WINDLL -DCMPgcc)
-  elseif (CMAKE_GENERATOR MATCHES "Unix Makefiles")
-  add_definitions(-DANSI -DCMPgcc) 
+  link_libraries(odbc32)
+elseif (CMAKE_GENERATOR MATCHES "Unix Makefiles")
+  add_definitions(-DANSI -DCMPgcc)
+  link_libraries(odbc)
 else()
 endif()
 
@@ -108,7 +107,7 @@ set (OUTPUT_NAME ${prgName})
 set (includeDirs)
 set (CsourceSQL)
 set (CsourceFFE)
-#set (CsourceCFIM)
+##set (CsourceCFIM)
 set (FsourceFVS)
 set (FsourceMAIN)
 
@@ -130,7 +129,14 @@ foreach (fn ${fileList})
       list (APPEND FsourceFVS ${fn})
     endif()
   elseif(${extname} STREQUAL ".c" OR ${extname} STREQUAL ".cpp")
-    if(fname STREQUAL "sqlite3.c" OR fname STREQUAL "fvsqlite3.c" OR fname STREQUAL "apisubsc.c")
+    if (fname STREQUAL mkdbsTypeDefs.c)
+      add_executable(mkdbsTypeDefs ${fn})
+      get_target_property(MKDBSTYPEDEFS_EXE mkdbsTypeDefs LOCATION)
+      add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/DBSTYPEDEFS.F77
+                         COMMAND ${MKDBSTYPEDEFS_EXE}
+                         DEPENDS ${MKDBSTYPEDEFS_EXE})
+      add_custom_target(dbstypedefs mkdbsTypeDefs)
+    elseif(fname STREQUAL fvsSQL.c)
       list (APPEND CsourceSQL ${fn})
     else()
       list (APPEND CsourceFFE ${fn})
@@ -146,22 +152,24 @@ list (APPEND includeDirs ${CMAKE_CURRENT_BINARY_DIR})
 
 include_directories(BEFORE ${includeDirs})
 
-message(STATUS "includeDirs= ${includeDirs}")
-message(STATUS "CsourceSQL= ${CsourceSQL}")
-message(STATUS "CsourceFFE= ${CsourceFFE}")
-message(STATUS "FsourceFVS= ${FsourceFVS}")
-message(STATUS "FsourceMAIN= ${FsourceMAIN}")
+#message(STATUS "includeDirs= ${includeDirs}")
+#message(STATUS "CsourceSQL= ${CsourceSQL}")
+#message(STATUS "CsourceFFE= ${CsourceFFE}")
+#message(STATUS "FsourceFVS= ${FsourceFVS}")
+#message(STATUS "FsourceMAIN= ${FsourceMAIN}")
 
 message(STATUS "FVSvariant = FVS${varName}")
 
 add_library(FVSsql SHARED ${CsourceSQL})
 add_library(FVSfofem SHARED ${CsourceFFE})
-#add_library(FVScfim SHARED ${CsourceCFIM})  ### delete this line permanently
+##add_library(FVScfim SHARED ${CsourceCFIM})
 add_library(FVS_${varName} SHARED ${FsourceFVS})
 add_executable (${prgName} ${FsourceMAIN})
 
-#target_link_libraries(${prgName} FVS_${varName} FVSsql FVSfofem )
-#target_link_libraries(FVS_${varName} FVSsql FVSfofem )
+target_link_libraries(${prgName} FVS_${varName} FVSsql FVSfofem)
+target_link_libraries(FVS_${varName} FVSfofem FVSsql)
+
+add_dependencies(FVS_${varName} dbstypedefs)
 
 set_target_properties(${prgName} PROPERTIES LINKER_LANGUAGE Fortran)
 
@@ -169,5 +177,8 @@ set_target_properties(${prgName} PROPERTIES LINKER_LANGUAGE Fortran)
 
 if (CMAKE_GENERATOR MATCHES "MinGW Makefiles")
   set_target_properties(FVSfofem PROPERTIES LINK_FLAGS -Wl,--add-stdcall-alias)
-  # set_target_properties(FVScfim PROPERTIES LINK_FLAGS -Wl,--add-stdcall-alias)
 endif()
+
+#INSTALL(TARGETS ${prgName} FVSsql FVSfofem FVS_${varName}
+#	RUNTIME DESTINATION ../../myBin
+#)

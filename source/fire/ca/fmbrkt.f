@@ -1,7 +1,7 @@
       FUNCTION FMBRKT(DBH,ISP)
       IMPLICIT NONE
 C----------
-C FIRE-CA $Id: fmbrkt.f 3758 2021-08-25 22:42:32Z lancedavid $
+C  **FMBRKT  FIRE-CA-DATE OF LAST REVISION:  09/16/03
 C----------
 
 C     COMPUTES THE BARK THICKNESS FOR USE IN THE FIRE-CAUSED MORTALITY
@@ -66,8 +66,7 @@ COMMONS
      >     0.041,  !46 = willow (wi) ! Salix spp.
      >     0.025,  !47 = California nutmeg (cn) ! PY
      >     0.026,  !48 = California laurel (cl)
-     >     0.030,  !49 = other hardwoods (oh) ! BO
-     >     0.081/  !50 = coast redwood (RW)
+     >     0.030/  !49 = other hardwoods (oh) ! BO
 
       FMBRKT = DBH*B1(ISP)
 

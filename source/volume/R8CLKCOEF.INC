@@ -1,6 +1,3 @@
-C----------
-C VOLUME $Id: R8CLKCOEF.INC 2458 2018-07-22 19:09:30Z gedixon $
-C----------
       INTEGER II,JJ
       REAL DIBMEN(49,3), TOTAL(49,7), NINE(34,6)
       REAL SEVEN(15,6), FOUR(49,6)

@@ -1,7 +1,7 @@
       SUBROUTINE TXNOTE (LXNOTE)
       IMPLICIT NONE
 C----------
-C WSBWE $Id: txnote.f 2460 2018-07-24 14:41:48Z gedixon $
+C  **TXNOTE                 DATE OF LAST REVISION:  07/14/10
 C----------
 C
 C     This module sets the logical flag LXNOTE to true when the 

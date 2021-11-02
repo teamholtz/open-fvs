@@ -2,7 +2,7 @@
      &  GENTIM,TRAGE)
       IMPLICIT NONE
 C----------
-C IE $Id: essubh.f 2449 2018-07-11 14:53:35Z gedixon $
+C IE $Id: essubh.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C
 COMMONS

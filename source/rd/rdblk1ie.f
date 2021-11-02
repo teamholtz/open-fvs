@@ -1,7 +1,7 @@
       BLOCK DATA RDBLK1
       IMPLICIT NONE
 C----------
-C RD $Id: rdblk1ie.f 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDBLK1-IE     LAST REVISION:  08/26/14
 C----------
 C
 C  Purpose :

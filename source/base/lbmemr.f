@@ -1,7 +1,7 @@
       LOGICAL FUNCTION LBMEMR (LENMEM,MEM,LENSET,SET)
       IMPLICIT NONE
 C----------
-C BASE $Id: lbmemr.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: lbmemr.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     TRUE IF MEM IS A MEMBER OF SET, FALSE OTHERWISE.

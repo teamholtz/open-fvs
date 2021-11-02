@@ -1,7 +1,7 @@
       SUBROUTINE FMDOUT (IYR)
       IMPLICIT NONE
 C----------
-C METRIC-FIRE-BASE $Id: fmdout.f 3803 2021-09-14 08:05:54Z donrobinson $
+C  **FMDOUT--FIRE-BASE-METRIC  DATE OF LAST REVISION:  04/08/14
 C----------
 *     SINGLE-STAND VERSION
 *     CALLED FROM: FMMAIN
@@ -33,7 +33,7 @@ C.... COMMON INCLUDE FILES.
       INCLUDE 'FMCOM.F77'
       INCLUDE 'FMFCOM.F77'
       INCLUDE 'METRIC.F77'
-
+	    
 C.... VARIABLE DECLARATIONS.
       REAL      TOTSNG(2), TOTLIV(2), TONREM, CONV, CONV2
       LOGICAL   DEBUG, LPRINT, LPRINT2, LPRINT3, LMERCH
@@ -62,15 +62,32 @@ C
      >       ' IDFLAL=',I5,' JROUT=',I3,' NSNAG=',I5)  
 
 C     FIRST CHECK TO SEE IF WE NEED TO DO THIS FOR FUELS REPORTING
+C     IF THIS YEAR IS WITHIN THE REPORTING PERIOD, SET THE
+C     PRINT FLAG TO TRUE (DEFAULT IS FALSE)
+
       LPRINT = .TRUE.
-      IF (IFLALB .GT. 0) LPRINT = .FALSE.
+      IF (IYR .EQ. 0 .AND. IYR.EQ. IFLALE) GOTO 45
+
+      IF (IYR .LT. IFLALB .OR. IYR .GT. IFLALE) LPRINT = .FALSE.
+
+ 45   CONTINUE
 
 C     DO THIS AGAIN FOR THE DOWN WOOD VOLUME AND COVER REPORTS 
+
       LPRINT2 = .TRUE.
-      IF (IDWRPB .GT. 0) LPRINT2 = .FALSE.
+      IF (IYR .EQ. 0 .AND. IYR.EQ. IDWRPE) GOTO 46
+
+      IF (IYR .LT. IDWRPB .OR. IYR .GT. IDWRPE) LPRINT2 = .FALSE.
+
+ 46   CONTINUE
 
       LPRINT3 = .TRUE.
-      IF (IDWCVB .GT. 0) LPRINT3 = .FALSE.
+      IF (IYR .EQ. 0 .AND. IYR.EQ. IDWCVE) GOTO 47
+
+      IF (IYR .LT. IDWCVB .OR. IYR .GT. IDWCVE) LPRINT3 = .FALSE.
+
+ 47   CONTINUE
+
 C
 C     Zero the summation columns (index 1=3 and 4=5)
 C
@@ -291,7 +308,7 @@ C     ON SPECIFIC GRAVITY VALUE OF 0.4 FOR BOTH SOFT AND HARD MATERIAL,
 C     FROM BROWN (1974), GTR-INT-16, HANDBOOK FOR INVENTORYING DOWNED WOODY MATERIAL
 
       DO L = 1, 4
-         CWDDEN(1,L) = 18.72  ! lbs/cuft for soft down wood (SG = 0.3 corrected)
+         CWDDEN(1,L) = 24.96  ! lbs/cuft for soft down wood (SG = 0.4)
          CWDDEN(2,L) = 24.96  ! lbs/cuft for hard down wood (SG = 0.4)
       ENDDO
 
@@ -299,18 +316,18 @@ C     FROM BROWN (1974), GTR-INT-16, HANDBOOK FOR INVENTORYING DOWNED WOODY MATE
          DO J = 1, 9
             DO K = 1, 2
                DO L = 1, 4
-                  CWDVOL(I,J,K,L) = CWD(I,J,K,L)*2000/CWDDEN(K,L)
+                  CWDVOL(I,J,K,L) = CWD(I,J,K,L)*2000/CWDDEN(K,L)                
                ENDDO
             ENDDO
          ENDDO
       ENDDO
       
-C                         total stuff up
+C                         total stuff up 
       DO I = 1, 2
          DO J = 1, 9
             DO K = 1, 2
-               DO L = 1, 4
-                 CWDVOL(3,J,K,L) = CWDVOL(3,J,K,L) + CWDVOL(I,J,K,L)
+               DO L = 1, 4             
+                 CWDVOL(3,J,K,L) = CWDVOL(3,J,K,L) + CWDVOL(I,J,K,L) 
                ENDDO
             ENDDO
          ENDDO
@@ -319,8 +336,8 @@ C                         total stuff up
       DO I = 1, 3
          DO J = 1, 9
             DO K = 1, 2
-               DO L = 1, 4
-                 CWDVOL(I,J,K,5) = CWDVOL(I,J,K,5) + CWDVOL(I,J,K,L)
+               DO L = 1, 4             
+                 CWDVOL(I,J,K,5) = CWDVOL(I,J,K,5) + CWDVOL(I,J,K,L) 
                ENDDO
             ENDDO
          ENDDO
@@ -329,8 +346,8 @@ C                         total stuff up
       DO I = 1, 3
          DO J = 1, 9
             DO K = 1, 2
-               DO L = 1, 5
-                 CWDVOL(I,10,K,L) = CWDVOL(I,10,K,L) + CWDVOL(I,J,K,L)
+               DO L = 1, 5             
+                 CWDVOL(I,10,K,L) = CWDVOL(I,10,K,L) + CWDVOL(I,J,K,L) 
                ENDDO
             ENDDO
          ENDDO
@@ -339,14 +356,14 @@ C                         total stuff up
       DO I = 3,3
          DO J = 1, 9
             DO K = 1, 2
-               DO L = 5,5
+               DO L = 5,5                  
                   SELECT CASE (J)
                     CASE (1,2,3)
                       CWDCOV(I,J,K,L) = 0
                     CASE (4)
                       CWDCOV(I,J,K,L) = 0.0166*CWDVOL(I,J,K,L)**0.8715
                     CASE (5)
-                      CWDCOV(I,J,K,L) = 0.0092*CWDVOL(I,J,K,L)**0.8795
+                      CWDCOV(I,J,K,L) = 0.0092*CWDVOL(I,J,K,L)**0.8795                 
                     CASE (6)
                       CWDCOV(I,J,K,L) = 0.0063*CWDVOL(I,J,K,L)**0.8728
                     CASE (7)
@@ -364,12 +381,12 @@ C                         total stuff up
 
 C     STOP HERE IF WE ARE NOT PRINTING THE FUELS REPORT
       IF (.NOT. LPRINT) GOTO 750
+
+      CONV=TItoTM/ACRtoHA
 C
 C     CALL THE DBS MODULE TO OUTPUT FUEL DATA TO A DATABASE
 C
       DBSKODE = 1
-
-      CONV=TItoTM/ACRtoHA
       CALL DBSFUELS(IYR,NPLT,TOTLIT*CONV,TOTDUF*CONV,SMALL2*CONV,
      &    LARGE2*CONV,(CWD(3,4,1,5)+CWD(3,4,2,5))*CONV,
      &    (CWD(3,5,1,5)+CWD(3,5,2,5))*CONV,
@@ -401,8 +418,7 @@ C     IT, THEN DO SO.
   699    FORMAT(2(/1X,I5))
   700    FORMAT(1X,I5,1X,122('-'))
   701    FORMAT(1X,I5,1X,42X,'******  FIRE MODEL VERSION 1.0 ******')
-  702    FORMAT(1X,I5,1X,52X,'ALL FUELS REPORT '
-     &                       '(BASED ON STOCKABLE AREA)')
+  702    FORMAT(1X,I5,1X,52X,'ALL FUELS REPORT')
    44    FORMAT(1X,I5,' STAND ID: ',A26,4X,'MGMT ID: ',A4)
   703    FORMAT(1X,I5,1X,52X,'ESTIMATED FUEL LOADINGS')
   704    FORMAT(1X,I5,22X,'SURFACE FUEL (TONNES/HA) ',
@@ -411,7 +427,7 @@ C     IT, THEN DO SO.
   710    FORMAT(1X,I5,21X,'DEAD FUEL ',21X,
      &       'LIVE',15X,'DEAD',12X,'LIVE')
   715    FORMAT(1X,I5,1X,5X,39('-'),
-     &   '--  ----------  SURF  -----------   ---------------',
+     &       '--  ---------- SURF   -----------   ---------------',
      &       '        TOTAL TOTAL BIOMASS')
   720    FORMAT(1X,I5,1X,'YEAR LITT.  DUFF  <7.6  >7.6 -15.2',
      &    ' -30.5   >30  HERB SHRUB TOTAL   <7.6  >7.6   FOL  <7.6',
@@ -419,7 +435,7 @@ C     IT, THEN DO SO.
       ENDIF
 C
       WRITE(JROUT,730) IDFLAL,IYR,TOTLIT*CONV,TOTDUF*CONV,
-     &     SMALL2*CONV,LARGE2*CONV,
+     &	   SMALL2*CONV,LARGE2*CONV,
      &     (CWD(3,4,1,5)+CWD(3,4,2,5))*CONV,
      &     (CWD(3,5,1,5)+CWD(3,5,2,5))*CONV,
      &     LARGE12*CONV,
@@ -435,12 +451,13 @@ C
   750 CONTINUE
 C     STOP HERE IF WE ARE NOT PRINTING THE DOWN WOOD VOLUME REPORT
       IF (.NOT. LPRINT2) GOTO 850
+
+      CONV2=FT3pACRtoM3pHA
+
 C
 C     CALL THE DBS MODULE TO OUTPUT DOWN WOOD VOLUME REPORT TO A DATABASE
 C
       DBSKODE = 1
-      CONV2=FT3pACRtoM3pHA
-
       DO I = 1,16
         V1(I) = 0.0
       ENDDO
@@ -455,9 +472,9 @@ C
       V1(8) = CWDVOL(3,10,2,5)*CONV2
       V1(9) = (CWDVOL(3,1,1,5)+CWDVOL(3,2,1,5)+CWDVOL(3,3,1,5))*CONV2
       V1(10) = CWDVOL(3,4,1,5)*CONV2
-      V1(11) = CWDVOL(3,5,1,5)*CONV2
+      V1(11) = CWDVOL(3,5,1,5)*CONV2   
       V1(12) = CWDVOL(3,6,1,5)*CONV2
-      V1(13) = CWDVOL(3,7,1,5)*CONV2
+      V1(13) = CWDVOL(3,7,1,5)*CONV2                                         
       V1(14) = CWDVOL(3,8,1,5)*CONV2
       V1(15) = CWDVOL(3,9,1,5)*CONV2
       V1(16) = CWDVOL(3,10,1,5)*CONV2  
@@ -482,18 +499,17 @@ C     IT, THEN DO SO.
          WRITE(JROUT,820) IDDWRP
          WRITE(JROUT,800) IDDWRP
   799    FORMAT(2(/1X,I5))
-  800    FORMAT(1X,I5,1X,134('-'))
+  800    FORMAT(1X,I5,1X,122('-'))
   801    FORMAT(1X,I5,1X,42X,'******  FIRE MODEL VERSION 1.0 ******')
-  802    FORMAT(1X,I5,1X,46X,'DOWN DEAD WOOD VOLUME REPORT '
-     &                       '(BASED ON STOCKABLE AREA)')
+  802    FORMAT(1X,I5,1X,46X,'DOWN DEAD WOOD VOLUME REPORT')
 C   44    FORMAT(1X,I5,' STAND ID: ',A26,4X,'MGMT ID: ',A4)
   803    FORMAT(1X,I5,1X,30X,'ESTIMATED DOWN WOOD VOLUME (M3/HA)',
      &                       ' BY SIZE CLASS (CM)')
   804    FORMAT(1X,I5,34X,'HARD ',61X,'SOFT')
   805    FORMAT(I5,8X,62('-'),4X,62('-'))
-  820    FORMAT(1X,I5,1X,'YEAR    0-8   8-15  15-30   30-51   51-89',
-     &    '  89-127    >=127      TOT       0-8   8-15  15-30   30-51',
-     &    '   51-89  89-127    >=127      TOT ')
+  820    FORMAT(1X,I5,1X,'YEAR    0-3    3-6   6-12   12-20   20-35',
+     &    '   35-50     >=50      TOT       0-3    3-6   6-12   12-20',
+     &    '   20-35   35-50     >=50      TOT ')
       ENDIF
 C
       WRITE(JROUT,830) IDDWRP,IYR,(NINT(V1(I)),I=1,16)
@@ -519,12 +535,12 @@ C
       V2(6) = CWDCOV(3,9,2,5)
       V2(7) = CWDCOV(3,10,2,5)
       V2(8) = CWDCOV(3,4,1,5)
-      V2(9) = CWDCOV(3,5,1,5)
+      V2(9) = CWDCOV(3,5,1,5)    
       V2(10) = CWDCOV(3,6,1,5)
-      V2(11) = CWDCOV(3,7,1,5)
+      V2(11) = CWDCOV(3,7,1,5)                                         
       V2(12) = CWDCOV(3,8,1,5)
       V2(13) = CWDCOV(3,9,1,5)
-      V2(14) = CWDCOV(3,10,1,5)
+      V2(14) = CWDCOV(3,10,1,5)         
 
       CALL DBSFMDWCOV(IYR,NPLT,V2,14,DBSKODE)
       IF(DBSKODE.EQ.0) RETURN
@@ -548,16 +564,15 @@ C     IT, THEN DO SO.
   899    FORMAT(2(/1X,I5))
   900    FORMAT(1X,I5,1X,122('-'))
   901    FORMAT(1X,I5,1X,42X,'******  FIRE MODEL VERSION 1.0 ******')
-  902    FORMAT(1X,I5,1X,46X,'DOWN DEAD WOOD COVER REPORT '
-     &                       '(BASED ON STOCKABLE AREA)')
+  902    FORMAT(1X,I5,1X,46X,'DOWN DEAD WOOD COVER REPORT')
 C   44    FORMAT(1X,I5,' STAND ID: ',A26,4X,'MGMT ID: ',A4)
   903    FORMAT(1X,I5,1X,30X,'ESTIMATED DOWN WOOD PERCENT COVER (%)',
      &                       ' BY SIZE CLASS (CM)')
   904    FORMAT(1X,I5,31X,'HARD ',53X,'SOFT')
   905    FORMAT(I5,8X,56('-'),2X,58('-'))
-  920    FORMAT(1X,I5,1X,'YEAR   8-15   15-30   30-51   51-89  89-127',
-     &    '   >=127     TOT      8-15   15-30   30-51   51-89  89-127',
-     &    '   >=127     TOT ')
+  920    FORMAT(1X,I5,1X,'YEAR    3-6    6-12   12-20   20-35   35-50',
+     &    '    >=50     TOT       3-6    6-12   12-20   20-35   35-50',
+     &    '    >=50     TOT ')
       ENDIF
 C
       WRITE(JROUT,930) IDDWCV,IYR,(V2(I),I=1,14)
@@ -565,3 +580,7 @@ C
 
       RETURN
       END
+
+
+
+

@@ -1,7 +1,7 @@
       SUBROUTINE FMKILL(ICALL)
       IMPLICIT NONE
 C----------
-C FIRE-BASE $Id: fmkill.f 2561 2018-11-17 00:28:06Z lancedavid $
+C  $Id: fmkill.f 2359 2018-05-18 17:35:04Z lancedavid $
 C----------
 C     SINGLE-STAND VERSION
 C
@@ -15,8 +15,8 @@ C                  IS ADDED TO WK2
 C     IF ICALL = 2 THEN CALLED TO GET ALL EXTRA WK2 MORTALITY
 C                  INTO THE SNAG LIST.
 C
-C     CALLED FROM:  GRADD  [SINGLE-STAND]
-C
+C     CALLED FROM:  PPMAIN [PPE]
+C                   GRADD  [SINGLE-STAND]
 C     CALLS:   FMSSEE
 C              FMSADD
 C
@@ -137,6 +137,7 @@ C        end of tree loop.
 C        Now group new snags into species-dbh-ht records,
 C        and collect the canopy material of non-fire-killed snags.
 
+Cppe     YEAR = MIY(MICYC) - 1
 Csng     YEAR =  IY(ICYC+1) - 1
          YEAR =  IY(ICYC+1) - 1
 
@@ -147,6 +148,10 @@ C        Now you can zero out the fire model mortality array
          DO I = 1, ITRN
             FIRKIL(I) = 0.0
          ENDDO
+
+Cppe     PUT THE FIRE MODEL PARAMETERS BACK IN THE DA FILE
+Cppe     CALL SPARLS (ISNKEY(ISTND, 5), ISNKEY(ISTND, 6))
+Cppe     CALL FMPSTD(ISTND)
 
 C        SET FLAG TO MARK COMPLETION OF THE FIRST MASTER CYCLE.
 

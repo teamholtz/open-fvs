@@ -1,7 +1,7 @@
       SUBROUTINE ISSTAG
       IMPLICIT NONE
 C----------
-C BASE $Id: isstag.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: isstag.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C   INITIALIZE THE STAND STRUCTURAL STAGE CLASSES CALCULATIONS.

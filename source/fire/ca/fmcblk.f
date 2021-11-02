@@ -1,7 +1,7 @@
       BLOCK DATA FMCBLK
       IMPLICIT NONE
 C----------
-C FIRE-CA $Id: fmcblk.f 3758 2021-08-25 22:42:32Z lancedavid $
+C   **FMCBLK--FIRE-CA  DATE OF LAST REVISION:   08/15/06
 C----------
 COMMONS
 C
@@ -34,7 +34,7 @@ C      10=WOODLAND JUNIPER/OAK/MESQUITE
      & 9, 9, 9, 7, 8,
      & 8, 8, 8, 8, 8, ! 40
      & 8, 8, 8, 6, 6,
-     & 6, 3, 8,10, 1 /! 50
+     & 6, 3, 8,10 /   ! 49
 
 C DATA Statement Debug Information
 C         Variant   = CA

@@ -1,6 +1,6 @@
       BLOCK DATA DBSBLKD
 C
-C DBS $Id: dbsblkd.f 2445 2018-07-09 21:23:04Z gedixon $
+C $Id: dbsblkd.f 2357 2018-05-18 17:26:03Z lancedavid $
 C
 C     INITIALIZE DATABASE VARIABLES
 C

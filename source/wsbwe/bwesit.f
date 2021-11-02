@@ -1,7 +1,7 @@
       SUBROUTINE BWESIT 
       IMPLICIT NONE
 C----------
-C WSBWE $Id: bwesit.f 2460 2018-07-24 14:41:48Z gedixon $
+C  **BWESIT                 DATE OF LAST REVISION:  07/14/10
 C----------
 C
 C     INITIALIZES ONE STAND AT THE BEGINNING OF A CYCLE.

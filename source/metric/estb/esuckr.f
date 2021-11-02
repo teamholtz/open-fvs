@@ -1,7 +1,7 @@
        SUBROUTINE ESUCKR
        IMPLICIT NONE
 C----------
-C METRIC-ESTB $Id: esuckr.f 2464 2018-07-27 15:36:37Z gedixon $
+C  **ESUCKR--ESTB/M  DATE OF LAST REVISION:   02/08/13
 C----------
 COMMONS
 C

@@ -1,7 +1,7 @@
       SUBROUTINE SVCMP2(ITARG,ISOUR)
       IMPLICIT NONE
 C----------
-C BASE $Id: svcmp2.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: svcmp2.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     STAND VISUALIZATION GENERATION

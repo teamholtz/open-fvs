@@ -3,7 +3,7 @@
      -  PERTRCR,SM25,SM10,KODE)
       IMPLICIT NONE
 C----------
-C DBSQLITE $Id: dbsfmfuel.f 2477 2018-08-30 15:16:07Z lancedavid $
+C $Id: dbsfmfuel.f 2377 2018-06-01 09:28:24Z nickcrookston $
 C----------
 C
 C     PURPOSE: TO POPULATE A DATABASE WITH THE FUELS CONSUMPTION REPORT

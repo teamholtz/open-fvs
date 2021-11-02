@@ -1,7 +1,7 @@
       SUBROUTINE SVLCOL (X,Y,R,X1,Y1,X2,Y2,KODE)
       IMPLICIT NONE
 C----------
-C BASE $Id: svlcol.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: svlcol.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     STAND VISUALIZATION GENERATION

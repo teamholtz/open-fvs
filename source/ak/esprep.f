@@ -1,19 +1,13 @@
       SUBROUTINE ESPREP (PNONE,PMECH,PBURN)
       IMPLICIT NONE
 C----------
-C AK $Id: esprep.f 3617 2021-05-28 17:02:44Z lancedavid $
+C  **ESPREP--AK     DATE OF LAST REVISION:   02/14/08
 C----------
 C     PREDICT DEFAULT SITE PREP PROBABILITIES.
 C
-C----------
-C  VARIABLE DECLARATIONS:
-C----------
-C
-      REAL PBURN,PMECH,PNONE
-C
-C----------
 C     PROB(NO SITE PREP)
 C----------
+      REAL PBURN,PMECH,PNONE
       PNONE = 1.0
 C----------
 C     PROB(MECH SITE PREP)

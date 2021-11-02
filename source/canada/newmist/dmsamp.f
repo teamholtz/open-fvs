@@ -1,7 +1,7 @@
       SUBROUTINE DMSAMP (TotD, D, CNB, Prop, S)
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: dmsamp.f 2461 2018-07-24 18:00:57Z gedixon $
+C  $Id: dmsamp.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 C **DMSAMP -- NISI  Date of last revision: April 12 1994 
 C----------------------------------------------------------------------

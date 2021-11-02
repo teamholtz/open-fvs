@@ -1,7 +1,7 @@
       SUBROUTINE ESTAB (KDT)
       IMPLICIT NONE
 C----------
-C METRIC-AK $Id: estab.f 2464 2018-07-27 15:36:37Z gedixon $
+C AK/M $ID$
 C----------
 COMMONS
 C

@@ -1,7 +1,7 @@
       SUBROUTINE RDROUT
       IMPLICIT NONE
 C----------
-C RD $Id: rdrout.f 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDROUT      LAST REVISION:  09/02/14
 C----------
 C  ****** NOTICE ********* NOTICE ******* NOTICE ****** NOTICE *******
 C  ***                                                             ***

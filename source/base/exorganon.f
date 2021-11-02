@@ -1,8 +1,8 @@
       SUBROUTINE EXORGANON
       IMPLICIT NONE
 C----------
-C BASE $Id: exorganon.f 2438 2018-07-05 16:54:21Z gedixon $
-C----------
+C BASE $Id: exorganon.f 0000 2018-02-14 00:00:00Z gedixon $
+C
 C  SATISFY EXTERNAL REFRENCES FOR THE ORGANON EXTENSION
 C----------
       LOGICAL DEBUG,LKECHO

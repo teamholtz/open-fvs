@@ -1,9 +1,9 @@
       SUBROUTINE DMSUM(DMTRCW, IDMSHP)
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: dmsum.f 3787 2021-09-13 22:47:08Z donrobinson $
+C  $Id: dmsum.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
-C **DMSUM --     DATE OF LAST REVISION:  02/23/96 
+C **DMSUM --     DATE OF LAST REVISION:  02/23/96   
 C This code was adapted from the CVSUM subroutine of the COVER model.
 C----------
 C  Purpose:
@@ -22,7 +22,7 @@ C Other routines called:
 C
 C     DBCHK
 C
-C Argument list definitions:
+C Argument list definitions:                        
 C
 C     REAL    DMTRCW  (I) Predicted maximum crown width (feet).
 C     INTEGER IDMSHP  (I) Tree crown shape category.
@@ -55,9 +55,9 @@ C     INTEGER DMSHAP      DM shape category
 C
 C Common block variables and parameters:
 C
-C     DMRDMX  DMCOM
+C     DMRDMX  DMCOM                                 
 C     FPM     DMCOM
-C     MESH    DMCOM
+C     MESH    DMCOM                       
 C     MXHT    DMCOM
 C     PIE     DMCOM
 C
@@ -69,7 +69,7 @@ C********************************************************************
       INCLUDE 'CONTRL.F77'
       INCLUDE 'ARRAYS.F77'
       INCLUDE 'PLOT.F77'
-      INCLUDE 'DMCOM.F77'
+      INCLUDE 'DMCOM.F77'                                       
 
 C Argument list variables.
 
@@ -77,7 +77,7 @@ C Argument list variables.
       INTEGER IDMSHP
 
       DIMENSION DMTRCW(MAXTRE)
-      DIMENSION IDMSHP(MAXTRE)
+      DIMENSION IDMSHP(MAXTRE)      
 
 C Local variables.
 
@@ -114,11 +114,11 @@ C
      &'  LOWLIM      H1      H2      Y1      Y1')
 
       do I=1,ITRN
-        do J=1,MXHT
+	  do J=1,MXHT
           DMRDMX(I, J, RADIUS) = 0.
           DMRDMX(I, J, VOLUME) = 0.
-        enddo
-      enddo
+	  enddo
+	enddo
 C
 C     ENTER TREE LOOP.
 C
@@ -187,9 +187,9 @@ C
       IF (Y1 .LT. -B1) Y1 = -B1
       IF (Y2 .GT. B1) Y2 = B1
       IF (Y2 .LT. -B1) Y2 = -B1
-      Z1=B1*B1-Y1*Y1
-      Z2=B1*B1-Y2*Y2
-      IF(Z1.LT.0.0) Z1=0.0
+	Z1=B1*B1-Y1*Y1
+	Z2=B1*B1-Y2*Y2
+	IF(Z1.LT.0.0) Z1=0.0
       IF(Z2.LT.0.0) Z2=0.0
       CONST = 1.04720 * H2 * RAD * RAD / (HC * HC)
       FRUST = CONST* (3 * HC * HC - 12*H1*H1 - 12*H1*H2 - 4*H2*H2)
@@ -230,10 +230,10 @@ C
       IF (Y1 .LT. -B1) Y1 = -B1
       IF (Y2 .GT. B1) Y2 = B1
       IF (Y2 .LT. -B1) Y2 = -B1
-      Z1=B1*B1-Y1*Y1
-      Z2=B1*B1-Y2*Y2
-      IF(Z1.LT.0.0) Z1=0.0
-      IF(Z2.LT.0.0) Z2=0.0
+	Z1=B1*B1-Y1*Y1
+	Z2=B1*B1-Y2*Y2
+	IF(Z1.LT.0.0) Z1=0.0
+	IF(Z2.LT.0.0) Z2=0.0
       CONST = 1.04720*H2*RAD*RAD/(HC*HC)
       FRUST = CONST*(3*HC*HC - 12*H1*H1 - 12*H1*H2 - 4*H2*H2)
       PAREA = RAD/B1*(Y2*SQRT(Z2)+B1**2*ASIN(Y2/B1))-
@@ -249,8 +249,8 @@ C  RADIUS and VOLUME measures are in MESH units.
       RAD2 = SQRT(FRUST / (PIE * H2))
       
 c     if (j .gt. 4) then
-c        jjj=0
-c      endif
+c	  jjj=0
+c	endif
 
       DMRDMX(I, J, RADIUS) = RAD2 / MSCL
       DMRDMX(I, J, VOLUME) = FRUST / MSCL**3

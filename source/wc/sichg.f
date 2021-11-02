@@ -1,7 +1,7 @@
       SUBROUTINE SICHG(ISISP,SSITE,SIAGE)
       IMPLICIT NONE
 C----------
-C WC $Id: sichg.f 2459 2018-07-22 22:04:44Z gedixon $
+C  **SICHG--WC   DATE OF LAST REVISION:  04/22/10
 C----------
 COMMONS
 C

@@ -1,7 +1,7 @@
       SUBROUTINE TWIGBF(ISPC,H,D,VMAX,BBFV)
       IMPLICIT NONE
 C----------
-C ACD $Id: twigbf.f 2461 2018-07-24 18:00:57Z gedixon $
+C  **TWIGBF---NE  DATE OF LAST REVISION:  07/11/08
 C----------
 C
 COMMONS

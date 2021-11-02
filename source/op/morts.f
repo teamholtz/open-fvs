@@ -1,7 +1,7 @@
       SUBROUTINE MORTS
       IMPLICIT NONE
 C----------
-C OP $Id: morts.f 3758 2021-08-25 22:42:32Z lancedavid $
+C OP $Id: morts.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C  THIS SUBROUTINE COMPUTES PERIODIC MORTALITY RATES FOR
 C  EACH TREE RECORD AND THEN REDUCES THE NUMBER OF TREES/ACRE
@@ -21,7 +21,7 @@ C----------
 C  SF , WF, GF, AF, RF,SS, NF, ES:     USE GF FROM NW ORGANON
 C  YC , IC:                            USE IC FROM SW ORGANON
 C  LP, JP, SP, WP, PP, WJ, LL, WB, KP: USE PP FROM SW ORGANON
-C  DF, OT:                             USE DF FROM NW ORGANON
+C  DF, RW, OT:                         USE DF FROM NW ORGANON
 C  WH, MH, RC:                         USE WH FROM NW ORGANON
 C  BM:                                 USE BM FROM NW ORGANON
 C  RA, WA, PB, AS, CW, WI:             USE RA FROM NW ORGANON
@@ -29,7 +29,6 @@ C  GC:                                 USE GC FROM SW ORGANON
 C  WO:                                 GOULD&HARRINGTON
 C  PY:                                 USE PY FROM SW ORGANON
 C  DG, HT, CH:                         USE DG FROM NW ORGANON
-C  RW                                  USE CASTLE 2021 EQUATION
 C----------
 COMMONS
 C
@@ -127,7 +126,7 @@ C CHANGE SOME OF THE SETTINGS FOR DF. THIS IS DONE BELOW.
 C----------
       DATA MORTMAP/ 
      & 2,2,2,2,2,2,2,4,4,2,
-     & 4,4,4,4,4,1,6,3,3,3,                              ! DF NWO
+     & 4,4,4,4,4,1,1,3,3,3,                              ! DF NWO
 C SMC     & 4,4,4,4,4,4,1,3,3,3,                         ! DF SMC
      & 4,4,4,4,4,4,4,5,4,4,
      & 4,4,4,4,4,4,4,1,1/
@@ -279,10 +278,9 @@ C  CALCULATE AVERAGE DBH USED IN INDIV. MORT EQUATION BELOW
 C----------
       DSUM=0.0
       WPROB=0.0
-      DO I=1,ITRN
-        WPROB=WPROB+PROB(I)
-        DSUM=DSUM+DBH(I)*PROB(I)
-      ENDDO
+      DO 30 I=1,ITRN
+      WPROB=WPROB+PROB(I)
+   30 DSUM=DSUM+DBH(I)*PROB(I)
       AVED=DSUM/WPROB
       IF(DEBUG)WRITE(JOSTND,*)'IN MORTS DSUM,WPROB,AVED= ',DSUM,WPROB,
      &AVED
@@ -362,7 +360,6 @@ C SMALL TREES USE EQUATIONS BY GOULD AND HARRINGTON
 C----------
       CR=ICR(I)*0.01
       BAL=(1.0 - (PCT(I)/100.)) * BA
-      PTBAL=PTBALT(I)
       CRADJ = 1.0
       IF(CR .LE. 0.17) CRADJ=1.0-EXP(-(25.0*CR)**2.0)
       XSITE2=SITEAR(19)
@@ -417,25 +414,18 @@ C
           RIP = -6.6707 + 0.5105*ALOG(5+BA) - 1.3183*RELHT
           RIP = (1.0/(1.0+EXP(RIP)))
           RIP = 1.0-RIP                                          !annual RIP
-C NEW REDWOOD EQUATION
-        CASE(6)
-          RIP = 2.901447 + (0.578694*D) + (-0.001793*PTBAL)
-          RIP = 1.0/(1.0 + EXP(RIP))                           !annual RIP
-          IF(RIP .LT. 0.0001) RIP = 0.0001                     !constrain RIP
-          IF(DEBUG) WRITE(JOSTND,*)'IN MORTS RW DEBUG',' DBH=',D,
-     & ' PTBAL=',PTBAL,' RIP=',RIP
       END SELECT
 C----------
 C SMALL-TREE MORTALITY MODEL DEVELOPED BY GOULD AND HARRINGTON
-C SMALL-TREE LOGIC IS BYPASSED FOR REDWOOD
 C----------  
-      IF (D .LT. 3.0 .AND. ISPC .NE. 17) THEN
+      IF (D .LT. 3.0) THEN
         RELHT = 0.0
         IF(AVH .GT. 0.0) RELHT=HT(I)/AVH
         IF(RELHT .GT. 1.5)RELHT=1.5
         HBH = HT(I)
         IF (HBH .GE. 4.5) HBH = 4.5
         DBHA = D+BETA(ISPC)*HBH  
+        PTBAL=PTBALT(I)
         ACLASS = MCLASS(ISPC)
         AVALUE = MVALUES(ACLASS)
         RIP = PTBAL*AVALUE/SQRT(DBHA+1)
@@ -573,7 +563,7 @@ C---------
 C
 C
 C----------
-C  COMPUTE THE FIXMORT OPTION.  LOOP OVER ALL SCHEDULED FIXMORTS
+C  COMPUTE THE FIXMORT OPTION.  LOOP OVER ALL SCHEDULED FIXMORT'S
 C  LINCL IS USED TO INDICATE WHETHER A TREE GETS AFFECTED OR NOT
 C----------
       CALL OPFIND (1,MYACTS(2),NTODO)

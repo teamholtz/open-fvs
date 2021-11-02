@@ -1,7 +1,7 @@
       SUBROUTINE RDSHRK
       IMPLICIT NONE
 C----------
-C RD $Id: rdshrk.f 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDSHRK      LAST REVISION:  09/03/14
 C----------
 C
 C  Purpose :

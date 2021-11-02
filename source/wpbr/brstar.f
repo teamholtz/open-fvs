@@ -1,8 +1,8 @@
       SUBROUTINE BRSTAR(HT,STAR)
       IMPLICIT NONE
-C----------
-C WPBR $Id: brstar.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **BRSTAR       DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C  Calculates the value of the sum of target area for a tree.
 C----------------------------------------------------------------------

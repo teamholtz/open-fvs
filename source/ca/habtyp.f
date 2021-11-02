@@ -1,7 +1,7 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
       IMPLICIT NONE
 C----------
-C CA $Id: habtyp.f 2440 2018-07-05 18:12:18Z gedixon $
+C CA $Id: habtyp.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C
 C     TRANSLATES HABITAT TYPE  CODE INTO A SUBSCRIPT, ITYPE, AND IF

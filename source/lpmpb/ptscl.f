@@ -1,7 +1,7 @@
       SUBROUTINE PTSCL(IPLTNO,IPTLUN)
       IMPLICIT NONE
 C----------
-C LPMPB $Id: ptscl.f 2450 2018-07-11 17:28:41Z gedixon $
+C  **PTSCL         DATE OF LAST REVISION:  08/22/14
 C----------
 C
 C        ROUTINE TO PRINT SCALES

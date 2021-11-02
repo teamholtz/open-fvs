@@ -1,6 +1,6 @@
       BLOCK DATA BWEBK
 C----------
-C WSBWE $Id: bwebkbc.f 2460 2018-07-24 14:41:48Z gedixon $
+C  **BWEBK--IB       DATE OF LAST REVISION:  09/06/06
 C           SEI 14-July-2008
 C----------
 C

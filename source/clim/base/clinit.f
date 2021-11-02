@@ -1,7 +1,7 @@
       SUBROUTINE CLINIT 
       IMPLICIT NONE
 C----------
-C CLIM-BASE $Id: clinit.f 2442 2018-07-09 14:51:05Z gedixon $
+C  $Id: clinit.f 341 2012-08-15 22:19:22Z ncrookston.fs@gmail.com $
 C----------
 C
 C     CLIMATE EXTENSION 

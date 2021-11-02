@@ -1,7 +1,7 @@
       FUNCTION BRATIO(IS,D,H)
       IMPLICIT NONE
 C----------
-C KT $Id: bratio.f 2449 2018-07-11 14:53:35Z gedixon $
+C NI $Id: bratio.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C
 C FUNCTION TO COMPUTE BARK RATIOS. THIS ROUTINE IS VARIANT SPECIFIC

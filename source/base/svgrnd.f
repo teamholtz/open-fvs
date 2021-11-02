@@ -1,7 +1,7 @@
       SUBROUTINE SVGRND (NOUT,KYLAST,KYFRST,IFIREFLG)
       IMPLICIT NONE
 C----------
-C BASE $Id: svgrnd.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: svgrnd.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C     SVS BASIC GROUND DEFINITION GENERATION
 C     D.L.GAMMEL    -- SEM         -- JUNE 2002

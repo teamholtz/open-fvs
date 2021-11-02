@@ -1,7 +1,7 @@
       SUBROUTINE EVTACT
       IMPLICIT NONE
 C----------
-C BASE $Id: evtact.f 2944 2020-02-03 22:59:12Z lancedavid $
+C  $Id: evtact.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     ESTABLISHES THE LINKAGE BETWEEN AN EVENT, REFERENCED BY THE MOST
@@ -16,8 +16,8 @@ C     -----   ----------------------------------------------------------
 C     EVTHEN  CALLED WHEN THE THEN KEYWORD IS SPECIFIED, THE OPTION
 C             ACTIVITY KEYWORDS WHICH FOLLOW ARE LINKED TO AN EVENT
 C             NUMBER AND STORED FOR FUTURE SCHEDULING.
-C     EVALSO  CALLED WHEN ALSOTRY KEYWORD IS SPECIFIED.  
-C             CLOSES OFF
+C     EVALSO  CALLED WHEN ALSOTRY KEYWORD IS SPECIFIED.  EVALSO THEN
+C             FINDS OUT IF THE PPE IS AN ACTIVE SYSTEM, CLOSES OFF
 C             A PREVIOUS ENTRY IN IEVACT, ESTABLISHES NEW ENTRY IN
 C             IEVACT, AND ACCOMPLISHES SOME ERROR CHECKING.
 C     EVEND   CALLED WHEN ENDIF IS SPECIFIED, CLOSES OFF PREVIOUS
@@ -143,13 +143,12 @@ C
 C        MOVE THE EXPRESSION INTO CEXPRS.
 C
          ICEX=0
-         DO J=IPRMPT,7
-           DO K=1,10
-           ICEX=ICEX+1
-           CEXPRS(ICEX)=KARD(J)(K:K)
-           CALL UPCASE(CEXPRS(ICEX))
-           ENDDO
-         ENDDO
+         DO 10 J=IPRMPT,7
+         DO 10 K=1,10
+         ICEX=ICEX+1
+         CEXPRS(ICEX)=KARD(J)(K:K)
+         CALL UPCASE(CEXPRS(ICEX))
+   10    CONTINUE
 C
 C        WRITE THE FIRST LINE.
 C
@@ -163,7 +162,7 @@ C
          IF (CEXPRS(I).EQ.'&') THEN
             IAMP=I
             GOTO 35
-         ENDIF                                                      
+         ENDIF
    30    CONTINUE
    35    CONTINUE
 C

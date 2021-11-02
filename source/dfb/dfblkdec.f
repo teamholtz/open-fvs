@@ -1,7 +1,7 @@
       BLOCK DATA DFBLKD
       IMPLICIT NONE
 C----------
-C DFB $Id: dfblkdec.f 2446 2018-07-09 22:54:33Z gedixon $
+C  **DFBLKD--EC   DATE OF LAST REVISION:  03/16/12
 C----------
 C
 C     DOUGLAS-FIR BEETLE MODEL BLOCK DATA

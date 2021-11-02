@@ -1,7 +1,7 @@
       SUBROUTINE ESTPP (VAL,TPP)
       IMPLICIT NONE
 C----------
-C ESTB $Id: estpp.f 2448 2018-07-10 17:04:02Z gedixon $
+C  **ESTPP  DATE OF LAST REVISION:   07/25/08
 C----------
 C
 COMMONS

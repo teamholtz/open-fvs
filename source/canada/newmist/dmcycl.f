@@ -1,7 +1,7 @@
       SUBROUTINE DMCYCL
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: dmcycl.f 2461 2018-07-24 18:00:57Z gedixon $
+C  $Id: dmcycl.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 C **DMCYCL -- NISI  Date of last revision April 7 1994
 C----------------------------------------------------------------------

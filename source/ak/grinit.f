@@ -1,11 +1,10 @@
       SUBROUTINE GRINIT
       IMPLICIT NONE
 C----------
-C AK $Id: grinit.f 3617 2021-05-28 17:02:44Z lancedavid $
+C AK $Id: grinit.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C  INITIALIZE PROGNOSIS MODEL VARIABLES
-C----------
 C
 COMMONS
 C
@@ -16,63 +15,54 @@ C
       INCLUDE 'ARRAYS.F77'
 C
 C
-      INCLUDE 'CALCOM.F77'
-C
-C
       INCLUDE 'COEFFS.F77'
 C
 C
       INCLUDE 'CONTRL.F77'
 C
 C
-      INCLUDE 'CWDCOM.F77'
-C
-C
-      INCLUDE 'ECON.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'MULTCM.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'SUMTAB.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
 C
 C
       INCLUDE 'WORKCM.F77'
 C
 C
+      INCLUDE 'PLOT.F77'
+C
+C
+      INCLUDE 'HTCAL.F77'
+C
+C
+      INCLUDE 'ECON.F77'
+C
+C
+      INCLUDE 'MULTCM.F77'
+C
+C
+      INCLUDE 'SUMTAB.F77'
+C
+C
+      INCLUDE 'VOLSTD.F77'
+C
+C
+      INCLUDE 'VARCOM.F77'
+C
+C
+      INCLUDE 'CWDCOM.F77'
+C
+C
+      INCLUDE 'CALCOM.F77'
+C
+C
 COMMONS
-C
 C----------
-C  VARIABLE DECLARATIONS:
-C----------
-C
-      CHARACTER*2 ANINDEX
-      CHARACTER*4 NONE
-      CHARACTER*26 DBLK
-C
       INTEGER I,J,K
-C----------
-C  DATA STATEMENTS:
-C----------
+      CHARACTER*26 DBLK
+      CHARACTER*4 NONE
+      CHARACTER*2 ANINDEX
       DATA DBLK/'                          '/
       DATA NONE/'NONE'/
 C----------
-      VARACD = 'AK'
       CALL LNKINT
       DO 5 I=1,MAXSP
       SDIDEF(I) = 0.0
@@ -88,21 +78,21 @@ C----------
       VEQNNB(I) = '          '
       VEQNNC(I) = '          '
       STMP(I) = 1.0
-      TOPD(I) = 0.0
-      DBHMIN(I) = 0.0
+      TOPD(I) = 6.0
+      DBHMIN(I) = 9.0
       FRMCLS(I) = 32.0
       METHB(I) = 6
       METHC(I) = 6
       BFSTMP(I) = 1.0
-      BFTOPD(I) = 0.0
-      BFMIND(I) = 0.0
+      BFTOPD(I) = 6.0
+      BFMIND(I) = 9.0
       BFLA0(I) = 0.0
       BFLA1(I) = 1.0
       CFLA0(I) = 0.0
       CFLA1(I) = 1.0
       LDGCAL(I) = .TRUE.
       LHTCAL(I) = .TRUE.
-      LHTDRG(I) = .FALSE.
+      LHTDRG(I) = .TRUE.
       BARANK(I) = 0.0
       MAXSDI(I) = 0
       SITEAR(I) = 0.0
@@ -126,8 +116,16 @@ C----------
    5  CONTINUE
       LFLAGV = .FALSE.
       LBAMAX = .FALSE.
-      LZEIDE = .TRUE.
-      CALCSDI = ' '
+      LZEIDE = .FALSE.
+      LHTDRG(10) = .FALSE.
+      LHTDRG(11) = .FALSE.
+      DBHMIN(10) = 11.0
+      TOPD(10) = 8.0
+      DBHMIN(11) = 11.0
+      TOPD(11) = 8.0
+      DBHMIN(12) = 11.0
+      TOPD(12) = 8.0
+      BFMIND(7) = 8.0
       CFMIN = 0.
       TCFMIN = 0.
       BFMIN = 0.
@@ -143,7 +141,6 @@ C----------
       ITHNPI = 1
       ITHNPN = -1
       ITHNPA = 0
-      LPERM =.FALSE.
 C----------
       DO 10 I=1,MAXCYC
       IY(I) = -1
@@ -166,7 +163,7 @@ C----------
       BRK = 5.0
       DGSD = 2.0
       EFF = 1.0
-      ELEV = 0.
+      ELEV = 10.
       FINT = 10.
       FINTH = 5.
       FINTM = 5.0
@@ -184,7 +181,7 @@ C----------
       IDG = 0
       IFINT = 10
       IFINTH = 5
-      IFOR = 2
+      IFOR = 3
       KODFOR = 0
       IFST = 1
       IGL = 1
@@ -219,8 +216,8 @@ C----------
       DBCN = ' '
       SAMWT = -1E25
       SLOPE = 5.0
-      TLAT = 0.
-      TLONG = 0.
+      TLAT = 56.
+      TLONG = 132.
       ISTATE = 0
       ICNTY = 0
       TFPA = 0.0
@@ -254,10 +251,10 @@ C----------
       DLOMSB=0.
       DHIMSB=999.
       MFLMSB=1
-      DBHZEIDE=0.0
-      DBHSTAGE=0.0
+      DBHZEIDE=0.
+      DBHSTAGE=0.
       DR016=0.
-      DBHSDI=0.0
+      DBHSDI=0.
       JSPINDEF=0
       CCCOEF=1.0 
       CCCOEF2=1.0
@@ -329,8 +326,5 @@ C----------
         ISTAGF(I)=0
       ENDDO
 C
-      DO I=1,MAXPLT
-        XMAXPT(I)=0.0
-      ENDDO
       RETURN
       END

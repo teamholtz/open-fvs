@@ -1,5 +1,5 @@
 C----------
-C VOLUME $Id: stump.f 2458 2018-07-22 19:09:30Z gedixon $
+C VOLUME $Id: stump.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
 C----------
 c     Subroutines to calculate diameter inside and ouside bark diameter between 0 and 4.5 and also stump volume.
 c     From Raile, G 1982. Estimating stump volume. Res. Pap. NC-224 St Paul, USDA FS North Central Forest Experimental Station

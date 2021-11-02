@@ -1,7 +1,7 @@
       SUBROUTINE RDINIT
       IMPLICIT NONE
 C----------
-C RD $Id: rdinit.f 3800 2021-09-14 00:22:52Z donrobinson $
+C  **RDINIT      LAST REVISION:  03/24/15
 C----------
 C
 C  Purpose :
@@ -722,14 +722,9 @@ C     time step.
       LBBON     = .TRUE.
       LBORAX(1) = .FALSE. 
       LBORAX(2) = .FALSE. 
+      LMTRIC    = .FALSE.
       LPLINF    = .FALSE.
       LRTYPE    = .FALSE.
-      
-      IF(VARACD.EQ.'BC' .OR. VARACD.EQ.'ON') THEN
-        LMTRIC = .TRUE.
-      ELSE
-        LMTRIC = .FALSE.
-      ENDIF
 
       MAXRR  = 2
       MINRR  = 1

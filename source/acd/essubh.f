@@ -2,7 +2,7 @@
      &  TRAGE,SI,LOSTND)
       IMPLICIT NONE
 C----------
-C ACD $Id: essubh.f 2461 2018-07-24 18:00:57Z gedixon $
+C  **ESSUBH--NE   DATE OF LAST REVISION:   07/11/08
 C----------
 C
 COMMONS

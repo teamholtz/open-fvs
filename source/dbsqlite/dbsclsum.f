@@ -1,26 +1,21 @@
-      SUBROUTINE DBSCLSUM(CNPLT,IYR,SP,SPVIAB,
+      SUBROUTINE DBSCLSUM(NPLT,IYR,SP,SPVIAB,
      >          SPBA,SPTPA,SPMORT1,SPMORT2,SPGMULT,
      >          SPSITGM,MXDENMLT,POTESTAB)
       IMPLICIT NONE
 C
-C DBSQLITE $Id: dbsclsum.f 3039 2020-03-31 01:45:27Z lancedavid $
+C $Id: dbsclsum.f 2377 2018-06-01 09:28:24Z nickcrookston $
 C
 C     POPULATE A DATABASE WITH THE CLIMATE SUMMARY
 
-      INCLUDE 'PRGPRM.F77'
-
-      INCLUDE 'PLOT.F77'
-
       INCLUDE 'DBSCOM.F77'
 C
-      INTEGER I,IYR,IRCODE
-      CHARACTER(LEN=*) CNPLT,SP
+      INTEGER IYR,IRCODE
+      CHARACTER(LEN=*) NPLT,SP
       REAL SPVIAB,SPBA,SPTPA,SPMORT1,SPMORT2,SPGMULT,
      >     SPSITGM,MXDENMLT,POTESTAB
 
-      CHARACTER*8    CSP1,CSP2,CSP3
       CHARACTER*2000 SQLStmtStr
-
+      
       INTEGER fsql3_tableexists,fsql3_exec
       IF (ICLIM.EQ.0) RETURN
 
@@ -34,9 +29,7 @@ C     MAKE SURE WE HAVE AN UP TO DATE CASEID
      -              'CaseID text not null,'//
      -              'StandID text not null,'//
      -              'Year Int null,'//
-     -              'SpeciesFVS    text null,'//
-     -              'SpeciesPLANTS text null,'//
-     -              'SpeciesFIA    text null,'//
+     -              'Species text null,'//
      -              'Viability real null,'//
      -              'BA real null,'//
      -              'TPA real null,'//
@@ -53,25 +46,11 @@ C     MAKE SURE WE HAVE AN UP TO DATE CASEID
         ENDIF
       ENDIF
 
-C     ASSIGN FVS, PLANTS AND FIA SPECIES CODES
-C
-      DO I = 1,MAXSP
-        IF (SP .EQ. JSP(I)) THEN
-          CSP1 = JSP(I)
-          CSP2 = PLNJSP(I)
-          CSP3 = FIAJSP(I)
-        ENDIF
-      ENDDO
-
       WRITE(SQLStmtStr,*)'INSERT INTO FVS_Climate (CaseID,'//
-     -   'StandID,Year,SpeciesFVS,SpeciesPLANTS,SpeciesFIA,'//
-     -   'Viability,BA,TPA,ViabMort,'//
+     -   'StandID,Year,Species,Viability,BA,TPA,ViabMort,'//
      -   'dClimMort,GrowthMult,SiteMult,MxDenMult,AutoEstbTPA) '//
-     -   'VALUES(''',CASEID,''',''',TRIM(CNPLT),''',',IYR,',',
-     -   '''',TRIM(CSP1),''',',
-     -   '''',TRIM(CSP2),''',',
-     -   '''',TRIM(CSP3),''',',
-     -   SPVIAB,',',SPBA,',',SPTPA,',',
+     -   'VALUES(''',CASEID,''',''',trim(NPLT),''',',IYR,',''',
+     -   trim(SP),''',',SPVIAB,',',SPBA,',',SPTPA,',',
      -   SPMORT1,',',SPMORT2,',',SPGMULT,',',
      -   SPSITGM,',',MXDENMLT,',',POTESTAB,')'
 
@@ -79,4 +58,5 @@ C
       IF (IRCODE .NE. 0) ICLIM = 0
       RETURN
       END
+
 

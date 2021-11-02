@@ -1,7 +1,7 @@
       SUBROUTINE MPBGO(L)
       IMPLICIT NONE
 C----------
-C LPMPB $Id: mpbgo.f 2450 2018-07-11 17:28:41Z gedixon $
+C  **MPBGO         DATE OF LAST REVISION:  06/14/13
 C----------
 C
 C

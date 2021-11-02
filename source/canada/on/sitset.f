@@ -1,7 +1,8 @@
       SUBROUTINE SITSET
       IMPLICIT NONE
 C----------
-C CANADA-ON $Id: sitset.f 3788 2021-09-13 23:08:03Z donrobinson $
+C  **SITSET-- ON  DATE OF LAST REVISION:  05/11/11
+C    ON: 2/16/04
 C----------
 C THIS SUBROUTINE LOADS THE SITELG ARRAY WITH A SITE INDEX FOR EACH
 C SPECIES WHICH WAS NOT ASSIGNED A SITE INDEX BY KEYWORD.
@@ -39,16 +40,16 @@ C
       REAL SICOEF1(MAXSP,MAXSP),SICOEF2(MAXSP,MAXSP),
      &          BAMAX1(MAXSP)
       INTEGER METHB8,METHC8
-      REAL A1(17), A2(17), A3(17), A4(17), A5(17)
-      REAL THT1(17), THT2(17), THT3(17), THT4(17)
-      INTEGER OSP(MAXSP)
-
-      DOUBLE PRECISION KD
-      INTEGER J,I,JJ,K,KSP,IEQAG
+	REAL A1(17), A2(17), A3(17), A4(17), A5(17)
+	REAL THT1(17), THT2(17), THT3(17), THT4(17)
+	INTEGER OSP(MAXSP)
+	
+	DOUBLE PRECISION KD
+	INTEGER J,I,JJ,K,KSP,IEQAG
       CHARACTER FORST*2,DIST*2,PROD*2,VAR*2,VOLEQ*10
       INTEGER IFIASP,ERRFLAG,ISPC,IREGN,KFORST
-      REAL AGEBH,HTM,SIM,SLP,DIFF,SIMIN,AGEDIF
-      LOGICAL LONT
+	REAL AGEBH,HTM,SIM,SLP,DIFF,SIMIN,AGEDIF
+	LOGICAL LONT
 C
       DATA BAMAX1/
      & 150.,   150.,   240.,   240.,   240.,   190.,   240.,
@@ -274,42 +275,42 @@ C
      &  7*.0,.856,.0,.769,62*.000/
 C-----------
 C  DATA STATEMENTS FOR ONTARIO SITE INDEX EQUATIONS
-C   1=Balsam fir (SP8), 2=Black spruce (SP9,72), 3=Tamarak (SP10)
+C	1=Balsam fir (SP8), 2=Black spruce (SP9,72), 3=Tamarak (SP10)
 C    4=Black ash (SP15), 5=Black cherry (SP20), 6=Elm (SP21)
 C    7=Yellow birch (SP24), 8=Basswood (SP25), 9=Hard maple (SP26)
 C    10=White ash (SP29), 11=Red oak (SP34), 12=White birch (sp43)
-C    13=White spruce (SP6,71),
-C    14=Jack Pine(SP1,69), 15=Red Pine (Sp2&3),
+C    13=White spruce (SP6,71), 
+C    14=Jack Pine(SP1,69), 15=Red Pine (Sp2&3), 
 C    16=White pine (SP5,70), 17=Aspen (SP41)
 C-----------
       DATA A1/
-     &  0.0061, 9.0023, 0.6464, 0.2388, 0.1073, 0.1898,
+     &  0.0061, 9.0023, 0.6464, 0.2388, 0.1073, 0.1898, 
      &  0.1817, 0.1921, 0.1984, 0.1728, 0.1692, 0.5119,
      & 40.6506,23.7086,22.5992,24.4573,28.0109/
       DATA A2/
-     &  1.3539, 1.4753, 1.000,  1.1583, 1.3455, 1.2186,
+     &  1.3539, 1.4753, 1.000,  1.1583, 1.3455, 1.2186, 
      &  1.243,  1.201, 1.2089,  1.256,  1.2648, 1.0229,
      &  5.6605,20.5596,18.7782,18.1841,24.5365/
-      DATA A3/
-     &  -0.00019, 0.7996,-0.0225, -0.0102, -0.007, -0.011,
+	DATA A3/
+     &  -0.00019, 0.7996,-0.0225, -0.0102, -0.007, -0.011, 
      &  -0.011,  -0.01,  -0.011, -0.011, -0.011, -0.0167,
      &   1.2544, 17.3764,15.1961,12.4653,12.4653/
-      DATA A4/
-     &  -1.0286, 0.3976, -1.1129, -1.8455, -3.3034, -2.6865,
+	DATA A4/
+     &  -1.0286, 0.3976, -1.1129, -1.8455, -3.3034, -2.6865, 
      &  -3.0184, -2.3009, -2.4917, -3.3605, -3.4334, -1.0284,
      &  -0.1567,14.2208, 11.5513,  6.7618, 16.9224/
-      DATA A5/
-     &  -0.0723, 19.26275, 0.0, -0.1883, -0.3899, -0.2717,
+	DATA A5/
+     &  -0.0723, 19.26275, 0.0, -0.1883, -0.3899, -0.2717, 
      &  -0.318, -0.2331, -0.2542, -0.3452, -0.3557, -0.0049,
      &   5*0.0/
-      DATA THT1/13*0.0,22.56,23.0,24.42,28.53/
-      DATA THT2/13*0.0,19.46,19.78,19.24,25.02/
-      DATA THT3/13*0.0,16.36,16.56,14.06,21.12/
-      DATA THT4/13*0.0,13.32,13.04,8.3,17.3/
+	DATA THT1/13*0.0,22.56,23.0,24.42,28.53/
+	DATA THT2/13*0.0,19.46,19.78,19.24,25.02/
+	DATA THT3/13*0.0,16.36,16.56,14.06,21.12/
+	DATA THT4/13*0.0,13.32,13.04,8.3,17.3/
 
 
 C  SPECIES MAPPINGS FOR ONTARIO
-C     CODES AS ABOVE.
+C     CODES AS ABOVE. 
       DATA OSP/
      & 14,15,15,15,16,13,13, 1, 2, 3,
      &  2, 9, 2, 2, 4, 4,17, 9, 9, 5,
@@ -318,7 +319,7 @@ C     CODES AS ABOVE.
      & 17,17,12, 9, 9, 9, 9, 9, 9, 9,
      &  9, 9, 9, 9, 9, 9, 9, 5, 9, 9,
      &  5, 5, 5,17,17,17, 9, 4,14,16,
-     & 13, 2/
+     & 13, 2/ 
 C-----------
 C  SEE IF WE NEED TO DO SOME DEBUG.
 C-----------
@@ -362,7 +363,7 @@ C----------
 C     DETERMINE IF WE USE THE NEW ONTARIO EQUATIONS.
 C----------
       LONT = .FALSE.
-      IF ((KODFOR .EQ. 915 .OR. KODFOR.EQ. 916) .AND.
+      IF ((KODFOR .EQ. 915 .OR. KODFOR.EQ. 916) .AND. 
      &     OSP(ISISP) .GT. 0)
      &   LONT = .TRUE.
 C----------
@@ -371,7 +372,7 @@ C  BEEN ENTERED.
 C     NOTE THAT IF USING ONTARIO EQUATIONS, VALUES FOR SITEAR<0
 C     ARE OKAY, BECAUSE THEY ARE ACTUALLY A HEIGHT.
 C----------
-      IF(ISISP .LE. 0 .OR. SITEAR(ISISP) .EQ. 0.0 .OR.
+      IF(ISISP .LE. 0 .OR. SITEAR(ISISP) .EQ. 0.0 .OR. 
      &  (SITEAR(ISISP) .LT. 0.0 .AND. .NOT. LONT)) THEN
         WRITE(JOSTND,1)
     1   FORMAT(/,3(' ***************'/),' WARNING: SITE SPECIES ',
@@ -384,7 +385,7 @@ C  SET DEFAULT SITE SPECIES OF RED PINE NATURAL AND INDEX OF 60
 C  IF MISSING.
 C----------
       IF(ISISP .LE. 0) ISISP=3
-      IF(SITEAR(ISISP) .EQ. 0.0 .OR.
+      IF(SITEAR(ISISP) .EQ. 0.0 .OR. 
      &  (SITEAR(ISISP) .LT. 0.0 .AND. .NOT. LONT)) SITEAR(ISISP)=60.
 
       IF (LONT .AND. SITEAR(ISISP) .LT. 0.0) THEN
@@ -398,36 +399,36 @@ C       ieqag = USE AGE OF THE EQUATION, USUALLY 50, OR 56
 C       HTM = USE TOP HEIGHT ENTERED IN THE KEYWORD.
 C
          KSP = OSP(ISISP)
-       AGEBH = 6
-       IF (KSP .GE. 3 .AND. KSP .LE. 12) AGEBH = 4
-       IEQAG = 56
-       IF (KSP .GT. 1 .AND. KSP .LE. 11 .AND. KSP .NE. 7) IEQAG = 50
-       AGEDIF = REAL(IEQAG - AGEBH)
+	   AGEBH = 6
+	   IF (KSP .GE. 3 .AND. KSP .LE. 12) AGEBH = 4
+	   IEQAG = 56
+	   IF (KSP .GT. 1 .AND. KSP .LE. 11 .AND. KSP .NE. 7) IEQAG = 50
+	   AGEDIF = REAL(IEQAG - AGEBH)
 c           remember that if we get here, then SITEAR is negative!
-       HTM = -SITEAR(ISISP) * FTtoM
+	   HTM = -SITEAR(ISISP) * FTtoM     
 
-       IF (KSP.EQ.2) THEN
+	   IF (KSP.EQ.2) THEN
 C            BLACK SPRUCE
 C            SIBH50 = a1+0.4396*(topht-1.3)+a2*LN(topht-1.3)-a3*LN(age-age2bh)-a4*(LN(age-age2bh))^2+a5*(topht-1.3)/(age-age2bh)
             IF (HTM .LE. 1.3 .OR. AGEDIF .LE. 0.0) THEN
-             SIM = 0.0
-          ELSE
+	         SIM = 0.0
+	      ELSE
                SIM = A1(KSP) + 0.4396*(HTM-1.3) + A2(KSP)*LOG(HTM-1.3) -
-     &             A3(KSP)*LOG(AGEDIF) - A4(KSP)*(LOG(AGEDIF))**2.0 +
+     &             A3(KSP)*LOG(AGEDIF) - A4(KSP)*(LOG(AGEDIF))**2.0 + 
      &              A5(KSP)*(HTM-1.3)/(AGEDIF)
-          ENDIF
+	      ENDIF
 
          ELSE IF (KSP .EQ. 3) THEN
 C           TAMARAK
 C           SI = (4.5+A1*(topht*3.28-4.5)*(1-exp(A3*(age-y2bh)))^ (A4))/3.28
-           SIM = (4.5 + A1(KSP) * (HTM*3.28-4.5) *
+           SIM = (4.5 + A1(KSP) * (HTM*3.28-4.5) * 
      &           (1.0-exp(A3(KSP)*AGEDIF))**A4(KSP))/3.28
 
          ELSE IF (KSP .EQ. 1) THEN
 C           BALSAM FIR
 C          SI = (4.5 + A1*(topht*3.28)^A2*(1-exp(A3*(age-y2bh)))^ (A4*(topht*3.28)^(A5)))/3.28
-           SIM = (4.5 + A1(KSP)*(HTM*3.28)**A2(KSP) *
-     &           (1.0-exp(A3(KSP)*(AGEDIF)))**
+           SIM = (4.5 + A1(KSP)*(HTM*3.28)**A2(KSP) * 
+     &           (1.0-exp(A3(KSP)*(AGEDIF)))** 
      &           (A4(KSP)*(HTM*3.28)**(A5(KSP))))/3.28
 
          ELSE IF (KSP .EQ. 13) THEN
@@ -437,43 +438,43 @@ C           K =1-(1/(A1*(topht-1.3)^(A2+1)))^(1/(A3*(topht-1.3)^(A4)))
 C           NOTE: won't work well at heights above 28 m
           KD = 1.- (1./(A1(KSP)*(HTM-1.3)**(A2(KSP)+1)))**
      &            (1.0/(A3(KSP)*(HTM-1.3)**(A4(KSP))))
-          SIM = REAL(1.3 + (1.0/(A1(KSP)*(HTM-1.3)**A2(KSP)*
-     &         (1.0-KD**(AGEDIF/50.))**(A3(KSP)*(HTM-1.3)**(A4(KSP))))))
+          SIM = 1.3 + (1.0/(A1(KSP)*(HTM-1.3)**A2(KSP)*
+     &         (1.0-KD**(AGEDIF/50.))**(A3(KSP)*(HTM-1.3)**(A4(KSP)))))
 
          ELSE IF (KSP .LT. 14) THEN
 C          MOST OTHER DEFINED SPECIES
 C          SI = (4.5+a1*(topht*3.28-4.5)^a2*(1-exp(a3*(age-y2bh)))^(a4*(topht*3.28 - 4.5)^(a5)))/3.28
-           SIM = (4.5 + A1(KSP)*(HTM*3.28-4.5)**A2(KSP) *
+           SIM = (4.5 + A1(KSP)*(HTM*3.28-4.5)**A2(KSP) * 
      &          (1.-exp(A3(KSP)*AGEDIF))**(A4(KSP) *
      &          (HTM*3.28 - 4.5)**(A5(KSP))))/3.28
 
          ELSE IF (KSP .GE. 14) THEN
 C          SPECIES FOR WHICH WE DON'T HAVE A CLOSED FORM.
 C           SI HAS BEEN CALCULATED FOR 4 SITE TYPES (I.E., TOP HEIGHTS).
-C          IF THE USER ENTERS A DIFFERENT ONE, THEN WE WILL JUST INTERPOLATE
+C          IF THE USER ENTERS A DIFFERENT ONE, THEN WE WILL JUST INTERPOLATE 
 C          OR EXTRAPOLATE TO GET THE SI. NOTE THAT THE HEIGHTS ARE IN DECREASING
 C          ORDER.
 
-            IF ((HTM .GE. THT4(KSP) .AND. HTM .LT. THT3(KSP)) .OR.
+            IF ((HTM .GE. THT4(KSP) .AND. HTM .LT. THT3(KSP)) .OR. 
      &          HTM .LT. THT4(KSP)) THEN
-             SLP = (A3(KSP) - A4(KSP)) / (THT3(KSP) - THT4(KSP))
-             DIFF = HTM - THT4(KSP)
-             SIMIN = A4(KSP)
-
+	         SLP = (A3(KSP) - A4(KSP)) / (THT3(KSP) - THT4(KSP))
+	         DIFF = HTM - THT4(KSP)
+	         SIMIN = A4(KSP)
+	        
             ELSEIF (HTM .GE. THT3(KSP) .AND. HTM .LT. THT2(KSP)) THEN
-             SLP = (A2(KSP) - A3(KSP)) / (THT2(KSP) - THT3(KSP))
-             DIFF = HTM - THT3(KSP)
-             SIMIN = A3(KSP)
+	         SLP = (A2(KSP) - A3(KSP)) / (THT2(KSP) - THT3(KSP))
+	         DIFF = HTM - THT3(KSP)
+	         SIMIN = A3(KSP)
 
             ELSEIF ((HTM .GE. THT2(KSP) .AND. HTM .LT. THT1(KSP)) .OR.
      &               HTM .GE. THT1(KSP)) THEN
-             SLP = (A1(KSP) - A2(KSP)) / (THT1(KSP) - THT2(KSP))
-             DIFF = HTM - THT2(KSP)
-             SIMIN = A2(KSP)
-          ENDIF
+	         SLP = (A1(KSP) - A2(KSP)) / (THT1(KSP) - THT2(KSP))
+	         DIFF = HTM - THT2(KSP)
+	         SIMIN = A2(KSP)
+	      ENDIF
             SIM = DIFF * SLP + SIMIN
-
-         ENDIF
+         
+         ENDIF   
          IF (SIM .GT. 0.0) SITEAR(ISISP) = SIM * MtoFT
 C----------
 C  END OF ONTARIO SECTION
@@ -603,7 +604,7 @@ C     &VEQNNC(ISPC)
           VOLEQ(1:7)='900DVEE'
         ELSE
           VOLEQ(1:7)='900CLKE'
-        ENDIF
+        ENDIF        
         PROD='01'
         CALL VOLEQDEF(VAR,IREGN,FORST,DIST,IFIASP,PROD,VOLEQ,ERRFLAG)
         VEQNNB(ISPC)=VOLEQ
@@ -611,7 +612,7 @@ C     &VEQNNC(ISPC)
           METHB8=METHB8+1
       ENDIF
       ENDDO
-
+   50 CONTINUE
       DO 92 I=1,15
       J=(I-1)*10 + 1
       JJ=J+9

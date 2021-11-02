@@ -1,7 +1,7 @@
       SUBROUTINE FMSVSYNC
       IMPLICIT NONE
 C----------
-C FIRE-BASE $Id: fmsvsync.f 2462 2018-07-26 14:39:59Z gedixon $
+C  $Id: fmsvsync.f 2359 2018-05-18 17:35:04Z lancedavid $
 C----------
 C
 C     STAND VISUALIZATION GENERATION

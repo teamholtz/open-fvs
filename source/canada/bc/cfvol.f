@@ -2,7 +2,7 @@
      1                 CTKFLG)
       IMPLICIT NONE
 C----------
-C CANADA-BC $Id: cfvol.f 3783 2021-09-13 22:08:32Z donrobinson $
+C  $Id: cfvol.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
 C----------
 C THIS ROUTINE CALCULATES TOTAL CUBIC FOOT VOLUME USING A NUMBER OF
 C DIFFERENT METHODS.
@@ -22,13 +22,13 @@ COMMONS
 C----------
 C  DIMENSION STATEMENT FOR INTERNAL ARRAYS.
 C----------
-      LOGICAL TKILL,LCONE,CTKFLG
-      INTEGER ISPC,ITHT,FIZ
+      LOGICAL TKILL,LCONE,LOGOK,LMRCH,CTKFLG
+	INTEGER ISPC,ITHT,FIZ
 
       REAL D,H,D2H,VN,VM,VMAX,BARK,VOLT,VOLM
-      REAL HTRUNC
+	REAL HTRUNC
 
-      DATA FIZ /2/
+	DATA FIZ /2/
 C----------
 C  INITIALIZE VOLUME ESTIMATES.
 C----------
@@ -46,10 +46,6 @@ C----------
         IF (HTRUNC .GT. 0.0) HTRUNC = HTRUNC / 100.0
         IF (HTRUNC .EQ. 0.0) HTRUNC = H
         IF (H .GE. 4.5) THEN
-c
-c         This needs to be updated to use Kozak's 2002 refit; also to calculate log
-c         volumes by BEC zone; which the new LOG(...) subroutine uses.
-c
           CALL MIN(ISPC,IAGE,FIZ,D,H,STMP(ISPC),TOPD(ISPC),
      +             HTRUNC,VOLT,VOLM)
           IF (D .GE. DBHMIN(ISPC) .AND. D .GE. TOPD(ISPC)) THEN

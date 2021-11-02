@@ -2,7 +2,7 @@
      &                  HTMAX2,DEBUG)
       IMPLICIT NONE
 C----------
-C NC $Id: findag.f 2452 2018-07-12 21:17:48Z gedixon $
+C NC $Id: findag.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C  THIS ROUTINE FINDS EFFECTIVE TREE AGE BASED ON INPUT VARIABLE(S)
 C  CALLED FROM **COMCUP

@@ -1,7 +1,7 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
       IMPLICIT NONE
 C----------
-C FIRE-CR $Id: fmcba.f 2561 2018-11-17 00:28:06Z lancedavid $
+C FIRE-CR $Id: fmcba.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C     SINGLE-STAND VERSION
 C     CALLED FROM: FMMAIN
@@ -37,9 +37,11 @@ C.... Parameter statements.
 
 C.... Parameter include files.
       INCLUDE 'PRGPRM.F77'
+Cppe      INCLUDE 'PPEPRM.F77'
       INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
+Cppe      INCLUDE 'PPCNTL.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'ARRAYS.F77'
       INCLUDE 'PLOT.F77'
@@ -458,6 +460,7 @@ C
       IF (IYR .EQ. IY(1)) THEN
 
 Csng    IF (IYR .EQ. IY(1)) THEN
+Cppe    IF (IYR .EQ. MIY(1)) THEN
 C
 C       Load dead fuels as a function of PERCOV...assume that the initiating
 C       stands correspond to about 10% cover and established are 60% or more.

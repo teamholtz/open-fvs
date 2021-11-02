@@ -1,8 +1,6 @@
+C**********************************************************************
       SUBROUTINE SUBMAX(TRIAL,VERSION,NTREES,TDATAI,TDATAR,MGEXP,
      1                  MSDI_1,MSDI_2,MSDI_3,A1,A2)
-C----------
-C ORGANON $Id: submax.f 2453 2018-07-12 22:20:53Z gedixon $
-C----------
 C     CALCULATE THE MAXIMUM SIZE-DENISTY LINE
 C**********************************************************************
 C

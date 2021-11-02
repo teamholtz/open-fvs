@@ -1,7 +1,7 @@
       SUBROUTINE GETSED (SED)
       IMPLICIT NONE
 C----------
-C BASE $Id: getsed.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: getsed.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     GENERATES A SEED FOR THE RANDOM NUMBER GENERATOR.

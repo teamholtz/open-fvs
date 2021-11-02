@@ -1,16 +1,11 @@
-C----------
-C BASE $Id: apisubs.f 3838 2021-10-13 00:49:14Z donrobinson $
-C----------
+
+c $Id: apisubs.f 2355 2018-05-18 17:21:33Z lancedavid $
+
 c     This is a collection of routines that provide an interface to 
 c     the shared library version of FVS. Other routines that exist
 c     inside FVS may also be called.
 
 c     Created in late 2011 by Nick Crookston, RMRS-Moscow
-c     In 2019 additional interface routines were added to allow for C functions
-c     that are part of the API to call fortran functions with character strings.
-c     The fortran routines that can be called by C have an upper case C added to 
-c     the routine name. See apisubs.c for the C functions that are used to call 
-c     the fortran routines. 
 
       subroutine fvsDimSizes(ntrees,ncycles,nplots,maxtrees,maxspecies,
      -                       maxplots,maxcycles)
@@ -60,37 +55,7 @@ c     the fortran routines.
       endif
       return
       end    
-
-#ifdef CMPgcc
-      subroutine fvsTreeAttrC(namei,nch,actioni,ntrees,attr,rtnCode)
-     -           bind(c, name="fvsTreeAttrC") 
-      use iso_c_binding
-      implicit none
-
-c     C-callable version of fvsTreeAttr where namei and actioni are 
-c     C-bindings of their correspoinding arguments.
-
-      integer(c_int), bind(c) :: nch,rtnCode,ntrees
-      real(c_double), dimension(ntrees), bind(c) :: attr
-      character(c_char), dimension(10), bind(c) :: namei,actioni
-      character name*10,action*4
-      integer i
       
-      if (nch == 0 .or. nch > 10) then
-        rtnCode = 4
-        return
-      endif
-      name=" "
-      do i=1,nch
-        name(i:i) = namei(i)
-      enddo
-      action="get"
-      if (actioni(1) == "s") action="set"
-      call fvsTreeAttr(name,nch,action,ntrees,attr,rtnCode)
-      return
-      end
-#endif
-
       subroutine fvsTreeAttr(name,nch,action,ntrees,attr,rtnCode)
       implicit none
 
@@ -226,37 +191,6 @@ c
       return
       end
 
-#ifdef CMPgcc
-      subroutine fvsSpeciesAttrC(namei,nch,actioni,attr,rtnCode)
-     -           bind(c, name="fvsSpeciesAttrC") 
-      use iso_c_binding
-      implicit none
-
-c     C-callable version of fvsSpeciesAttr where namei and actioni are 
-c     C-bindings of their correspoinding arguments.
-
-      include "PRGPRM.F77"
-
-      integer(c_int), bind(c) :: nch,rtnCode
-      real(c_double), dimension(MAXSP), bind(c) :: attr
-      character(c_char), dimension(10), bind(c) :: namei,actioni
-      character name*10,action*4
-      integer i
-      
-      if (nch == 0 .or. nch > 10) then
-        rtnCode = 4
-        return
-      endif
-      name=" "
-      do i=1,nch
-        name(i:i) = namei(i)
-      enddo
-      action="get"
-      if (actioni(1) == "s") action="set"
-      call fvsSpeciesAttr(name,nch,action,attr,rtnCode)
-      return
-      end
-#endif
 
       subroutine fvsSpeciesAttr(name,nch,action,attr,rtnCode)
       implicit none
@@ -292,6 +226,7 @@ c
       action=action(1:3)
 
       rtnCode = 0
+
       select case(name)
       case ("spccf")
         if (action=="get") attr = reldsp
@@ -340,35 +275,6 @@ c     volume calculation-related vectors
       return
       end
 
-#ifdef CMPgcc
-      subroutine fvsEvmonAttrC(namei,nch,actioni,attr,rtnCode)
-     -           bind(c, name="fvsEvmonAttrC") 
-      use iso_c_binding
-      implicit none
-
-c     C-callable version of fvsSpeciesAttr where namei and actioni are 
-c     C-bindings of their correspoinding arguments.
-
-      integer(c_int), bind(c) :: nch,rtnCode
-      real(c_double), bind(c) :: attr
-      character(c_char), dimension(9), bind(c) :: namei,actioni
-      character name*9,action*4
-      integer i
-      
-      if (nch == 0 .or. nch > 9) then
-        rtnCode = 4
-        return
-      endif
-      name=" "
-      do i=1,nch
-        name(i:i) = namei(i)
-      enddo
-      action="get"
-      if (actioni(1) == "s") action="set"
-      call fvsEvmonAttr(name,nch,action,attr,rtnCode)
-      return
-      end
-#endif
 
       subroutine fvsEvmonAttr(name,nch,action,attr,rtnCode)
       implicit none
@@ -391,7 +297,7 @@ c
 !DEC$ ATTRIBUTES REFERENCE :: NAME, NCH, ACTION, ATTR, RTNCODE
 
       integer :: nch,rtncode,iv,i
-      real(kind=8)      :: attr
+      double precision  :: attr
       character(len=9)  :: name
       character(len=4)  :: action
       character(len=8)  :: upname
@@ -828,50 +734,8 @@ c     indx    = species index
       endif
       return
       end
-
-#ifdef CMPgcc
-      subroutine fvsSpeciesCodeC(fvs_code,fia_code,plant_code,indx) 
-     -           bind(c, name="fvsSpeciesCodeC") 
-      use iso_c_binding
-      implicit none
-                  
-c     rtnCode = 0 when all is OK                                                            
-c               1 when index is out of bounds
-c     indx    = species index
-     
-      include "PRGPRM.F77"
-      include "PLOT.F77"
-                                                                                          
-      integer(c_int), bind(c) :: indx
-      integer i,nch
-      character(c_char), dimension(5), bind(c) :: fvs_code
-      character(c_char), dimension(5), bind(c) :: fia_code
-      character(c_char), dimension(7), bind(c) :: plant_code
-      if (indx == 0 .or. indx > MAXSP) then
-        fvs_code(1)  =char(0)
-        fia_code(1)  =char(0)                             
-        plant_code(1)=char(0)
-      else
-        nch=len_trim(JSP(indx))
-        do i=1,nch
-          fvs_code(i) = JSP(indx)(i:i)
-        enddo
-        fvs_code(nch+1) = char(0)
-        nch=len_trim(FIAJSP(indx))                     
-        do i=1,nch
-          fia_code(i) = FIAJSP(indx)(i:i)
-        enddo
-        fia_code(nch+1) = char(0)                             
-        nch=len_trim(PLNJSP(indx))
-        do i=1,nch
-          plant_code(i) = PLNJSP(indx)(i:i)
-        enddo
-        plant_code(nch+1) = char(0)
-      endif
-      return
-      end
-#endif
-
+      
+      
       subroutine fvsCutTrees(pToCut,ntrees,rtnCode)
 
       include "PRGPRM.F77"
@@ -893,47 +757,7 @@ c     indx    = species index
       rtnCode = 1
       return
       end
-
-#ifdef CMPgcc
-      subroutine fvsStandIDC(sID,sCN,mID,mCase)
-     -           bind(c, name="fvsStandIDC") 
-      use iso_c_binding
-      implicit none
-                       
-      include "PRGPRM.F77"
-      include "PLOT.F77"
-      include "DBSCOM.F77"
-                                                                                          
-      integer i,ncsID,ncCN,ncmID,ncCase
-      character(c_char), dimension(len(NPLT  )+1), bind(c) :: sID
-      character(c_char), dimension(len(DBCN  )+1), bind(c) :: sCN
-      character(c_char), dimension(len(MGMID )+1), bind(c) :: mID
-      character(c_char), dimension(len(CASEID)+1), bind(c) :: mCase
-
-      ncsID  = len_trim(NPLT)
-      ncCN   = len_trim(DBCN)
-      ncmID  = len_trim(MGMID)
-      ncCase = len_trim(CASEID)
-      do i=1,ncsID
-        sID(i)=NPLT(i:i)
-      enddo
-      sID(ncsID+1)=char(0)
-      do i=1,ncCN
-        sCN(i)=DBCN(i:i)
-      enddo
-      sCN(ncCN+1)=char(0)
-      do i=1,ncmID
-        mID(i)=MGMID(i:i)
-      enddo
-      mID(ncmID+1)=char(0)
-      do i=1,ncCase
-        mCase(i) = CASEID(i:i)
-      enddo
-      mCase(ncCase+1)=char(0)
-      return
-      end
-#endif
-
+      
       subroutine fvsStandID(sID,sCN,mID,ncsID,ncCN,ncmID)
 
       include "PRGPRM.F77"
@@ -957,24 +781,6 @@ c     indx    = species index
       return
       end
 
-#ifdef CMPgcc
-      subroutine fvsCloseFileC(filenamei,nch)
-     -           bind(c, name="fvsCloseFileC") 
-      use iso_c_binding
-      implicit none
-                       
-      integer(c_int), bind(c) :: nch
-      integer i
-      character(c_char), dimension(nch), bind(c) :: filenamei
-      character*255 filename
-
-      do i=1,nch
-        filename(i:i) = filenamei(i)
-      enddo 
-      call fvsCloseFile(filename,nch)
-      return
-      end
-#endif
 
       subroutine fvsCloseFile(filename,nch)
       implicit none
@@ -1054,35 +860,6 @@ C     add an activity to the schedule.
       return
       end
 
-#ifdef CMPgcc
-      subroutine fvsSVSObjDataC(namei,nch,actioni,nobjs,attr,rtnCode)
-     -           bind(c, name="fvsSVSObjDataC") 
-      use iso_c_binding
-      implicit none
-
-c     C-callable version of fvsSVSObjData 
-
-      integer(c_int), bind(c) :: nch,rtnCode,nobjs
-      real(c_double), dimension(nobjs), bind(c) :: attr
-      character(c_char), dimension(10), bind(c) :: namei,actioni
-      character name*10,action*4
-      integer i
-      
-      if (nch == 0 .or. nch > 10) then
-        rtnCode = 4
-        return
-      endif
-      name=" "
-      do i=1,nch
-        name(i:i) = namei(i)
-      enddo
-      action="get"
-      if (actioni(1) == "s") action="set"
-      call fvsSVSObjData(name,nch,action,nobjs,attr,rtnCode)
-      return
-      end
-#endif
-
       subroutine fvsSVSObjData(name,nch,action,nobjs,attr,rtnCode)
       implicit none
 
@@ -1122,6 +899,7 @@ c               4= the length of the "name" string was too big or small
       action=action(1:3)
 
       rtnCode = 0
+      
       select case(name)
       
 C     ALL object section (the locations, etc):
@@ -1405,36 +1183,6 @@ C     CWD section:
       return
       end
 
-#ifdef CMPgcc
-      subroutine fvsFFEAttrsC(namei,nch,actioni,nobjs,attr,rtnCode)
-     -           bind(c, name="fvsFFEAttrsC") 
-      use iso_c_binding
-      implicit none
-
-c     C-callable version of fvsTreeAttr where namei and actioni are 
-c     C-bindings of their correspoinding arguments.
-
-      integer(c_int), bind(c) :: nch,rtnCode,nobjs
-      real(c_double), dimension(nobjs), bind(c) :: attr
-      character(c_char), dimension(10), bind(c) :: namei,actioni
-      character name*10,action*4
-      integer i
-      
-      if (nch == 0 .or. nch > 10) then
-        rtnCode = 4
-        return
-      endif
-      name=" "
-      do i=1,nch
-        name(i:i) = namei(i)
-      enddo
-      action="get"
-      if (actioni(1) == "s") action="set"
-      call fvsFFEAttrs(name,nch,action,nobjs,attr,rtnCode)
-      return
-      end     
-#endif
-
       subroutine fvsFFEAttrs(name,nch,action,nobjs,attr,rtnCode)
       implicit none
 
@@ -1537,34 +1285,7 @@ c               4= the length of the "name" string was too big or small
       return
       end
       
-#ifdef CMPgcc
-      subroutine fvsUnitConversionC(namei,nch,value,rtnCode)
-     -           bind(c, name="fvsUnitConversionC") 
-      use iso_c_binding
-      implicit none
-
-c     C-callable version of fvsUnitConversionC where namei is a
-c     C-bindings of name
-
-      integer(c_int), bind(c) :: nch,rtnCode
-      real(c_double), bind(c) :: value
-      character(c_char), dimension(15), bind(c) :: namei
-      character name*15
-      integer i
       
-      if (nch == 0 .or. nch > 15) then
-        rtnCode = 1
-        return
-      endif
-      name=" "
-      do i=1,nch
-        name(i:i) = namei(i)
-      enddo
-      call fvsUnitConversion(name,nch,value,rtnCode)
-      return
-      end
-#endif
-
       subroutine fvsUnitConversion(name,nch,value,rtnCode)
       implicit none
       
@@ -1654,3 +1375,5 @@ c               1= "name" not found,
       end select
       return
       end
+      
+

@@ -1,7 +1,6 @@
+c      SUBROUTINE BMCGRF (ISTD,IYR)
       SUBROUTINE BMCGRF (ISTD,IYR,OLDGRF)
-C----------
-C WWPB $Id: bmcgrf.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+
 c     CALLED BY: BMDRV
 ***********************************************************************
 *  **BMCGRF  Date of last revision:  June 14, 1994

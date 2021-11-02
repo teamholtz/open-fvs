@@ -5,7 +5,7 @@
      &      forestValueCalculated,reprodValue, reprodValueCalculated,
      &      ft3Volume, bfVolume,discountRate, sevInput, sevInputUsed)
 
-C DBS $Id: dbsecsum.f 2445 2018-07-09 21:23:04Z gedixon $
+C $Id: dbsecsum.f 2357 2018-05-18 17:26:03Z lancedavid $
 
 
       implicit none

@@ -1,7 +1,7 @@
       SUBROUTINE DGF(DIAM)
       IMPLICIT NONE
 C----------
-C OP $Id: dgf.f 3758 2021-08-25 22:42:32Z lancedavid $
+C  **DGF--OP    DATE OF LAST REVISION:  06/17/2015
 C----------
 C  THIS SUBROUTINE COMPUTES THE VALUE OF DDS (CHANGE IN SQUARED
 C  DIAMETER) FOR EACH TREE RECORD, AND LOADS IT INTO THE ARRAY
@@ -50,9 +50,6 @@ C
       INCLUDE 'PDEN.F77'
 C
 C
-      INCLUDE 'VARCOM.F77'
-C
-C
 COMMONS
 C
 C  DIMENSIONS FOR INTERNAL VARIABLES.
@@ -90,92 +87,85 @@ C               33=PY, 34=DG, 35=HT, 36=CH, 37=WI, 38=  , 39=OT
 C
 C COEFFICIENT ORDER
 C 1=SF, 2=WF/GF,  3=RF,  4=NF,  5=SP/WP,  6=JP/PP,  7=DF,  8=RC,
-C 9=WH,  10=WH,  11=IC/ES/LL/WB/KP/PY,  12=BM, 13=RA,
+C 9=WH,  10=WH,  11=IC/ES/RW/LL/WB/KP/PY,  12=BM, 13=RA,
 C 14=MA/TO/GC/AS/CW/J/DG/HT/CH/WI,  15=YC,  16=LP,  17=AF,  18=SS,  19=WO
-C 20=RW
 C
 C  THE COEFFICIENTS FOR JP/PP ARE FROM THE CA VARIANT. THE EQUATION
 C  DEVELOPED FROM THE VERY LIMITED DATA SET AVAILABLE FROM THE WC 
 C  AREA DID NOT PERFORM VERY WELL.  GED 1/29/03
 C
-      REAL DIAM(MAXTRE),DGLD(20),DGLBA(20),DGCR(20),DGCRSQ(20),
-     &   DGDBAL(20),DGBAL(20),DGFOR(3,20),DGDS(3,20),DGEL(20),
-     &   DGEL2(20),DGSASP(20),DGCASP(20),DGSLOP(20),DGSLSQ(20),
-     &   DGBA(20),DGSITE(20),DGPCCF(20),DGHAH(20),OBSERV(20)
-      INTEGER MAPDSQ(6,20),MAPLOC(6,20),MAPSPC(39)
+      REAL DIAM(MAXTRE),DGLD(19),DGLBA(19),DGCR(19),DGCRSQ(19),
+     &   DGDBAL(19),DGBAL(19),DGFOR(3,19),DGDS(3,19),DGEL(19),
+     &   DGEL2(19),DGSASP(19),DGCASP(19),DGSLOP(19),DGSLSQ(19),
+     &   DGBA(19),DGSITE(19),DGPCCF(19),DGHAH(19),OBSERV(19)
+      INTEGER MAPDSQ(6,19),MAPLOC(6,19),MAPSPC(39)
       INTEGER ISPC,I1,I2,JSPC,I3,I,IPCCF
-      REAL CONSPP,D,BARK,BRATIO,CONST,DIAGR,DDS,CR,BAL,RELHT
-      REAL SASP,XSITE,TEMEL,TDDS
-
-C  VARIABLES ADDED JUNE 2021 RW EDITS
-      INTEGER IWHO
-      REAL A,B,PRD,DGLT,DHI,DLO,PBAL,SDICS,SDICZ,XMAX
-      REAL BRAT,DUP,TEMPD1,TEMPD2
-      REAL ZRD(MAXPLT)
+      REAL CONSPP,D,BARK,BRATIO,CONST,DIAGR,DDS,CR,BAL,RELHT,X1
+      REAL XPPDDS,SASP,XSITE,TEMEL,TDDS
 C
       DATA MAPSPC/
-     & 1,2,2,3, 4,18,4,15,11,11,16,6,5,5,6,7,20,8,9,10,12,
+     & 1,2,2,3, 4,18,4,15,11,11,16,6,5,5,6,7,11,8,9,10,12,
      & 13,14,14,14,14,14,19,14,11,11,11,11,14,14,14,14,14,14/
 C
       DATA DGLD/
      & 0.919402, 0.905119, 0.993986, 0.904253, 0.844690, 0.738750,
      & 0.802905, 0.744005, 0.641956, 0.857131, 0.879338, 1.024186,
      & 0.511442, 0.889596, 0.816880, 0.478504, 0.949631, 1.049845,
-     & 1.66609,  0.0/
+     & 1.66609/
 C
       DATA DGCR/
      & 1.290568, 1.754811, 1.522401, 4.123101, 1.597250, 3.454857,
      & 1.936912, 0.771395, 1.471926, 1.505513, 1.970052, 0.459387,
      & 0.623093, 1.732535, 2.471226, 1.905011, 1.826879, 1.632468,
-     & 0.0,      0.0/
+     & 0.0/
 C
       DATA DGCRSQ/
      & 0.125823, 0.0     , 0.0     ,-2.689340, 0.0     ,-1.773805,
      & 0.0     , 0.0     , 0.0     , 0.0     , 0.0     , 0.0     ,
      & 0.0     , 0.0     , 0.0     , 0.0     , 0.0     , 0.0     ,
-     & 0.0     , 0.0/
+     & 0.0/
 C
       DATA DGSITE/
      & 0.541881, 0.318254, 0.349888, 0.684939, 0.404010, 1.011504,
      & 0.495162, 0.708166, 0.634098, 0.208040, 0.252853, 1.965888,
      & 0.237269, 0.227307, 0.244694, 0.391327, 0.375175, 0.0     ,
-     & 0.14995,  0.0/
+     & 0.14995/
 C
       DATA DGDBAL/
      & -0.002133, -0.005355, -0.002979, -0.006368, -0.003726, -0.013091,
      & -0.001827, -0.016240, -0.012589, -0.004101, -0.004215, -0.010222,
      & -0.027074, -0.001265, -0.005950, -0.004706, -0.005350, -0.000086,
-     & 0.0      ,  0.0/
+     & 0.0/
 C
       DATA DGLBA/
      & -0.136818,  0.0     ,  0.0     ,  0.0     ,  0.0     , -0.131185,
      & -0.129474, -0.130036, -0.085525,  0.0     ,  0.0     ,  0.0     ,
      & -0.481983,  0.0     ,  0.0     ,  0.0     ,  0.0     , -0.198636,
-     & 0.0      ,  0.0/
+     & 0.0/
 C
       DATA DGBA/
      &  0.0     ,  0.0     , -0.000137,  0.0     ,  0.0     ,  0.0     ,
      &  0.0     ,  0.0     ,  0.0     ,  0.0     , -0.000173,  0.0     ,
      &  0.0     , -0.000981, -0.000147, -0.000114,  0.000040,  0.0     ,
-     & -0.00204 ,  0.0/
+     & -0.00204/
 C
       DATA DGBAL/
      &  0.0     ,  0.0     ,  0.0     ,  0.0     ,  0.0     ,  0.0     ,
      & -0.001639,  0.003883,  0.002385,  0.0     ,  0.0     ,  0.0     ,
      &  0.008903,  0.0     ,  0.0     ,  0.0     ,  0.0     , -0.002319,
-     & -0.00326,   0.0/
+     & -0.00326/
 C
       DATA DGPCCF/
      &  0.0     ,  0.0     ,  0.0     , -0.000471, -0.000257, -0.000593,
      &  0.0     ,  0.0     ,  0.0     , -0.000201,  0.0     , -0.000757,
      &  0.0     ,  0.0     ,  0.0     ,  0.0     ,  0.0     ,  0.0     ,
-     &  0.0     ,  0.0/
+     &  0.0/
 C
       DATA DGHAH/
      &  0.0     , -0.000661,  0.0     ,  0.0     ,  0.0     ,  0.0     ,
      &  0.0     ,  0.0     ,  0.0     ,  0.0     ,  0.0     ,  0.0     ,
      &  0.0     ,  0.0     ,  0.0     ,  0.0     ,  0.0     ,  0.0     ,
-     &  0.0     ,  0.0/
+     &  0.0/
 C----------
 C  IDTYPE IS A HABITAT TYPE INDEX THAT IS COMPUTED IN **RCON**.
 C  ASPECT IS STAND ASPECT.  OBSERV CONTAINS THE NUMBER OF
@@ -187,7 +177,7 @@ C----------
       DATA  OBSERV/
      &   622., 1487., 747., 1467.,  596., 2482., 11563., 1192., 4293.,
      &  2848.,  475.,  78., 1369.,  220., 112.,   759.,  542.,  502.,
-     &  2144.,  8928./
+     &  2144./
 C----------
 C  DGFOR CONTAINS LOCATION CLASS CONSTANTS FOR EACH SPECIES.
 C  MAPLOC IS AN ARRAY WHICH MAPS FOREST ONTO A LOCATION CLASS.
@@ -211,7 +201,6 @@ C----------
      & 1,2,1,2,2,2,
      & 1,1,1,1,1,1,
      & 1,2,1,2,2,2,
-     & 1,1,1,1,1,1,
      & 1,1,1,1,1,1/
 C
       DATA DGFOR/
@@ -233,8 +222,7 @@ C
      & -0.524624, -0.803095,  0.0     ,
      & -9.211184, -9.800653,  0.0     ,
      &  2.075598,  2.100904,  0.0     ,
-     & -1.33299 ,  0.0     ,  0.0     ,
-     &  0.0     ,  0.0     ,  0.0     /
+     & -1.33299 ,  0.0     ,  0.0     /
 C----------
 C  DGDS CONTAINS COEFFICIENTS FOR THE DIAMETER SQUARED TERMS
 C  IN THE DIAMETER INCREMENT MODELS    ARRAYED BY FOREST BY
@@ -260,7 +248,6 @@ C----------
      & 1,1,1,1,1,1,
      & 1,1,1,1,1,1,
      & 1,2,1,2,2,2,
-     & 1,1,1,1,1,1,
      & 1,1,1,1,1,1/
 C
       DATA DGDS/
@@ -282,8 +269,7 @@ C
      &  0.0      ,  0.0      ,  0.0      ,
      & -0.0003552,  0.0      ,  0.0      ,
      & -0.0002123, -0.0001361,  0.0      ,
-     & -0.00154  ,  0.0      ,  0.0      ,
-     &  0.0      ,  0.0      ,  0.0/
+     & -0.00154  ,  0.0      ,  0.0      /
 C----------
 C  DGEL CONTAINS THE COEFFICIENTS FOR THE ELEVATION TERM IN THE
 C  DIAMETER GROWTH EQUATION.  DGEL2 CONTAINS THE COEFFICIENTS FOR
@@ -300,37 +286,37 @@ C----------
      & -0.217205,  0.0     , -0.782418, -0.374512,  0.0     ,  0.0     ,
      &  0.014165, -0.106936, -0.056608, -0.104495,  0.0     ,  0.0     ,
      &  0.022254,  0.085958, -0.023186,  0.207853, -0.935870, -0.221095,
-     &  0.0     ,  0.0/
+     &  0.0/
 C
       DATA DGSASP/
      &  0.096326,  0.0     ,  0.022160, -0.207659,  0.0     ,  0.0     ,
      &  0.003263, -0.106020,  0.061254, -0.126130,  0.0     ,  0.0     ,
      & -0.085538, -0.863980,  0.679903,  0.378860,  0.202507,  0.100081,
-     &  0.0     ,  0.0/
+     &  0.0/
 C
       DATA DGSLOP/
      & -0.265612,  0.0     ,  0.319956,  0.400223,  0.0     ,  0.0     ,
      & -0.340401, -0.303490,  0.736143,  0.411602,  0.0     ,  0.0     ,
      &  0.0     ,  0.0     ,  0.0     , -0.066440,  0.0     , -0.169141,
-     &  0.0     ,  0.0/
+     &  0.0/
 C
       DATA DGSLSQ/
      &  0.0     ,  0.0     ,  0.0     ,  0.0     ,  0.0     ,  0.0     ,
      &  0.0     ,  0.0     , -1.082191,  0.0     ,  0.0     ,  0.0     ,
      &  0.0     ,  0.0     ,  0.0     ,  0.0     ,  0.0     ,  0.0     ,
-     &  0.0     ,  0.0/
+     &  0.0/
 C
       DATA DGEL/
      & -0.023858, -0.003051, -0.003773, -0.069045, -0.023376, -0.003784,
      & -0.009845, -0.009564, -0.018444, -0.003809,  0.0     , -0.012111,
      &  0.0     , -0.075986,  0.0     , -0.005414,  0.323546,  0.007009,
-     &  0.0     ,  0.0/
+     &  0.0/
 
       DATA DGEL2/
      &  0.0     ,  0.0     ,  0.0     ,  0.000608,  0.0     , 0.0000666,
      &  0.0     ,  0.0     ,  0.0     ,  0.0     ,  0.0     ,  0.0     ,
      &  0.0     ,  0.001193,  0.0     ,  0.0     , -0.003130,  0.0     ,
-     &  0.0     ,  0.0/
+     &  0.0/
 C
       LOGICAL DEBUG
 C-----------
@@ -347,29 +333,6 @@ C----------
       IF(DEBUG)
      & WRITE(JOSTND,9000) DGCON,DGDSQ
  9000 FORMAT(/11(1X,F10.5))
-
-C----------
-C  CALL SDICAL TO LOAD THE POINT MAX SDI WEIGHTED BY SPECIES ARRAY XMAXPT
-C----------
-      IWHO = 2
-      CALL SDICAL (IWHO, XMAX)
-C----------
-C  LOAD RELATIVE DENSITY (ZEIDI) FOR INDIVIDUAL POINTS.
-C  ALL SPECIES AND ALL SIZES INCLUDED FOR THIS CALCULATION.
-C----------
-      DLO = 0.0
-      DHI = 500.0
-      ISPC = 0
-      IWHO = 1
-      I2 = INT(PI)
-
-      IF(DEBUG)WRITE(JOSTND,*) 'IN DGF, CALL SDICLS - POINT COUNT ',I2
-      DO I1 = 1, I2
-        CALL SDICLS (ISPC,DLO,DHI,IWHO,SDICS,SDICZ,A,B,I1)
-        IF(DEBUG)WRITE(JOSTND,*) 'IN DGF, POINT ',I1,' SDICZ= ',SDICZ
-        ZRD(I1) = SDICZ
-      END DO
-
 C----------
 C  BEGIN SPECIES LOOP.  ASSIGN VARIABLES WHICH ARE SPECIES
 C  DEPENDENT
@@ -379,14 +342,7 @@ C----------
       IF(I1.EQ.0) GO TO 20
       I2=ISCT(ISPC,2)
       JSPC=MAPSPC(ISPC)
-
-C  DEFINE CONSPP: RW DOES NOT GET COR ADJUSTMENT 
-C  UNTIL AFTER DIAMETER GROWTH PREDICTION
-      IF(ISPC .EQ. 17) THEN
-        CONSPP = DGCON(ISPC)
-      ELSE
-        CONSPP= DGCON(ISPC) + COR(ISPC)
-      END IF
+      CONSPP= DGCON(ISPC) + COR(ISPC)
 C----------
 C  BEGIN TREE LOOP WITHIN SPECIES ISPC.
 C----------
@@ -418,63 +374,29 @@ C
       RELHT = 0.0
       IF(AVH .GT. 0.0) RELHT=HT(I)/AVH
       IF(RELHT .GT. 1.5)RELHT=1.5
-
-C  RELATIVE DENSITY (ZEIDI) ON THE POINT
-C  CONSTRAIN RD IF NEEDED
-      IF (XMAXPT(ITRE(I)).LE.0.0) THEN
-        PRD = 0.01
-      ELSE
-        PRD = ZRD(ITRE(I)) / XMAXPT(ITRE(I))
-      ENDIF      
-
-C  PROCESS REDWOOD
-      IF(ISPC .EQ. 17) THEN
-        PBAL=PTBAA(ITRE(I))*(1.0-(PCT(I)/100.))
-
-        IF(PBAL .LT. 0.) PBAL=BAL
-
-        DGLT = EXP(CONSPP + 0.185911*LOG(D) -0.000073*D*D 
-     &   -0.001796*PBAL - 0.42078*PRD + 0.589318*LOG(CR*100)
-     &   -0.000926*SLOPE*100 - 0.002203*(SLOPE*100)*COS(ASPECT))
-
-C  CONVERT OUTSIDE BARK DIAMETER INCREMENT TO INSIDE BARK
-C  CHANGE IN SQUARED DIAMETERS AND LOAD INTO WK2 ARRAY.
-        BRAT = BRATIO(ISPC,D,HT(I))
-        TEMPD1 = D * BRAT                           ! CURRENT DIB
-        DUP = D + DGLT                            ! WITH GROWTH DOB
-        TEMPD2 = DUP * BRAT                         ! WITH GROWTH DIB
-
-C  LOG OF CHANGE IN DIB SQUARED FOR THE PERIOD
-        DDS = LOG(TEMPD2**2 - TEMPD1**2)
-
-C  RW/GS DEBUG
-        IF(DEBUG)WRITE(JOSTND,*)'IN DGF - RW/GS DEBUG ',' D=',D,
-     &    ' PBAL=',PBAL,' PRD=',PRD,' CR=',CR,' SI=',SITEAR(ISPC),
-     &    ' SLP=',SLOPE*100,' ASP=',ASPECT, ' BRAT=',BRAT,
-     &    ' DGLT=', DGLT,' DDS=',DDS
-
-C  APPLY COR AND COR2 TO DDS
-        DDS = DDS + COR(ISPC) + LOG(COR2(ISPC))
-        IF(DEBUG)WRITE(JOSTND,*)'IN DGF - RW/GS DEBUG ',' DDS=',DDS,
-     &    ' COR(ISPC)=',COR(ISPC),' COR2(ISPC)=',COR2(ISPC)
-
-      ELSE
 C----------
 C  THIS FUNCTION OCCASIONALLY GIVES UNDERFLOW ERROR ON PC. SPLITTING
 C  IT INTO TWO PARTS IS A TEMPORARY FIX WHICH WORKS. GD 2/20/97
 C----------
-        DDS = CONSPP + DGLD(JSPC)*ALOG(D)
-     &  + CR*(DGCR(JSPC) + CR*DGCRSQ(JSPC))
-     &  + DGDSQ(JSPC)*D*D  + DGDBAL(JSPC)*BAL/(ALOG(D+1.0))
-        DDS = DDS + DGPCCF(JSPC)*PCCF(IPCCF) + DGHAH(JSPC)*RELHT
-     &  + DGLBA(JSPC)*ALOG(BA)
-     &  + DGBAL(JSPC)*BAL + DGBA(JSPC)*BA
-      END IF
-
+       DDS = CONSPP + DGLD(JSPC)*ALOG(D)
+     & + CR*(DGCR(JSPC) + CR*DGCRSQ(JSPC))
+     & + DGDSQ(JSPC)*D*D  + DGDBAL(JSPC)*BAL/(ALOG(D+1.0))
+       DDS = DDS + DGPCCF(JSPC)*PCCF(IPCCF) + DGHAH(JSPC)*RELHT
+     & + DGLBA(JSPC)*ALOG(BA)
+     & + DGBAL(JSPC)*BAL + DGBA(JSPC)*BA
     5 CONTINUE
       IF(DEBUG) WRITE(JOSTND,8000)
-     &  I,ISPC,CONSPP,D,BA,CR,BAL,PCCF(IPCCF),RELDEN,HT(I),AVH
- 8000   FORMAT(1H0,'IN DGF 8000F',2I5,9F11.4)
+     &I,ISPC,CONSPP,D,BA,CR,BAL,PCCF(IPCCF),RELDEN,HT(I),AVH
+ 8000 FORMAT(1H0,'IN DGF 8000F',2I5,9F11.4)
+C---------
+C     CALL PPDGF TO GET A MODIFICATION VALUE FOR DDS THAT ACCOUNTS
+C     FOR THE DENSITY OF NEIGHBORING STANDS.
+C
+      X1=0.
+      XPPDDS=0.
+      CALL PPDGF (XPPDDS,X1,X1,X1,X1,X1,X1)
+C
+      DDS=DDS+XPPDDS
 C---------
 C EQUATIONS ARE PREDICTING 10-YEAR DIAMETER GROWTH, CONVERT THIS TO A
 C 5-YR ESTIMATE IN REAL SCALE AND THEN LOAD INTO WK2
@@ -525,24 +447,15 @@ C----------
       IF(JSPC.EQ.19)XSITE=-37.60812*ALOG(1-(XSITE/114.24569)**.4444)
       TEMEL=ELEV
       IF(JSPC.EQ.14 .AND. TEMEL.GT.30.)TEMEL=30.
-C--------PROCESS RW AND THEN BACK TO ORIGIN CODE FOR OTHER SPP
-      IF(ISPC .EQ. 17) THEN
-        DGCON(ISPC) = -3.502444 + 0.415435*LOG(SITEAR(ISPC))
-        DGDSQ(JSPC) = 0.
-
-      ELSE
-        DGCON(ISPC) =
+      DGCON(ISPC) =
      &                   DGFOR(ISPFOR,JSPC)
      &                 + DGEL(JSPC) * TEMEL
      &                 + DGEL2(JSPC) * TEMEL * TEMEL
      &                 + DGSITE(JSPC)*ALOG(XSITE)
      &                 + SASP
-        DGDSQ(JSPC)=DGDS(ISPDSQ,JSPC)
-      END IF
-
+      DGDSQ(JSPC)=DGDS(ISPDSQ,JSPC)
       ATTEN(JSPC)=OBSERV(JSPC)
       SMCON(ISPC)=0.
-
       IF(DEBUG)WRITE(JOSTND,9030)DGFOR(ISPFOR,JSPC),
      &DGEL(JSPC),ELEV,DGEL2(JSPC),DGSASP(JSPC),ASPECT,
      &DGCASP(JSPC),DGSLOP(JSPC),SLOPE,DGSITE(JSPC),
@@ -553,13 +466,8 @@ C  IF READCORD OR REUSCORD WAS SPECIFIED (LDCOR2 IS TRUE) ADD
 C  LN(COR2) TO THE BAI MODEL CONSTANT TERM (DGCON).  COR2 IS
 C  INITIALIZED TO 1.0 IN BLKDATA.
 C----------
-      IF (LDCOR2.AND.COR2(ISPC).GT.0.0) THEN
-        IF(ISPC .EQ. 17) THEN
-          DGCON(ISPC)=DGCON(ISPC)
-        ELSE
-          DGCON(ISPC)=DGCON(ISPC) + ALOG(COR2(ISPC))
-        END IF
-      END IF
+      IF (LDCOR2.AND.COR2(ISPC).GT.0.0) DGCON(ISPC)=DGCON(ISPC)
+     &  + ALOG(COR2(ISPC))
    30 CONTINUE
       RETURN
       END

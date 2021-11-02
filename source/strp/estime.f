@@ -1,7 +1,7 @@
       SUBROUTINE ESTIME (IEVTYR,KDT)
       IMPLICIT NONE
 C----------
-C STRP $Id: estime.f 2456 2018-07-22 14:50:53Z gedixon $
+C  **ESTIME DATE OF LAST REVISION:  09/17/08
 C----------
 C
 C     CALLED FROM ESTAB.

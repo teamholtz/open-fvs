@@ -1,6 +1,8 @@
       BLOCK DATA BMBLKD
 C----------
-C WWPB $Id: bmblkdwc.f 2460 2018-07-24 14:41:48Z gedixon $
+C  **BMBLKD WC--WESTWIDE PINE BEETLE MODEL  DATE OF LAST REVISION: 05/31/05
+C           Westside Cascades (WC) FVS variant
+C           Created 5/31/05.  AJM
 C----------
 ***********************************************************************
 * The following Westwide Pine Beetle Model variable initializations

@@ -1,7 +1,7 @@
       SUBROUTINE GRINIT
       IMPLICIT NONE
 C----------
-C ACD $Id: grinit.f 2461 2018-07-24 18:00:57Z gedixon $
+C NE $Id$
 C----------
 C
 C  INITIALIZE PROGNOSIS MODEL VARIABLES
@@ -66,7 +66,6 @@ C----------
       DATA DBLK/'                          '/
       DATA NONE/'NONE'/
 C----------
-      VARACD = 'AC'
       CALL LNKINT
       DO 5 I=1,MAXSP
       SDIDEF(I) = 0.

@@ -1,7 +1,7 @@
       SUBROUTINE DBADD (SUBIN,NC,ICYC,IRC)
       IMPLICIT NONE
 C----------
-C BASE $Id: dbadd.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: dbadd.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C

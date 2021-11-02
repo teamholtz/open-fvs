@@ -1,7 +1,7 @@
       SUBROUTINE RDAREA
       IMPLICIT NONE
 C----------
-C RD $Id: rdarea.f 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDAREA      LAST REVISION:  08/26/14
 C----------
 C
 C  Purpose :

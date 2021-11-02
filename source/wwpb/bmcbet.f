@@ -1,7 +1,5 @@
       SUBROUTINE BMCBET(ABETA, MINSIZE, MAXSIZE, BETA)
-C----------
-C WWPB $Id: bmcbet.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+
 C     CALLED BY: BMISTD
 C     CALLS: FUNCTIONS ALNGAM AND BETAIN
 ******************************************************************************

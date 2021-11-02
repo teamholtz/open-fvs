@@ -1,7 +1,7 @@
       BLOCK DATA RDBLK1
       IMPLICIT NONE
 C----------
-C RD $Id: rdblk1bc.f 3800 2021-09-14 00:22:52Z donrobinson $
+C  **RDBLK1-SEI    LAST REVISION:  08/27/14
 C----------
 C
 C  Purpose :
@@ -61,7 +61,5 @@ C     Assume birch = non-host (NH)(40) for i=11,15
 
       DATA IOUNIT /22/
       DATA IRUNIT /18/
-      
-      DATA LMTRIC / .TRUE. /
       
       END

@@ -1,7 +1,7 @@
       SUBROUTINE MISINT
       IMPLICIT NONE
 C----------
-C MISTOE $Id: misintci.f 2451 2018-07-11 18:10:16Z gedixon $
+C MISTOE $Id: misint.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
 C----------
 C  Purpose:
 C  Mistletoe parameter initialization routine. This routine is

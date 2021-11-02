@@ -1,7 +1,7 @@
       FUNCTION FMBRKT(DBH,ISP)
       IMPLICIT NONE
 C----------
-C FIRE-NC $Id: fmbrkt.f 3758 2021-08-25 22:42:32Z lancedavid $
+C  **FMBRKT  FIRE-NC-DATE OF LAST REVISION: 07/15/03
 C----------
 C
 C     COMPUTES THE BARK THICKNESS FOR USE IN THE FIRE-CAUSED MORTALITY
@@ -28,8 +28,7 @@ C
      >     0.052,    !8  tanoak
      >     0.039,    !9  red fir
      >     0.063,    !10 ponderosa pine
-     >     0.052,    !11 other hardwood - use tanoak
-     >     0.081/    !12 coast redwood - use giant sequoia/redwood from WS
+     >     0.052/    !11 other hardwood - use tanoak
 C
       FMBRKT = DBH*B1(ISP)
 C

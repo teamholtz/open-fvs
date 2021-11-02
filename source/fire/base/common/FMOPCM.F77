@@ -1,6 +1,6 @@
 C.... Code segment FMOPCM.
 C----------
-C FIRE-BASE-COMMON $Id: FMOPCM.F77 2462 2018-07-26 14:39:59Z gedixon $
+C  $Id: FMOPCM.F77 767 2013-04-10 22:29:22Z rhavis@msn.com $
 C----------
 C  **FMOPCM  FIRE-
 C----------

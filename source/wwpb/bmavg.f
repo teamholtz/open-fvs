@@ -1,7 +1,8 @@
       SUBROUTINE BMAVG (KDBH, KHIGH, KSDI, KWET)
-C----------
-C WWPB $Id: bmavg.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+      
+***********************************************************************
+*  **BMAVG  Date of last revision:  20 May 1994
+*----------------------------------------------------------------------
 *  
 *Purpose: Calculates some stand values, stand averages and size-class 
 *         averages (and their standard deviations) required by BMDRGT.

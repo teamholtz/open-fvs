@@ -1,8 +1,8 @@
       SUBROUTINE BRSETP
       IMPLICIT NONE
-C----------
-C WPBR $Id: brsetp.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **BRSETP       DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C  BRSETP initializes the Blister Rust Model tree-specific variables
 C  after FVS tree data and blister rust canker data has been read.

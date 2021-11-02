@@ -1,7 +1,7 @@
       SUBROUTINE RDINIT
       IMPLICIT NONE
 C----------
-C RD $Id: rdinitca.f 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDINIT--CA      LAST REVISION:  03/24/15
 C----------
 C
 C  Purpose :

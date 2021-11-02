@@ -1,7 +1,7 @@
       SUBROUTINE DMSHAP(DMTRCW, IDMSHP)
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: dmshap.f 3787 2021-09-13 22:47:08Z donrobinson $
+C  $Id: dmshap.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 C **DMSHAP -- NISI Date of last revision: 08/05/94
 C This module was made by modifying the COVER MODEL module CVSHAP
@@ -83,16 +83,17 @@ C Argument list variables.
 
 C Local variables.
 
-      LOGICAL DEBUG !, LTHIN
+      LOGICAL DEBUG, LTHIN
       REAL    CONST(5,11),BCR(5,11),BHT(5,11),BRAD(5,11),
      &        BDBH(5,11),BCL(5,11),BTPA(5,11),SCORE(5)
       INTEGER MAPISP(49),MAPAK(49),MAPCA(49),MAPBM(49),MAPCR(49),
      &        MAPEM(49),MAPIE(49),MAPNI(49),MAPSO(49),
      &        MAPTT(49),MAPUT(49),MAPWC(49),MAPBC(49)
+      CHARACTER VVER*7
       INTEGER I,ISPI,J
       REAL    TPA,RAD,CR,CL,SCORM1
 
-C Data assigments for coefficients of discriminant function.
+C Data assigments for coefficients of discriminant function.      
 C      SHAPE      1       2       3       4      5
       DATA CONST/
      &      -13.943,-37.395,-99.000,-32.104,-32.042,
@@ -285,8 +286,9 @@ C     BM=RC,RA=RC,WA=RC,PB=RC,GC=RC,AS=RC,CW=RC,WO=RC,WJ=LP,LL=WL
 C     WB=AF,KP=PP,PY=AF,DG=RC,HT=RC,CH=RC,WI=RC,--=OT,OT=RC
      &    9,   10,    9,    6,    6,    6,    6,   11,    6, 10*0/
 
+      CALL VARVER(VVER)
 C    
-      SELECT CASE (VARACD)
+      SELECT CASE (VVER(:2))
       CASE('BC')
         MAPISP=MAPBC
 C  ORIGINAL 11 SPECIES VARIANTS
@@ -339,10 +341,8 @@ C----------
 C  SET PRE-THIN TREES PER ACRE IF THINNING HAS JUST OCCURRED.
 C---------
 
-c      TPA = TPROB
-c      IF (LTHIN) TPA=OLDTPA
-       TPA = MAX(TPROB,OLDTPA)
-
+      TPA = TPROB
+      IF (LTHIN) TPA=OLDTPA
 C----------
 C  ENTER TREE LOOP.
 C----------

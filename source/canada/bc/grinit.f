@@ -1,7 +1,7 @@
-      SUBROUTINE GRINIT
+       SUBROUTINE GRINIT
        IMPLICIT NONE
 C----------
-C CANADA-BC $Id: grinit.f 3783 2021-09-13 22:08:32Z donrobinson $
+C  $Id: grinit.f 1594 2015-09-18 19:59:19Z rhavis $
 C----------
 C
 C  INITIALIZE PROGNOSIS MODEL VARIABLES
@@ -10,53 +10,21 @@ COMMONS
 C
 C
       INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
-C
       INCLUDE 'COEFFS.F77'
-C
-C
       INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
-C
-C
       INCLUDE 'WORKCM.F77'
-C
-C
       INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'HTCAL.F77'
-C
-C
       INCLUDE 'ECON.F77'
-C
-C
       INCLUDE 'MULTCM.F77'
-C
-C
       INCLUDE 'SUMTAB.F77'
-C
-C
       INCLUDE 'VOLSTD.F77'
-C
-C
       INCLUDE 'VARCOM.F77'
-C
-C
       INCLUDE 'CWDCOM.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
-C
-C
       INCLUDE 'BCPLOT.F77'
-C
-C
       INCLUDE 'METRIC.F77'
 C
 COMMONS
@@ -65,7 +33,6 @@ C----------
       CHARACTER*26 DBLK
       CHARACTER*4 NONE
       CHARACTER*2 ANINDEX
-
       DATA DBLK/'                          '/
       DATA NONE/'NONE'/
       DATA LV2HTCP /.TRUE./
@@ -82,7 +49,6 @@ C     INITIAL VALUES FOR "Version 2" active and processed; respectively
       LV2ATV = .FALSE.
       LV2HDR = .FALSE.
 
-      VARACD = 'BC'
       CALL LNKINT
       DO 5 I=1,MAXSP
       IORDER(I) = 0
@@ -99,13 +65,12 @@ C     INITIAL VALUES FOR "Version 2" active and processed; respectively
       STMP(I)   = 30.0 * CMtoFT     ! cm
       TOPD(I)   = 10.0 * CMtoIN     ! cm
       DBHMIN(I) = 17.5 * CMtoIN     ! cm
-      METHC(I) = 4                  ! kozak volume estimation is Method 4
+      METHC(I) = 4        ! kozak volume estimation is Method 4
       FRMCLS(I) = 0.0
       METHB(I) = 999
-      METHC(I) = 999      
-      BFSTMP(I) = 30.0 * CMtoFT     ! cm not used, but here anyway
-      BFTOPD(I) = 10.0 * CMtoIN     ! cm not used, but here anyway
-      BFMIND(I) = 17.5 * CMtoIN     ! cm not used, but here anyway
+      BFSTMP(I) = 1.0
+      BFTOPD(I) = 4.5
+      BFMIND(I) = 7.0
       BFLA0(I) = 0.0
       BFLA1(I) = 1.0
       CFLA0(I) = 0.0
@@ -117,7 +82,6 @@ C     INITIAL VALUES FOR "Version 2" active and processed; respectively
       MAXSDI(I) = 0
       SDIDEF(I) = 0.
       SITEAR(I) = 0.
-      IABFLG(I) = 1
       LSPCWE(I) = .FALSE.
       CWDS0(I) = 0.
       CWDS1(I) = 0.
@@ -128,19 +92,18 @@ C     INITIAL VALUES FOR "Version 2" active and processed; respectively
       CWDL2(I) = 0.
       CWDL3(I) = 2.
       CWTDBH(I) = 0.
+      IABFLG(I) = 1
       SIZCAP(I,1) = 999.
       SIZCAP(I,2) = 1.
       SIZCAP(I,3) = 0.
       SIZCAP(I,4) = 999.
-      JSPIN(I)=3
+      JSPIN(I)=1
       LEAVESP(I)=.FALSE.
     5 CONTINUE
+      DBHMIN(7) = 12.5 * CMtoIN    ! PL uses 12.5 cm 
       LFLAGV = .FALSE.
       LBAMAX = .FALSE.
       LZEIDE = .FALSE.
-      CALCSDI = ' '
-      DBHMIN(7) = 12.5 * CMtoIN    ! PL uses 12.5 cm 
-      BFMIND(7) = 12.5 * CMtoIN    ! cm not used, but to be consistent
       CFMIN = 0.
       TCFMIN =0.
       BFMIN = 0.
@@ -149,7 +112,7 @@ C     INITIAL VALUES FOR "Version 2" active and processed; respectively
       SPCLWT = 0.
       PBAWT = 0.
       PCCFWT = 0.
-      PTPAWT = 0.
+	PTPAWT = 0.
       IREC1 = 0
       RMAI = 0.0
       IREC2 = MAXTP1
@@ -199,15 +162,14 @@ C----------
       IFINT = 10
       IFINTH = 5
       IFOR = 4
-      KODFOR = 0
       IFST = 1
       IGL = 2
       IHTG = 0
       IPTINV = -9999
       ITYPE = 4
-      KODTYP = 0
-      CPVREF='          '
+	KODTYP = 0
       PCOMX='        '
+      CPVREF='          '
       LDCOR2 = .FALSE.
       LDUBDG = .FALSE.
       LEVUSE = .TRUE.
@@ -229,12 +191,12 @@ C----------
       NONSTK = -9999
       NOTRIP = .FALSE.
       NPLT=DBLK
-      DBCN=' '
+	DBCN=' '
       SAMWT = -1E25
       SLOPE = 5.0
       TLAT = 50.0
-      TLONG = 116.
-      ISTATE = 0
+      TLONG = 116
+      ISTATE = 0.
       ICNTY = 0
       TFPA = 0.0
       TRM = 1.
@@ -248,7 +210,7 @@ C----------
       SDIMAX = 555.0
       SDIBC = 0.
       SDIAC = 0.
-      ISISP = 3
+      ISISP = 0
       PMSDIL = 55.
       PMSDIU = 85.
       SLPMRT = 0.0
@@ -267,13 +229,7 @@ C----------
       DLOMSB=0.
       DHIMSB=999.
       MFLMSB=1
-      DBHZEIDE=0.
-      DBHSTAGE=0.
-      DR016=0.
       DBHSDI=0.
-      JSPINDEF=0
-      CCCOEF=1.0
-      CCCOEF2=1.0
 C
       DO 30 J=1,9
       DO 20 K=1,MAXSP

@@ -1,18 +1,19 @@
       SUBROUTINE FMIN (ICALL,NSP,LKECHO)
       IMPLICIT NONE
 C----------
-C FIRE-BASE $Id: fmin.f 2879 2019-12-07 00:03:48Z lancedavid $
+C FIRE-BASE $Id: fmin.f 2359 2018-05-18 17:35:04Z lancedavid $
 C----------
 C
 C     FIRE - FIRE & SNAG MODEL
 C
 C     OPTION PROCESSOR FOR FIRE MODEL
 C
-C     CALLED FROM: INITRE [SINGLE-STAND VERSION]
+C     CALLED FROM: INITRE [SINGLE-STAND VERSION & PPE]
+C                  PPIN   [PPE]
 C
 C     PARAMETER DEFINITIONS
 C     ICALL = 1 call is within a stand (called from INITRE)
-C             2 call is from outside (will always be 1 with deletion of PPE)
+C             2 call from outside a stand (called from PPIN)
 COMMONS
 C
 C
@@ -190,7 +191,7 @@ C
       IF (PRMS(2) .GE. 1.0) PRMS(2) = 1.0
 
       ILEN=3
-      IF(JSP.LT.0)ILEN=ISPGRP(-JSP,92)
+      IF(JSP.LT.0)ILEN=ISPGRP(-JSP,52)
       IF(PRMS(2).LT. 1.0) THEN
         IF(LKECHO)WRITE(JOSTND,110) KEYWRD,IDT,KARD(2)(1:ILEN),JSP
   110   FORMAT(/A8,'   DATE/CYCLE ',I4,' SPECIES=',A,' (CODE=',
@@ -2610,7 +2611,7 @@ C----------
       CHARACTER*130 RECORD
       CHARACTER*10 KARD(NVALS)
       CHARACTER*8 KEYWRD,TMP
-      LOGICAL LDEBUG,LNOTBK(NVALS),LCOM,LFLAG
+      LOGICAL LDEBUG,LNOTBK(NVALS),LCOM,LFLAG,L
       INTEGER IOUT,IRECNT,INUNIT,KODE,NF,IP,I,J,K,ISTLNB
       REAL ARRAY(NVALS)
 C----------
@@ -2632,6 +2633,9 @@ C
       ENDDO
       IF (LFLAG) THEN
          CALL GROHED (IOUT)
+         CALL PPEATV (L)
+         IF (L) WRITE (IOUT,11)
+   11    FORMAT (/T39,'PARALLEL PROCESSING EXTENSION -- VERSION 1.0')
          WRITE (IOUT,12)
    12    FORMAT (/130('-')//T49,'OPTIONS SELECTED BY INPUT'//
      >            130('-')/' KEYWORD    PARAMETERS:'/

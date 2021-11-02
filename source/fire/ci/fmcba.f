@@ -1,7 +1,7 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
       IMPLICIT NONE
 C----------
-C FIRE-CI $Id: fmcba.f 2561 2018-11-17 00:28:06Z lancedavid $
+C FIRE-CI $Id: fmcba.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C     SINGLE-STAND VERSION
 C     CALLED FROM: FMMAIN
@@ -37,7 +37,13 @@ C
       INCLUDE 'PRGPRM.F77'
 C
 C
+Cppe      INCLUDE 'PPEPRM.F77'
+C
+C
       INCLUDE 'FMPARM.F77'
+C
+C
+Cppe      INCLUDE 'PPCNTL.F77'
 C
 C
       INCLUDE 'CONTRL.F77'
@@ -440,6 +446,7 @@ C
         ENDIF
 C
 Csng      IF (IYR .EQ. IY(1)) THEN
+Cppe      IF (IYR .EQ. MIY(1)) THEN
 C----------
 C
 C  Load dead fuels as a function of PERCOV...assume that the initiating

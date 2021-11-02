@@ -1,7 +1,7 @@
       SUBROUTINE FMVINIT
       IMPLICIT NONE
 C----------
-C FIRE-NC $Id: fmvinit.f 3758 2021-08-25 22:42:32Z lancedavid $
+C FIRE-NC $Id: fmvinit.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 *  Purpose:
 *      Initialize variant-specific variables for the Fire Model
@@ -258,18 +258,7 @@ C         ponderosa pine
             FALLX(I)   =   1.235
             DKRCLS(I)  =   4
             LSW(I)     = .TRUE.
-           
-C         coast redwood
-          CASE (12)
-            V2T(I)     =  21.2
-            LEAFLF(I)  =   5.0
-            TFALL(I,0) =   3.0
-            TFALL(I,3) =  20.0
-            ALLDWN(I)  = 150.0
-            FALLX(I)   =   0.687
-            DKRCLS(I)  =   1
-            LSW(I)     = .TRUE.
-            
+
         END SELECT
 C
 C       HARD SNAGS NEVER BECOME SOFT

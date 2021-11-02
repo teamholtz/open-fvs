@@ -1,7 +1,7 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
       IMPLICIT NONE
 C----------
-C FIRE-CA $Id: fmcba.f 3758 2021-08-25 22:42:32Z lancedavid $
+C FIRE-CA $Id: fmcba.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C     SINGLE-STAND VERSION
 C     CALLED FROM: FMMAIN
@@ -171,8 +171,7 @@ C                  herbs, shrubs
      >             0.25, 0.25, !  46 = willow (wi) ! Salix spp.- use AS Ottmar and others 2000b
      >             0.20, 0.20, !  47 = California nutmeg (cn) - use DF
      >             0.20, 0.20, !  48 = California laurel (cl) - use DF
-     >             0.23, 0.22, !  49 = other hardwood - use BO
-     >             0.20, 0.20/ !  50 = Coast redwood (RW)-- use DF/GS
+     >             0.23, 0.22/ !  49 = other hardwoods (oh) - use BO
 
 
 C     INITIAL LIVE FUEL LOADING FOR 'INTIALIZING STANDS WITH 10% COVER
@@ -226,8 +225,7 @@ C                  herbs, shrubs
      >             0.18, 1.32, !  46 = willow (wi) ! Salix spp.- use AS Ottmar and others 2000b
      >             0.40, 2.00, !  47 = California nutmeg (cn) - use DF
      >             0.40, 2.00, !  48 = California laurel (cl) - use DF
-     >             0.55, 0.35, !  49 = other hardwood - use BO
-     >             0.40, 2.00/ !  49 = Coast redwood - use DF/GS
+     >             0.55, 0.35/ !  49 = other hardwood - use BO
 
 C     INITIAL FUEL LOADING FOR 'ESTABLISHED' STANDS WITH 60% COVER
 C     THIS CAN BE MODIFIED BY THE *FUELINIT** KEYWORD
@@ -282,8 +280,7 @@ C     <.25 to1  1-3   3-6 6-12 12-20 20-35 35-50 >50  Lit  Duf
      &0.2, 0.6, 2.4, 3.6, 5.6, 0.0, 0.0, 0.0, 0.0, 1.4,16.8, ! 46 = willow (wi) ! Salix spp.- use AS
      &0.9, 0.9, 1.6, 3.5, 3.5, 0.0, 0.0, 0.0, 0.0, 0.6,10.0, ! 47 = California nutmeg (cn) - use DF
      &0.9, 0.9, 1.6, 3.5, 3.5, 0.0, 0.0, 0.0, 0.0, 0.6,10.0, ! 48 = California laurel (cl) - use DF
-     &0.3, 0.7, 1.4, 0.2, 0.1, 0.0, 0.0, 0.0, 0.0, 3.9, 0.0, ! 49 = other hardwood - use BO
-     &0.9, 0.9, 1.6, 3.5, 3.5, 0.0, 0.0, 0.0, 0.0, 0.6,10.0/ ! 50 = Coast redwood - use DF/GS
+     &0.3, 0.7, 1.4, 0.2, 0.1, 0.0, 0.0, 0.0, 0.0, 3.9, 0.0/ ! 49 = other hardwood - use BO
 
 C     INITIAL FUEL LOADING FOR 'INITIALIZING' STANDS WITH 10% COVER
 C     THIS CAN BE MODIFIED BY THE *FUELINIT** KEYWORD
@@ -340,8 +337,7 @@ C     <.25 to1  1-3   3-6 6-12 12-20 20-35 35-50 >50  Lit  Duf
      &0.1, 0.4, 5.0, 2.2, 2.3, 0.0, 0.0, 0.0, 0.0, 0.8, 5.6, ! 46 = willow (wi) ! Salix spp.- use AS
      &0.5, 0.5, 1.0, 1.4, 1.4, 0.0, 0.0, 0.0, 0.0, 0.3, 5.0, ! 47 = California nutmeg (cn) - use DF
      &0.5, 0.5, 1.0, 1.4, 1.4, 0.0, 0.0, 0.0, 0.0, 0.3, 5.0, ! 48 = California laurel (cl) - use DF
-     &0.1, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.9, 0.0, ! 49 = other hardwood - use BO
-     &0.5, 0.5, 1.0, 1.4, 1.4, 0.0, 0.0, 0.0, 0.0, 0.3, 5.0/! 50 = Coast redwood - use DF/GS
+     &0.1, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.9, 0.0/ ! 49 = other hardwood - use BO
 
 C     DOMINANT SPECIES FOR EACH (OPTIONAL) VEGETATION CODE.
 C     DERIVED FROM R5 VEG CODES AND CA **HABTYP**

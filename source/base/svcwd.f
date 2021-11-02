@@ -1,7 +1,7 @@
       SUBROUTINE SVCWD(IYEAR)
       IMPLICIT NONE
 C----------
-C BASE $Id: svcwd.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: svcwd.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     STAND VISUALIZATION GENERATION

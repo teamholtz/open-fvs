@@ -1,7 +1,7 @@
       SUBROUTINE BWEKDP (IOUT,IRECNT,KEYWRD,ARRAY,KARD)
       IMPLICIT NONE
 C----------
-C WSBWE $Id: bwekdp.f 2460 2018-07-24 14:41:48Z gedixon $
+C  **BWEKDP                 DATE OF LAST REVISION:  06/17/13
 C----------
 C  Revision History:
 C    14-JUL-2010 Lance R. David (FMSC)

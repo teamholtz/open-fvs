@@ -1,6 +1,6 @@
 C.... Code segment FMFCOM.
 C----------
-C FIRE-BASE-COMMON $Id: FMFCOM.F77 2462 2018-07-26 14:39:59Z gedixon $
+C  $Id: FMFCOM.F77 2126 2018-03-04 06:47:07Z nickcrookston $
 C----------
 C  **FMFCOM  FIRE
 C----------

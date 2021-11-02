@@ -2,7 +2,7 @@
      >                   ARRAY,IRECNT,KODE,KARD)
       IMPLICIT NONE
 C----------
-C WSBWE $Id: bwekrd.f 2460 2018-07-24 14:41:48Z gedixon $
+C  $Id: bwekrd.f 1842 2016-06-30 22:20:31Z ldavid $
 C  **BWEKRD                 DATE OF LAST REVISION:  03/23/17
 C----------
 c

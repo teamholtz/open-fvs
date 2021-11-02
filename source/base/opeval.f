@@ -1,7 +1,7 @@
       SUBROUTINE OPEVAL (IREFN,IRC)
       IMPLICIT NONE
 C----------
-C BASE $Id: opeval.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: opeval.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     OPTION PROCESSING ROUTINE - NL CROOKSTON - JULY 1988 - MOSCOW

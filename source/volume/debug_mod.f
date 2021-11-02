@@ -1,6 +1,3 @@
-C----------
-C VOLUME $Id: debug_mod.f 2458 2018-07-22 19:09:30Z gedixon $
-C----------
       MODULE DEBUG_MOD
 
 !...  Module to store NVEL debug data

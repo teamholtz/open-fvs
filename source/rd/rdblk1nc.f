@@ -1,7 +1,7 @@
       BLOCK DATA RDBLK1
       IMPLICIT NONE
 C----------
-C RD $Id: rdblk1nc.f 3758 2021-08-25 22:42:32Z lancedavid $
+C  **RDBLK1-NC     LAST REVISION:  08/27/14
 C----------
 C
 C  Purpose :
@@ -52,7 +52,7 @@ C.... model.
 C.... The following IRTSPC is the base root disease model IRTSPC
 C.... It is used for variants : NI, CI, and KT
 
-      DATA IRTSPC /27, 12,  3, 13, 30, 14, 29, 32, 15, 10, 18, 35/
+      DATA IRTSPC /27, 12,  3, 13, 30, 14, 29, 32, 15, 10, 18/
 
       DATA DICLAS /0.0, 5.0, 12.0, 24.0/
       DATA DSFAC  /1.0, 0.75/

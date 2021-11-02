@@ -1,7 +1,7 @@
       SUBROUTINE BWEOB 
       IMPLICIT NONE
 C ------------
-C WSBWE $Id: bweob.f 2460 2018-07-24 14:41:48Z gedixon $
+C     **BWEOB                  DATE OF LAST REVISION:  08/28/13
 C ------------
 C
 C  CALCULATE THE YEAR THE NEXT REGIONAL OUTBREAK STARTS & ENDS

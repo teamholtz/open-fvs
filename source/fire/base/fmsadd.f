@@ -1,7 +1,7 @@
       SUBROUTINE FMSADD (YEAR,ITYP)
       IMPLICIT NONE
 C----------
-C FIRE-BASE $Id: fmsadd.f 2561 2018-11-17 00:28:06Z lancedavid $
+C FIRE-BASE $Id: fmsadd.f 2359 2018-05-18 17:35:04Z lancedavid $
 C----------
 C PURPOSE:
 C     ADDS NEW SNAGS TO THE SNAG LIST, AVERAGING THE APPROPRIATE
@@ -18,6 +18,7 @@ C                  FMKILL
 C                  FMSDIT  [SERIAL FVS ONLY]
 C                  FMSCUT
 C                  FMSNAG
+C                  INSTND  [PPE]
 C
 C     CALLS:       FMSCRO
 C                  FMCBIO

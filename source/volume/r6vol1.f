@@ -1,7 +1,7 @@
-C----------
-C VOLUME $Id: r6vol1.f 2944 2020-02-03 22:59:12Z lancedavid $
-C----------
       SUBROUTINE R6VOL1(IAPZ,DBHOB,FCLASS,XLOGS,LOGDIA,LOGVOL,INTBF)
+C----------
+C VOLUME $Id: r6vol1.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
+C----------
 C== last modified  08-13-2003
 C ENTER WITH COMPUTED DIBS FOR 1 TO 20 LOGS IN A TREE.
 C RETURN WITH GROSS BD-FT AND CU-FT VOLUME FOR EACH LOG.
@@ -50,11 +50,10 @@ C IFTR(127-132) APPLY ONLY TO  8-FT LOGS WITH DIB (6-11)
 
 
 C     ***** CLEAR PREVIOUS TREE *****
-      DO I=1,20
+      DO 10 I=1,20
         INTBF(I) = 0
         LOGVOL(1,I) = 0
-        LOGVOL(4,I) = 0
-      ENDDO
+   10   LOGVOL(4,I) = 0
 
          X = 0.0
 
@@ -93,8 +92,7 @@ C     ***** PROPORTIONATE 32-FT SCALE BY LOG HALFS *****
       ITOPGV = INT(REAL(IV32) * R + 0.5)
       IBOTGV = IV32 - ITOPGV
       LOGVOL(1,I+1) = ITOPGV
-      LOGVOL(1,I) = IBOTGV
-   20 CONTINUE
+   20 LOGVOL(1,I) = IBOTGV
       GO TO 60
                     
 C     ***** SINGLE 16-FT LOG (TOP OR BUTT OF TREE) *****
@@ -118,8 +116,7 @@ C  INTERNATIONAL BDFT
       CALL INTL14(LOGDIA(I,1),16.0,BFINT)
       INTBF(I) = BFINT
 
-      LOGVOL(1,I) = IG
-   50 CONTINUE
+   50 LOGVOL(1,I) = IG
 
       X = XLOGS - LOGS
       IF (X.EQ.0.0) GO TO 60
@@ -148,9 +145,8 @@ C     ***** EASTSIDE HALF LOG AT TOP *****
      >                                    LOGDIA(LOGS,1)**2*F)/2.0*8.0
 
 C     ***** REMAINING LOGS *****
-   70 DO I=2,LOGS
-        LOGVOL(4,I) = (LOGDIA(I,1)**2 * F  +  
+   70 DO 80 I=2,LOGS
+   80    LOGVOL(4,I) = (LOGDIA(I,1)**2 * F  +  
      >                              LOGDIA(I-1,1)**2 * F) / 2.0 * 16.0
-      ENDDO
       RETURN
       END

@@ -1,6 +1,6 @@
-C----------
-C ORGANON $Id: htgrowth.f 2453 2018-07-12 22:20:53Z gedixon $
-C----------
+C
+C ORGANON $Id: htgrowth.f 0000 2018-02-14 00:00:00Z gedixon $
+C
 C     ORGANON GROWTH AND YIELD MODEL
 C     SUBROUTINES INCLUDED:
 C         HTGRO1

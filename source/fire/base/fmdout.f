@@ -1,7 +1,8 @@
       SUBROUTINE FMDOUT (IYR)
       IMPLICIT NONE
 C----------
-C FIRE-BASE $Id: fmdout.f 3751 2021-08-19 15:02:28Z lancedavid $
+C  $Id: fmdout.f 2359 2018-05-18 17:35:04Z lancedavid $
+C  $Id: fmdout.f 2359 2018-05-18 17:35:04Z lancedavid $
 C----------
 *     SINGLE-STAND VERSION
 *     CALLED FROM: FMMAIN
@@ -307,7 +308,7 @@ C     ON SPECIFIC GRAVITY VALUE OF 0.4 FOR BOTH SOFT AND HARD MATERIAL,
 C     FROM BROWN (1974), GTR-INT-16, HANDBOOK FOR INVENTORYING DOWNED WOODY MATERIAL
 
       DO L = 1, 4
-         CWDDEN(1,L) = 18.72  ! lbs/cuft for soft down wood (SG = 0.3)
+         CWDDEN(1,L) = 24.96  ! lbs/cuft for soft down wood (SG = 0.4)
          CWDDEN(2,L) = 24.96  ! lbs/cuft for hard down wood (SG = 0.4)
       ENDDO
 

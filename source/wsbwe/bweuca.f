@@ -1,7 +1,7 @@
       SUBROUTINE BWEUCA (C)
       IMPLICIT NONE
 C----------
-C WSBWE $Id: bweuca.f 2460 2018-07-24 14:41:48Z gedixon $
+C  **BWUPCA                 DATE OF LAST REVISION:  07/14/10
 C----------
       CHARACTER C
       CHARACTER*26 UPPER,LOWER

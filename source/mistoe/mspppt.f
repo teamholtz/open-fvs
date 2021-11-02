@@ -1,6 +1,6 @@
       SUBROUTINE MSPPPT (WK3, IPNT, ILIMIT)
 ***********************************************************************
-C MISTOE $Id: mspppt.f 2451 2018-07-11 18:10:16Z gedixon $
+*  **MSPPPT--MS  DATE OF LAST REVISION:  06/25/13
 *----------------------------------------------------------------------
 *  Purpose:
 *     Put (store) the mistletoe model data for a given stand.

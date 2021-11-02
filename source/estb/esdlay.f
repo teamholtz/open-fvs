@@ -1,7 +1,7 @@
       SUBROUTINE ESDLAY (ISPE,IAS,DRAW,DELAY)
       IMPLICIT NONE
 C----------
-C ESTB $Id: esdlay.f 2448 2018-07-10 17:04:02Z gedixon $
+C ESTB $Id: esdlay.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C
 COMMONS

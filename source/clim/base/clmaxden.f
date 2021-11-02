@@ -1,7 +1,7 @@
       SUBROUTINE CLMAXDEN (SDIDEF,XMAX) 
       IMPLICIT NONE
 C----------
-C CLIM-BASE $Id: clmaxden.f 2442 2018-07-09 14:51:05Z gedixon $
+C  $Id: clmaxden.f 1094 2013-11-20 00:40:30Z rhavis@msn.com $
 C----------
 C
 C     CLIMATE EXTENSION 

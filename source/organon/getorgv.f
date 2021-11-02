@@ -1,7 +1,7 @@
       SUBROUTINE GETORGV(I,VALU)
       IMPLICIT NONE
 C----------
-C ORGANON $Id: getorgv.f 2453 2018-07-12 22:20:53Z gedixon $
+C  $Id: getorgv.f $
 C----------
 C
 C  SUBROUTINE TO RETURN EVENT MONITOR VARIABLES

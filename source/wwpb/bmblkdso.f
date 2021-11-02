@@ -1,7 +1,7 @@
       BLOCK DATA BMBLKD
 C----------
-C WWPB $Id: bmblkdso.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+C  **BMBLKD SO--WESTWIDE PINE BEETLE MODEL  DATE OF LAST REVISION: 05/31/05
+C           South Central Oregon/Northeast California (SORNEC) FVS variant
 C           Modified 5/31/05 for 33-species version.  AJM
 C----------
 ***********************************************************************

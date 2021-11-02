@@ -1,6 +1,3 @@
-C----------
-C VOLUME $Id: sf_yhat3.f 2458 2018-07-22 19:09:30Z gedixon $
-C----------
 !== last modified  4-9-2002
       SUBROUTINE SF_YHAT3(JSP,geosub,NEXTRA,SETOPT,DBH,THT,H,DIB,
      >                    HEX,ZEX,FMOD,PINV_Z,EDIB)

@@ -1,7 +1,7 @@
       SUBROUTINE FMCWD(IYR)
       IMPLICIT NONE
 C----------
-C FIRE-BASE $Id: fmcwd.f 2561 2018-11-17 00:28:06Z lancedavid $
+C FIRE-BASE $Id: fmcwd.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C     CALLED FROM: FMSNAG
 C                  FMMAIN
@@ -26,6 +26,7 @@ C.... Parameter statements.
 C.... Parameter include files.
 
       INCLUDE 'PRGPRM.F77'
+C      INCLUDE 'PPEPRM.F77'
       INCLUDE 'FMPARM.F77'
 
 C.... Common include files.

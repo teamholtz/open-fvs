@@ -2,7 +2,7 @@
      &                  DEBUG)
       IMPLICIT NONE
 C----------
-C CA $Id: findag.f 2440 2018-07-05 18:12:18Z gedixon $
+C CA $Id: findag.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C  THIS ROUTINE FINDS EFFECTIVE TREE AGE BASED ON INPUT VARIABLE(S)
 C  CALLED FROM ***COMCUP

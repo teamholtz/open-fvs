@@ -1,6 +1,3 @@
-C----------
-C VOLUME $Id: sf_shp.f 2458 2018-07-22 19:09:30Z gedixon $
-C----------
 !== last modified  09-14-2007
       SUBROUTINE SF_SHP(JSP,GEOSUB,SETOPT,DBHOB,TOTALH,RFLW,RHFW,DBTBH,
      >                  DBT_USER,DBHIB)

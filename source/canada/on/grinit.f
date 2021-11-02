@@ -1,7 +1,8 @@
       SUBROUTINE GRINIT
       IMPLICIT NONE
 C----------
-C CANADA-ON $Id: grinit.f 3788 2021-09-13 23:08:03Z donrobinson $
+C  ON  $ID
+C    ON: 05/06/04
 C----------
 C
 C  INITIALIZE PROGNOSIS MODEL VARIABLES
@@ -31,7 +32,7 @@ C----------
       CHARACTER*26 DBLK
       CHARACTER*4 NONE
       CHARACTER*2 ANINDEX
-      REAL ONMTD(MAXSP)
+	REAL ONMTD(MAXSP)
       DATA DBLK/'                          '/
       DATA NONE/'NONE'/
 C ====================================================
@@ -114,19 +115,18 @@ C    71 = WHITE SPRUCE PLANTATION (SP) - 10 CM
 C    72 = BLACK SPRUCE PLANTATION (BP) - 10 CM
 C
 C
-C   DATA ONMTD /
+C	DATA ONMTD /
 C     >  10., 10., 16., 16., 16., 10., 10., 10., 10., 10.,
-C     >  10., 16., 10., 10., 20., 20., 20., 20., 20., 20.,
-C     >  20., 20., 20., 20., 20., 20., 20., 20., 20., 20.,
-C     >  20., 20., 20., 20., 20., 20., 20., 20., 20., 16.,
-C     >  16., 16., 16., 20., 20., 20., 20., 20., 20., 20.,
-C     >  20., 20., 20., 20., 20., 20., 20., 20., 20., 20.,
+C     >  10., 16., 10., 10., 20., 20., 20., 20., 20., 20., 
+C     >  20., 20., 20., 20., 20., 20., 20., 20., 20., 20., 
+C     >  20., 20., 20., 20., 20., 20., 20., 20., 20., 16., 
+C     >  16., 16., 16., 20., 20., 20., 20., 20., 20., 20., 
+C     >  20., 20., 20., 20., 20., 20., 20., 20., 20., 20., 
 C     >  20., 20., 20., 20., 20., 20., 20., 20., 10., 16.,
 C     >  10., 10. /
-      DATA ONMTD / MAXSP * 0.0 /
+	DATA ONMTD / MAXSP * 0.0 /
 C
 C----------
-
       CALL LNKINT
       DO 5 I=1,MAXSP
       SDIDEF(I) = 0.
@@ -189,7 +189,7 @@ C----------
       SPCLWT = 0.
       PBAWT = 0.
       PCCFWT = 0.
-      PTPAWT = 0.
+	PTPAWT = 0.
       IREC1 = 0
       RMAI = 50.0
       IREC2 = MAXTP1
@@ -238,13 +238,13 @@ C----------
       IFINT = 10
       IFINTH = 5
       IFOR = 9
-      KODFOR = 0
+	KODFOR = 0
       IFST = 1
       IGL = 1
       IHTG = 0
       IPTINV = -9999
       ITYPE = 0
-      KODTYP = 0
+	KODTYP = 0
       PCOMX='        '
       CPVREF='          '
       IY(1) = 0
@@ -274,7 +274,7 @@ C----------
       SAMWT = -1E25
       SLOPE = 5.0
       TLAT =  0.
-      TLONG = 0.
+	TLONG = 0.
       ISTATE = 0
       ICNTY = 0
       TFPA = 0.0
@@ -308,7 +308,7 @@ C----------
       DLOMSB=0.
       DHIMSB=999.
       MFLMSB=1
-      DBHSDI=0.
+      DBHSDI=0.      
 C
       DO 30 J=1,9
       DO 20 K=1,MAXSP

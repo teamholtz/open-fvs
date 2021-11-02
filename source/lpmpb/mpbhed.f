@@ -1,7 +1,7 @@
       SUBROUTINE MPBHED
       IMPLICIT NONE
 C----------
-C LPMPB $Id: mpbhed.f 2450 2018-07-11 17:28:41Z gedixon $
+C  **MPBHED        DATE OF LAST REVISION:  06/14/13
 C----------
 C
 C     WRITES HEADING FOR MPB MODEL OUTPUT

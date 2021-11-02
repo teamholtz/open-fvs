@@ -1,8 +1,10 @@
       BLOCK DATA BLKDAT
       IMPLICIT NONE
 C----------
-C BM $Id: blkdat.f 3751 2021-08-19 15:02:28Z lancedavid $
+C  **BLKDAT--BM   DATE OF LAST REVISION:  04/19/10
 C----------
+C
+C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
 C
 COMMONS
 C
@@ -13,25 +15,22 @@ C
       INCLUDE 'ESPARM.F77'
 C
 C
+      INCLUDE 'ESCOMN.F77'
+C
+C
       INCLUDE 'COEFFS.F77'
 C
 C
-      INCLUDE 'CONTRL.F77'
+      INCLUDE 'PDEN.F77'
 C
 C
       INCLUDE 'ECON.F77'
 C
 C
-      INCLUDE 'ESCOMN.F77'
-C
-C
-      INCLUDE 'FVSSTDCM.F77'
-C
-C
       INCLUDE 'HTCAL.F77'
 C
 C
-      INCLUDE 'PDEN.F77'
+      INCLUDE 'CONTRL.F77'
 C
 C
       INCLUDE 'PLOT.F77'
@@ -46,21 +45,15 @@ C
       INCLUDE 'VARCOM.F77'
 C
 C
+      INCLUDE 'FVSSTDCM.F77'
+C
+C
 COMMONS
-C
 C----------
-C  VARIABLE DECLARATIONS:
-C----------
-C
       INTEGER I,J
-C
+
 C----------
-C  DATA STATEMENTS.
-C
-C  SPECIES ORDER:
-C   1=WP,  2=WL,  3=DF,  4=GF,  5=MH,  6=WJ,  7=LP,  8=ES,
-C   9=AF, 10=PP, 11=WB, 12=LM, 13=PY, 14=YC, 15=AS, 16=CW,
-C  17=OS, 18=OH
+C     TYPE DECLARATIONS AND COMMON STATEMENT FOR CONTROL VARIABLES.
 C----------
       DATA BKRAT/MAXSP*0./
 C
@@ -116,26 +109,19 @@ C     2 = WESTERN LARCH        073 WL  LAOC   LARIX OCCIDENTALIS
 C     3 = DOUGLAS-FIR          202 DF  PSME   PSEUDOTSUGA MENZIESII
 C     4 = GRAND FIR            017 GF  ABGR   ABIES GRANDIS
 C     5 = MOUNTAIN HEMLOCK     264 MH  TSME   TSUGA MERTENSIANA
-C     6 = WESTERN JUNIPER      064 WJ  JUOC   JUNIPERUS OCCIDENTALIS 
-C                                             (WJ FROM UT)
+C     6 = WESTERN JUNIPER      064 WJ  JUOC   JUNIPERUS OCCIDENTALIS (WJ FROM UT)
 C     7 = LODGEPOLE PINE       108 LP  PICO   PINUS CONTORTA
 C     8 = ENGLEMANN SPRUCE     093 ES  PIEN   PICEA ENGELMANNII
 C     9 = SUBALPINE FIR        019 AF  ABLA   ABIES LASIOCARPA
 C    10 = PONDEROSA PINE       122 PP  PIPO   PINUS PONDEROSA
-C    11 = WHITEBARK PINE       101 WB  PIAL   PINUS ALBICAULIS 
-C                                             (WB FROM TT)
-C    12 = LIMBER PINE          113 LM  PIFL2  PINUS FLEXILIS 
-C                                             (LM FROM UT)
-C    13 = PACIFIC YEW          231 PY  TABR2  TAXUS BREVIFOLIA 
-C                                             (PY FROM WC)
-C    14 = ALASKA CEDAR         042 YC  CANO9  CALLITROPSIS NOOTKATENSIS 
-C                                             (YC FROM WC)
-C    15 = QUAKING ASPEN        746 AS  POTR5  POPULUS TREMULOIDES 
-C                                             (AS FROM UT)
-C    16 = BLACK COTTONWOOD     747 CW  POBAT  POPULUS BALSAMIFERA var. 
-C                                             TRICHOCARPA (CW FROM WC)
-C    17 = OTHER SOFTWOOD       299 OS  2TE    (PP FROM BM)
-C    18 = OTHER HARDWOOD       998 OH  2TD    (OT FROM WC)
+C    11 = WHITEBARK PINE       101 WB  PIAL   PINUS ALBICAULIS (WB FROM TT)
+C    12 = LIMBER PINE          113 LM  PIFL2  PINUS FLEXILIS (LM FROM UT)
+C    13 = PACIFIC YEW          231 PY  TABR2  TAXUS BREVIFOLIA (PY FROM WC)
+C    14 = ALASKA YELLOW CEDAR  042 YC  CANO9  CALLITROPSIS NOOTKATENSIS (YC FROM WC)
+C    15 = QUAKING ASPEN        746 AS  POTR5  POPULUS TREMULOIDES (AS FROM UT)
+C    16 = BLACK COTTONWOOD     747 CW  POBAT  POPULUS BALSAMIFERA (CW FROM WC)
+C    17 = OTHER SOFTWOODS      298 OS  2TE    (PP FROM BM)
+C    18 = OTHER HARDWOODS      998 OH  2TD    (OT FROM WC)
 C----------
       DATA JSP /
      & 'WP ',   'WL ',   'DF ',   'GF ',   'MH ',   'WJ ',   'LP ',
@@ -145,12 +131,12 @@ C
       DATA FIAJSP /
      & '119',   '073',   '202',   '017',   '264',   '064',   '108',
      & '093',   '019',   '122',   '101',   '113',   '231',   '042',
-     & '746',   '747',   '299',   '998'/
+     & '746',   '747',   '298',   '998'/
 C
       DATA PLNJSP /
      & 'PIMO3 ','LAOC  ','PSME  ','ABGR  ','TSME  ','JUOC  ','PICO  ',
      & 'PIEN  ','ABLA  ','PIPO  ','PIAL  ','PIFL2 ','TABR2 ','CANO9 ',
-     & 'POTR5 ','POBAT ','2TN   ','2TB   '/
+     & 'POTR5 ','POBAT ','2TE   ','2TD   '/
 C
       DATA JTYPE /130,170,250,260,280,290,310,320,330,420,
      &            470,510,520,530,540,550,570,610,620,640,
@@ -181,6 +167,81 @@ C
      &0.34663, 0.2820, 0.3348, 0.3249, 0.2745,
      &0.34663,0.46710, 0.4842, 0.3931,0.34663,
      & 0.5357, 0.2745, 0.5357/
+C----------
+C STATEMENTS FOR VARIABLES IN VARCOM COMMON BLOCK
+C----------
+C IN THE FOLLOWING DATA STATEMENTS, DF IS USED FOR OT, AND WF FOR RC
+C
+      DATA BB0/
+     & 0.37504453,         0.0,      0.0,   -0.30935,     22.8741,
+     &        0.0,     -0.0968,  2.75780,   -0.07831, 128.8952205,
+     &        0.0,         0.0,   0.6192,     0.6192,         0.0,
+     &     0.6192, 128.8952205,   0.6192/
+      DATA BB1/ 
+     &    0.92503,     1.46897, -0.37496,     1.2383,    0.950234,
+     &        0.0,     0.02679,  0.83312,     0.0149,   -0.016959,
+     &        0.0,         0.0,  -5.3394,    -5.3394,         0.0,
+     &    -5.3394,   -0.016959,  -5.3394/
+      DATA BB2/
+     & -0.0207959,   0.0092466,  1.36164,   0.001762, -0.00206465,
+     &        0.0, -0.00009309, 0.015701, -4.0818E-5,     1.23114,
+     &        0.0,         0.0,   240.29,     240.29,         0.0,
+     &     240.29,     1.23114,   240.29/
+       DATA BB3/
+     & -2.4881068, -0.00023957, -0.00243434, -5.4E-6,         0.5,
+     &        0.0,         0.0,    22.71944,     0.0,     -0.7864,
+     &        0.0,         0.0,      3368.9,  3368.9,         0.0,
+     &     3368.9,     -0.7864,      3368.9/
+      DATA BB4/
+     &        0.0,   1.1122E-6,   -79.97,   2.046E-7,    1.365566,
+     &        0.0,         0.0, -0.63557,        0.0,     2.49717,
+     &        0.0,         0.0,      0.0,        0.0,         0.0,
+     &        0.0,     2.49717,      0.0/
+      DATA BB5/
+     &        0.0,    -0.12528,  -0.2828,  -4.04E-13,    2.045963,
+     &        0.0,         0.0,      0.0,        0.0,  -0.0045042,
+     &        0.0,         0.0,      0.0,        0.0,         0.0,
+     &        0.0,  -0.0045042,      0.0/
+      DATA BB6/
+     &        0.0,    0.039636,  1.87947,    -6.2056,         0.0,
+     &        0.0,         0.0,      0.0,        0.0,     0.33022,
+     &        0.0,         0.0,      0.0,        0.0,         0.0,
+     &        0.0,     0.33022,      0.0/
+      DATA BB7/
+     &        0.0,  -0.0004278, -0.022399,     2.097,         0.0,
+     &        0.0,         0.0,       0.0,       0.0,      100.43,
+     &        0.0,         0.0,       0.0,       0.0,         0.0,
+     &        0.0,      100.43,       0.0/
+      DATA BB8/
+     &        0.0,   1.7039E-6,  0.966998,  -0.09411,         0.0,
+     &        0.0,         0.0,       0.0,       0.0,         0.0,
+     &        0.0,         0.0,       0.0,       0.0,         0.0,
+     &        0.0,         0.0,       0.0/
+       DATA BB9/
+     &        0.0,       73.57,       0.0, -0.00004382,       0.0,
+     &        0.0,         0.0,       0.0,         0.0,       0.0,
+     &        0.0,         0.0,       0.0,         0.0,       0.0,
+     &        0.0,         0.0,       0.0/
+      DATA BB10/
+     &        0.0,    -0.12528,       0.0,   2.007E-11,       0.0,
+     &        0.0,         0.0,       0.0,         0.0,       0.0,
+     &        0.0,         0.0,       0.0,         0.0,       0.0,
+     &        0.0,         0.0,       0.0/
+      DATA BB11/
+     &        0.0,    0.039636,       0.0,  -2.054E-17,       0.0,
+     &        0.0,         0.0,       0.0,         0.0,       0.0,
+     &        0.0,         0.0,       0.0,         0.0,       0.0,
+     &        0.0,         0.0,       0.0/
+      DATA BB12/
+     &        0.0,  -0.0004278,       0.0,      -84.73,       0.0,
+     &        0.0,         0.0,       0.0,         0.0,       0.0,
+     &        0.0,         0.0,       0.0,         0.0,       0.0,
+     &        0.0,         0.0,       0.0/
+      DATA BB13/
+     &        0.0,   1.7039E-6,       0.0,         0.0,       0.0,
+     &        0.0,         0.0,       0.0,         0.0,       0.0,
+     &        0.0,         0.0,       0.0,         0.0,       0.0,
+     &        0.0,         0.0,       0.0/
 C
       DATA REGNBK/2.999/
 C

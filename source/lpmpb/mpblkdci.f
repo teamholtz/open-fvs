@@ -1,7 +1,7 @@
       BLOCK DATA MPBLKD
       IMPLICIT NONE
 C----------
-C LPMPB $Id: mpblkdci.f 2450 2018-07-11 17:28:41Z gedixon $
+C  **MPBLKD--CI   DATE OF LAST REVISION:  08/22/14
 C----------
 C
 C     MOUNTAIN PINE BEETLE --

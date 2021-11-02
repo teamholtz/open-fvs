@@ -1,7 +1,7 @@
       LOGICAL FUNCTION FMCHKFWT(I2)
       IMPLICIT NONE
 C----------
-C FIRE-BASE $Id: fmchkfwt.f 2462 2018-07-26 14:39:59Z gedixon $
+C  $Id: fmchkfwt.f 2359 2018-05-18 17:35:04Z lancedavid $
 C----------
 C     CALLED FROM: FMDYN, FMCFMD (WS,NC,IC)
 C

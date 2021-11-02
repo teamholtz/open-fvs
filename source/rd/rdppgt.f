@@ -1,7 +1,7 @@
       SUBROUTINE RDPPGT (WK3, IPNT, ILIMIT)
       IMPLICIT NONE
 ***********************************************************************
-C RD $Id: rdppgt.f 2454 2018-07-18 23:01:17Z gedixon $
+*  **RDPPGT      DATE OF LAST REVISION:  09/10/14
 *----------------------------------------------------------------------
 *  Purpose:
 *     Get (read) the Root Disease model data for a given stand from

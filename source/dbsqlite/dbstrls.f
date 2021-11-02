@@ -1,15 +1,18 @@
       SUBROUTINE DBSTRLS(IWHO,KODE,TEM)
       IMPLICIT NONE
 C----------
-C DBSQLITE $Id: dbstrls.f 3240 2020-09-30 19:57:47Z lancedavid $
+C $Id: dbstrls.f 2377 2018-06-01 09:28:24Z nickcrookston $
 C----------
 C     PURPOSE: TO OUTPUT THE TREELIST DATA TO THE DATABASE
+C
+C     AUTH: D. GAMMEL -- SEM -- JULY 2002
 C
 C     INPUT: IWHO  - THE WHO CALLED ME VALUE WHICH MUST BE 1
 C                     INORDER FOR US TO CONTINUE
 C            KODE  - FOR LETTING CALLING ROUTINE KNOW IF THIS IS A
 C                     REDIRECT OF THE FLAT FILE REPORT OR IN
-C                     ADDITION TO IT
+C                     ADDITION TO
+C
 COMMONS
 C
 C
@@ -32,29 +35,27 @@ C
 C
 C
       INCLUDE 'WORKCM.F77'
-C
+C                                          
 C
       INCLUDE 'DBSCOM.F77'
 C
 C
 COMMONS
 C
-      CHARACTER*8 TID,CSPECIE1,CSPECIE2,CSPECIE3
-      CHARACTER*17 TBLNAME
-      CHARACTER*5 NTCUFT,NMCUFT,NBDFT
-      CHARACTER*8 NAMDCF,NAMDBF
+      CHARACTER*8 TID,CSPECIES
       CHARACTER*2000 SQLStmtStr
       INTEGER IWHO,I,IP,ITPLAB,iRet,IDMR,ICDF,IBDF,IPTBAL,KODE
       INTEGER ISPC,I1,I2,I3,ColNumber
       INTEGER IDCMP1,IDCMP2,ITRNK
       DATA IDCMP1,IDCMP2/10000000,20000000/
-      REAL TEM
-      REAL*8 CW,P,DGI,DP,ESTHT,TREAGE,DDBH,DHT,DHTG,DPCT,
+      REAL*8 CW,P,DGI,DP,TEM,ESTHT,TREAGE,DDBH,DHT,DHTG,DPCT,
      >       DCFV,DWK1,DBFV,DHT2TD2,DHT2TD1
 
+     
       integer fsql3_tableexists,fsql3_exec,fsql3_bind_int,fsql3_step,
      >        fsql3_prepare,fsql3_bind_double,fsql3_finalize,
      >        fsql3_bind_text,fsql3_reset
+
 
 C     IF TREEOUT IS NOT TURNED ON OR THE IWHO VARIABLE IS NOT 1
 C     THEN JUST RETURN
@@ -67,39 +68,18 @@ C     IS THIS OUTPUT A REDIRECT OF THE REPORT THEN SET KODE TO 0
 
       CALL DBSCASE(1)
 
-C     For CS, LS, NE and SN, the table name is FVS_TreeList_East and the following
-C     Column names change from: TCuFt, MCuFt, BdFt to MCuFt, SCuFt, SBdFt
-
-      IF (VARACD.EQ.'CS' .OR. VARACD.EQ.'LS' .OR. VARACD.EQ.'SN' .OR.
-     >    VARACD.EQ.'NE') THEN
-        TBLNAME = 'FVS_TreeList_East'
-        NTCUFT  = 'MCuFt'
-        NMCUFT  = 'SCuFt'
-        NBDFT   = 'SBdFt'
-        NAMDCF  = 'Ht2TDMCF'
-        NAMDBF  = 'Ht2TDSCF'
-      ELSE
-        TBLNAME = 'FVS_TreeList'
-        NTCUFT  = 'TCuFt'
-        NMCUFT  = 'MCuFt'
-        NBDFT   = 'BdFt'
-        NAMDCF  = 'Ht2TDCF '
-        NAMDBF  = 'Ht2TDBF '
-      ENDIF
-
       iRet = fsql3_exec (IoutDBref,"Begin;"//Char(0))
-      iRet = fsql3_tableexists(IoutDBref,TRIM(TBLNAME)//CHAR(0))
+      iRet = fsql3_tableexists(IoutDBref,
+     >       "FVS_TreeList"//CHAR(0))
       IF(iRet.EQ.0) THEN
-          SQLStmtStr='CREATE TABLE ' // TRIM(TBLNAME) //
-     -             ' (CaseID text not null,'//
-     -             'StandID text not null,'//
+          SQLStmtStr='CREATE TABLE FVS_TreeList('//
+     -             'CaseID text,'//
+     -             'StandID text,'//
      -             'Year int null,'//
      -             'PrdLen int null,'//
      -             'TreeId text null,'//
      -             'TreeIndex int null,'//
-     -             'SpeciesFVS text null,'//
-     -             'SpeciesPLANTS text null,'//
-     -             'SpeciesFIA text null,'//
+     -             'Species text null,'//
      -             'TreeVal int null,'//
      -             'SSCD int null,'//
      -             'PtIndex int null,'//
@@ -114,38 +94,35 @@ C     Column names change from: TCuFt, MCuFt, BdFt to MCuFt, SCuFt, SBdFt
      -             'MistCD int null,'//
      -             'BAPctile real null,'//
      -             'PtBAL real null,'//
-     -             NTCUFT // ' real null,'//
-     -             NMCUFT // ' real null,'//
-     -             NBDFT  // ' real null,'//
+     -             'TCuFt real null,'//
+     -             'MCuFt real null,'//
+     -             'BdFt real null,'//
      -             'MDefect int null,'//
      -             'BDefect int null,'//
      -             'TruncHt int null,'//
      -             'EstHt real null,'//
      -             'ActPt int null,'//
-     -             NAMDCF // ' real null,'//
-     -             NAMDBF // ' real null,'//
+     -             'Ht2TDCF real null,'//
+     -             'Ht2TDBF real null,'//
      -             'TreeAge real null);'//CHAR(0)
-         iRet = fsql3_exec(IoutDBref,SQLStmtStr)
+         iRet = fsql3_exec(IoutDBref,SQLStmtStr) 
          IF (iRet .NE. 0) THEN
            ITREELIST = 0
-           iRet = fsql3_exec (IoutDBref,"Commit;"//Char(0))
            RETURN
          ENDIF
       ENDIF
-      WRITE(SQLStmtStr,*)'INSERT INTO ',TBLNAME,
+      WRITE(SQLStmtStr,*)'INSERT INTO FVS_TreeList',
      -  ' (CaseID,StandID,Year,PrdLen,',
-     -  'TreeId,TreeIndex,SpeciesFVS,SpeciesPLANTS,SpeciesFIA,',
-     -  'TreeVal,SSCD,PtIndex,TPA,',
+     -  'TreeId,TreeIndex,Species,TreeVal,SSCD,PtIndex,TPA,',
      -  'MortPA,DBH,DG,',
-     -  'HT,HTG,PctCr,CrWidth,MistCD,BAPctile,PtBAL,',NTCUFT,',',
-     -  NMCUFT,',',NBDFT,',MDefect,BDefect,TruncHt,',
-     -  'EstHt,ActPt,',NAMDCF,',',NAMDBF,',','TreeAge) VALUES (''',
+     -  'HT,HTG,PctCr,CrWidth,MistCD,BAPctile,PtBAL,TCuFt,',
+     -  'MCuFt,BdFt,MDefect,BDefect,TruncHt,',
+     -  'EstHt,ActPt,Ht2TDCF,Ht2TDBF,TreeAge) VALUES (''',
      -  CASEID,''',''',TRIM(NPLT),''',',IY(ICYC+1),',',IFINT,
-     - ',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'
+     -  ',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'
       iRet = fsql3_prepare(IoutDBref,trim(SQLStmtStr)//CHAR(0))
       IF (iRet .NE. 0) THEN
         ITREELIST = 0
-        iRet = fsql3_exec (IoutDBref,"Commit;"//Char(0))
         RETURN
       ENDIF
 
@@ -158,13 +135,13 @@ C     AND THE OUTPUT REPORTING YEAR.
           I2=ISCT(ISPC,2)
           DO I3=I1,I2
             I=IND1(I3)
-
+         
             IP=ITRN
             ITPLAB=1
             P = PROB(I) / GROSPC
             IF (ICYC.GT.0) THEN
               DP = WK2(I)/ GROSPC
-            ELSE
+            ELSE                          
               DP = 0.0
             ENDIF
 
@@ -196,10 +173,6 @@ C           DECODE DEFECT AND ROUND OFF POINT BAL.
             IBDF= DEFECT(I)-((DEFECT(I)/100)*100)
             IPTBAL=NINT(PTBALT(I))
 
-C           SET TRUNCATED (TOPKILL) HEIGHT
-C
-            ITRNK = INT((ITRUNC(I)+5)/100)
-
 C           DETERMINE ESTIMATED HEIGHT
 C           ESTIMATED HEIGHT IS NORMAL HEIGHT, UNLESS THE IT WAS NOT
 C           BEEN SET, IN WHICH CASE IT IS EQUAL TO CURRENT HEIGHT
@@ -209,7 +182,7 @@ C           BEEN SET, IN WHICH CASE IT IS EQUAL TO CURRENT HEIGHT
             ELSE
               ESTHT = HT(I)
             ENDIF
-
+            
 C           DETERMINE TREE AGE
 
             IF (LBIRTH(I)) THEN
@@ -217,33 +190,36 @@ C           DETERMINE TREE AGE
             ELSE
               TREAGE = 0
             ENDIF
-
+ 
 C           GET DG INPUT
 
             DGI=DG(I)
             IF(ICYC.EQ.0 .AND. TEM.EQ.0) DGI=WORK1(I)
 
-C           LOAD SPECIES CODES FROM FVS, PLANTS AND FIA ARRAYS.
+C           DETERMINE PREFERED OUTPUT FORMAT FOR SPECIES CODE
+C           KEYWORD OVER RIDES
+
+            IF(JSPIN(ISP(I)).EQ.1)THEN
+              CSPECIES=ADJUSTL(TRIM(JSP(ISP(I))))
+            ELSEIF(JSPIN(ISP(I)).EQ.2)THEN
+              CSPECIES=ADJUSTL(TRIM(FIAJSP(ISP(I))))
+            ELSEIF(JSPIN(ISP(I)).EQ.3)THEN
+              CSPECIES=ADJUSTL(TRIM(PLNJSP(ISP(I))))
+            ELSE
+              CSPECIES=ADJUSTL(PLNJSP(ISP(I)))
+            ENDIF
 C
-            CSPECIE1 = JSP(ISP(I))
-            CSPECIE2 = PLNJSP(ISP(I))
-            CSPECIE3 = FIAJSP(ISP(I))
-
-
+            IF(ISPOUT6.EQ.1)CSPECIES=ADJUSTL(TRIM(JSP(ISP(I))))
+            IF(ISPOUT6.EQ.2)CSPECIES=ADJUSTL(TRIM(FIAJSP(ISP(I))))
+            IF(ISPOUT6.EQ.3)CSPECIES=ADJUSTL(TRIM(PLNJSP(ISP(I)))) 
+            
             ColNumber=1
-            iRet = fsql3_bind_text(IoutDBref,ColNumber,TID,
-     >                         LEN_TRIM(TID))
+            iRet = fsql3_bind_int(IoutDBref,ColNumber,TID)            
             ColNumber=ColNumber+1
             iRet = fsql3_bind_int(IoutDBref,ColNumber,I)
             ColNumber=ColNumber+1
-            iRet = fsql3_bind_text(IoutDBref,ColNumber,CSPECIE1,
-     >                             LEN_TRIM(CSPECIE1))
-            ColNumber=ColNumber+1
-            iRet = fsql3_bind_text(IoutDBref,ColNumber,CSPECIE2,
-     >                             LEN_TRIM(CSPECIE2))
-            ColNumber=ColNumber+1
-            iRet = fsql3_bind_text(IoutDBref,ColNumber,CSPECIE3,
-     >                             LEN_TRIM(CSPECIE3))
+            iRet = fsql3_bind_text(IoutDBref,ColNumber,CSPECIES,
+     >                             LEN_TRIM(CSPECIES))
             ColNumber=ColNumber+1
             iRet = fsql3_bind_int(IoutDBref,ColNumber,IMC(I))
             ColNumber=ColNumber+1
@@ -299,11 +275,11 @@ C
             ColNumber=ColNumber+1
             iRet = fsql3_bind_double(IoutDBref,ColNumber,DHT2TD2)
             ColNumber=ColNumber+1
-            DHT2TD1 = HT2TD(I,1)
+            DHT2TD1 = HT2TD(I,2)
             iRet = fsql3_bind_double(IoutDBref,ColNumber,DHT2TD1)
             ColNumber=ColNumber+1
             iRet = fsql3_bind_double(IoutDBref,ColNumber,TREAGE)
-
+            
             iRet = fsql3_step(IoutDBref)
             iRet = fsql3_reset(IoutDBref)
           ENDDO
@@ -314,15 +290,13 @@ C     FOR CYCLE 0 TREELIST, PRINT DEAD TREES WHICH WERE PRESENT IN
 C     THE INVENTORY DATA AT THE BOTTOM OF THE TREELIST.
 C
       IF (ITREELIST .EQ. 0) RETURN
-      IF ((IREC2.GE.MAXTP1).OR.(ITPLAB.EQ.3).OR.
-     >         (ICYC.GE.1)) THEN
-        iRet = fsql3_exec (IoutDBref,"Commit;"//Char(0))
+      IF(.NOT.((IREC2.GE.MAXTP1).OR.(ITPLAB.EQ.3).OR.
+     >         (ICYC.GE.1))) THEN
         iRet = fsql3_finalize(IoutDBref)
         RETURN
       ENDIF
-
+      
       DO I=IREC2,MAXTRE
-
         P =(PROB(I) / GROSPC) / (FINT/FINTM)
         WRITE(TID,'(I8)') IDTREE(I)
         TID=ADJUSTL(TID)
@@ -339,30 +313,15 @@ C       DECODE DEFECT AND ROUND OFF POINT BAL.
         IBDF= DEFECT(I)-((DEFECT(I)/100)*100)
         IPTBAL=NINT(PTBALT(I))
 
-C       SET TRUNCATED (TOPKILL) HEIGHT
-C
-        ITRNK = INT((ITRUNC(I)+5)/100)
-
-C       DETERMINE ESTIMATED HEIGHT
-C       ESTIMATED HEIGHT IS NORMAL HEIGHT, UNLESS THE IT WAS NOT
-C       BEEN SET, IN WHICH CASE IT IS EQUAL TO CURRENT HEIGHT
-
-        IF (NORMHT(I) .NE. 0) THEN
-          ESTHT = (REAL(NORMHT(I))+5)/100
-        ELSE
-          ESTHT = HT(I)
-        ENDIF
-
 C       DETERMINE TREE AGE
 
         IF (LBIRTH(I)) THEN
           TREAGE = ABIRTH(I)
         ELSE
           TREAGE = 0
-        ENDIF
+        ENDIF        
 
 C       CYCLE 0, PRINT INPUT DG ONLY, UNLESS DIRECTED TO PRINT ESTIMATES.
-
         DGI=DG(I)
         IF(ICYC.EQ.0 .AND. TEM.EQ.0) DGI=WORK1(I)
 
@@ -370,27 +329,30 @@ C       PUT PROB IN MORTALITY COLUMN
         DP = P
         P = 0.
 
-C       LOAD SPECIES CODES FROM FVS, PLANTS AND FIA ARRAYS.
-C
-        CSPECIE1 = JSP(ISP(I))
-        CSPECIE2 = PLNJSP(ISP(I))
-        CSPECIE3 = FIAJSP(ISP(I))
+C       DETERMINE PREFERED OUTPUT FORMAT FOR SPECIES CODE
+C       KEYWORD OVER RIDES
 
-
+        IF(JSPIN(ISP(I)).EQ.1)THEN
+          CSPECIES=ADJUSTL(TRIM(JSP(ISP(I))))
+        ELSEIF(JSPIN(ISP(I)).EQ.2)THEN
+          CSPECIES=ADJUSTL(TRIM(FIAJSP(ISP(I))))
+        ELSEIF(JSPIN(ISP(I)).EQ.3)THEN
+          CSPECIES=ADJUSTL(TRIM(PLNJSP(ISP(I))))
+        ELSE
+          CSPECIES=ADJUSTL(TRIM(PLNJSP(ISP(I))))
+        ENDIF
+C       
+        IF(ISPOUT6.EQ.1)CSPECIES=ADJUSTL(TRIM(JSP(ISP(I))))
+        IF(ISPOUT6.EQ.2)CSPECIES=ADJUSTL(TRIM(FIAJSP(ISP(I))))
+        IF(ISPOUT6.EQ.3)CSPECIES=ADJUSTL(TRIM(PLNJSP(ISP(I))))
+        
         ColNumber=1
-        iRet = fsql3_bind_text(IoutDBref,ColNumber,TID,
-     >                         LEN_TRIM(TID))
+        iRet = fsql3_bind_int(IoutDBref,ColNumber,TID)            
         ColNumber=ColNumber+1
         iRet = fsql3_bind_int(IoutDBref,ColNumber,I)
         ColNumber=ColNumber+1
-        iRet = fsql3_bind_text(IoutDBref,ColNumber,CSPECIE1,
-     >                         LEN_TRIM(CSPECIE1))
-        ColNumber=ColNumber+1
-        iRet = fsql3_bind_text(IoutDBref,ColNumber,CSPECIE2,
-     >                         LEN_TRIM(CSPECIE2))
-        ColNumber=ColNumber+1
-        iRet = fsql3_bind_text(IoutDBref,ColNumber,CSPECIE3,
-     >                         LEN_TRIM(CSPECIE3))
+        iRet = fsql3_bind_text(IoutDBref,ColNumber,CSPECIES,
+     >                         LEN_TRIM(CSPECIES))
         ColNumber=ColNumber+1
         iRet = fsql3_bind_int(IoutDBref,ColNumber,IMC(I))
         ColNumber=ColNumber+1
@@ -446,11 +408,11 @@ C
         ColNumber=ColNumber+1
         iRet = fsql3_bind_double(IoutDBref,ColNumber,DHT2TD2)
         ColNumber=ColNumber+1
-        DHT2TD1 = HT2TD(I,1)
+        DHT2TD1 = HT2TD(I,2)
         iRet = fsql3_bind_double(IoutDBref,ColNumber,DHT2TD1)
         ColNumber=ColNumber+1
         iRet = fsql3_bind_double(IoutDBref,ColNumber,TREAGE)
-
+        
         iRet = fsql3_step(IoutDBref)
         iRet = fsql3_reset(IoutDBref)
       ENDDO

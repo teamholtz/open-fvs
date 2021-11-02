@@ -1,7 +1,7 @@
       SUBROUTINE SVGTPT (IPGLEM,X1R1,X2R2,Y1A1,Y2A2,X,Y,IMETRIC)
       IMPLICIT NONE
 C----------
-C BASE $Id: svgtpt.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: svgtpt.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     STAND VISUALIZATION GENERATION

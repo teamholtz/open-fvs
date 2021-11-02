@@ -1,5 +1,5 @@
 C-------------------------  
-C DFTM $Id: TMCOM1.F77 2446 2018-07-09 22:54:33Z gedixon $
+C  TMCOM1 COMMON BLOCK -- DATE OF LAST REVISION: 06/30/10
 C-------------------------  
       LOGICAL LDF, LGF, LREDIS, LPUNCH, TMDEBU, TMDTRE, TMWORK(40),
      &        LNPV2, LNPV3, LRANSD, LTMPRM, LCHEM

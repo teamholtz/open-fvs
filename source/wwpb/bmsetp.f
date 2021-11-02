@@ -1,6 +1,6 @@
       SUBROUTINE BMSETP
 C----------
-C WWPB $Id: bmsetp.f 2460 2018-07-24 14:41:48Z gedixon $
+C  **BMSETP  DATE OF LAST REVISION:  12/20/05
 C----------
 c     Shamelessly adapted from MDSETP.
 c

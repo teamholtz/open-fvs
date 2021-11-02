@@ -1,7 +1,7 @@
       SUBROUTINE LBUNIN (LEN1,SET1,LEN2,SET2,LNUNIN,UNION,KODE)
       IMPLICIT NONE
 C----------
-C BASE $Id: lbunin.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: lbunin.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     SET UNION OPERATION

@@ -1,7 +1,5 @@
-CODE SEGMENT BMCOM
-C----------
-C WWPB $Id: BMCOM.F77 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+C.... Code segment BMCOM.
+
 ************************************************************************
 *  **BMCOM  Date of last revision: 12/08/05
 *

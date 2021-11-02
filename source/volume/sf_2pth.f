@@ -1,6 +1,3 @@
-C----------
-C VOLUME $Id: sf_2pth.f 2458 2018-07-22 19:09:30Z gedixon $
-C----------
 !== last modified  10-4-2002
       SUBROUTINE SF_2PTH(JSP,GEOSUB,SETOPT,DBH,H1,d1,DBTBH,TotalH,
      >                   HEX,ZEX,F,RHFW,RFLW,TAPCOE)

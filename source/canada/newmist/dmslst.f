@@ -1,7 +1,7 @@
       SUBROUTINE DMSLST (DMRCls, n, SInd, SCD, SPtr, SLst)
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: dmslst.f 3816 2021-09-15 23:34:54Z donrobinson $
+C  $Id: dmslst.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 C **DMSLST -- NISI  Date of last revision: April 14 1994 
 C--------------------------------------------------------------------
@@ -24,7 +24,7 @@ C Other routines called:
 C
 C     DMRANN
 C
-C Argument list definitions:
+C Argument list definitions:                        
 C
 C     INTEGER DMRCls  (I) The DM category from which trees will be
 C                          chosen at random.
@@ -142,13 +142,13 @@ C generate the sample.
 C Initialize a new element of 'SLst()' if the treelist record
 C 'SInd()' is new.
 
-          IF (.NOT.flg) THEN
-            m = m + 1
-            SLst(m, KNT) = 1
-            SLst(m, INDX) = SInd(j)
-          END IF
+					  IF (.NOT.flg) THEN
+            	m = m + 1
+            	SLst(m, KNT) = 1
+            	SLst(m, INDX) = SInd(j)
+					  END IF
 
-          GOTO 200
+					GOTO 200
           END IF
 
   300   CONTINUE

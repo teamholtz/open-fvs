@@ -1,7 +1,7 @@
       SUBROUTINE RCDSET (IC,LRETRN)
       IMPLICIT NONE
 C----------
-C BASE $Id: rcdset.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: rcdset.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     SETS THE RETURN CODE FOR THE PROGNOSIS MODEL.

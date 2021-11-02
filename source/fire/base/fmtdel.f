@@ -1,7 +1,7 @@
       SUBROUTINE FMTDEL (IVAC,IREC)
       IMPLICIT NONE
 C----------
-C FIRE-BASE $Id: fmtdel.f 2462 2018-07-26 14:39:59Z gedixon $
+C  $Id: fmtdel.f 2359 2018-05-18 17:35:04Z lancedavid $
 C----------
 C
 C     THIS SUBROUTINE IS USED TO DELETE TREE RECORDS BY MOVING

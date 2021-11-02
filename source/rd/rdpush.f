@@ -1,7 +1,7 @@
       SUBROUTINE RDPUSH
       IMPLICIT NONE
 C----------
-C RD $Id: rdpush.f 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDPUSH      LAST REVISION:  09/02/14
 C----------
 C
 C  PROCESSES THE PSTUMP KEYWORD.

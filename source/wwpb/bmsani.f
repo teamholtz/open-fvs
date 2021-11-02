@@ -1,7 +1,6 @@
       SUBROUTINE BMSANI (IYR)
-C----------
-C WWPB $Id: bmsani.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+*      SUBROUTINE BMSANI (ISTD,IYR)
+C
 c     CALLED FROM BMDRV
 c     CALLS:  BMSLSH
 ***********************************************************************

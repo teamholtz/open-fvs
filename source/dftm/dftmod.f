@@ -1,7 +1,7 @@
       SUBROUTINE DFTMOD (ISTART,IFIN)     
       IMPLICIT NONE
 C---------- 
-C DFTM $Id: dftmod.f 2446 2018-07-09 22:54:33Z gedixon $
+C  **DFTMOD DATE OF LAST REVISION:  04/01/13
 C---------- 
 C     
 C     *** DOUGLAS-FIR TUSSOCK MOTH INSECT AND BRANCH MODEL ***    

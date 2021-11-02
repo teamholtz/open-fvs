@@ -1,7 +1,5 @@
       SUBROUTINE BMFINT (BYRAM, FLAME, ISTD) 
-C----------
-C WWPB $Id: bmfint.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+
 *     CALLED FROM BMFIRE      
 ***********************************************************************
 *  **BMFINT--WS  DATE OF LAST REVISION:  JUNE 13, 1994

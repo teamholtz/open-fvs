@@ -1,5 +1,5 @@
 
-all : nct01 nct02 ffe
+all : nct01 nct02
 
 nct01 : 
 	@echo Test nct01, basic functionality 

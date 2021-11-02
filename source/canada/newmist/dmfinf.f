@@ -1,7 +1,7 @@
       SUBROUTINE DMFINF (Ptr, Index)
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: dmfinf.f 3816 2021-09-15 23:34:54Z donrobinson $
+C  $Id: dmfinf.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 C **DMFINF --  DATE OF LAST REVISION: 02/16/96 
 C----------
@@ -85,8 +85,8 @@ C Local variables.
       INTEGER PrSp, PrDMR
 
       do i = 1, MAXTRE
-        Index(i) = 0
-      enddo
+	  Index(i) = 0
+	enddo
 
 C Zero pointer matrix
 

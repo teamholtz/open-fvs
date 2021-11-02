@@ -1,6 +1,6 @@
       SUBROUTINE RDSOUT
 C----------
-C METRIC-RD $Id: rdsout.f 2464 2018-07-27 15:36:37Z gedixon $
+C  **RDSOUT                       LAST REVISION:  06/03/10
 C----------
 C
 C  PRODUCES OPTIONAL OUTPUT (IN A SEPARATE FILE) OF THE RESULTS

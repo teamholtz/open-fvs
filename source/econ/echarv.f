@@ -1,7 +1,7 @@
       SUBROUTINE ECHARV (bfPerTree, dbh, ft3PerTree, GROSPC, PREM2,
      &                                           spId, treeId, ICYC, IY)
 C----------
-C ECON $Id: echarv.f 2447 2018-07-10 16:31:11Z gedixon $
+C **ECHARV--ECON  DATE OF LAST REVISION: 09/02/10
 C----------
 C Author Fred Martin, WA DNR,
 

@@ -1,7 +1,7 @@
       SUBROUTINE DBSPPPUT (WK3, IPNT, ILIMIT)
       IMPLICIT NONE
 C
-C DBSQLITE $Id: dbsppput.f 3305 2020-11-21 00:53:47Z mshettles521 $
+C $Id: dbsppput.f 2106 2018-02-22 16:09:12Z nickcrookston $
 C
 COMMONS
 C
@@ -13,7 +13,7 @@ COMMONS
 C
 C
       INTEGER MXI
-      PARAMETER (MXI=53)
+      PARAMETER (MXI=45)
 
       INTEGER INTS(MXI), ILIMIT, IPNT
       REAL    WK3(*)
@@ -64,15 +64,7 @@ C
       INTS( 42) = IRD1
       INTS( 43) = IRD2
       INTS( 44) = IRD3
-      INTS( 45) = ICALIB  
-      INTS( 46) = ISTATS1  
-      INTS( 47) = ISTATS2 
-      INTS( 48) = IREG1  
-      INTS( 49) = IREG2 
-      INTS( 50) = IREG3  
-      INTS( 51) = IREG4 
-      INTS( 52) = IREG5  
-      INTS( 53) = IPOTFIREC  
+      INTS( 45) = ICALIB      
 C
       CALL IFWRIT (WK3, IPNT, ILIMIT, INTS, MXI, 2)
       LENSTRINGS(1) = LEN_TRIM(DSNIN)

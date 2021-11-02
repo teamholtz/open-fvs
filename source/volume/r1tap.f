@@ -1,5 +1,5 @@
 C----------
-C VOLUME $Id: r1tap.f 2458 2018-07-22 19:09:30Z gedixon $
+C VOLUME $Id: r1tap.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
 C----------
 !== last modified  4-12-2004
 

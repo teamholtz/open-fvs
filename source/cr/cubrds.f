@@ -1,7 +1,7 @@
       BLOCK DATA CUBRDS
       IMPLICIT NONE
 C----------
-C CR $Id: cubrds.f 2444 2018-07-09 16:00:55Z gedixon $
+C CR $Id$
 C----------
 C  DEFAULT PARAMETERS FOR THE CUBIC AND BOARD FOOT VOLUME EQUATIONS.
 C----------

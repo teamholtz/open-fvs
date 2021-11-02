@@ -1,6 +1,6 @@
 CODE SEGMENT RDPARM
 C----------
-C RD $Id: RDPARM.F77 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDPARM      LAST REVISION:  08/15/14
 C----------
 C
 C  Parameters for the root disease model are :

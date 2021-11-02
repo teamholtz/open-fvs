@@ -1,6 +1,3 @@
-C----------
-C VOLUME $Id: R8CLIST.INC 2458 2018-07-22 19:09:30Z gedixon $
-C----------
 c== last modified  9-6-2000
      
       INTEGER I,J

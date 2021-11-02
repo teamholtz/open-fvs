@@ -1,7 +1,10 @@
       SUBROUTINE FMCROWW (SPI,D,H,ITRNC,IC,HP,SG,XV)
       IMPLICIT NONE
+C
+C  $Id: fmcroww.f 2290 2018-05-16 15:53:09Z gedixon $
+C
 C----------
-C CANADA-FIRE-BC $Id: fmcroww.f 3785 2021-09-13 22:24:56Z donrobinson $
+C  **FMCROWW  FIRE-BC
 C----------
 C     CALLED FROM: FMCROW
 
@@ -25,26 +28,26 @@ C     SPECIES MAPPING (BASED ON CR AND ELABORATED FROM THERE)
 
 C     1 = SUBALPINE FIR, corkbark, subalpine larch
 C     2 = ASPEN
-C     3 = DOUGLAS-FIR, bigcone
+C     3 = DOUGLAS-FIR
 C     4 = GRAND FIR, white, Cal red, shasta red, red, Pacific silver, noble
-C     5 = BIGLEAF MAPLE, mountain, bigtooth
+C     5 = BIGLEAF MAPLE, mountain
 C     6 = WESTERN HEMLOCK
 C     7 = WESTERN REDCEDAR, pacific yew
 C     8 = WESTERN LARCH, Alaska cedar
 C     9 = BRISTLECONE PINE
 C    10 = MADRONE, white alder
-C    11 = LODGEPOLE PINE, limber, knobcone, foxtail, Coulter, Gray, Washoe
-C    12 = PINYON PINE, singleleaf
+C    11 = LODGEPOLE PINE, limber, knobcone
+C    12 = PINYON PINE
 C    13 = PONDEROSA PINE, Monterey
 C    14 = WHITEBARK PINE
 C    15 = WESTERN WHITE PINE, southwestern white, Jeffrey, sugar
-C    16 = ROCKY MTN JUNIPER, western, Utah, California
+C    16 = ROCKY MTN JUNIPER, western
 C    17 = TANOAK, chinkapin, coast live oak, canyon live oak, Engelmann oak
-C                 interior live oak, nutmeg, laurel, California live oak,
+C                 interior live oak, nutmeg, laurel
 C    18 = ENGELMANN SPRUCE, blue, white, brewer, Sitka
 C    19 = GIANT SEQUOIA, coast redwood
 C    20 = INCENSE CEDAR
-C    21 = CALIFORNIA BLACK OAK - based on tanoak, blue oak, valley oak
+C    21 = CALIFORNIA BLACK OAK - based on tanoak
 C    22 = GAMBEL OAK
 C    23 = RED ALDER
 C    24 = MOUNTAIN HEMLOCK
@@ -91,11 +94,11 @@ C.... Variable declarations.
 
       INTEGER J
 
-      LOGICAL LDUM1
+      LOGICAL LDUM1,LDUM2
       REAL    C, DEADWT, DOMPCT, DP1, DP2, DP3
       REAL    LIVEWT, TEMP, P1, P2, P3, P4, R, TOTWT, DRC, X, X0
-      REAL    V, DBHCUT, LDM
-      REAL    VM,XDUM2,XDUM3
+      REAL    V, DBHCUT, LDM, D2H
+      REAL    VM,XDUM1,XDUM2,XDUM3
       REAL    DBR1, DBR2, DBR3, DBR4, DBR5, DFOL
       REAL    DCTLOW, DCTHGH, SMWGT, XVAL(3), YVAL(3), ALGSLP
 
@@ -289,11 +292,11 @@ C         western larch
 
 C         bristlecone pine
           CASE (9)
-            X = (D / 2) 
-            XV(0) = 8.874 * X
-            XV(1) = 3.428 * X
-            XV(2) = 4.429 * X
-            XV(3) = 0.590 * X
+            X = (H / 16.3) ! 16.3 is the ht of a 2in dbh bc (9.8 in drc)
+            XV(0) = 8.8839 * X
+            XV(1) = 3.4332 * X
+            XV(2) = 4.4363 * X
+            XV(3) = 0.5615 * X
 
 C         madrone -  predicted from partitioning of 1" dbh tree using
 C         large tree equation
@@ -309,26 +312,26 @@ C         ponderosa pine
             XV(2) = 0.29 * TOTWT
 
 c         pinyon, bristlecone, juniper, oak based on plugging in a
-c         2" (juniper, pinyon, bristlecone) or 4" (gambel oak) drc
-c         tree and computing biomass components (as per large trees), 
-c         then scaling the result by the diameter.
-c         these values are already in lbs and don't need further conversion.
+c         2 or 4" drc tree (CR-FFE) and computing biomass components
+c         (as per large trees), the scaling result by the height of
+c         a 2 or 4" drc tree. these values are already in lbs and don't
+c         need further conversion.
 
 c         pinyon pine
           CASE (12)
-            X = (D / 2)
-            XV(0) = 3.177 * X
-            XV(1) = 0.977 * X
-            XV(2) = 1.084 * X
-            XV(3) = 0.079 * X
+            X = (H / 16.3) ! 16.3 is the height of a 2in drc pinyon
+            XV(0) = .73866 * X
+            XV(1) = .16971 * X
+            XV(2) = .15328 * X
+            XV(3) = .00474 * X
 
 C         juniper
           CASE (16)
-            X = (D / 2) 
-            XV(0) = 0.256 * X
-            XV(1) = 0.126 * X
-            XV(2) = 1.388 * X
-            XV(3) = 0.454 * X
+            X = (H / 16.3) ! 16.3 is the height of a 2in drc juniper
+            XV(0) = .07054 * X
+            XV(1) = .03474 * X
+            XV(2) = .25751 * X
+            XV(3) = .08457 * X
 
 c         tanoak, California black oak use proportions at 1" dbh
           CASE (17,21)
@@ -344,7 +347,7 @@ C         giant sequoia, incense cedar: use proportions at 1" dbh
 
 C         Gambel oak
           CASE (22)
-            X = (D / 4) 
+            X = (H / 28) !28 is the height of a 4in drc oak
             XV(0) =  3.2119 * X
             XV(1) =  1.606  * X
             XV(2) = 15.8115 * X
@@ -406,11 +409,10 @@ C         subalpine fir
 C         aspen
           CASE (2)
 
-c            CALL NATCRS (V,VM,XDUM1,SPI,D,H,.FALSE.,XDUM2,ITRNC,
-c     &          XDUM3,LDUM1,LDUM2,-1)
-
-            CALL CFVOL (SPI,D,H,D*D*H,V,VM,XDUM3,.FALSE.,.FALSE.,XDUM2,
+	      D2H = D*D*H
+            CALL CFVOL (SPI,D,H,D2H,V,VM,XDUM3,.FALSE.,.FALSE.,XDUM2,
      1          ITRNC,LDUM1)
+
 
 C           INPUT   D (IN) CONVERTED TO (M)
 C           INPUT   V (FT**3)CONVERTED TO (M**3);
@@ -635,8 +637,8 @@ C         ARE FROM GRIER ET AL. 1992 FOR. ECOL. MGMT. 50:331, TABLE 2.
 
 C         ONLY BRISTLECONE NEEDS TO HAVE ITS DBH CONVERTED TO DRC,
 C         SINCE FOR PINYON, DRC IS WHAT USERS ENTER
-C         STILL CONVERT TO CM --SAR 10/13
-            DRC = D*2.54
+
+            DRC = D
             IF (SPI .EQ. 9) DRC = 2.54 * (D + 1.9410) / 1.0222
 
 C           INPUT   DRC (CM) - DIAMETER AT ROOT COLLAR
@@ -656,6 +658,10 @@ C           ASSUMED TO BE COUNTED BY FVS BASE EQNS (>1.5" BRANCH).
 C           STEMWOOD IS ASSUMED TO BE INCLUDED IN THE BASE FVS
 C           VOLUME EQUATIONS, EVEN FOR <1.5" UTILIZATION. SO NO
 C           STEMWOOD IS INCLUDED.
+
+C           TRIAL CALCULATION COMPARING WITH GRIER STAND SUMMARIES
+C           GIVES ESTIMATED TOTAL BIOMASS 1.83 TIMES OBSERVED
+C           ** THIS IS CAUSE FOR CONCERN **
 
             DFOL = 10**(-0.946 + 1.565 * LOG10(DRC))
             DBR1 = 10**(-1.613 + 2.088 * LOG10(DRC)) * 0.33
@@ -851,10 +857,12 @@ C           INTO FOLIAGE (67%), <.25" CATEGORIES. (33%). 1-3"
 C           CATEGORY IS SPLIT SO 25% GOES INTO DBR3; REMAINDER
 C           ASSUMED TO BE COUNTED BY FVS BASE EQNS (>1.5" BRANCH).
 
+C           TRIAL CALCULATION COMPARING WITH GRIER STAND SUMMARIES
+C           GIVES ESTIMATED TOTAL BIOMASS 1.14 TIMES OBSERVED
+
 C           LINE BELOW IS NOT NEEDED SINCE USERS ENTER DRC--SAR 4/03
 C           DRC = 2.54 * (D + 1.1841) / 0.9823
-C           STILL CONVERT TO CM --SAR 10/13
-            DRC = D*2.54
+            DRC = D
 
             DFOL = 10**(-1.737 + 1.382 * LOG10(DRC)) * 0.67
             DBR1 = 10**(-1.737 + 1.382 * LOG10(DRC)) * 0.33
@@ -994,7 +1002,7 @@ C
             IF (V .LE. .01) THEN
               V = .01
             ENDIF
-C 
+
 C           WT OF PLANT & BRANCHES > 1.5" (POUNDS)
 
             V = V * SG * 2000.0
@@ -1056,7 +1064,7 @@ c         partitioning from western hemlock
 
             LIVEWT = LIVEWT*2.2046         ! convert kg to lbs
             DEADWT = DEADWT*2.2046
-
+            
             IF (D .LE. 40.0) THEN
               P1 = 0.5474 * EXP(-0.03697*D)
               P2 = 0.8352* EXP(-0.03802*D)
@@ -1188,7 +1196,7 @@ C           right).
               XV(0) = XV(0) + (LIVEWT *  P1) * X
               XV(1) = XV(1) + (LIVEWT * (P2-P1) + DEADWT * DP1) * X
             ENDIF
-
+            
             XV(2) = XV(2) + (LIVEWT * (P3-P2) + DEADWT * (DP2-DP1)) * X
             XV(3) = XV(3) + (LIVEWT * (P4-P3) + DEADWT * (DP3-DP2)) * X
             XV(4) = XV(4) + (LIVEWT * (1.0-P4)+ DEADWT * (1.0-DP3)) * X

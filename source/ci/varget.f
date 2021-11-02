@@ -1,7 +1,7 @@
       SUBROUTINE VARGET (WK3,IPNT,ILIMIT,REALS,LOGICS,INTS)
       IMPLICIT NONE
 C----------
-C CI $Id: varget.f 2441 2018-07-05 22:31:42Z gedixon $
+C CI $Id: varget.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C
 C     READ THE VARIANT SPECIFIC VARIABLES.

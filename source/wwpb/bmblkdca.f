@@ -1,6 +1,7 @@
       BLOCK DATA BMBLKD
 C----------
-C WWPB $Id: bmblkdca.f 2460 2018-07-24 14:41:48Z gedixon $
+C  **BMBLKD CA--WESTWIDE PINE BEETLE MODEL  DATE OF LAST REVISION: 05/31/05
+C           ICASCA (Inland California Southern Cascades FVS variant
 C----------
 ***********************************************************************
 * The following Westwide Pine Beetle Model variable initializations

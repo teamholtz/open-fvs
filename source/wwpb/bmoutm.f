@@ -1,7 +1,5 @@
       SUBROUTINE BMOUTM (I,IYEAR)
 C----------
-C WWPB $Id: bmoutm.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
 C  **BMOUTM  DATE OF LAST REVISION:  JUNE 28, 2005, AJM
 C                                    Aug 1999, AJM
 C                                    AUG 13, 1994

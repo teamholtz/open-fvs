@@ -1,7 +1,7 @@
       SUBROUTINE ESPXCS
       IMPLICIT NONE
 C----------
-C IE $Id: espxcs.f 2449 2018-07-11 14:53:35Z gedixon $
+C  **ESPXCS--NI23   DATE OF LAST REVISION:   04/01/08
 C----------
 C
 COMMONS

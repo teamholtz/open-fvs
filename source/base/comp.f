@@ -1,7 +1,7 @@
       SUBROUTINE COMP(CMP,ICMP,ATTR)
       IMPLICIT NONE
 C----------
-C BASE $Id: comp.f 2944 2020-02-03 22:59:12Z lancedavid $
+C BASE $Id: comp.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C  THIS SUBROUTINE COMPUTES THE PERCENTAGE OF A GIVEN STAND
 C  ATTRIBUTE IN EACH SPECIES-TREE CLASS.  IT THEN LOADS CMP
@@ -39,12 +39,11 @@ C----------
       DATA NS/'---'/
       IF (ITRN.LE.0) GOTO 30
       J=0
-      DO I1=1,MAXSP
-        DO I2=1,3
-          J=J+1
-          WORK1(J)=ATTR(I1,I2)
-        ENDDO
-      ENDDO
+      DO 10 I1=1,MAXSP
+      DO 10 I2=1,3
+      J=J+1
+      WORK1(J)=ATTR(I1,I2)
+   10 CONTINUE
 C----------
 C  SORT THE ATTRIBUTE ARRAY IN DESCENDING ORDER.
 C----------

@@ -1,7 +1,7 @@
       SUBROUTINE CCFCAL(ISPC,D,H,JCR,P,LTHIN,CCFT,CRWDTH,MODE)
       IMPLICIT NONE
 C----------
-C CANADA-BC $Id: ccfcal.f 3783 2021-09-13 22:08:32Z donrobinson $
+C  $Id: ccfcal.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
 C----------
 C  THIS ROUTINE COMPUTES CROWN WIDTH AND CCF FOR INDIVIDUAL TREES.
 C  CALLED FROM DENSE, REGENT, PRTRLS, SSTAGE, AND CVCW.
@@ -161,14 +161,14 @@ C     COMPUTE OC (14) AND OH (15) USING FD AND EP
 C
       SELECT CASE (ISPC)
 
-        CASE (1:10,14) ! EQUATIONS DERIVED FROM NI
+	  CASE (1:10,14) ! EQUATIONS DERIVED FROM NI
 
           SELECT CASE (ISPC)
-            CASE (1:10)
+	      CASE (1:10)
               IC = ISPC
-            CASE (14)
+	      CASE (14)
               IC = 3
-           END SELECT
+        	END SELECT
 C----------
 C         COMPUTE CCF
 C----------
@@ -197,16 +197,16 @@ C----------
             IF(CRWDTH .GT. 99.9) CRWDTH=99.9
           ENDIF
 
-        CASE (11:13,15) ! EQUATIONS DERIVED FROM PN
+	  CASE (11:13,15) ! EQUATIONS DERIVED FROM PN
 
           SELECT CASE (ISPC)
-            CASE (11,15)
+	      CASE (11,15)
               IC = INDCCF(24)
-            CASE (12)
+	      CASE (12)
               IC = INDCCF(26)
-            CASE (13)
+	      CASE (13)
               IC = INDCCF(27)
-          END SELECT
+        	END SELECT
 C----------
 C         COMPUTE CCF
 C----------
@@ -227,9 +227,8 @@ C----------
             IF(CRWDTH .GT. 99.9) CRWDTH = 99.9
           ENDIF
 
-      END SELECT
+	END SELECT
 C
   100 CONTINUE
-      IF(CRWDTH .LT. 0.1) CRWDTH=0.1
       RETURN
       END

@@ -1,7 +1,7 @@
       SUBROUTINE DMNAC(A,B)
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: dmnac.f 3816 2021-09-15 23:34:54Z donrobinson $
+C  $Id: dmnac.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 C **DMNAC -- NISI  Date of last revision: January 10, 2002
 C----------------------------------------------------------------------
@@ -53,7 +53,7 @@ C     LOCAL VARIABLES.
       DO J = 1, MXTHRX
         TMP(J) = EXP(DSTNCE(J) * B)
       ENDDO
-
+    
       DO I = 0,6
         X = FLOAT(I) * A
         DO J = 1,MXTHRX
@@ -61,5 +61,5 @@ C     LOCAL VARIABLES.
         ENDDO
       ENDDO
 
-      RETURN
-      END
+	RETURN
+	END

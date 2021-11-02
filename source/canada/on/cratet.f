@@ -1,7 +1,8 @@
       SUBROUTINE CRATET
       IMPLICIT NONE
 C----------
-C CANADA-ON $Id: cratet.f 3788 2021-09-13 23:08:03Z donrobinson $
+C  **CRATET--ON    DATE OF LAST REVISION:   04/06/11
+C    ON  08/12/05
 C----------
 C  THIS SUBROUTINE IS CALLED PRIOR TO PROJECTION.  IT HAS THE
 C  FOLLOWING FUNCTIONS:
@@ -267,10 +268,10 @@ C----------
       I=IND1(I3)
 
       H=HT(I)
-c     H_M = HT(I) * FTtoM
+c	H_M = HT(I) * FTtoM
       NH=NORMHT(I)
       D=DBH(I)
-c     D_M=DBH(I)*INtoCM
+c      D_M=DBH(I)*INtoCM
 
       BX = HT2(ISPC)
 C----------
@@ -360,12 +361,12 @@ C
       K4=K4+1
       GO TO 125
   120 CONTINUE
-      NORMHT(II)=INT(H*100.0+0.5)
+      NORMHT(II)=H*100.0+0.5
       IF(ITRUNC(II).EQ.0) THEN
          IF(HT(II).GT.0.0) THEN
-            ITRUNC(II)=INT(80.0*HT(II)+0.5)
+            ITRUNC(II)=80.0*HT(II)+0.5
          ELSE
-            ITRUNC(II)=INT(80.0*H+0.5)
+            ITRUNC(II)=80.0*H+0.5
             HT(II)=H
          ENDIF
       ELSE
@@ -375,7 +376,7 @@ C
             HT(II)=ITRUNC(II)*0.01
          ENDIF
       ENDIF
-      IF(NORMHT(II)*0.01.LT.HT(II)) NORMHT(II)=INT(HT(II)*100.0)
+      IF(NORMHT(II)*0.01.LT.HT(II)) NORMHT(II)=HT(II)*100.0
   125 CONTINUE
   130 CONTINUE
       KNT2(IPTR)=K4
@@ -421,15 +422,15 @@ C     CALL HTONT ROUTINE TO PROCESS ONTARIO EQUATIONS,
       GO TO 146
   142 CONTINUE
       IF(HT(II) .GT. 0.) THEN
-        NORMHT(II)=INT(HT(II)*100.0+0.5)
+        NORMHT(II)=HT(II)*100.0+0.5
       ELSE
-        NORMHT(II)=INT(H*100.0+0.5)
+        NORMHT(II)=H*100.0+0.5
       ENDIF
       IF(ITRUNC(II).EQ.0) THEN
          IF(HT(II).GT.0.0) THEN
-            ITRUNC(II)=INT(80.0*HT(II)+0.5)
+            ITRUNC(II)=80.0*HT(II)+0.5
          ELSE
-            ITRUNC(II)=INT(80.0*H+0.5)
+            ITRUNC(II)=80.0*H+0.5
             HT(II)=H
          ENDIF
       ELSE
@@ -439,7 +440,7 @@ C     CALL HTONT ROUTINE TO PROCESS ONTARIO EQUATIONS,
             HT(II)=ITRUNC(II)*0.01
          ENDIF
       ENDIF
-      IF(NORMHT(II)*0.01.LT.HT(II)) NORMHT(II)=INT(HT(II)*100.0)
+      IF(NORMHT(II)*0.01.LT.HT(II)) NORMHT(II)=HT(II)*100.0
 C----------
 C   CALL FIRE SNAG MODEL TO ADD THE DEAD TREES TO THE
 C   SNAG LIST; DEFLATE PROB(II), WHICH WAS TEMPORARILY

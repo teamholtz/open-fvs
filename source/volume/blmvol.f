@@ -1,5 +1,5 @@
 C----------
-C VOLUME $Id: blmvol.f 2458 2018-07-22 19:09:30Z gedixon $
+C VOLUME $Id: blmvol.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C 01/18/2013 Added calculation for stump VOL(14) and tip VOL(15)
 C 09/18/2013 Correct XINT to sum all logs

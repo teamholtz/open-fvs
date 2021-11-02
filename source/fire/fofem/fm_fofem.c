@@ -1,5 +1,5 @@
 //
-// FIRE-FOFEM $Id: fm_fofem.c 3829 2021-09-29 16:52:55Z donrobinson $
+// $Id: fm_fofem.c 2359 2018-05-18 17:35:04Z lancedavid $
 //
 /*{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}
 * Name: fm_fofem.c
@@ -65,7 +65,7 @@ void Test_In (float fr_In[]);
       float *fr_In,
       float *fr_Out,
       char  *cr_ErrMes);
-  #endif
+#endif
 #else
   extern __declspec(dllexport) int FM_FOFEM (    // VS2010 compiler, Windows OS
     float *fr_In,

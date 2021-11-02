@@ -1,8 +1,8 @@
       SUBROUTINE BRSOR
       IMPLICIT NONE
-C----------
-C WPBR $Id: brsor.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **BRSOR        DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C   This subroutine is called to sort and match tree IDs to insure
 C   proper mapping of Blister Rust Model canker data and FVS Model

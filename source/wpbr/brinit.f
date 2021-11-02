@@ -1,8 +1,8 @@
       SUBROUTINE BRINIT
       IMPLICIT NONE
-C----------
-C WPBR $Id: brinit.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **BRINIT       DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C  Initializes the Blister Rust model variables.
 C----------------------------------------------------------------------

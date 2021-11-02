@@ -1,7 +1,7 @@
       SUBROUTINE IAPSRT(N,A,INDEX,LSEQ)
       IMPLICIT NONE
 C----------
-C BASE $Id: iapsrt.f 2944 2020-02-03 22:59:12Z lancedavid $
+C  $Id: iapsrt.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C  IAPSRT IS A INTEGER ASCENDING IDENTIFICATION SORT.
 C
@@ -24,11 +24,10 @@ C----------
 C  IF LSEQ IS FALSE, ASSUME THAT A IS PARTIALLY
 C  SORTED.  OTHERWISE, LOAD INDEX WITH VALUES FROM 1 TO N.
 C----------
-      IF(LSEQ) THEN
-        DO I=1,N
-          INDEX(I)=I
-        ENDDO 
-      ENDIF
+      IF(.NOT.LSEQ) GO TO 20
+      DO 10 I=1,N
+   10 INDEX(I)=I
+   20 CONTINUE
 C----------
 C  RETURN IF FEWER THAN TWO ELEMENTS IN ARRAY A.
 C----------

@@ -1,8 +1,8 @@
       SUBROUTINE BRCRED
       IMPLICIT NONE
-C----------
-C WPBR $Id: brcred.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **BRCRED       DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C  BRCRED reduces the crowns of white pines that have been girdled
 C  by Blister Rust at initialization from canker data provided or

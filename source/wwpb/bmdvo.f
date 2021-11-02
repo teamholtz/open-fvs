@@ -1,6 +1,6 @@
       SUBROUTINE BMDVO (I,IYEAR)
 C----------
-C WWPB $Id: bmdvo.f 2460 2018-07-24 14:41:48Z gedixon $
+C  **BMDVO  DATE OF LAST REVISION:  JUNE 27, 1994
 C----------
 C
 c     Westwide Pine Beetle model; 

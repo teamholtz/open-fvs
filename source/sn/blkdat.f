@@ -1,7 +1,7 @@
       BLOCK DATA BLKDAT
       IMPLICIT NONE
 C----------
-C SN $Id: blkdat.f 3751 2021-08-19 15:02:28Z lancedavid $
+C  **BLKDAT--SN    DATE OF LAST REVISION:  10/19/11
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
@@ -122,7 +122,7 @@ C----------
      & 'SD ',   'RA ',   'SY ',   'CW ',   'BT ',   'BC ',   'WO ',
      & 'SO ',   'SK ',   'CB ',   'TO ',   'LK ',   'OV ',   'BJ ',
      & 'SN ',   'CK ',   'WK ',   'CO ',   'RO ',   'QS ',   'PO ',
-     & 'BO ',   'LO ',   'BK ',   'WI ',   'SS ',   'BD ',   'EL ',
+     & 'BO ',   'LO ',   'BK ',   'WI ',   'SS ',   'BW ',   'EL ',
      & 'WE ',   'AE ',   'RL ',   'OS ',   'OH ',   'OT '/
 C
       DATA FIAJSP /
@@ -138,7 +138,7 @@ C
      & '806',   '812',   '813',   '819',   '820',   '822',   '824',
      & '825',   '826',   '827',   '832',   '833',   '834',   '835',
      & '837',   '838',   '901',   '920',   '931',   '950',   '970',
-     & '971',   '972',   '975',   '299',   '998',   '999'/
+     & '971',   '972',   '975',   '298',   '998',   '999'/
 C
       DATA PLNJSP /
      & 'ABIES ','JUNIP ','PICEA ','PICL  ','PIEC2 ','PIEL  ','PIGL2 ',
@@ -153,7 +153,7 @@ C
      & 'QUCO2 ','QUFA  ','QUPA5 ','QULA2 ','QULA3 ','QULY  ','QUMA3 ',
      & 'QUMI  ','QUMU  ','QUNI  ','QUPR2 ','QURU  ','QUSH  ','QUST  ',
      & 'QUVE  ','QUVI  ','ROPS  ','SALIX ','SAAL5 ','TILIA ','ULMUS ',
-     & 'ULAL  ','ULAM  ','ULRU  ','2TN   ','2TB   ','2TREE '/
+     & 'ULAL  ','ULAM  ','ULRU  ','2TE   ','2TD   ','2TREE '/
 C
       DATA JTYPE / 10,100,110,130,140,160,170,180,190,200,
      &            210,220,230,250,260,280,290,310,320,330,
@@ -175,7 +175,7 @@ C
      & 'MV1','ML1','AP1','MB1','WT1','BG1','TS1','HH1','SD1','RA1',
      & 'SY1','CW1','BT1','BC1','WO1','SO1','SK1','CB1','TO1','LK1',
      & 'OV1','BJ1','SN1','CK1','WK1','CO1','RO1','QS1','PO1','BO1',
-     & 'LO1','BK1','WI1','SS1','BD1','EL1','WE1','AE1','RL1','OS1',
+     & 'LO1','BK1','WI1','SS1','BW1','EL1','WE1','AE1','RL1','OS1',
      & 'OH1','OT1'/
       DATA (NSP(I,2),I= 1,90) /
      & 'FR2','JU2','PI2','PU2','SP2','SA2','SR2','LL2',
@@ -186,7 +186,7 @@ C
      & 'MV2','ML2','AP2','MB2','WT2','BG2','TS2','HH2','SD2','RA2',
      & 'SY2','CW2','BT2','BC2','WO2','SO2','SK2','CB2','TO2','LK2',
      & 'OV2','BJ2','SN2','CK2','WK2','CO2','RO2','QS2','PO2','BO2',
-     & 'LO2','BK2','WI2','SS2','BD2','EL2','WE2','AE2','RL2','OS2',
+     & 'LO2','BK2','WI2','SS2','BW2','EL2','WE2','AE2','RL2','OS2',
      & 'OH2','OT2'/
       DATA (NSP(I,3),I= 1,90) /
      & 'FR3','JU3','PI3','PU3','SP3','SA3','SR3','LL3',
@@ -197,14 +197,14 @@ C
      & 'MV3','ML3','AP3','MB3','WT3','BG3','TS3','HH3','SD3','RA3',
      & 'SY3','CW3','BT3','BC3','WO3','SO3','SK3','CB3','TO3','LK3',
      & 'OV3','BJ3','SN3','CK3','WK3','CO3','RO3','QS3','PO3','BO3',
-     & 'LO3','BK3','WI3','SS3','BD3','EL3','WE3','AE3','RL3','OS3',
+     & 'LO3','BK3','WI3','SS3','BW3','EL3','WE3','AE3','RL3','OS3',
      & 'OH3','OT3'/
 C----------
 C     SPECIES LIST FOR SOUTHERN VARIANT.
 C
-C    1 = FIR (FR)                      ABIES 
-C    2 = REDCEDAR (JU)                 JUNIPERUS
-C    3 = SPRUCE (PI)                   PICEA
+C    1 = FIR SPECIES (FR)              ABIES SP.
+C    2 = REDCEDAR SPECIES (JU)         JUNIPERUS SP.
+C    3 = SPRUCE SPECIES (PI)           PICEA SP.
 C    4 = SAND PINE (PU)                PINUS CLAUSA
 C    5 = SHORTLEAF PINE (SP)           PINUS ECHINATA
 C    6 = SLASH PINE (SA)               PINUS ELLIOTTII
@@ -216,58 +216,58 @@ C    11 = POND PINE (PD)               PINUS SEROTINA
 C    12 = EASTERN WHITE PINE (WP)      PINUS STROBUS
 C    13 = LOBLOLLY PINE (LP)           PINUS TAEDA
 C    14 = VIRGINIA PINE (VP)           PINUS VIRGINIANA
-C    15 = BALD CYPRESS (BY)            TAXODIUM DISTICHUM
-C    16 = POND CYPRESS (PC)            TAXODIUM ASCENDENS
-C    17 = HEMLOCK (HM)                 TSUGA
+C    15 = BALDCYPRESS (BY)             TAXODIUM DISTICHUM
+C    16 = PONDCYPRESS (PC)             TAXODIUM DISTICHUM VAR. NUTANS
+C    17 = HEMLOCK SPECIES (HM)         TSUGA SP.
 C    18 = FLORIDA MAPLE (FM)           ACER BARBATUM
 C    19 = BOXELDER (BE)                ACER NEGUNDO
 C    20 = RED MAPLE (RM)               ACER RUBRUM
 C    21 = SILVER MAPLE (SV)            ACER SACCHARINUM
 C    22 = SUGAR MAPLE (SM)             ACER SACCHARUM
-C    23 = BUCKEYE (BU)                 AESCULUS
-C    24 = BIRCH (BB)                   BETULA
-C    25 = SWEET BIRCH (SB)             BETULA LENTA
+C    23 = BUCKEYE, HORSECHESTNUT SPECIES(BU)  AESCULUS SP.
+C    24 = BIRCH SPECIES (BB)           BETULA SP.
+C    25 = SWEET BIRCH, BLACK BIRCH (SB)BETULA LENTA
 C    26 = AMERICAN HORNBEAM (AH)       CARPINUS CAROLINIANA
-C    27 = HYBRID HICKORY (HI)          CARYA 
-C    28 = CATALPA (CA)                 CATALPA 
-C    29 = HACKBERRY (HB)               CELTIS
+C    27 = HICKORY SPECIES (HI)         CARYA SP.
+C    28 = CATALPA (CA)                 CATALPA SP.
+C    29 = HACKBERRY SPECIES (HB)       CELTIS SP.
 C    30 = EASTERN REDBUD (RD)          CERCIS CANADENSIS
 C    31 = FLOWERING DOGWOOD (DW)       CORNUS FLORIDA
 C    32 = COMMON PERSIMMON (PS)        DIOSPYROS VIRGINIANA
 C    33 = AMERICAN BEECH (AB)          FAGUS GRANDIFOLIA
-C    34 = ASH (AS)                     FRAXINUS
+C    34 = ASH SPECIES(AS)              FRAXINUS SP.
 C    35 = WHITE ASH (WA)               FRAXINUS AMERICANA
 C    36 = BLACK ASH (BA)               FRAXINUS NIGRA
 C    37 = GREEN ASH (GA)               FRAXINUS PENNSYLVANICA
 C    38 = HONEYLOCUST (HL)             GLEDITSIA TRIACANTHOS
-C    39 = LOBLOLLY BAY (LB)            GORDONIA LASIANTHUS
-C    40 = SILVERBELL (HA)              HALESIA
+C    39 = LOBLOLLY-BAY (LB)            GORDONIA LASIANTHUS
+C    40 = SILVERBELL (HA)              HALESIA SP.
 C    41 = AMERICAN HOLLY (HY)          ILEX OPACA
 C    42 = BUTTERNUT (BN)               JUGLANS CINEREA
 C    43 = BLACK WALNUT (WN)            JUGLANS NIGRA
 C    44 = SWEETGUM (SU)                LIQUIDAMBAR STYRACIFLUA
-C    45 = TULIPTREE (YP)               LIRIODENDRON TULIPIFERA
-C    46 = MAGNOLIA (MG)                MAGNOLIA
-C    47 = CUCUMBER TREE (CT)           MAGNOLIA ACUMINATA
+C    45 = YELLOW-POPLAR (YP)           LIRIODENDRON TULIPIFERA
+C    46 = MAGNOLIA SPECIES (MG)        MAGNOLIA SP.
+C    47 = CUCUMBERTREE (CT)            MAGNOLIA ACUMINATA
 C    48 = SOUTHERN MAGNOLIA (MS)       MAGNOLIA GRANDIFLORA
 C    49 = SWEETBAY (MV)                MAGNOLIA VIRGINIANA
 C    50 = BIGLEAF MAGNOLIA (ML)        MAGNOLIA MACROPHYLLA
-C    51 = APPLE (AP)                   MALUS
-C    52 = MULBERRY (MB)                MORUS
+C    51 = APPLE SPECIES (AP)           MALUS SP.
+C    52 = MULBERRY SPECIES (MB)        MORUS SP.
 C    53 = WATER TUPELO (WT)            NYSSA AQUATICA
-C    54 = BLACKGUM (BG)                NYSSA SYLVATICA
-C    55 = SWAMP TUPELO (TS)            NYSSA BIFLORA
-C    56 = HOPHORNBEAM (HH)             OSTRYA VIRGINIANA
+C    54 = BLACKGUM/ BLACK TUPELO (BG)  NYSSA SYLVATICA
+C    55 = SWAMP TUPELO(TS)             NYSSA SYLVATICA VAR. BIFLORA
+C    56 = EASTERN HOPHORNBEAM, (HH)    OSTRYA VIRGINIANA
 C    57 = SOURWOOD (SD)                OXYDENDRUM ARBOREUM
 C    58 = REDBAY (RA)                  PERSEA BORBONIA
-C    59 = AMERICAN SYCAMORE (SY)       PLATANUS OCCIDENTALIS
-C    60 = COTTONWOOD (CW)              POPULUS
+C    59 = SYCAMORE (SY)                PLATANUS OCCIDENTALIS
+C    60 = COTTONWOOD SPECIES (CW)      POPULUS SP.
 C    61 = BIGTOOTH ASPEN (BT)          POPULUS GRANDIDENTATA
 C    62 = BLACK CHERRY (BC)            PRUNUS SEROTINA
 C    63 = WHITE OAK (WO)               QUERCUS ALBA
 C    64 = SCARLET OAK (SO)             QUERCUS COCCINEA
-C    65 = SOUTHERN RED OAK (SK)        QUERCUS FALCATA 
-C    66 = CHERRYBARK OAK (CB)          QUERCUS PAGODA
+C    65 = SOUTHERN RED OAK (SK)        QUERCUS FALCATA VAR. FALCATA
+C    66 = CHERRYBARK OAK               QUERCUS FALCATA
 C    67 = TURKEY OAK (TO)              QUERCUS LAEVIS
 C    68 = LAUREL OAK (LK)              QUERCUS LAURIFOLIA
 C    69 = OVERCUP OAK (OV)             QUERCUS LYRATA
@@ -282,15 +282,15 @@ C    77 = POST OAK (PO)                QUERCUS STELLATA
 C    78 = BLACK OAK (BO)               QUERCUS VELUTINA
 C    79 = LIVE OAK (LO)                QUERCUS VIRGINIANA
 C    80 = BLACK LOCUST (BK)            ROBINIA PSUEDOACACIA
-C    81 = WILLOW (WI)                  SALIX 
+C    81 = WILLOW SPECIES (WI)          SALIX SP.
 C    82 = SASSAFRAS (SS)               SASSAFRAS ALBIDUM
-C    83 = BASSWOOD (BD)                TILIA 
-C    84 = ELM (EL)                     ULMUS 
+C    83 = BASSWOOD SPECIES (BW)        TILIA SP.
+C    84 = ELM SPECIES(EL)              ULMUS SP.
 C    85 = WINGED ELM (WE)              ULMUS ALATA
 C    86 = AMERICAN ELM (AE)            ULMUS AMERICANA
 C    87 = SLIPPERY ELM (RL)            ULMUS RUBRA
-C    88 = OTHER SOFTWOOD (OS)
-C    89 = OTHER HARDWOOD (OH)
+C    88 = OTHER SOFTWOOD SPECIES (OS)
+C    89 = OTHER HARDWOOD SPECIES (OH)
 C    90 = OTHER SPECIES(OT)
 C----------
 C   THE HT-DBH COEFFICIENTS ARE ASSIGNED IN THE **SITSET ROUTINE

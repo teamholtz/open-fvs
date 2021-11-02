@@ -1,6 +1,6 @@
       SUBROUTINE DBSCKNROWS(IRCODE,TABLENAME,NRESERV,ISEXCEL)
 C
-C DBS $Id: dbscknrows.f 2685 2019-05-30 17:29:01Z lancedavid $
+C $Id: dbscknrows.f 2357 2018-05-18 17:26:03Z lancedavid $
 C
 C     PURPOSE: SEE IF THE NUMBER OF ROWS ON AN OUTPUT DATABASE
 C              IS TOO LARGE FOR EXCEL...OR EVEN IF THE DATA BASE 
@@ -35,23 +35,15 @@ C
 C     CHECK TO SEE IF THE TREELIST TABLE EXISTS IN DATBASE
 C     IF IT DOESNT THEN WE NEED TO CREATE IT
 
-      IF (ISEXCEL) THEN
+      if (ISEXCEL) then
         SQLStmtStr= 'SELECT Count(*) FROM '//TABLENAME
-
-      ELSEIF (TRIM(DBMSOUT) .EQ. 'ACCESS') THEN
-        SQLStmtStr= 'SELECT Count(*) FROM '//
-     >  '(SELECT TOP 1 * FROM '//TRIM(TABLENAME)//')'
-
-      ELSE
-        SQLStmtStr= 'SELECT Count(*) FROM '//
-     >  '(SELECT * FROM '//TRIM(TABLENAME)//' LIMIT 1 )'
-      ENDIF
+      else 
+        SQLStmtStr= 'SELECT Count(*) FROM (select * from '//TABLENAME//
+     >  ' limit 1)'
+      endif
 
       iRet = fvsSQLExecDirect(StmtHndlOut,trim(SQLStmtStr),
      >            int(len_trim(SQLStmtStr),SQLINTEGER_KIND))
-
-c*      PRINT *,SQLStmtStr,"iRet=",iRet
-
       IF(iRet.NE.SQL_SUCCESS.AND.
      >   iRet.NE.SQL_SUCCESS_WITH_INFO) THEN
         IRCODE = 1

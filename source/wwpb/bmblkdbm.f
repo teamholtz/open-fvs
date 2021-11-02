@@ -1,6 +1,7 @@
       BLOCK DATA BMBLKD
 C----------
-C WWPB $Id: bmblkdbm.f 2460 2018-07-24 14:41:48Z gedixon $
+C  **BMBLKD BM--WESTWIDE PINE BEETLE MODEL  DATE OF LAST REVISION: 07/23/10
+C            Blue Mountains FVS variant
 C----------
 ***********************************************************************
 * The following Westwide Pine Beetle Model variable initializations

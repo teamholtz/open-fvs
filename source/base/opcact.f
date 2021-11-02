@@ -1,7 +1,7 @@
       SUBROUTINE OPCACT (KODE,CSTR)
       IMPLICIT NONE
 C----------
-C BASE $Id: opcact.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: opcact.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C     OPTION PROCESSING ROUTINE - NL CROOKSTON - JAN 2003 - MOSCOW
 C

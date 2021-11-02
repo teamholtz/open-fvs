@@ -1,7 +1,5 @@
       SUBROUTINE BMATCT(IYR)
-C----------
-C WWPB $Id: bmatct.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+
 C     CALLED FROM BMDRV
 C     CALLS:  SPLAAR
 C             SPLADS

@@ -1,6 +1,6 @@
       BLOCK DATA DFBLKD
 C----------
-C DFB $Id: dfblkdbc.f 2446 2018-07-09 22:54:33Z gedixon $
+C  **DFBLKD--BC   DATE OF LAST REVISION:  08/13/03
 C----------
 C
 C     DOUGLAS-FIR BEETLE MODEL BLOCK DATA FOR

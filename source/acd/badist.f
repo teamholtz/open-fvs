@@ -1,7 +1,7 @@
       SUBROUTINE BADIST(DEBUG)
       IMPLICIT NONE
 C----------
-C ACD $Id: badist.f 2461 2018-07-24 18:00:57Z gedixon $
+C   **BADIST--NE   DATE OF LAST REVISION:  07/11/08
 C----------
 C
 C COMMONS

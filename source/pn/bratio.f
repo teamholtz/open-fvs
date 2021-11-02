@@ -1,7 +1,7 @@
       FUNCTION BRATIO(IS,D,H)
       IMPLICIT NONE
 C-----
-C PN $Id: bratio.f 3758 2021-08-25 22:42:32Z lancedavid $
+C PN $Id: bratio.f 0000 2018-02-14 00:00:00Z gedixon $
 C-------
 C
 C FUNCTION TO COMPUTE BARK RATIOS.  THIS ROUTINE IS VARIANT SPECIFIC
@@ -18,20 +18,19 @@ C  31-WB-101,32-KP-103,33-PY-231,34-DG-492,35-HT-500,36-CH-764,
 C  37-WI-920,   ---   ,39-OT-999
 C----------
 
-      REAL BARKB(4,16),H,D,BRATIO,DIB
+      REAL BARKB(4,15),H,D,BRATIO,DIB
       INTEGER JBARK(39),IS
       REAL RDANUW
 C
       DATA JBARK/
      &  2,  2,  2,  2,  2, 11,  2,  5,  5,  9,
-     & 10,  4,  4,  4,  3,  1,  16, 12, 13, 12,
+     & 10,  4,  4,  4,  3,  1,  5, 12, 13, 12,
      &  6, 14, 14,  6,  7, 14, 14,  8, 12, 10,
      & 15, 15, 15, 14, 14, 14, 14, 10, 10/
 C----------
 C  MASTER SPECIES
 C  202=DF, 015=WF, 122=PP, 116=JP, 081=IC, 312=BM, 431=GC, 815=WO,
 C  093=ES, 108=LP, 098=SS, 242=RC, 263=WH, 351=RA, 001=OTHER SOFTWOODS
-C  211=RW (UPDATED JUNE 2021)
 C
 C  NOTE: COEFFICIENTS FOR SPECIES 312 & 431 IN PILLSBURY &
 C  KIRKLEY ARE METRIC. INTERCEPT IS DIVIDED BY 2.54 TO CONVERT THESE
@@ -52,8 +51,7 @@ C----------
      & 242.,  0.949670,  1.0     , 1.,
      & 263.,  0.933710,  1.0     , 1.,
      & 351.,  0.075256,  0.94373 , 2.,
-     & 001.,  0.933290,  1.0     , 1.,
-     & 211.,  0.7012  ,  1.04862 , 1./
+     & 001.,  0.933290,  1.0     , 1./
 C----------
 C BARK COEFS
 C  202,15,122,116,81   FROM WALTERS ET.AL. RES BULL 50  TABLE 2

@@ -1,7 +1,7 @@
       SUBROUTINE TMHED (IOUT, NPLT, MGMID)
       IMPLICIT NONE
 C---------- 
-C DFTM $Id: tmhed.f 2446 2018-07-09 22:54:33Z gedixon $
+C  **TMHED  DATE OF LAST REVISION:  05/31/13 
 C---------- 
 C
 C Revision History:

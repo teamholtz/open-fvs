@@ -1,7 +1,7 @@
       SUBROUTINE BWERAN(SEL)
       IMPLICIT NONE
 C----------
-C WSBWE $Id: bweran.f 2460 2018-07-24 14:41:48Z gedixon $
+C  **BWERAN                 DATE OF LAST REVISION:  07/14/10
 C----------
 C
 C     BASE RANDOM NUMBER GENERATOR

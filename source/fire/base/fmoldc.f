@@ -1,7 +1,7 @@
       SUBROUTINE FMOLDC
       IMPLICIT NONE
 C----------
-C FIRE-BASE $Id: fmoldc.f 2561 2018-11-17 00:28:06Z lancedavid $
+C  $Id: fmoldc.f 2359 2018-05-18 17:35:04Z lancedavid $
 C----------
 C
 C     CALLED FROM: FMMAIN
@@ -32,6 +32,7 @@ C.... Parameter statements.
 
 C.... Parameter include files.   
       INCLUDE 'PRGPRM.F77'
+C      INCLUDE 'PPEPRM.F77'
       INCLUDE 'FMPARM.F77'
 
 C.... Common include files.

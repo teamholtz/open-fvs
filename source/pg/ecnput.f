@@ -1,7 +1,7 @@
       SUBROUTINE ECNPUT (WK3,IPNT,ILIMIT)
       IMPLICIT NONE
 C----------
-C PG $Id: ecnput.f 2454 2018-07-18 23:01:17Z gedixon $
+C  $Id: ecnput.f 2362 2018-05-18 17:43:47Z lancedavid $
 C----------
 C
 C     STORE THE ECONOMIC DATA FOR A GIVEN STAND.

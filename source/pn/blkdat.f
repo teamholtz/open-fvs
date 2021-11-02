@@ -1,7 +1,7 @@
       BLOCK DATA BLKDAT
       IMPLICIT NONE
 C----------
-C PN $Id: blkdat.f 3759 2021-08-26 20:24:07Z ckeyser01 $
+C  **BLKDAT--PN   DATE OF LAST REVISION:  05/09/12
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
@@ -94,10 +94,12 @@ C     1 = PACIFIC SILVER FIR (SF)      ABIES AMABILIS
 C     2 = WHITE FIR (WF)               ABIES CONCOLOR
 C     3 = GRAND FIR (GF)               ABIES GRANDIS
 C     4 = SUBALPINE FIR (AF)           ABIES LASIOCARPA
-C     5 = CALIFORNIA RED FIR (RF)      ABIES MAGNIFICA
+C     5 = CALIFORNIA RED FIR (RF)/     ABIES MAGNIFICA
+C         SHASTA RED FIR
 C     6 = SITKA SPRUCE (SS)            PICEA SITCHENSIS
 C     7 = NOBLE FIR (NF)               ABIES PROCERA
-C     8 = ALASKA CEDAR (YC)            CALLITROPSIS NOOTKATENSIS
+C     8 = ALASKA CEDAR (YC)/           CALLITROPSIS NOOTKATENSIS
+C         WESTERN LARCH                LARIX OCCIDENTALIS
 C     9 = INCENSE CEDAR (IC)           LIBOCEDRUS DECURRENS
 C    10 = ENGELMANN SPRUCE (ES)        PICEA ENGELMANNII
 C    11 = LODGEPOLE PINE (LP)          PINUS CONTORTA
@@ -106,28 +108,30 @@ C    13 = SUGAR PINE (SP)              PINUS LAMBERTIANA
 C    14 = WESTERN WHITE PINE (WP)      PINUS MONTICOLA
 C    15 = PONDEROSA PINE (PP)          PINUS PONDEROSA
 C    16 = DOUGLAS-FIR (DF)             PSEUDOTSUGA MENZIESII
-C    17 = REDWOOD (RW)                 SEQUOIA SEMPERVIRENS
+C    17 = COAST REDWOOD (RW)           SEQUOIA SEMPERVIRENS
 C    18 = WESTERN REDCEDAR (RC)        THUJA PLICATA
 C    19 = WESTERN HEMLOCK (WH)         TSUGA HETEROPHYLLA
 C    20 = MOUNTAIN HEMLOCK (MH)        TSUGA MERTENSIANA
 C    21 = BIGLEAF MAPLE (BM)           ACER MACROPHYLLUM
 C    22 = RED ALDER (RA)               ALNUS RUBRA
-C    23 = WHITE ALDER (WA)             ALNUS RHOMBIFOLIA
+C    23 = WHITE ALDER (WA) /           ALNUS RHOMBIFOLIA
+C         PACIFIC MADRONE              ARBUTUS MENZIESII
 C    24 = PAPER BIRCH (PB)             BETULA PAPYRIFERA
-C    25 = GIANT CHINQUAPIN (GC)        CHRYSOLEPIS CHRYSOPHYLLA
-C                                      var.  CHRYSOPHYLLA
+C    25 = GIANT CHINQUAPIN (GC) /      CHRYSOLEPIS CHRYSOPHYLLA
+C         TANOAK                       LITHOCARPUS DENSIFLORUS
 C    26 = QUAKING ASPEN (AS)           POPULUS TREMULOIDES
 C    27 = BLACK COTTONWOOD (CW)        POPULUS TRICHOCARPA
-C    28 = OREGON WHITE OAK (WO)        QUERCUS GARRYANA
+C    28 = OREGON WHITE OAK (WO) /      QUERCUS GARRYANA
+C         CALIFORNIA BLACK OAK         QUERCUS KELLOGGII
 C    29 = WESTERN JUNIPER (WJ)         JUNIPERUS OCCIDENTALIS
 C    30 = SUBALPINE LARCH (LL)         LARIX LYALLII
 C    31 = WHITEBARK PINE (WB)          PINUS ALBICAULIS
 C    32 = KNOBCONE PINE (KP)           PINUS ATTENUATA
 C    33 = PACIFIC YEW (PY)             TAXUS BREVIFOLIA
 C    34 = PACIFIC DOGWOOD (DG)         CORNUS NUTTALLII
-C    35 = HAWTHORN (HT)                CRATAEGUS
+C    35 = HAWTHORN (HT)                CRATAEGUS sp.
 C    36 = BITTER CHERRY (CH)           PRUNUS EMARGINATA
-C    37 = WILLOW (WI)                  SALIX
+C    37 = WILLOW (WI)                  SALIX sp.
 C    38 = ---
 C    39 = OTHER (OT)
 C----------
@@ -179,13 +183,13 @@ C   AND LARGER.
 C----------
       DATA HT1/
      & 5.487, 2*5.308, 2*5.313, 5.517, 5.327, 5.143, 2*5.188, 4.865,
-     & 5.333, 2*5.382, 5.333, 5.563, 5.3401, 5.233, 5.355, 5.081,
+     & 5.333, 2*5.382, 5.333, 5.563, 5.188, 5.233, 5.355, 5.081,
      & 4.700, 4.875, 7*5.152, 4*5.188, 6*5.152/
 C
       DATA HT2/
      & -16.701, 2*-13.624, 2*-15.321, -17.944, -15.450, -13.497,
      & 2*-13.801, -9.305, -17.762, 2*-15.866, -17.762, -16.475,
-     & -15.9354, -14.737, -13.878, -13.430, -6.326, -8.639,
+     & -13.801, -14.737, -13.878, -13.430, -6.326, -8.639,
      & 7*-13.576, 4*-13.801, 6*-13.576/
 C
 C  SIGMAR VALUES FOR SF,SS,DF,RC,WH,RA MULTIPLIED BY .75
@@ -196,7 +200,7 @@ C
       DATA SIGMAR/
      & 0.3428, 2*0.4390, 0.3960, 0.3102, 0.3769, 0.4275,
      & 0.3931, 2*0.4842, 0.3690, 0.3222, 2*0.5494, 0.3222,
-     & 0.2679, 0.6178, 0.3625, 0.3402, 0.3751, 0.5107,
+     & 0.2679, 0.4842, 0.3625, 0.3402, 0.3751, 0.5107,
      & 0.3328, 5*0.5357, 0.236, 0.5357, 4*0.4842, 6*0.5357/
 C----------
 C DATA STATEMENTS FOR VARIABLES IN VARCOM COMMON BLOCK.
@@ -236,6 +240,139 @@ C
 C   HTT1(ISPC,6) THRU HTT1(ISPC,9) ARE NOT USED. SET TO 0.0
 C
      & 156*0.0/
+C
+      DATA BB0/
+     &  0.0071839, -0.30935  , -0.30935  ,  2.75780 ,  0.0      ,
+     & -0.2050542, -564.38   ,  0.6192   ,128.8952205,  2.75780 ,
+     & -0.0968   ,128.8952205, -4.62536  , -4.62536  ,128.8952205,
+     & -0.954038 ,  0.6192   , -0.2050542, -1.7307   , 22.8741   ,
+     &  0.6192   , 59.5864   ,  0.6192   ,  0.6192   ,  0.6192   ,
+     &  0.6192   ,  0.6192   , -0.954038  ,  0.6192   ,  0.0      ,
+     &  0.6192   ,  0.6192   ,  0.6192   ,  0.6192   ,  0.6192   ,
+     &  0.6192   ,  0.6192   ,  0.6192   ,  0.6192    /
+C
+      DATA BB1/
+     &  0.0000571,  1.2383   ,  1.2383   ,  0.83312 ,  1.51744  ,
+     &  1.449615 , 22.25     , -5.3394   , -0.016959 ,  0.83312 ,
+     &  0.02679  , -0.016959 ,  1.346399 ,  1.346399 , -0.016959 ,
+     &  0.109757 , -5.3394   ,  1.449615 ,  0.1394   ,  0.950234 ,
+     & -5.3394   ,  0.7953   , -5.3394   , -5.3394   , -5.3394   ,
+     & -5.3394   , -5.3394   , 0.109757      , -5.3394   ,  1.46897  ,
+     & -5.3394   , -5.3394   , -5.3394   , -5.3394   , -5.3394   ,
+     & -5.3394   , -5.3394   , -5.3394   , -5.3394    /
+C
+      DATA BB2/
+     &  1.39005  ,  0.001762 ,  0.001762 ,  0.015701 ,  1.4151E-6,
+     &-0.01780992,  0.04995  , 240.29    ,  1.23114  ,  0.015701 ,
+     & -9.309E-5 ,  1.23114  ,-135.354483,-135.354483,  1.23114  ,
+     & 5.58178E-2, 240.29    ,-0.01780992, -0.0616   , -2.06465E-3,
+     & 240.29    ,  0.00194  , 240.29    , 240.29    , 240.29    ,
+     & 240.29    , 240.29    ,5.58178E-2 , 240.29    ,  0.0092466,
+     & 240.29    , 240.29    , 240.29    , 240.29    , 240.29    ,
+     & 240.29    , 240.29    , 240.29    , 240.29     /
+C
+       DATA BB3/
+     &  0.0      , -5.4E-6   , -5.4E-6   , 22.71944  , -0.0440853,
+     &6.519748E-5,  6.80     , 3368.9    , -0.7864   , 22.71944  ,
+     &  0.0      , -0.7864   ,  0.0      ,  0.0      , -0.7864   ,
+     & 7.92236E-3, 3368.9    ,6.519748E-5,  0.0137   ,  0.5      ,
+     & 3368.9    , -0.0007403, 3368.9    , 3368.9    , 3368.9    ,
+     & 3368.9    , 3368.9    ,7.92236E-3 , 3368.9    , -2.3957E-4,
+     & 3368.9    , 3368.9    , 3368.9    , 3368.9    , 3368.9    ,
+     & 3368.9    , 3368.9    , 3368.9    , 3368.9     /
+C
+       DATA BB4/
+     &  0.0        ,  2.046E-7 ,  2.046E-7   , -0.63557  , -3.0495E6 ,
+     &-1.095593E-23, 2843.21   ,  0.0        ,  2.49717  , -0.63557  ,
+     &  0.0        ,  2.49717  ,  0.0        ,  0.0      ,  2.49717  ,
+     &-7.33819E-4  ,  0.0      ,-1.095593E-23,  0.00192  ,  1.365566 ,
+     &  0.0        ,  0.9198   ,  0.0        ,  0.0      ,  0.0      ,
+     &  0.0        ,  0.0      ,-7.33819E-4  ,  0.0      ,  1.1122E-6,
+     &  0.0        ,  0.0      ,  0.0        ,  0.0      ,  0.0      ,
+     &  0.0        ,  0.0      ,  0.0        ,  0.0       /
+C
+      DATA BB5/
+     &  0.0      , -4.04E-13 , -4.04E-13 ,  0.0      , 5.72474E-4,
+     & -5.611879 , 34735.54  ,  0.0      , -0.0045042,  0.0      ,
+     &  0.0      , -0.0045042,  0.0      ,  0.0      , -0.0045042,
+     & 1.97693E-4,  0.0      , -5.611879 ,  0.00007  ,  2.045963 ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,1.97693E-4 ,  0.0      , -0.12528,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0       /
+C
+      DATA BB6/
+     &  0.0      , -6.2056   , -6.2056   ,  0.0      ,  0.0      ,
+     &  2.418604 ,  0.0      ,  0.0      ,  0.33022  ,  0.0      ,
+     &  0.0      ,  0.33022  ,  0.0      ,  0.0      ,  0.33022  ,
+     &  0.0      ,  0.0      ,  2.418604 ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.039636 ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0       /
+C
+      DATA BB7/
+     &  0.0      ,  2.097    ,  2.097    ,  0.0      ,  0.0      ,
+     & -0.2593110,  0.0      ,  0.0      ,100.43     ,  0.0      ,
+     &  0.0      ,100.43     ,  0.0      ,  0.0      ,100.43     ,
+     &  0.0      ,  0.0      , -0.2593110,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      , -4.278E-4 ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0       /
+C
+      DATA BB8/
+     &  0.0      , -0.09411  , -0.09411  ,  0.0      ,  0.0      ,
+     &1.351445E-4,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,1.351445E-4,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  1.7039E-6,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0       /
+C
+       DATA BB9/
+     &  0.0        , -4.382E-5 , -4.382E-5   ,  0.0      ,  0.0      ,
+     &-1.701139E-12,  0.0      ,  0.0        ,  0.0      ,  0.0      ,
+     &  0.0        ,  0.0      ,  0.0        ,  0.0      ,  0.0      ,
+     &  0.0        ,  0.0      ,-1.701139E-12,  0.0      ,  0.0      ,
+     &  0.0        ,  0.0      ,  0.0        ,  0.0      ,  0.0      ,
+     &  0.0        ,  0.0      ,  0.0        ,  0.0      , 73.57     ,
+     &  0.0        ,  0.0      ,  0.0        ,  0.0      ,  0.0      ,
+     &  0.0        ,  0.0      ,  0.0        ,  0.0       /
+C
+      DATA BB10/
+     &  0.0       ,  2.007E-11,  2.007E-11 ,  0.0      ,  0.0      ,
+     &7.964197E-27,  0.0      ,  0.0       ,  0.0      ,  0.0      ,
+     &  0.0       ,  0.0      ,  0.0       ,  0.0      ,  0.0      ,
+     &  0.0       ,  0.0      ,7.964197E-27,  0.0      ,  0.0      ,
+     &  0.0       ,  0.0      ,  0.0       ,  0.0      ,  0.0      ,
+     &  0.0       ,  0.0      ,  0.0       ,  0.0      , -0.12528,
+     &  0.0       ,  0.0      ,  0.0       ,  0.0      ,  0.0      ,
+     &  0.0       ,  0.0      ,  0.0       ,  0.0       /
+C
+      DATA BB11/
+     &  0.0      ,  2.054E-17,  2.054E-17,  0.0      ,  0.0      ,
+     &-86.43     ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,-86.43     ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.039636,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0       /
+C
+      DATA BB12/
+     &  0.0      ,-84.93     ,-84.93     ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      , -4.278E-4 ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0      ,  0.0      ,
+     &  0.0      ,  0.0      ,  0.0      ,  0.0       /
+C
+      DATA BB13/
+     & 29*0.0, 1.7039E-6,  9*0.0/
 C
       DATA REGNBK/2.999/
 C

@@ -1,7 +1,7 @@
       BLOCK DATA FMCBLK
       IMPLICIT NONE
 C----------
-C FIRE-NC $Id: fmcblk.f 3758 2021-08-25 22:42:32Z lancedavid $
+C   **FMCBLK--FIRE-NC  DATE OF LAST REVISION:   08/15/06
 C----------
 COMMONS
 C
@@ -27,7 +27,7 @@ C      10=WOODLAND JUNIPER/OAK/MESQUITE
       DATA BIOGRP/
      & 2, 4, 2, 3, 8,
      & 1, 9, 8, 3, 4, ! 10
-     & 8, 1/
+     & 8 /
 
 C DATA Statement Debug Information
 C         Variant   = NC

@@ -1,7 +1,7 @@
       SUBROUTINE LBDSET (JOSTND,LKECHO)
       IMPLICIT NONE
 C----------
-C BASE $Id: lbdset.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: lbdset.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     CREATE DEFAULT A LABEL SET FOR THE STAND AND WRITE IT TO THE

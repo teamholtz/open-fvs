@@ -1,7 +1,7 @@
       SUBROUTINE TMDTLS(JO)   
       IMPLICIT NONE
 C---------- 
-C DFTM $Id: tmdtls.f 2446 2018-07-09 22:54:33Z gedixon $
+C  **TMDTLS DATE OF LAST REVISION:  06/30/10
 C---------- 
 C     **** This listing of revision dates has NEVER been maintained ****
 C

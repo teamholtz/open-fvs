@@ -1,6 +1,3 @@
-C----------
-C VOLUME $Id: r2oldv.f 2458 2018-07-22 19:09:30Z gedixon $
-C----------
 !== last modified  3-29-2004
       SUBROUTINE R2OLDV(VOLEQ,HTTOT,DBHOB,DRC,FCLASS,VOL,ERRFLAG)
 

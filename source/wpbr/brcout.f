@@ -1,8 +1,8 @@
       SUBROUTINE BRCOUT
       IMPLICIT NONE
-C----------
-C WPBR $Id: brcout.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **BRCOUT       DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C  BRCOUT write a detailed summary of cankers to output file.
 C  The canker and tree information is printed in  FEET and INCHES.

@@ -1,7 +1,7 @@
       SUBROUTINE FMSSUM (IYR)
       IMPLICIT NONE
 C----------
-C METRIC-FIRE-BASE $Id: fmssum.f 3803 2021-09-14 08:05:54Z donrobinson $
+C  **FMSSUM  DATE OF LAST REVISION:  12/16/04
 C----------
 C
 C  Purpose:
@@ -33,6 +33,7 @@ C
       THDSF=0.
 
       DO II=1,NSNAG
+
          TSF(7)=TSF(7)+DENIS(II)
          IF (HARD(II)) THEN
             THD(7)=THD(7)+DENIH(II)
@@ -51,18 +52,20 @@ C
             ENDIF
          ENDDO
       ENDDO
+      THDSF=THD(7)+TSF(7)      
 
-      DO I = 1,7
-        TSF(I) = TSF(I) / ACRtoHA
-        THD(I) = THD(I) / ACRtoHA
-      ENDDO
-      THDSF = THD(7) + TSF(7)
+	DO I = 1,7
+	  TSF(I) = TSF(I) / ACRtoHA
+	  THD(I) = THD(I) / ACRtoHA
+	ENDDO
+
 C
 C     CALL THE DBS MODULE TO OUTPUT SUMMARY SNAG REPORT TO A DATABASE
 C
       DBSKODE = 1
-      CALL DBSFMSSNAG(IYR,NPLT,THD(1),THD(2),THD(3),THD(4),THD(5),
-     &  THD(6),THD(7),TSF(1),TSF(2),TSF(3),TSF(4),TSF(5),TSF(6),TSF(7),
+      CALL DBSFMSSNAG(IYR,NPLT,
+     &  THD(1),THD(2),THD(3),THD(4),THD(5),THD(6),THD(7),
+     &  TSF(1),TSF(2),TSF(3),TSF(4),TSF(5),TSF(6),TSF(7),
      &  THDSF,DBSKODE)
       IF(DBSKODE.EQ.0) RETURN
 
@@ -72,15 +75,11 @@ C
          CALL GETID (ISNGSM)
          WRITE (JOUT,10) ISNGSM,NPLT,MGMID,
      >                   ((INT(SNPRCL(I)*INtoCM),I=1,6),K=1,2)
- 10      FORMAT (/I6,' $#*%'//,114('-')/
-     >        42X,'******  FIRE MODEL VERSION 1.0 ******',/
-     >        46('-'),' SNAG SUMMARY REPORT ',
-     >        '(BASED ON STOCKABLE AREA) ',21('-')/,
+ 10      FORMAT (/I6,' $#*%'//38('-'),' SNAG SUMMARY REPORT ',30('-')/,
      >        ' STAND ID: ',A26,4X,'MGMT ID: ',A4/
-     >        7X,15('-'),' HARD SNAGS/HA   ',16('-'),
-     >        2X,15('-'),' SOFT SNAGS/HA   ',16('-'),'   GRAND'/
-     >        'YEAR ',2(1X,6(' >=',I2.2,'CM'),'  TOTAL'),'   TOTAL'/
-     >        '---- ',2(1X,7(' ------')),'  ------'/
+     >        6X,13('-'),' HARD SNAGS/HA ',13('-'),
+     >        1X,13('-'),' SOFT SNAGS/HA ',13('-')/
+     >        'YEAR ',12(' >=',I2.2,'cm')/'---- ',12(' ------')/
      >        '$#*%')
       ENDIF
 

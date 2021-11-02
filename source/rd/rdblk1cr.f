@@ -1,7 +1,7 @@
       BLOCK DATA RDBLK1
       IMPLICIT NONE
 C----------
-C RD $Id: rdblk1cr.f 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDBLK1--CR     LAST REVISION:  08/27/14
 C
 C     The IRTSPC array is now initialized using a data statement in this
 C     subroutine rather than in the RDINCR subroutine (RNH Dec98)

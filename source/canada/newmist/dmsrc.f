@@ -1,7 +1,7 @@
       SUBROUTINE DMSRC (Sp, D, Ptr, Index, P, SrcI, SrcCD, SPtr)
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: dmsrc.f 2461 2018-07-24 18:00:57Z gedixon $
+C  $Id: dmsrc.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 C  **DMSRC -- NISI  Date of last revision April 14 1994
 C--------------------------------------------------------------------

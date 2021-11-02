@@ -1,5 +1,5 @@
 C----------
-C VOLUME $Id: sf_3pt.f 2458 2018-07-22 19:09:30Z gedixon $
+C VOLUME $Id: sf_3pt.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
 C----------
 !== last modified  04-02-2014
       SUBROUTINE SF_3pt(JSP,geosub,setopt,DBH,TOTALH,DBT_BH,NEXTRA,HEX,

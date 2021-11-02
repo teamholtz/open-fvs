@@ -1,7 +1,7 @@
       SUBROUTINE DBSCAN (LDEBG,SUBIN,NC,ICYC)
       IMPLICIT NONE
 C----------
-C BASE $Id: dbscan.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: dbscan.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C

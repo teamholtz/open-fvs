@@ -1,7 +1,7 @@
       SUBROUTINE FXNOTE
       IMPLICIT NONE
 C----------
-C WSBWE $Id: fxnote.f 2460 2018-07-24 14:41:48Z gedixon $
+C  **FXNOTE                 DATE OF LAST REVISION:  07/14/10
 C----------
 C
 C     This module satisfies the external reference to the module

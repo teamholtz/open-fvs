@@ -1,5 +1,5 @@
 C----------
-C VOLUME $Id: blmtap.f 2458 2018-07-22 19:09:30Z gedixon $
+C VOLUME $Id: blmtap.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
 C----------
 ! 1/6/2014 YW corrected coefficient for hemlock(48) B3=0.00000546
       SUBROUTINE BLMTAP(DBHOB,HTTOT,TLH,HTUP,D17,TOP,XLEN,D2,Profile)

@@ -1,5 +1,5 @@
 //
-// FIRE-FOFEM $Id: fof_ci.h 2463 2018-07-26 20:58:10Z gedixon $
+// $Id: fof_ci.h 2359 2018-05-18 17:35:04Z lancedavid $
 //
 /*{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}
 * Name: fof_ci.h       Consume Data Inputs

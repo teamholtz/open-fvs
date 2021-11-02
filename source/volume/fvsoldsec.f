@@ -1,8 +1,8 @@
-C----------
-C VOLUME $Id: fvsoldsec.f 2458 2018-07-22 19:09:30Z gedixon $
-C----------
       SUBROUTINE FVSOLDSEC(ISPC,VN,D,H)
       IMPLICIT NONE
+C----------
+C VOLUME $Id: fvsoldsec.f 2364 2018-05-18 17:49:31Z lancedavid $
+C----------
       INTEGER ISPC
       REAL H,D,VN
       INTEGER IDANUW

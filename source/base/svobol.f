@@ -2,7 +2,7 @@
      >                   K,XK1,YK1,XK2,YK2,XS,YS,KODE)
       IMPLICIT NONE
 C----------
-C BASE $Id: svobol.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: svobol.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     STAND VISUALIZATION GENERATION

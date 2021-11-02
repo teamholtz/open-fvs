@@ -1,7 +1,7 @@
       FUNCTION BRATIO(IS,D,H)
       IMPLICIT NONE
 C----------
-C WS $Id: bratio.f 3758 2021-08-25 22:42:32Z lancedavid $
+C WS $Id: bratio.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C
 C FUNCTION TO COMPUTE BARK RATIOS AS A FUNCTION OF DIAMETER AND SPECIES.
@@ -61,6 +61,7 @@ C    FROM EXISTING WS EQUATIONS --
 C      USE 1(SP) FOR 11(WP) AND 24(MH) 
 C      USE 2(DF) FOR 22(BD)
 C      USE 3(WF) FOR 13(SF)
+C      USE 4(GS) FOR 23(RW)
 C      USE 8(PP) FOR 18(MP)
 C      USE 34(TO) FOR 35(GC), 36(AS), 37(CL), 38(MA), AND 39(DG)
 C      USE 31(BO) FOR 28(LO), 29(CY), 30(BL), 32(VO), 33(IO), 40(BM), AND
@@ -76,38 +77,36 @@ C      USE SO30(MC) FOR 41(MC)
 C
 C    FROM UT VARIANT --
 C      USE UT17(GB) FOR 21(GB)
-C
-C    GS AND RW USE RELATIONSHIPS FROM CASTLE 2019
 C----------
-      REAL BARK1(43),BARK2(43),H,D,BRATIO,TEMD,DIB
+      REAL BARK1(43),BARK2(43),H,D,BRATIO,TEMD
       INTEGER IMAP(43),IS,IEQN
       REAL RDANUW
 C
       DATA BARK1/
-     & 0.8863, 0.8839, 0.8911, 0.7012, 0.8374,
+     & 0.8863, 0.8839, 0.8911, 0.8863, 0.8374,
      & 0.8967, 0.8911, 0.8967, 0.9000, 0.9000,
      & 0.8863, 0.9329, 0.8911, 0.9329, 0.9329,
      & 0.9329, 0.9329, 0.8967, 0.9329, 0.9329,
-     & 0.9625, 0.8839, 0.7012, 0.8863, 0.9329,
+     & 0.9625, 0.8839, 0.8863, 0.8863, 0.9329,
      & 0.9329, 0.9329, 0.8374, 0.8374, 0.8374,
      & 0.8374, 0.8374, 0.8374, 0.8374, 0.8374,
      & 0.8374, 0.8374, 0.8374, 0.8374, 0.8374,
      & 0.9000, 0.8967, 0.8374/
 C
       DATA BARK2/
-     &     0.,     0.,     0., 1.04862,      0.,
-     &     0.,     0.,     0.,      0.,     0.,
-     &     0.,     0.,     0.,      0.,     0.,
-     &     0.,     0.,     0.,      0.,     0.,
-     &-0.1141,     0., 1.04862,      0.,     0.,
-     &     0.,     0.,     0.,      0.,     0.,
-     &     0.,     0.,     0.,      0.,     0.,
-     &     0.,     0.,     0.,      0.,     0.,
+     &     0.,     0.,     0.,     0.,     0.,
+     &     0.,     0.,     0.,     0.,     0.,
+     &     0.,     0.,     0.,     0.,     0.,
+     &     0.,     0.,     0.,     0.,     0.,
+     &-0.1141,     0.,     0.,     0.,     0.,
+     &     0.,     0.,     0.,     0.,     0.,
+     &     0.,     0.,     0.,     0.,     0.,
+     &     0.,     0.,     0.,     0.,     0.,
      &     0.,     0.,     0./
 C
-      DATA IMAP/ 1, 1, 1, 3, 1, 1, 1, 1, 1, 1,
+      DATA IMAP/ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
      &           1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-     &           2, 1, 3, 1, 1, 1, 1, 1, 1, 1,
+     &           2, 1, 1, 1, 1, 1, 1, 1, 1, 1,
      &           1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
      &           1, 1, 1/
 C----------
@@ -130,15 +129,6 @@ C
 C
       ELSEIF(IEQN .EQ. 2)THEN
         BRATIO=BARK1(IS)+BARK2(IS)*(1.0/TEMD)
-
-C NEW GS/RW BARK RATIO RELATIONSHIP
-      ELSE
-        DIB=BARK1(IS)*D**BARK2(IS)
-        BRATIO=DIB/D
-      ENDIF
-
-C  CONSTRAIN BRATIO PREDICTIONS FOR IEQN 2 AND IEQN 3
-      IF(IEQN .EQ. 2 .OR. IEQN .EQ. 3) THEN
         IF(BRATIO .GT. 0.99) BRATIO=0.99
         IF(BRATIO .LT. 0.80) BRATIO=0.80
       ENDIF

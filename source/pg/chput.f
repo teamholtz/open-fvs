@@ -1,7 +1,7 @@
       SUBROUTINE CHPUT
       IMPLICIT NONE
 C----------
-C PG $Id: chput.f 2944 2020-02-03 22:59:12Z lancedavid $
+C  $Id: chput.f 2362 2018-05-18 17:43:47Z lancedavid $
 C----------
 C
 C     WRITE THE ALL-DATA CHARACTER DATA TO THE DA FILE.
@@ -115,11 +115,10 @@ C
       ENDIF
 C
       IF (ITST5.GT.0) THEN
-         DO J=1,ITST5
-           DO I=1,8
-             CALL CHWRIT (CBUFF,IPNT,LNCBUF,CTSTV5(J)(I:I),2)
-           ENDDO
-         ENDDO
+         DO 95 J=1,ITST5
+         DO 95 I=1,8
+         CALL CHWRIT (CBUFF,IPNT,LNCBUF,CTSTV5(J)(I:I),2)
+   95    CONTINUE
       ENDIF
       IF (ICACT.GT.0) THEN
          DO I=1,ICACT
@@ -158,24 +157,15 @@ C
       CALL CHWRIT(CBUFF,IPNT,LNCBUF,PTGNAME(J)(I:I),2)
   111 CONTINUE
   112 CONTINUE
-C
-      DO 114 I=1,2
-      CALL CHWRIT(CBUFF,IPNT,LNCBUF,VARACD(I:I),2)
-  114 CONTINUE
-C
-      DO 115 I=1,7
-      CALL CHWRIT(CBUFF,IPNT,LNCBUF,CALCSDI(I:I),2)
-  115 CONTINUE
-C
+
       CALL DBSCHPUT(CBUFF,IPNT,LNCBUF)
       CALL VARCHPUT(CBUFF,IPNT,LNCBUF)
       CALL MSCHPUT(CBUFF,IPNT,LNCBUF)
-C
+
 C     Store dummy character as last write and finalize character 
 C     variable storage, last parameter is 3 to specify.
-C
       CDMB='X'
       CALL CHWRIT(CBUFF,IPNT,LNCBUF,CDMB,3)
-C
+
       RETURN
       END

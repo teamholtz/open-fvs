@@ -2,7 +2,7 @@
      &                  HTMAX2,DEBUG)
       IMPLICIT NONE
 C----------
-C WS $Id: findag.f 2459 2018-07-22 22:04:44Z gedixon $
+C WS $Id: findag.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C  CALLED FROM **COMCUP
 C  CALLED FROM **CRATET** AND **HTGF** 

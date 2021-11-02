@@ -1,7 +1,7 @@
       SUBROUTINE MISIN(PASKEY,ARRAY,LNOTBK,LKECHO)
       IMPLICIT NONE
 C----------
-C METRIC-NEWMIST $Id: misin.f 3798 2021-09-14 00:14:52Z donrobinson $
+C  $Id: misin.f 2361 2018-05-18 17:40:40Z lancedavid $
 C----------
 *  Purpose:
 *     Reads in mistletoe keywords and processes the ones that aren't
@@ -24,6 +24,7 @@ C----------
 *     KODE:   Error code passed back from keyword reading routines.
 *     NUMBER: Keyword number passed back from FNDKEY.
 *     TABLE:  Character array of possible keywords.
+*     VVER:   Character buffer for variant version.
 *
 *  Common block variables and parameters:
 *
@@ -117,7 +118,7 @@ C.... Variable declarations.
       PARAMETER (ISIZE=30)
 
       LOGICAL      LNOTBK(7),DEBUG,LCHK(2),LOK,LKECHO
-      INTEGER      I,IDT,ISPL,KEY,KODE,NUMBR,IKD,IPRMPT
+      INTEGER      I,IDT,ISPL,KEY,KODE,NUMBER,IKD,IPRMPT
       INTEGER      LTNP(2), ERRT(2),J,K,M,N,P,IRTNCD
       INTEGER      DMT(5,3)
       REAL         DMLRX(2,2,4),X
@@ -125,11 +126,12 @@ C.... Variable declarations.
       CHARACTER*8  TABLE(ISIZE),KEYWRD,PASKEY,LTNM
       CHARACTER*10 KARD(7)
       CHARACTER*8  RTYPE(2)
+      CHARACTER*7  VVER
 
 C.... Data statements.
 
       DATA TABLE/
-     >   'MISTMULT','MISTHMOD','END     ','MISTPREF','MISTMORT',
+     >   'MISTMULT','        ','END     ','MISTPREF','MISTMORT',
      >   'MISTPRT ','MISTGMOD','MISTOFF ','        ','MISTPINF',
      >   'MISTABLE','NEWSPRED','DMCRTHRD','DMSED   ','DMOPAQ  ',
      >   'DMKTUNE ','DMSTUNE ','DMITUNE ','DMETUNE ','DMLIGHT ',
@@ -149,6 +151,10 @@ C.... Check for debug.
 
       IF(DEBUG)WRITE(JOSTND,10)ICYC,ITYPE
    10 FORMAT(' Begin MISIN: Cycle, ITYPE = ',I5,I5)
+
+C.... Check for variant version.
+
+      CALL VARVER(VVER)
 
 C.... Load the passed keyword into KEYWRD.
 
@@ -173,7 +179,7 @@ C.... Process errors; 0=no error, 1=first column blank, 2=EOF.
          GO TO 50
       ENDIF
 
-      CALL FNDKEY(NUMBR,KEYWRD,TABLE,ISIZE,KODE,DEBUG,JOSTND)
+      CALL FNDKEY(NUMBER,KEYWRD,TABLE,ISIZE,KODE,DEBUG,JOSTND)
 
 C.... Return codes; 0=no error, 1=keyword not found.
 
@@ -183,7 +189,7 @@ C.... Return codes; 0=no error, 1=keyword not found.
       ENDIF
       GO TO 70
 
-C....Special EOF target.
+C     Special EOF target.
 
    60 CONTINUE
       CALL ERRGRO(.FALSE.,2)
@@ -196,7 +202,7 @@ C.....Process the keyword.
       GO TO( 100, 200, 300, 400, 500, 600, 700, 800, 900,1000,
      &      1100,1200,1300,1400,1500,1600,1700,1800,1900,2000,
      &      2100,2200,2300,2400,2500,2600,2700,2800,2900,3000),
-     &      NUMBR
+     &      NUMBER
 
 C.... Option number 1: MISTMULT.
 
@@ -241,7 +247,7 @@ C....    Insert activity into schedule.
          IF(KODE.GT.0) GO TO 50
          IF(LKECHO)WRITE(JOSTND,120) KEYWRD,IDT,KARD(2),ISPL,ARRAY(3),
      &                               ARRAY(4)
-  120    FORMAT(/A8,'   Date/Cycle=',I5,'; Species= ',A3,' (',
+  120    FORMAT(/1X,A8,'   Date/Cycle=',I5,'; Species= ',A3,' (',
      &      I3,'); DMR Increase Multiplier=',F6.2,
      &      '; DMR Decrease Multiplier=',F6.2)
       ELSE
@@ -251,53 +257,9 @@ C....    Insert activity into schedule.
       ENDIF
       GO TO 50
 
-C.... Option number 2: MISTHMOD.
+C.... Option number 2:
 
   200 CONTINUE
-C.... Mistletoe height growth modification proportion values.
-C.... ARRAY(1): effective date, ARRAY(2): species number
-C.... Supplemental record: fields 1-6, height growth proportions
-C.... for DMRs 1-6.
-
-C.... Check for blank date.
-
-      IDT=1
-      IF(LNOTBK(1)) IDT=IFIX(ARRAY(1))
-
-C.... Get species code.
-
-      CALL SPDECD(2,ISPL,NSP(1,1),JOSTND,IRECNT,KEYWRD,
-     &            ARRAY,KARD)
-      IF(ISPL.EQ.-999) GOTO 50
-
-C.... Check for invalid species code.
-
-      IF(ISPL.LT.0.OR.ISPL.GT.MAXSP) THEN
-         CALL KEYDMP(JOSTND,IRECNT,KEYWRD,ARRAY,KARD)
-         WRITE(JOSTND,8000) ISPL,MAXSP
-         CALL ERRGRO(.TRUE.,4)
-
-C.... Process height growth modification proportions from
-C.... supplemental record
-
-      ELSE
-         ARRAY(1)=ARRAY(2)
-         READ(IREAD,*,END=60) (ARRAY(I+1),I=1,6)
-
-C....    Insert activity into schedule.
-
-         CALL OPNEW(KODE,IDT,2004,7,ARRAY(1))
-         IF(KODE.GT.0) GO TO 50
-         IF(LKECHO)WRITE(JOSTND,250)KEYWRD,IDT,KARD(2),ISPL
-  250    FORMAT(/A8,'   Date/Cycle=',I5,'; Species= ',A3,
-     &      ' (',I3,'):')
-         DO 290 I=1,6
-            IF(LKECHO)WRITE(JOSTND,280) I,ARRAY(I+1)
-  280       FORMAT(10X,' DMR=',I1,
-     &      ';  height growth modification proportion=',
-     &      F10.2)
-  290    CONTINUE
-      ENDIF
       GO TO 50
 
 C.... Option number 3: END.
@@ -307,15 +269,15 @@ C.... Option number 3: END.
 C.... End mistletoe keyword processing.
 
       IF(LKECHO)WRITE(JOSTND,310) KEYWRD
-  310 FORMAT(/A8,'   End of mistletoe keywords.')
+  310 FORMAT(/1X,A8,'   End of mistletoe keywords.')
       GO TO 9000
 
-C.... Option number 4: MISTPREF.
+C.... Option number 4: MISTPREF
 
   400 CONTINUE
 
 C.... Check for mistletoe cutting preference values.
-C.... ARRAY(1): effective date, ARRAY(2): species number
+C.... ARRAY(1): effective date, ARRAY(2): species number,
 C.... Supplemental record: fields 1-6, preferences for DMRs 1-6.
 
 C.... Check for blank date.
@@ -347,16 +309,16 @@ C....    Insert activity into schedule.
          CALL OPNEW(KODE,IDT,2002,7,ARRAY(1))
          IF(KODE.GT.0) GO TO 50
          IF(LKECHO)WRITE(JOSTND,450)KEYWRD,IDT,KARD(2),ISPL
-  450    FORMAT(/A8,'   Date/Cycle=',I5,'; Species= ',A3,
+  450    FORMAT(/1X,A8,'   Date/Cycle=',I5,'; Species= ',A3,
      &      ' (',I3,'):')
          DO 490 I=1,6
             IF(LKECHO)WRITE(JOSTND,480) I,ARRAY(I+1)
-  480 FORMAT(' DMR=',I1,';  cutting preference=',F10.2)
+  480 FORMAT(1X,' DMR=',I1,';  cutting preference=',F10.2)
   490    CONTINUE
       ENDIF
       GO TO 50
 
-C.... Option number5: MISTMORT.
+C.... Option 5: MISTMORT.
 
   500 CONTINUE
 
@@ -393,7 +355,7 @@ C....    Insert activity into schedule.
          CALL OPNEW(KODE,IDT,2003,2,ARRAY(2))
          IF(KODE.GT.0) GO TO 50
          IF(LKECHO)WRITE(JOSTND,520) KEYWRD,IDT,KARD(2),ISPL,ARRAY(3)
-  520    FORMAT(/A8,'   Date/Cycle=',I5,'; Species= ',A3,' (',
+  520    FORMAT(/1X,A8,'   Date/Cycle=',I5,'; Species= ',A3,' (',
      &      I3,'); Mortality Multiplier=',F6.2)
       ELSE
          CALL KEYDMP(JOSTND,IRECNT,KEYWRD,ARRAY,KARD)
@@ -402,7 +364,7 @@ C....    Insert activity into schedule.
       ENDIF
       GO TO 50
 
-C.... Option number 6: MISTPRT.
+C.... Option 6: MISTPRT.
 
   600 CONTINUE
 
@@ -415,16 +377,16 @@ C.... and above will be counted in DMR/DMI statistics.
 
       IF(LNOTBK(1).AND.ARRAY(1).GE.0.0) DMRMIN=ARRAY(1)*CMtoIN
       IF(LKECHO)WRITE(JOSTND,620) KEYWRD,DMRMIN*INtoCM
-  620 FORMAT(/A8,'   Print mistletoe summary output; ',
+  620 FORMAT(/1X,A8,'   Print mistletoe summary output; ',
      &   'DMRs and DMIs calculated for trees with DBH >=',F4.1)
 
       GO TO 50
 
-C.... Option number7: MISTGMOD.
+C.... Option 7: MISTGMOD.
 
   700 CONTINUE
 
-C.... Mistletoe diameter growth modification proportion values.
+C.... Check for mistletoe cutting growth modification proportion values.
 C.... ARRAY(1): effective date, ARRAY(2): species number
 C.... Supplemental record: fields 1-6, growth modification proportions
 C.... for DMRs 1-6.
@@ -458,18 +420,17 @@ C....    Insert activity into schedule.
          CALL OPNEW (KODE,IDT,2005,7,ARRAY(1))
          IF (KODE .GT. 0) GOTO 50
          IF(LKECHO)WRITE (JOSTND,750) KEYWRD,IDT,KARD(2),ISPL
-  750    FORMAT (/A8,'   Date/Cycle=',I5,'; Species= ',A3,
+  750    FORMAT (/1X,A8,'   Date/Cycle=',I5,'; Species= ',A3,
      &          ' (',I3,'):')
          DO 790 I=1,6
             IF(LKECHO)WRITE (JOSTND,780) I,ARRAY(I+1)
-  780       FORMAT(' DMR=',I1,
-     &      ';  diameter growth modification proportion=',
-     &      F10.2)
+  780       FORMAT (1X,' DMR=',I1,';  growth modification proportion=',
+     &              F10.2)
   790    CONTINUE
       ENDIF
       GOTO 50
 
-C.... Option number 8: MISTOFF.
+C.... Option 8: MISTOFF.
 
   800 CONTINUE
 
@@ -480,17 +441,15 @@ C.... is to run with mistletoe if any exists.
       MISFLG=.FALSE.
 
       IF(LKECHO)WRITE(JOSTND,820) KEYWRD
-  820 FORMAT(/A8,'   Mistletoe stand infection ignored.')
-
+  820 FORMAT(/1X,A8,'   Mistletoe stand infection ignored.')
       GO TO 50
 
-C.... Option  number 9: ** OPEN SPOT
+C.... Option  9: ** OPEN SPOT **
 
   900 CONTINUE
-
       GO TO 50
 
-C.... Option number 10: MISTPINF.
+C.... Option 10: MISTPINF
 
  1000 CONTINUE
 
@@ -548,27 +507,25 @@ C....    Insert activity into schedule.
          CALL OPNEW(KODE,IDT,2006,4,ARRAY(2))
          IF(KODE.GT.0) GO TO 50
          IF(LKECHO)WRITE(JOSTND,1020) KEYWRD,IDT,KARD(2),ISPL,ARRAY(3)
- 1020    FORMAT(/A8,'   Date/Cycle=',I5,'; Species= ',A3,' (',
+ 1020    FORMAT(/1X,A8,'   Date/Cycle=',I5,'; Species= ',A3,' (',
      &      I3,'); Proportion to Infect=',F10.2,';')
          IF(LKECHO)WRITE(JOSTND,1021) ARRAY(4),ARRAY(5)
- 1021    FORMAT(8X,'   Infection Level=',F10.2,'; Infection Method=',
+ 1021    FORMAT(1X,8X,'   Infection Level=',F10.2,'; Infection Method=',
      &      F10.2)
       ENDIF
       GO TO 50
 
-C.... Option number 11: MISTABLE.
+C.... Option 11: MISTABLE
 
  1100 CONTINUE
 
 C.... Check for mistletoe detail (species/DBH) table output preference.
-C.... ARRAY(1): effective date, ARRAY(2): species number.
+C.... ARRAY(1): effective date, ARRAY(2): species number
 
 C.... Check for blank date.
 
       IDT=1
       IF(LNOTBK(1)) IDT=IFIX(ARRAY(1))
-      
-C.... Get species code.
 
       CALL SPDECD(2,ISPL,NSP(1,1),JOSTND,IRECNT,KEYWRD,
      &            ARRAY,KARD)
@@ -583,7 +540,7 @@ C....    Insert activity into schedule.
          CALL OPNEW(KODE,IDT,2007,1,ARRAY(2))
          IF(KODE.GT.0) GO TO 50
          IF(LKECHO)WRITE(JOSTND,1120) KEYWRD,IDT,KARD(2),ISPL
- 1120    FORMAT(/A8,'   Date/Cycle=',I5,'; Species= ',A3,' (',
+ 1120    FORMAT(/1X,A8,'   Date/Cycle=',I5,'; Species= ',A3,' (',
      &      I3,')')
       ELSE
          CALL KEYDMP(JOSTND,IRECNT,KEYWRD,ARRAY,KARD)
@@ -598,7 +555,7 @@ C.... Option 12: NEWSPRED (USING NEW SPREAD AND INTENSIFICATION MODEL).
 
       NEWMOD = .TRUE.
       WRITE(JOSTND,1220) KEYWRD
- 1220 FORMAT(/A8,'   New Spread & Intensification Model in use')
+ 1220 FORMAT(/1X,A8,'   New Spread & Intensification Model in use')
       GO TO 50
 
 C.... Option 13: DMCRTHRD
@@ -609,7 +566,7 @@ C     crown thirds.
  1300 CONTINUE
 
       WRITE(JOSTND,1301) KEYWRD
- 1301 FORMAT(/A8,' Default initial crownthird distribution changed')
+ 1301 FORMAT(/1X,A8,' Default initial crownthird distribution changed')
 
       DO 1302 I= 1,5
         READ(IREAD,1303) DMT(I,1), DMT(I,2), DMT(I,3)
@@ -626,7 +583,7 @@ C     Check that crownthird values sum to DMR.
           LCHK(1)=.FALSE.
         END IF
  1310 CONTINUE
- 1311 FORMAT(/'** ERROR: DMR class:',I2,', Sum of thirds .NE. DMR,',
+ 1311 FORMAT(/1X,'** ERROR: DMR class:',I2,', Sum of thirds .NE. DMR,',
      >         'Change not made.')
 
       IF (LCHK(1)) THEN
@@ -656,7 +613,7 @@ C     is provided (or a negative number), the clock is used.
       IF (LNOTBK(1).AND.ARRAY(1).EQ.0.0) CALL GETSED (ARRAY(1))
       CALL DMRNSD (.TRUE., ARRAY(1))
       WRITE (JOSTND,1401) KEYWRD,ARRAY(1)
- 1401 FORMAT (/A8,'   RANDOM SEED IS:',F14.1)
+ 1401 FORMAT (/1X,A8,'   RANDOM SEED IS:',F14.1)
       GO TO 50
 
 C     Option 15: DMOPAQ
@@ -688,7 +645,7 @@ C....    Check for valid opacity.
          ENDIF
 
         WRITE(JOSTND,1501) KEYWRD,KARD(1),ISPL,ARRAY(2)
- 1501   FORMAT(/A8, 'Relative opacity (LP=1, PP=1) for ',
+ 1501   FORMAT(/1X, A8, 'Relative opacity (LP=1, PP=1) for ',
      >    'foliage of species: ', A3, ' (', I2,') changed to: ', F4.2)
         IF (ISPL .GT. 0) THEN
           DMOPAQ(ISPL) = ARRAY(2)
@@ -735,13 +692,13 @@ C....    Check for valid threshold DMR.
          ENDIF
 
         WRITE(JOSTND,1601) KEYWRD,KARD(1),ISPL,NINT(ARRAY(2))
- 1601   FORMAT(/A8, 'Critical DMR for spreading DM from a ',
+ 1601   FORMAT(/1X, A8, 'Critical DMR for spreading DM from a ',
      >    'tree of species: ', A3, ' (', I2, ') changed to ', I1)
         IF (ISPL .GT. 0) THEN
-          DMKTUN(ISPL) = INT(ARRAY(2))
+          DMKTUN(ISPL) = ARRAY(2)
         ELSE
           DO 1602 J = 1, MAXSP
-            DMKTUN(J) = INT(ARRAY(2))
+            DMKTUN(J) = ARRAY(2)
  1602     CONTINUE
         ENDIF
       ELSE
@@ -781,7 +738,7 @@ C....    Check for valid multiplier.
          ENDIF
 
         WRITE(JOSTND,1701) KEYWRD,KARD(1),ISPL,ARRAY(2)
- 1701   FORMAT(/A8, 'Spread scaling factor for DM on ',
+ 1701   FORMAT(/1X, A8, 'Spread scaling factor for DM on ',
      >    'species: ', A3, ' (', I2, ') changed to ', F6.2)
         IF (ISPL .GT. 0) THEN
           DMSTUN(ISPL) = ARRAY(2)
@@ -827,7 +784,7 @@ C....    Check for valid multiplier.
          ENDIF
 
         WRITE(JOSTND,1801) KEYWRD,KARD(1),ISPL,ARRAY(2)
- 1801   FORMAT(/A8, 'Intensification scaling factor for DM ',
+ 1801   FORMAT(/1X, A8, 'Intensification scaling factor for DM ',
      >    'on species: ', A3, ' (', I2, ') changed to ', F6.2)
         IF (ISPL .GT. 0) THEN
           DMITUN(ISPL) = ARRAY(2)
@@ -873,7 +830,7 @@ C....    Check for valid multiplier.
          ENDIF
 
         WRITE(JOSTND,1901) KEYWRD,KARD(1),ISPL,ARRAY(2)
- 1901   FORMAT(/A8, 'Total establishment scaling factor for DM ',
+ 1901   FORMAT(/1X, A8, 'Total establishment scaling factor for DM ',
      >    'on species: ', A3, ' (', I2, ') changed to ', F6.2)
         IF (ISPL .GT. 0) THEN
           DMETUN(ISPL) = ARRAY(2)
@@ -1017,11 +974,11 @@ C print out a message and the values.
 
           IF (LCHK(I)) THEN
             WRITE(JOSTND, 2020) LTNM, RTYPE(I), ISPL
- 2020       FORMAT(/A8,A8, ' reaction function default',
+ 2020       FORMAT(/1X, A8,A8, ' reaction function default',
      >        ' values for species ',I2,' WILL be changed.')
           ELSEIF (.NOT.LCHK(I) .AND. LTNP(I) .GT. 0) THEN
             WRITE(JOSTND,2021) LTNM, RTYPE(I), ISPL, ERRT(I)
- 2021       FORMAT(/A8,'Error reading ', A8, ' reaction',
+ 2021       FORMAT(/1X, A8,'Error reading ', A8, ' reaction',
      >        ' function for species: ',I2,'. Error is of',/,' type ',
      >        I1,'; where 1 means not enough points (<2), 2 means',
      >        ' the x-values',/,' are not sorted in ascending order',
@@ -1033,7 +990,7 @@ C Write out values if they were changed or in error.
 
           IF (LTNP(I) .GT. 0) THEN
             WRITE(JOSTND,2025) RTYPE(I), LTNP(I)
- 2025       FORMAT(/A8, ' reaction points = ',I1,/)
+ 2025       FORMAT(/1X,A8, ' reaction points = ',I1,/)
             WRITE(JOSTND,2026)
  2026       FORMAT('            X         Y')
             DO 2040 J = 1, LTNP(I)
@@ -1104,7 +1061,7 @@ C....    Check for valid death rate.
          ENDIF
 
         WRITE(JOSTND,2101) KEYWRD,KARD(1),ISPL,ARRAY(2)
- 2101   FORMAT(/A8, 'Annual mortality for DM on',
+ 2101   FORMAT(/1X, A8, 'Annual mortality for DM on',
      >    'species: ', A3, ' (', I2, ') changed to ', F5.3)
         IF (ISPL .GT. 0) THEN
           DMDETH(ISPL) = ARRAY(2)
@@ -1150,7 +1107,7 @@ C....    Check for valid capping factor.
          ENDIF
 
         WRITE(JOSTND,2201) KEYWRD,KARD(1),ISPL,ARRAY(2)
- 2201   FORMAT(/A8, 'Capping factor for DM on ',
+ 2201   FORMAT(/1X, A8, 'Capping factor for DM on ',
      >    'species: ', A3, ' (', I2, ') changed to ', F6.2)
         IF (ISPL .GT. 0) THEN
           DMCAP(ISPL) = ARRAY(2)
@@ -1183,7 +1140,7 @@ C     of the sample points.
         CALL OPNEW(KODE,IDT,2008,1,ARRAY(2))
         IF(KODE.GT.0) GO TO 50
         WRITE(JOSTND, 2301) KEYWRD, IDT, ARRAY(2)
- 2301   FORMAT(/A8, '   Date/Cycle=', I5,
+ 2301   FORMAT(/1X, A8, '   Date/Cycle=', I5,
      >    ': Stems/ha variance/mean ratio will be changed to', F7.3)
       ELSE
         CALL KEYDMP(JOSTND,IRECNT,KEYWRD,ARRAY,KARD)
@@ -1218,22 +1175,22 @@ C     dummy value is substituted and detected in DMOPTS
 
       IF (ARRAY(2)  .NE. -999.) THEN
         WRITE(JOSTND, 2401) KEYWRD, IDT, ARRAY(2)
- 2401   FORMAT(/A8, '   Date/Cycle=', I5,
+ 2401   FORMAT(/1X, A8, '   Date/Cycle=', I5,
      >   ': Autocorrelation alpha is: ', F7.3)
       ELSE
         WRITE(JOSTND, 2402) KEYWRD, IDT
- 2402   FORMAT(/A8, '   Date/Cycle=', I5, ': Autocorrelation alpha',
+ 2402   FORMAT(/1X, A8, '   Date/Cycle=', I5, ': Autocorrelation alpha',
      >      ' value is missing or greater than zero. Current value',
      >      ' not changed.')
       END IF
 
       IF (ARRAY(3) .NE. -999.) THEN
         WRITE(JOSTND, 2403) KEYWRD, IDT, ARRAY(3)
- 2403   FORMAT(/A8, '   Date/Cycle=', I5,
+ 2403   FORMAT(/1X, A8, '   Date/Cycle=', I5,
      >   ': Autocorrelation beta is: ', F7.3)
       ELSE
         WRITE(JOSTND, 2404) KEYWRD, IDT
- 2404   FORMAT(/A8, '   Date/Cycle=', I5, ': Autocorrelation beta',
+ 2404   FORMAT(/1X, A8, '   Date/Cycle=', I5, ': Autocorrelation beta',
      >     ' value is missing or greater than zero. Current value',
      >     ' not changed.')
       END IF
@@ -1246,7 +1203,7 @@ C     ENABLE PRINTING OF DM-TREELIST AND LIGHT TABLES TO DATABASE
  2500 CONTINUE
       LDETAIL = .TRUE.
       WRITE(JOSTND,2501) KEYWRD
- 2501 FORMAT(/A8,'  DM-Treelist table printing is on')
+ 2501 FORMAT(/1X,A8,'  DM-Treelist table printing is on')
       GO TO 50
 
 C     Option 26: SAREA
@@ -1268,7 +1225,7 @@ C     calibrate the relative values of DMOPAQ().
       IF (LNOTBK(1) .AND. (ARRAY(1) .GT. 0.0)) THEN
         X = ARRAY(1)
         WRITE(JOSTND, 2701) KEYWRD, X
- 2701   FORMAT(/A8, ' Relative P(stopping DM seed) IN 1 M**3 of ',
+ 2701   FORMAT(/1X, A8, ' Relative P(stopping DM seed) IN 1 M**3 of ',
      &          'avg. PP/LP foliage will be multiplied by: ', F4.2)
         DMOPQM = X
       ELSE
@@ -1308,7 +1265,7 @@ C....    Check for valid delay.
         ENDIF
 
         WRITE(JOSTND,2801) KEYWRD,KARD(1),ISPL,NINT(ARRAY(2))
- 2801   FORMAT(/A8, ' Years to flowering for species: ',
+ 2801   FORMAT(/1X, A8, ' Years to flowering for species: ',
      >          A3, ' (', I2, ') changed to ', I3, ' years.')
         IF (ISPL .GT. 0) THEN
           DMFLWR(ISPL) = NINT(ARRAY(2))
@@ -1362,7 +1319,7 @@ C     Option 29: DMBCI: Biological control initiation
      >  (BC(I)%Mort(K),  K=1,ACTIVE),
      >  (BC(I)%Suprs(K), K=1,ACTIVE),
      >  (BC(I)%Yr(K),    K=1,ACTIVE)
- 2902   FORMAT(/A8,
+ 2902   FORMAT(/1X,A8,
      >  /T8,'Definition of Biocontrol Agent: ',I2,
      >  /T8,'Host species: ',A,' (CODE= ',I2,')',
      >  /T8,'Immediate Mortality (%)',  4F10.1,
@@ -1400,7 +1357,7 @@ C     Option 30: DMBCA:      Biological control application
 
         WRITE (JOSTND,3010) KEYWRD,IDT,IFIX(ARRAY(2)),
      >                      ARRAY(3),ARRAY(4)
- 3010   FORMAT (/A8,'   DATE/CYCLE=',I5,
+ 3010   FORMAT (/1X,A8,'   DATE/CYCLE=',I5,
      >  '; Application of Biocontrol Agent:', I2,
      >  /T13,'Strength: ',F7.2, '; Height (m): ', F7.2)
         CALL OPNEW (KODE,IDT,IKD,3,ARRAY(2))
@@ -1414,25 +1371,25 @@ C     Option 30: DMBCA:      Biological control application
 C====================
 C.... Error messages.
 
- 8000 FORMAT(/' *** Species specified,',I3,', outside range of',
+ 8000 FORMAT(/1X,' *** Species specified,',I3,', outside range of',
      &       ' valid species ( 0 -',I3,' )')
- 8100 FORMAT(/' *** Value specified,',F10.4,', negative; set to',
+ 8100 FORMAT(/1X,' *** Value specified,',F10.4,', negative; set to',
      &       ' 1.0.')
- 8150 FORMAT(/' *** Value specified,',F10.4,', negative; set to',
+ 8150 FORMAT(/1X,' *** Value specified,',F10.4,', negative; set to',
      &       ' 0.0.')
-c8200 FORMAT(/' *** DMR specified,',I3,', outside range of',
-c     &       ' valid values ( 0 - 6 )')
- 8300 FORMAT(/' *** Proportion to be infected, ',F10.4,', outside',
+ 8200 FORMAT(/1X,' *** DMR specified,',I3,', outside range of',
+     &       ' valid values ( 0 - 6 )')
+ 8300 FORMAT(/1X,' *** Proportion to be infected, ',F10.4,', outside',
      &       ' range of valid values ( 0.0 - 1.0 )')
- 8400 FORMAT(/' *** DMR infection specified,',I3,', outside range',
+ 8400 FORMAT(/1X,' *** DMR infection specified,',I3,', outside range',
      &       ' of valid values ( 1 - 6 )')
- 8500 FORMAT(/' *** Method of infection specified,',I3,', outside',
+ 8500 FORMAT(/1X,' *** Method of infection specified,',I3,', outside',
      &       ' range of valid values ( 0 - 2 )')
- 8600 FORMAT(/' *** Death rate specified,',F6.2,', outside',
+ 8600 FORMAT(/1X,' *** Death rate specified,',F6.2,', outside',
      &       ' range of valid values ( 0 - 1 ).  Default 0.08 used.')
- 8700 FORMAT(/' *** Years delay specified,',F6.2,', less than 1.',
+ 8700 FORMAT(/1X,' *** Years delay specified,',F6.2,', less than 1.',
      &       '  Default 4.0 used.')
- 8800 FORMAT(/' *** Backwards coefficients for species: ', A3,
+ 8800 FORMAT(/1X,' *** Backwards coefficients for species: ', A3,
      &       ' (', I2, ') - not used.')
 
 C.... Common return.

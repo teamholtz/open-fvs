@@ -1,7 +1,7 @@
       SUBROUTINE DBSCMPU
       IMPLICIT NONE
 C
-C DBSQLITE $Id: dbscmpu.f 3793 2021-09-13 23:58:52Z donrobinson $
+C $Id: dbscmpu.f 2377 2018-06-01 09:28:24Z nickcrookston $
 C
 C     PURPOSE: TO POPULATE A DATABASE WITH THE COMPUTE TABLE
 C              INFORMATION
@@ -13,7 +13,7 @@ C
 C
 C
       INCLUDE 'OPCOM.F77'
-C
+C                                    
 C
       INCLUDE 'CONTRL.F77'
 C
@@ -23,58 +23,14 @@ C
 C
       INCLUDE 'DBSCOM.F77'
 C
-C
+C                                                                                  
       INCLUDE 'PLOT.F77'
 C
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_ADDCOLIFABSENT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_BIND_DOUBLE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_BIND_INT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_BIND_TEXT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_CLOSE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLCNT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLDOUBLE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLINT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLISNULL
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLNAME
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLREAL
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLTEXT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLTYPE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_ERRMSG
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_EXEC
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_FINALIZE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_OPEN
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_PREPARE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_RESET
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_STEP
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_TABLEEXISTS
-#if !(_WIN64)
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_ADDCOLIFABSENT' :: FSQL3_ADDCOLIFABSENT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_BIND_DOUBLE'    :: FSQL3_BIND_DOUBLE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_BIND_INT'       :: FSQL3_BIND_INT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_BIND_TEXT'      :: FSQL3_BIND_TEXT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_CLOSE'          :: FSQL3_CLOSE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLCNT'         :: FSQL3_COLCNT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLDOUBLE'      :: FSQL3_COLDOUBLE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLINT'         :: FSQL3_COLINT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLISNULL'      :: FSQL3_COLISNULL
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLNAME'        :: FSQL3_COLNAME
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLREAL'        :: FSQL3_COLREAL
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLTEXT'        :: FSQL3_COLTEXT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLTYPE'        :: FSQL3_COLTYPE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_ERRMSG'         :: FSQL3_ERRMSG
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_EXEC'           :: FSQL3_EXEC
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_FINALIZE'       :: FSQL3_FINALIZE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_OPEN'           :: FSQL3_OPEN
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_PREPARE'        :: FSQL3_PREPARE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_RESET'          :: FSQL3_RESET
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_STEP'           :: FSQL3_STEP
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_TABLEEXISTS'    :: FSQL3_TABLEEXISTS
-#endif
-C
+C                                     
 COMMONS
 C
       INTEGER MXLEN
-      PARAMETER(MXLEN=10000)
+      PARAMETER(MXLEN=2000)
       CHARACTER(LEN=MXLEN) SQLStmt
       CHARACTER(LEN=8),DIMENSION(MXTST5)::KWINSRT
       DOUBLE PRECISION,DIMENSION(MXTST5)::CURVAL
@@ -110,15 +66,15 @@ C
       iRet = fsql3_tableexists(IoutDBref,"FVS_Compute"//CHAR(0))
       IF(iRet.EQ.0) THEN
         SQLStmt='CREATE TABLE FVS_Compute('//
-     -             'CaseID text not null,'//
-     -             'StandID text not null,'//
+     -             'CaseID text ,'//
+     -             'StandID text null,'//
      -             'Year int null'
         DO I=1,ITST5
           IF(.NOT.(CTSTV5(I)(1:1).EQ.'_'.AND.I_CMPU.LT.1)) THEN
             SQLStmt=TRIM(SQLStmt)//', '//
      -              TRIM(CTSTV5(I))//' real null'
           ENDIF
-        ENDDO
+        ENDDO           
         iRet = fsql3_exec(IoutDBref,TRIM(SQLStmt)//');'//CHAR(0))
         IF (iRet .NE. 0) THEN
           ICOMPUTE = 0
@@ -130,8 +86,8 @@ C       MAKE SURE ALL THE NEEDED COLUMNS EXIST
 C
         DO I=1,ITST5
           IF(.NOT.(CTSTV5(I)(1:1).EQ.'_'.AND.I_CMPU.LT.1)) THEN
-          iRet = fsql3_addcolifabsent(IoutDBref,
-     >         "FVS_Compute"//CHAR(0),
+          iRet = fsql3_addcolifabsent(IoutDBref, 
+     >         "FVS_Compute"//CHAR(0), 
      >         TRIM(CTSTV5(I))//CHAR(0), "real"//CHAR(0))
           ENDIF
         ENDDO
@@ -150,11 +106,11 @@ C
           I=IOPSRT(II)
           IF(IACT(I,1).EQ.33 .AND. IACT(I,4).GT.0) THEN
             IF(THISYR.EQ.-1) THISYR = IACT(I,4)
-            IF(IACT(I,4).NE.THISYR) THEN
+            IF(IACT(I,4).NE.THISYR) THEN                                     
               IF(NSRTNUM.GT.0) THEN
 
-C             Build and run an insert query
-
+C             Build and run an insert query                                        
+                 
                 CALL INSERTCMPU(IoutDBref,KWINSRT,CURVAL,THISYR,
      >                          NPLT,CASEID,NSRTNUM)
 
@@ -164,16 +120,16 @@ C             Build and run an insert query
             ENDIF
             IX=IFIX(PARMS(IACT(I,2)+1))
             IF (IX.GT.500) IX=IX-500
-C
+C           
 C           CHECK TO SEE IF WE WANT TO SKIP UNDERSCORE COMPUTES
-C
-            IF(CTSTV5(IX)(1:1).EQ.'_'.AND.I_CMPU.LT.1) CYCLE
+C            
+            IF(CTSTV5(IX)(1:1).EQ.'_'.AND.I_CMPU.LT.1) CYCLE 
             IF (NSRTNUM.EQ.0) THEN
               KWINSRT(1) = CTSTV5(IX)
-              CURVAL(1)=PARMS(IACT(I,2))
+              CURVAL(1)=PARMS(IACT(I,2))                                     
               NSRTNUM = 1
             ELSE
-              LDUPKW =.FALSE.
+              LDUPKW =.FALSE. 
               DO I3=1,NSRTNUM
                 IF(TRIM(KWINSRT(I3)).EQ.TRIM(CTSTV5(IX))) THEN
                   CURVAL(I3)=PARMS(IACT(I,2))
@@ -185,21 +141,21 @@ C
                 NSRTNUM = NSRTNUM + 1
                 KWINSRT(NSRTNUM)=CTSTV5(IX)
                 CURVAL(NSRTNUM)=PARMS(IACT(I,2))
-              ENDIF
+              ENDIF                                                        
             ENDIF
           ENDIF
-        ENDDO
-
+        ENDDO        
+      
 C       More to insert?
 
-        IF(NSRTNUM.GT.0)
+        IF(NSRTNUM.GT.0) 
      >      CALL INSERTCMPU(IoutDBref,KWINSRT,CURVAL,THISYR,NPLT,CASEID,
-     >                      NSRTNUM)
+     >                      NSRTNUM) 
       ENDDO
-      iRet = fsql3_exec (IoutDBref,"Commit;"//Char(0))
+      iRet = fsql3_exec (IoutDBref,"Commit;"//Char(0))     
       RETURN
-      END
-
+      END               
+                         
       SUBROUTINE INSERTCMPU(IoutDBref,KWINSRT,CURVAL,THISYR,STANDID,
      >                      CASEID,NSRTNUM)
       IMPLICIT NONE
@@ -213,21 +169,21 @@ C
       DOUBLE PRECISION CURVAL(NSRTNUM)
       CHARACTER(LEN=26) STANDID
       CHARACTER(LEN=36) CASEID
-      CHARACTER(LEN=5000) SQLStmt
-      CHARACTER(LEN=500)  VALS
+      CHARACTER(LEN=3000) SQLStmt
+      CHARACTER(LEN=200)  VALS
       INTEGER fsql3_prepare,fsql3_bind_int,fsql3_bind_double,
      >        fsql3_finalize,fsql3_errmsg,fsql3_step
-
+      
       SQLStmt=" "
       VALS=" "
       IF(NSRTNUM.EQ.0) RETURN
       DO I=1,NSRTNUM
         SQLStmt = TRIM(SQLStmt) // "," // TRIM(KWINSRT(I))
-        VALS    = TRIM(VALS)    // ",?"
+        VALS    = TRIM(VALS)    // ",?"      
       ENDDO
 
       SQLStmt = "insert into FVS_Compute (CaseID,StandID,Year" //
-     >   trim(SQLStmt) // ") values ('" // CASEID // "','" //
+     >   trim(SQLStmt) // ") values ('" // CASEID // "','" // 
      >   TRIM(STANDID) // "',?" // TRIM(VALS) // ");" // CHAR(0)
       IRT = fsql3_prepare(IoutDBref,SQLStmt)
       IF (IRT>0) THEN
@@ -235,7 +191,7 @@ C
         PRINT *,"dbscmpu prepare error: ",TRIM(VALS)
       endif
       IRT = fsql3_bind_int(IoutDBref, 1, THISYR)
-      DO I=1,NSRTNUM
+      DO I=1,NSRTNUM 
         IRT = fsql3_bind_double(IoutDBref,I+1,CURVAL(I))
       ENDDO
       IRT = fsql3_step(IoutDBref)
@@ -250,3 +206,9 @@ C
       endif
       RETURN
       END
+      
+      
+      
+
+
+

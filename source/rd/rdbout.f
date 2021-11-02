@@ -1,7 +1,7 @@
       SUBROUTINE RDBOUT
       IMPLICIT NONE
 C----------
-C RD $Id: rdbout.f 2685 2019-05-30 17:29:01Z lancedavid $
+C  **RDBOUT      LAST REVISION:  03/24/15
 C----------
 C
 C  Purpose :
@@ -140,7 +140,7 @@ C
       
       IF (IROOT .EQ. 0) GOTO 1000
       
-      JYR = IY(ICYC+1)
+      JYR = IY(ISTEP)
       NOKILL = .TRUE.
       TOLDYR = .FALSE.
       

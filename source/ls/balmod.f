@@ -1,7 +1,7 @@
       SUBROUTINE BALMOD(ISPC,D,BA,RMSQD,GM,DEBUG)
       IMPLICIT NONE
 C----------
-C LS $Id: balmod.f 2617 2019-03-07 22:00:27Z lancedavid $
+C  **BALMOD--LS    DATE OF LAST REVISION:  07/10/08
 C----------
 C  THIS SUBROUTINE COMPUTES THE VALUE OF A GROWTH MODIFIER BASED
 C  ON BAL. ORIGINALLY THIS WAS JUST PART OF THE LARGE TREE DIAMETER
@@ -24,7 +24,7 @@ C----------
       LOGICAL DEBUG
       REAL CHECK(MAXSP),BAMAX1(MAXSP),
      & B1(MAXSP),B2(MAXSP),B3(MAXSP),B4(MAXSP),C1(MAXSP),C2(MAXSP)
-      REAL GM,RMSQD,BA,D,BETA,BATEMP,ARG,OMEGA,EXPVAL
+      REAL GM,RMSQD,BA,D,BETA,BATEMP,ARG,OMEGA
       INTEGER ISPC
 C
 C----------
@@ -86,17 +86,8 @@ C----------
       ELSEIF (D/RMSQD.LT.CHECK(ISPC)) THEN
          OMEGA = B4(ISPC)
       ELSE
-C        ----------
-C        Computation of the value used in the EXP function was 
-C        seperated from OMEGA calculation so that underflow of single
-C        precision variable is avoided.                 LD 2/27/19
-C                                     |--------------|
-C        OMEGA = B1(ISPC)*(1-EXP(-1.0*B2(ISPC)*D/RMSQD))**B3(ISPC)
-C    &           +B4(ISPC)
-C        ----------
-         EXPVAL = B2(ISPC)*D/RMSQD
-         IF (EXPVAL .GT. 86) EXPVAL = 86.0
-         OMEGA = B1(ISPC)*(1-EXP(-1.0*EXPVAL))**B3(ISPC)+B4(ISPC)
+         OMEGA = B1(ISPC)*(1-EXP(-1.0*B2(ISPC)*D/RMSQD))**B3(ISPC)
+     &           +B4(ISPC)
       ENDIF
       IF (DEBUG)WRITE(JOSTND,*)'ISPC=',ISPC,
      &    ' D=',D,' OMEGA=',OMEGA,' RMSQD=',RMSQD

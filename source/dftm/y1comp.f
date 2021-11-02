@@ -1,7 +1,7 @@
       SUBROUTINE Y1COMP 
       IMPLICIT NONE
 C---------- 
-C DFTM $Id: y1comp.f 2446 2018-07-09 22:54:33Z gedixon $
+C  **Y1COMP DATE OF LAST REVISION:  06/30/10 
 C---------- 
 C     
 C     DFTM MODEL SUBROUTINE - JIM COLBERT - JAN 1978. 

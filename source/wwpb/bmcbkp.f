@@ -1,7 +1,6 @@
+c      SUBROUTINE BMCBKP (ISTD,IYR)
       SUBROUTINE BMCBKP (ISTD,IYR,OLDGRF)
-C----------
-C WWPB $Id: bmcbkp.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+
 C CALLED BY:  BMDRV
 C CALLS:      GPGET2
 C             GPADD

@@ -1,6 +1,3 @@
-C----------
-C VOLUME $Id: formclas.f 2458 2018-07-22 19:09:30Z gedixon $
-C----------
 c  last modified  02-10-2012
 C     SUBROUTINES to determine the default Form Class.
 c      contains the following subroutines

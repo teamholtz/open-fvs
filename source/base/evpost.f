@@ -1,7 +1,7 @@
       SUBROUTINE EVPOST (JOSTND,IEN,IDTE,NGRPS,IALNK)
       IMPLICIT NONE
 C----------
-C BASE $Id: evpost.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: evpost.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     CALLED FROM EVMON, POSTS THE OCCURANCE OF AN EVENT.

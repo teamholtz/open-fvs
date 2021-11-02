@@ -3,7 +3,7 @@
      >          SPSITGM,MXDENMLT,POTESTAB)
       IMPLICIT NONE
 C
-C DBS $Id: dbsclsum.f 2445 2018-07-09 21:23:04Z gedixon $
+C $Id: dbsclsum.f 2357 2018-05-18 17:26:03Z lancedavid $
 C
 C     POPULATE A DATABASE WITH THE CLIMATE SUMMARY
 

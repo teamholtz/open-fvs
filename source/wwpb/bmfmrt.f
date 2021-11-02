@@ -1,7 +1,5 @@
       SUBROUTINE BMFMRT (ISTD, IYR, SH, FM)
-C----------
-C WWPB $Id: bmfmrt.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+
 *     CALLED FROM: BMFIRE
 ***********************************************************************
 *  **BMFMRT  DATE OF LAST REVISION:  June 14, 1994

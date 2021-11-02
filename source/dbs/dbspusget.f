@@ -1,7 +1,7 @@
       SUBROUTINE DBSPUSGET (CBUFF,IPNT,LNCBUF)
       IMPLICIT NONE
 C----------
-C DBS $Id: dbspusget.f 2445 2018-07-09 21:23:04Z gedixon $
+C $Id: dbspusget.f 2357 2018-05-18 17:26:03Z lancedavid $
 C----------
 C
 COMMONS

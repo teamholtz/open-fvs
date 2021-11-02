@@ -1,7 +1,7 @@
       SUBROUTINE DMTLST (Sp, tDMR, Ptr, Index, P, TLst)
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: dmtlst.f 2461 2018-07-24 18:00:57Z gedixon $
+C  $Id: dmtlst.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 C  **DMTLST -- NISI  Date of last revision April 16 1994
 C--------------------------------------------------------------------

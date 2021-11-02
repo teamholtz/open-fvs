@@ -1,7 +1,7 @@
       FUNCTION PTSRG(X,BASNO)
       IMPLICIT NONE
 C----------
-C LPMPB $Id: ptsrg.f 2450 2018-07-11 17:28:41Z gedixon $
+C  **PTSRG         DATE OF LAST REVISION:  07/02/10
 C----------
 C
 C

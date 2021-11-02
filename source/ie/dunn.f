@@ -1,7 +1,7 @@
       SUBROUTINE DUNN (SS)
       IMPLICIT NONE
 C----------
-C IE $Id: dunn.f 2449 2018-07-11 14:53:35Z gedixon $
+C NI $Id: dunn.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C
 C     THIS SUBROUTINE PROCESSES THE DUNNING SITE CODE INFORMATION

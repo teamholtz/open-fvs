@@ -1,7 +1,7 @@
       SUBROUTINE BASDAM(ITREE,ICODES)
       IMPLICIT NONE
 C----------
-C BASE $Id: basdam.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: basdam.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C  SUBROUTINE TO PROCESS THE SPECIAL TREE STATUS CODES, AND

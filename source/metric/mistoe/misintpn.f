@@ -1,6 +1,6 @@
       SUBROUTINE MISINT
 ***********************************************************************
-C METRIC-MISTOE $Id: misintpn.f 2464 2018-07-27 15:36:37Z gedixon $
+*  **MISINT--PN/M  Date of last revision:  04/21/09
 *----------------------------------------------------------------------
 *  Purpose:
 *     Mistletoe parameter initialization routine. This routine is

@@ -1,7 +1,7 @@
       SUBROUTINE RDSADD(I,TP)
       IMPLICIT NONE
 C----------
-C RD $Id: rdsadd.f 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDSADD      LAST REVISION:  09/02/14
 C----------
 C
 C  ADD TO THE STUMP LIST.

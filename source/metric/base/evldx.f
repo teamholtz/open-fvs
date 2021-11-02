@@ -1,12 +1,12 @@
       SUBROUTINE EVLDX (XLDREG,NXLDX,INSTR,IRC)
       IMPLICIT NONE
 C----------
-C METRIC-BASE $Id: evldx.f 3806 2021-09-14 18:50:24Z donrobinson $
+C  $Id: evldx.f 2361 2018-05-18 17:40:40Z lancedavid $
 C----------
 C
 C     CALLED FROM ALGEVL
 C
-C     LOADS X VALUES OWNED BY THE PROGNOSIS MODEL.
+C     LOADS X VALUES OWNED BY THE PROGNOSIS MODEL AS OPPOSED TO PPE.
 C
 C     N.L.CROOKSTON - APR 87 - FORESTRY SCIENCES LAB - MOSCOW, ID
 C
@@ -20,37 +20,18 @@ COMMONS
 C
 C
       INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
-C
       INCLUDE 'OUTCOM.F77'
-C
-C
       INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'PLOT.F77'
-C      
-C
       INCLUDE 'STDSTK.F77'
-C
-C
       INCLUDE 'WORKCM.F77'
-C
-C
       INCLUDE 'SSTGMC.F77'
-C
-C
       INCLUDE 'METRIC.F77'
-C
-C
+
 COMMONS
-C
+
       INTEGER M, I1,I2,I3,I4,INDEX(MAXTRE),ISRTI
       LOGICAL LDEB,LACTV,LINCL
       REAL XLDREG(NXLDX),DUMSDI
@@ -62,22 +43,21 @@ C
       INTEGER JPNUM,IGSP,IPNTR(MAXTRE)
       EXTERNAL RANN
       REAL TPA3,DCM,ADIV,HPCT(MAXTRE),JUNK,BADJ,ACRN
-      INTEGER JPT,JPTGRP
-      REAL CLSD2,CLSTPA,XCRD,CRDTFAC,CRDDFAC
-C
+
       ITMPDX(1) = 0
 
       CALL DBCHK (LDEB,'EVLDX',5,ICYC)
-
-      IF (LDEB) WRITE (JOSTND,5) INSTR,NXLDX
-    5 FORMAT (/' IN EVLDX, INSTR=',I6,'; NXLDX=',I3)
+      IF (LDEB) THEN
+         WRITE (JOSTND,5) INSTR,NXLDX
+    5    FORMAT (/' IN EVLDX, INSTR=',I6,'; NXLDX=',I3)
+         IF (NXLDX.GT.0) WRITE (JOSTND,6) (XLDREG(I),I=1,MIN(10,NXLDX))
+    6    FORMAT (' IN EVLDX: ARGUMENTS= ',10F7.2)
+      ENDIF
 C----------
 C     DECODE THE INSTRUCTION AND EXECUTE: LOAD A CONSTANT.
 C----------
       IF (INSTR.GT.1000 .AND. INSTR.LT. 7000) THEN
          XLDREG(1)=PARMS(INSTR-1000)
-        IF (LDEB) WRITE (JOSTND,*)
-     &   'IN EVLDX, XLDREG(1)=PARMS(',INSTR-1000,')',PARMS(INSTR-1000)
          GOTO 1000
       ENDIF
 C----------
@@ -168,27 +148,27 @@ C----------
         XLDREG(1) = TSTV4(I) * FTtoM
         GOTO 1000
 
-   15   CONTINUE   ! OPCODE 501 to 599
-        IF (.NOT.LTSTV5(I)) GOTO 1001  
+   15   CONTINUE
+        IF (.NOT.LTSTV5(I)) GOTO 1001
         XLDREG(1)=TSTV5(I)
         GOTO 1000
-   16   CONTINUE  ! OPCODE 600 to 699
-        IF (.NOT.LTSTV5(I+100)) GOTO 1001 
+   16   CONTINUE
+        IF (.NOT.LTSTV5(I+100)) GOTO 1001
         XLDREG(1)=TSTV5(I+100)
         GOTO 1000
-   17   CONTINUE  ! OPCODE 700 to 799
+   17   CONTINUE
         IF (.NOT.LTSTV5(I+200)) GOTO 1001
         XLDREG(1)=TSTV5(I+200)
         GOTO 1000
-   18   CONTINUE  ! OPCODE 800 to 899
+   18   CONTINUE
         IF (.NOT.LTSTV5(I+300)) GOTO 1001
         XLDREG(1)=TSTV5(I+300)
         GOTO 1000
-   19   CONTINUE  ! OPCODE 900
+   19   CONTINUE
         IF (I.EQ.0) THEN
-          CALL RANN (XLDREG(1))
+           CALL RANN (XLDREG(1))
         ELSE
-          XLDREG(1)=FLOAT(I)
+           XLDREG(1)=FLOAT(I)
         ENDIF
         GOTO 1000
       ENDIF
@@ -221,7 +201,6 @@ C     10 = AVERAGE DIAMETER GROWTH INSIDE BARK
 C     11 = STAND DENSITY INDEX
 C     12 = SILVAH RELATIVE DENSITY
 C     13 = ZEIDE STAND DENSITY INDEX
-C     14 = CURTIS RELATIVE DENSITY
 C   2ND ARGUMENT:
 C         0 = ALL SPECIES
 C        -X = SPECIES GROUP X
@@ -238,11 +217,11 @@ C----------
           J=IFIX(XLDREG(2)-.5)
         ENDIF
         K=IFIX(XLDREG(3)+.5)
-C----------
+CC----------
 C       IF THE ATTRIBUTE (L) IS OUT OF RANGE OR UNDEFINED IN THE
 C       PHASE, THEN: ISSUE ERROR CODE.
 C----------
-        IF (L.LE.0 .OR. L.GT.14) GOTO 1002
+        IF (L.LE.0 .OR. L.GT.13) GOTO 1002
 C----------
 C       IF THE SPECIES (J) IS OUT OF RANGE, THEN: ISSUE ERROR CODE.
 C       NOTE: A NEGATIVE SPECIES NUMBER INDICATES A SPECIES GROUP
@@ -259,25 +238,17 @@ C       IF CALCULATING STAGE'S SDI, GET THE STAGE PARAMETERS
 C----------
         IF(L.EQ.11)CALL SDICLS(0,0.,999.,1,XSDI,DUMSDI,STAGEA,STAGEB,0)
 C----------
-C       IF CALCULATING CURTIS'S RD, GET THE BRYAN LU PARAMETERS
-C       CRDTFAC - Curtis Relative Density TPA factor
-C       CRDDFAC - Curtis Relative Density diameter factor
-C----------
-        IF(L.EQ.14)CALL RDCLS(0,0.,999.,1,CLSD2,CLSTPA,XCRD,0,
-     &                        CRDTFAC,CRDDFAC)
-C----------
 C       FIND THE DBH RANGE AND THE HT RANGE.
 C----------
-        CUT=0.0
-        DEAD=0.0
-        RES=0.0
-        IDMI=0
+        CUT=0.
+        DEAD=0.
+        RES=0.
+        IDMI=0.
         XLDBH=0.0
         XHDBH=1E30
         XLHT=0.0
         XHHT=1E30
         JPNUM=0
-        JPTGRP=0
         IF (JARGS.GE.4) XLDBH = XLDREG(4) * CMtoIN
         IF (JARGS.GE.5) XHDBH = XLDREG(5) * CMtoIN
         IF (JARGS.GE.6) XLHT  = XLDREG(6) * MtoFT
@@ -286,21 +257,14 @@ C----------
         IF (JARGS.GE.8 .AND. XLDREG(8).EQ.2) CUT=XLDREG(8)
         IF (JARGS.GE.8 .AND. XLDREG(8).EQ.3) RES=XLDREG(8)
         IF (JARGS.GE.8 .AND. XLDREG(8).EQ.4) IDMI=IFIX(XLDREG(8)+0.5)
-        IF (JARGS.GE.9)THEN
-          IF(XLDREG(9).LT.0.)THEN
-            JPNUM=IFIX(XLDREG(9)-0.5)
-            JPTGRP=-JPNUM
-          ELSE
-            JPNUM=IFIX(XLDREG(9)+0.5)
-          ENDIF
-        ENDIF
-C----------
+        IF (JARGS.GE.9) JPNUM=IFIX(XLDREG(9)+0.5)
+C
 C IF THE POINT NUMBER IS PRESENT, AND VALID, AND A POINT NUMBER FROM
 C THE INVENTORY DATA, CONVERT IT TO THE CORRESPONDING FVS SEQUENTIAL
 C POINT NUMBER
-C----------
+C
         XLDREG(1)=0.0
-        IF(JPNUM.GT.0)THEN
+        IF(JPNUM.NE.0)THEN
           IF(ITHNPI .LE. 0 .OR. ITHNPI.GT.2)THEN
             GO TO 1000
           ELSEIF(ITHNPI .EQ. 1)THEN
@@ -320,7 +284,6 @@ C----------
 C
         SUMP=0.0
         NTREES=0
-
         IF(CUT.GT.0. .AND. IPHASE.LT.2) GOTO 1001
         IF(RES.GT.0. .AND. IPHASE.LT.2) GO TO 1001
         ILIM=ITRN
@@ -341,29 +304,7 @@ C
    90       CONTINUE
           ENDIF
    91     CONTINUE
-C----------
-C  CHECK TO SEE IF TREE IS ON A POINT IN A POINT GROUP
-C----------
-          IF(JPTGRP.GT.0)THEN
-            IF(ITHNPI .LE. 0 .OR. ITHNPI.GT.2)GO TO 1000
-            DO JPT=2,IPTGRP(JPTGRP,1)+1
-            IF(ITHNPI .EQ. 1)THEN
-              IF(IPTGRP(JPTGRP,JPT).EQ.IPVEC(ITRE(I)))THEN
-                JPNUM=ITRE(I)
-                GO TO 95
-              ENDIF
-            ELSEIF(ITHNPI .EQ. 2)THEN
-              IF(IPTGRP(JPTGRP,JPT).EQ.ITRE(I))THEN
-                JPNUM=ITRE(I)
-                IF(JPNUM .GT. IPTINV)GO TO 1000
-                GOTO 95
-              ENDIF
-            ENDIF
-            ENDDO
-            LINCL=.FALSE.
-          ENDIF
-   95     CONTINUE
-C         IF(JPNUM.GT.0 .AND. JPNUM.NE.ITRE(I)) LINCL=.FALSE.
+          IF(JPNUM.GT.0 .AND. JPNUM.NE.ITRE(I)) LINCL=.FALSE.
           IF (LINCL .AND.
      >       (K.EQ.0  .OR. K.EQ.IMC(I)) .AND.
      >       (DBH(I).GE.XLDBH)          .AND.
@@ -387,9 +328,7 @@ C
           IF(JPNUM.GT.0)TPA=TPA*(PI-FLOAT(NONSTK))
 C
           SUMP=SUMP+TPA
-          GOTO (111,112,113,114,115,116,117,118,119,120,121,122,123,
-     &          124),L
-
+          GOTO (111,112,113,114,115,116,117,118,119,120,121,122,123),L
   111       CONTINUE
               XLDREG(1)=XLDREG(1)+TPA
               GOTO 190
@@ -439,7 +378,6 @@ C----------
               XLDREG(1)=XLDREG(1)+(TPA*DG(I))
               GOTO 190
   121         CONTINUE
-              IF(DBH(I).LT.DBHSTAGE)GO TO 190   ! BRANCH IF D IS LT MIN DBH
               XLDREG(1)=XLDREG(1)+(STAGEA + STAGEB*(DBH(I)**2.0))*TPA
               GO TO 190
   122         CONTINUE
@@ -447,32 +385,11 @@ C----------
               XLDREG(1)=XLDREG(1)+(TPA*TREERD)/GROSPC
               GO TO 190
   123         CONTINUE
-              IF(DBH(I).LT.DBHZEIDE)GO TO 190   ! BRANCH IF D IS LT MIN DBH
               XLDREG(1)=XLDREG(1)+((DBH(I)/10)**1.605)*TPA
-              GOTO 190
-  124         CONTINUE
-C----------
-C           CURTIS RELATIVE DENSITY
-C----------
-            IF(DBH(I).LT.DBHSTAGE)GO TO 190   ! BRANCH IF D IS LT MIN DBH
-            XLDREG(1)=XLDREG(1)+(CRDTFAC + CRDDFAC*(DBH(I)**2.0))*TPA
-            GOTO 190
 C
             ENDIF
   190     CONTINUE
-C----------
-C  NORMALIZE GROUP POINT STATISTICS BASED ON GROUP AREA,
-C  I.E. NUMBER OF POINTS IN GROUP
-C----------
-          IF(((L.GE.1).AND.(L.LE.4)).OR.(L.EQ.9).OR.
-     &       ((L.GE.11).AND.(L.LE.14)))THEN
-            IF(JPTGRP.GT.0)THEN
-              IF(IPTGRP(JPTGRP,1).GT.0)THEN
-                XLDREG(1)=XLDREG(1)/FLOAT(IPTGRP(JPTGRP,1))
-              ENDIF
-            ENDIF
-          ENDIF
-C
+  192     CONTINUE
           IF (L.EQ.5 .OR. L.EQ.6 .OR. L.EQ.8 .OR. L.EQ.10) THEN
             IF (SUMP.GT.0.0001) THEN
               IF (L.EQ.5) XLDREG(1)=SQRT(XLDREG(1)/SUMP)
@@ -482,14 +399,12 @@ C
               XLDREG(1)=0.0
             ENDIF
           ELSEIF (L.EQ.7) THEN
-            CALL COVOLP (LDEB,JOSTND,NTREES,ITMPDX,WORK1,XLDREG(1),
-     &                   CCCOEF)
+            CALL COVOLP (LDEB,JOSTND,NTREES,ITMPDX,WORK1,XLDREG(1))
           ELSEIF ((L.GE.1 .AND. L.LE.4) .OR. L.EQ.9) THEN
             XLDREG(1)=XLDREG(1)/GROSPC
           ENDIF
 
-          GOTO (911,912,913,914,915,916,917,918,919,920,921,922,923,
-     &          924), L
+          GOTO (911,912,913,914,915,916,917,918,919,920,921,922,923), L
 
   911     CONTINUE
           XLDREG(1) = XLDREG(1) / ACRtoHA
@@ -528,9 +443,6 @@ C
           XLDREG(1) = XLDREG(1) / ACRtoHA
           GOTO 1000
   923     CONTINUE
-          XLDREG(1) = XLDREG(1) / ACRtoHA
-          GOTO 1000
-  924     CONTINUE
           XLDREG(1) = XLDREG(1) / ACRtoHA
           GOTO 1000
         ENDIF
@@ -597,36 +509,46 @@ C----------
          GOTO (201,202,203,204,205,206,207,208,209,210,211), I
   201    CONTINUE
          XLDREG(1) = OACC(J)
-         GOTO 1000
+         GOTO 1999
   202    CONTINUE
          XLDREG(1) = OMORT(J)
-         GOTO 1000
+         GOTO 1999
   203    CONTINUE
          XLDREG(1) = ONTCUR(J)
-         GOTO 1000
+         GOTO 1999
   204    CONTINUE
          XLDREG(1) = OCVCUR(J)
-         GOTO 1000
+         GOTO 1999
   205    CONTINUE
          XLDREG(1) = OMCCUR(J)
-         GOTO 1000
+         GOTO 1999
   206    CONTINUE
          XLDREG(1) = OBFCUR(J)
-         GOTO 1000
+         GOTO 1999
   207    CONTINUE
          XLDREG(1) = ONTREM(J)
-         GOTO 1000
+         GOTO 1999
   208    CONTINUE
          XLDREG(1) = OCVREM(J)
-         GOTO 1000
+         GOTO 1999
   209    CONTINUE
          XLDREG(1) = OMCREM(J)
-         GOTO 1000
+         GOTO 1999
   210    CONTINUE
          XLDREG(1) = OBFREM(J)
-         GOTO 1000
+         GOTO 1999
   211    CONTINUE
          XLDREG(1) = ONTRES(J)
+         GOTO 1999
+
+ 1999    CONTINUE
+ 2000    CONTINUE
+         GOTO 1000
+ 2001    CONTINUE
+         XLDREG(1) = XLDREG(1) / ACRtoHA
+         GOTO 1000
+ 2002    CONTINUE
+         XLDREG(1) = XLDREG(1) * FT3pACRtoM3pHA
          GOTO 1000
       ENDIF
 C----------
@@ -660,7 +582,7 @@ C----------
         GOTO 1000
       ENDIF
 C----------
-C     DECODE INSTRUCTION AND EXECUTE.    FUELLOAD:
+C     DECODE INSTRUCTION AND EXECUTE.    COARSEWD:
 C----------
       IF (MYSTR.EQ.11700) THEN
 C----------
@@ -687,9 +609,12 @@ C----------
 C
         CALL FMEVCWD(RVAL, ILO, IHI, I)
         IF (I.EQ.1) GOTO 1001
-        XLDREG(1) = RVAL * TItoTM / ACRtoHA
+        XLDREG(1) = RVAL
+C
+        XLDREG(1) = XLDREG(1) * TItoTM / ACRtoHA
         GOTO 1000
       ENDIF
+
 C----------
 C     DECODE INSTRUCTION AND EXECUTE.    SNAGS:
 C----------
@@ -702,21 +627,16 @@ C----------
 
       IF (JARGS.LT.3) GOTO 1002
         L=IFIX(XLDREG(1)+.5)
-        IF(XLDREG(2).GE. 0.)THEN
-          J=IFIX(XLDREG(2)+.5)
-        ELSE
-          J=IFIX(XLDREG(2)-.5)
-        ENDIF
+        J=IFIX(XLDREG(2)+.5)
         K=IFIX(XLDREG(3)+.5)
 C----------
 C     CHECK BOUNDARIES FOR
 C     (L=1:3)  TPA,BA OR VOL
-C     (J=0:MAXSP) ALL,SPP; <0=SPECIES GROUP
+C     (J=0:11) ALL,SPP
 C     (K=0:2)  ALL,HARD,SOFT
 C----------
         IF (L.LT.1 .OR. L.GT.3) GOTO 1002
-        IF (J.GT.MAXSP) GOTO 1002
-        IF (J.LT.0 .AND. NSPGRP.LT.-J) GOTO 1002
+        IF (J.LT.0 .OR. J.GT.MAXSP) GOTO 1002
         IF (K.LT.0 .OR. K.GT.2) GOTO 1002
 C----------
 C     FIND THE DBH RANGE AND THE HT RANGE.
@@ -730,7 +650,7 @@ C----------
         IF (JARGS.GE.5) XHDBH = XLDREG(5)
         IF (JARGS.GE.6) XLHT  = XLDREG(6)
         IF (JARGS.GE.7) XHHT  = XLDREG(7)
-        IF (JARGS.GE.8) M     = INT(XLDREG(8))
+        IF (JARGS.GE.8) M     = XLDREG(8)
 
         IF ((M.EQ.1) .AND. (IPHASE.LT.2)) GOTO 1001
 
@@ -741,8 +661,9 @@ C----------
 
         CALL FMEVSNG(RVAL, L, J, K, XLDBH, XHDBH, XLHT, XHHT, I)
         IF (I.EQ.1) GOTO 1001
-        XLDREG(1) = RVAL * FT3pACRtoM3pHA
-
+        XLDREG(1) = RVAL
+C
+        XLDREG(1) = XLDREG(1) * FT3pACRtoM3pHA
         GOTO 1000
       ENDIF
 C----------
@@ -848,8 +769,8 @@ C----------
         ELSE
           J=IFIX(XLDREG(1)-.5)
         ENDIF
-        IF (J.GT.MAXSP) GOTO 1002
-        IF (J.LT.0 .AND. NSPGRP.LT.-J) GOTO 1002
+        J=IFIX(XLDREG(1)+.5)
+        IF (J.LT.0 .OR. J.GT.MAXSP) GOTO 1002
 C----------
 C       FIND THE DBH RANGE
 C----------
@@ -928,6 +849,7 @@ C
 C
         GOTO 1000
       ENDIF
+
 C----------
 C     DECODE INSTRUCTION AND EXECUTE.    POTSRATE:
 C----------
@@ -975,7 +897,7 @@ C
         CALL FMEVRIN(RVAL, J, I)
         IF (I.EQ.1) GOTO 1001
         ! btu/ft**2/min -> kJ/m**2/min
-        XLDREG(1) = RVAL * BTUtoKJ / FT2toM2
+        XLDREG(1) = RVAL * BTUtoKJ * M2toFT2
 C
         GOTO 1000
       ENDIF
@@ -996,7 +918,7 @@ C----------
         I1=1         ! INCLUDE STANDING AND REMOVED
         I2=1         ! INCLUDE LIVE AND DEAD
         I3=1         ! INCLUDE STEM AND CROWN
-        I4=0         ! INCLUDE ALL SPECIES
+        I4=0         ! ICLUDE ALL SPECIES
 C----------
 C  ARG1-FIND TREE STATUS -  STANDING(<0), REMOVED(0),OR BOTH(>0)
 C----------
@@ -1115,7 +1037,7 @@ C
         SUMPIN = SUMPIN + P
       ENDIF
       IF(SUMPIN.GT.TPROB*HTPCT .AND. XLDREG(1).EQ.0.)
-     >  XLDREG(1) = HT(ISRTI) * FTtoM
+     >  XLDREG(1) = HT(ISRTI)
   410 CONTINUE
         GOTO 1000
       ENDIF
@@ -1182,7 +1104,7 @@ C
         GOTO 1000
       ENDIF
 C----------
-C     DECODE INSTRUCTION AND EXECUTE.    ACORNS:
+C     DECODE INSTRUCTION AND EXECUTE.    ACORNS: << DR: Requires metrification March 2012 >>
 C----------
 C      1ST ARUGMENT:
 C         1 = NUMBER OF ACORNS PER ACRE
@@ -1216,12 +1138,6 @@ C----------
         IF (J.GT.MAXSP) GOTO 1002
         IF (J.LT.0 .AND. NSPGRP.LT.-J) GOTO 1002
 C----------
-C----------
-C       CALCULATE PERCENTAGE IN HEIGHT DISTRIBUTION FOR USE IN 
-C       IDENTIFYING CO-DOMINANT AND DOMINANT TREES.
-C----------     
-        CALL RDPSRT(ITRN,HT,IPNTR,.TRUE.)
-        CALL PCTILE (ITRN,IPNTR,PROB,HPCT,JUNK)        
         ACRN=0.
         XLDREG(1)=0.
         ILIM=ITRN
@@ -1245,6 +1161,12 @@ C----------
             ENDIF
   452       CONTINUE
           ENDIF
+C----------
+C       CALCULATE PERCENTAGE IN HEIGHT DISTRIBUTION FOR USE IN
+C       IDENTIFYING CO-DOMINANT AND DOMINANT TREES.
+C----------
+          CALL RDPSRT(ITRN,HT,IPNTR,.TRUE.)
+          CALL PCTILE (ITRN,IPNTR,PROB,HPCT,JUNK)
           IF(LINCL .AND.
      >      (DBH(I).GE.5.0) .AND.
      >      (HPCT(I).GE.60.0)) THEN
@@ -1291,35 +1213,12 @@ C----------
               CASE("837")
                 BADJ = 0.4**2*(1-0.4**2)/2
                 ACRN = (TPA3*(10**(1.06367+0.03123*DCM+BADJ)-1))/ADIV
-              END SELECT
+            END SELECT
             XLDREG(1)=XLDREG(1)+(ACRN)
           ENDIF
   450     CONTINUE
-C       convert acorn lb/ac to acorn kg/ha
-        XLDREG(1) = XLDREG(1) * LBtoKG / ACRtoHA
         ENDIF
 C
-        GOTO 1000
-      ENDIF
-C----------
-C     DECODE INSTRUCTION AND EXECUTE.    CLSPVIAB
-C----------
-      IF (MYSTR.EQ.13500) THEN
-C----------
-C       RETURN IF CLIMATE MODEL IS INACTIVE, ALSO RETURN IF THE NUMBER
-C       OF ARGUMENTS IS NOT 1.
-C----------
-        CALL CLACTV(LACTV)
-        IF (.NOT.LACTV) GOTO 1002
-        IF (JARGS.NE.1) GOTO 1002
-C----------
-C       FETCH THE VIABILITY SCORE FOR SPECIES CODE STORED IN XLDREG(1)
-C       AND LOAD THE SCORE INTO XLDREG(1). IF THE SPECIES CODE IS NOT
-C       WITHIN RANGE, THEN SIGNAL THAT THE FUNCTION RESULTS IN AN UNDEFINED
-C       VALUE (SAME ACTION AS WHEN THE CLIMATE MODEL IS NOT ACTIVE
-C----------
-        CALL CLSPVIAB(IFIX(XLDREG(1)),XLDREG(1),IRC)
-        IF (IRC.NE.0) GOTO 1002
         GOTO 1000
       ENDIF
 C----------

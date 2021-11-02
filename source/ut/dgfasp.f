@@ -1,8 +1,8 @@
       SUBROUTINE DGFASP(D,ASPDG,CR,BARK,SI,DEBUG)
       IMPLICIT NONE
 C----------
-C UT $Id: dgfasp.f 2456 2018-07-22 14:50:53Z gedixon $
-C----------
+C UT $Id: dgfasp.f 0000 2018-02-14 00:00:00Z gedixon $
+C
 C   CALCULATES DIAMETER GROWTH RATES FOR LARGE ASPEN TREES
 C----------
 C

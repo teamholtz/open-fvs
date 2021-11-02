@@ -1,8 +1,8 @@
       SUBROUTINE ESPADV
       IMPLICIT NONE
 C----------
-C CI $Id: espadv.f 2441 2018-07-05 22:31:42Z gedixon $
-C----------
+C   **ESPADV--CI   DATE OF LAST REVISION:   06/20/11
+C
 C   PREDICT PROBS OF ADVANCE SPECIES.
 C----------
 COMMONS

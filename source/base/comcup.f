@@ -1,7 +1,7 @@
       SUBROUTINE COMCUP
       IMPLICIT NONE
 C----------
-C BASE $Id: comcup.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: comcup.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     INTERFACE ROUTINE TO COUPLE THE COMPRESSION ROUTINE TO

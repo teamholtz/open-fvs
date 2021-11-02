@@ -1,8 +1,8 @@
       SUBROUTINE BRCMPR (NCLAS,PROB2,INDX,INDX1)
       IMPLICIT NONE
-C----------
-C WPBR $Id: brcmpr.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **BRCMPR       DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C  This Blister Rust Model subroutine is called from the FVS routine
 C  COMPRS.  It compresses the blister rust model variables.

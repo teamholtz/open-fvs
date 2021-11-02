@@ -1,7 +1,7 @@
       SUBROUTINE DFTMGO(L)    
       IMPLICIT NONE
 C---------- 
-C DFTM $Id: dftmgo.f 2446 2018-07-09 22:54:33Z gedixon $
+C  **DFTMGO DATE OF LAST REVISION:  05/13/13
 C---------- 
 C     
 C     PARAMETERS: 

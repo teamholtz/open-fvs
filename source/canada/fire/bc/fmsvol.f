@@ -1,7 +1,10 @@
       SUBROUTINE FMSVOL (II, XHT, VOL2HT, DEBUG, IOUT)
       IMPLICIT NONE
+C
+C  $Id: fmsvol.f 2290 2018-05-16 15:53:09Z gedixon $
+C
 C----------
-C CANADA-FIRE-BC $Id: fmsvol.f 3785 2021-09-13 22:24:56Z donrobinson $
+C  **FMSVOL FIRE-BC
 C----------
 *     CALLED FROM: FMSOUT
 *                  FMDOUT
@@ -46,26 +49,26 @@ C.... COMMON INCLUDE FILES.
 C.... VARIABLE DECLARATIONS.  
 
       REAL     VM, VMAX, VN
-      LOGICAL  LTKIL, LC, LCONE, CTKFLG, DEBUG
-      LOGICAL  LMERCHIN, LMERCH
+      LOGICAL  LTKIL, LC, LCONE, CTKFLG, BTKFLG, DEBUG
+	LOGICAL  LMERCHIN, LMERCH
       INTEGER  JS, ISPC, IT
-      REAL     D, H, BARK, XHT, VOL2HT
+      REAL     D, H, BARK, XHT, VOL2HT   
       INTEGER  IOUT,II,JSP,IHT
-      REAL     XH,XD,BRATIO,D2H,X
+      REAL     XH,XD,BRATIO,D2H,BBFV
 
 C     CALCULATE THE VOLUME
 
-      JS = SPS(II)
+      JS = SPS(II)                          
       D = DBHS(II)
       H = HTDEAD(II)
       LMERCH = .FALSE.
-
+               
       GOTO 1000
 
 C     ENTRY POINT FOR SNAGS CREATED BY **CUTS**.
             
       ENTRY FMSVL2(JSP,XD,XH,XHT,VOL2HT,LMERCHIN,DEBUG,IOUT)
-
+      
       JS = JSP
       D  = XD
       H  = XH
@@ -78,51 +81,38 @@ C     ENTRY POINT FOR SNAGS CREATED BY **CUTS**.
          LTKIL = .TRUE.
       ELSE
          LTKIL = .FALSE.
-         XHT = H
+         XHT = H      
       ENDIF
-
+     
       BARK = BRATIO(JS,D,H)
       D2H = D * D * H
       IHT = INT(XHT * 100.0)
 
-C      This call was replaced by the code below (NATCRS, etc.).
-C      CALL CFVOL (JS,D,H,D2H,VOL2HT,VM,VMAX,LTKIL,LC,BARK,IHT,LDUM)
-      
 c     Actually do the call to calculate the volumes. Note that this 
 C     section of the code may have to change if there are any changes
 c     made within the base model routine VOLS or CFVOL
 C     Also note the following variable equivalencies:
 c     ITRUNC(I) = IHT
-C      TKILL = LTKIL
+C	TKILL = LTKIL
 
       ISPC = JS
       LCONE = LC
       IT = 0
       CTKFLG = LTKIL
 
-C     BC VARIANT DOES NOT RECOGNIZE METHC=6 OR 8, SO JUST USE
+C     SEI VARIANT DOES NOT RECOGNIZE METHC=6 OR 8, SO JUST USE
 C        THE CALL TO CFVOL.
 C           NOTE: THIS CALL TO CFVOL DOES NOT SET VMAX, SO IF
 C                 WE NEED IT, THEN WE WILL JUST SET IT TO VN
-!     IF(METHC(ISPC).EQ.6) THEN
-!         CALL NATCRS (VN,VM,BBFV,ISPC,D,H,LTKIL,BARK,IHT,VMAX,
-!    1        CTKFLG,BTKFLG,-1)
-!     ELSEIF ((METHC(ISPC).EQ.8).OR.(METHC(ISPC).EQ.5)) THEN
-!         CALL OCFVOL (VN,VM,ISPC,D,H,LTKIL,BARK,IHT,VMAX,LCONE,
-!    1        CTKFLG,IT)
-!     ELSE
       CALL CFVOL (ISPC,D,H,D2H,VN,VM,VMAX,LTKIL,LCONE,BARK,IHT,
-     !        CTKFLG)
+     1        CTKFLG)
       IF(CTKFLG .AND. LTKIL) THEN
-         VMAX = VN
+	   VMAX = VN      
          CALL CFTOPK (ISPC,D,H,VN,VM,VMAX,LCONE,BARK,IHT)
-      ENDIF
+	ENDIF
 
-C     Give some small volume to very tiny trees.
-C     based on cone with D = 1 inch
-      X = 0.005454154 * H
       VOL2HT = VN
-      IF (LMERCH) VOL2HT = VM
+	IF (LMERCH) VOL2HT = VM
  
       IF (DEBUG) WRITE(IOUT,40)ISPC,D,H,LCONE,VN
    40 FORMAT(' FMSVOL ISPC=',I3,' D=',F7.3,' H=',F7.3,
@@ -130,3 +120,4 @@ C     based on cone with D = 1 inch
 
       RETURN
       END
+

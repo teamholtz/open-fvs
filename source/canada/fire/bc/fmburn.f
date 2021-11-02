@@ -1,7 +1,10 @@
       SUBROUTINE FMBURN (IYR, FMD, LNMOUT)
       IMPLICIT NONE
+C
+C  $Id: fmburn.f 2290 2018-05-16 15:53:09Z gedixon $
+C
 C----------
-C CANADA-FIRE-BC $Id: fmburn.f 3785 2021-09-13 22:24:56Z donrobinson $
+C  **FMBURN  FIRE-BC
 C----------
 C
 C     CALLED FROM: FMMAIN
@@ -62,10 +65,11 @@ COMMONS
 C----------
 C     VARIABLE DECLARATIONS.
 C----------
-      INTEGER  FMOIS, FMD, IFMD, I, J, INL, INDD, IRTNCD
+      CHARACTER VVER*7
+      INTEGER  FMOIS, FMD, IFMD, I, J, K, L, INL, INDD, IRTNCD
       REAL     FLMULT
       REAL     OLDFL
-      REAL     FPRMS(4),CPRMS(6),MPRMS(7),DPRMS(1),PRMS(13)
+      REAL     FPRMS(4),CPRMS(6),MPRMS(7),DPRMS(1),PRMS(13),TPRMS(2)
       REAL     TMP2(3), TMP3(3)
       REAL     SUMPS, XSUR(2,3),XFML(2,3), XDEP, XEXT, ROS
       CHARACTER*8 CFTMP
@@ -76,7 +80,8 @@ C----------
      &         IFC,KTODO,JDO,IFIRE, MKODE
       REAL     SWIND,FLAME,WMULT,ALGSLP,BYRAM,CRRATE,CRTCBH,
      &         PSMOKE,PMRT,PVOLKL,HPA,FINTEN,FLB,FLT,TMPINT,TMPFLAME,
-     &         MAXINT,MININT,UCRBURN,PSBURN
+     &         MAXINT,MININT,UCRBURN,PSBURN,
+     &         CURRCWD(MXFLCL), BDavg, WF, FDFL, FFL, HERB, WOODY
       INTEGER  CANBURN, FCLS
       REAL     INTSTY
 C----------
@@ -99,10 +104,10 @@ C          IF (JYR .NE. IYR) GO TO 422
           ICOND = 1
   422   CONTINUE
       ENDIF
-C This is an inecessary call to have the fire reports printed for the PILEBURN keyword. M.S. 2/4/20
-C      IF ((ICOND .EQ. 0 .OR. COVTYP .LE. 0) .AND. (LFLBRN)) THEN
-C      CALL FMFOUT(IYR,0.0,0, 0,'FUELBURN')
-C      ENDIF
+C
+      IF ((ICOND .EQ. 0 .OR. COVTYP .LE. 0) .AND. (LFLBRN)) THEN
+        CALL FMFOUT(IYR,0.0,0, 0,'FUELBURN')
+      ENDIF
 C----------
 C  CHECK TO SEE IF THERE IS A DROUGHT STATE; THIS
 C  AFFECTS THE FUEL MODEL IN SOME VARIANTS (UT/CR/LS)
@@ -114,7 +119,7 @@ C----------
 C        IF (JYR .EQ. IYR) THEN
           CALL OPDONE(JDO,IYR)
           IDRYB = JYR
-          IDRYE = INT(REAL(JYR) + DPRMS(1) - 1.)
+          IDRYE = JYR + DPRMS(1) - 1
           GOTO 406
 C        ENDIF
       ENDDO
@@ -131,6 +136,7 @@ C----------
       DO JDO = 1,ITODO
         CALL OPGET(JDO,13,JYR,IACTK,NPRM,PRMS)
 C        IF (JYR .EQ. IYR) THEN
+C
           LOK   = .TRUE.
           SUMPS = 0.0
           INL   = 0
@@ -160,9 +166,9 @@ C
               XSUR(2,1) = PRMS(5)
             ENDIF
             IF (PRMS(12) .LT. 0.0) THEN
-              XSUR(2,2) = SURFVL(IFMD,2,2)
+            	XSUR(2,2) = SURFVL(IFMD,2,2)
             ELSE
-              XSUR(2,2) = PRMS(12)
+            	XSUR(2,2) = PRMS(12)
             ENDIF
 C
             DO I = 1,2
@@ -226,7 +232,7 @@ C----------
           IF (LOK) THEN
             DO I = 1,2
               DO J = 1,3
-                SURFVL(IFMD,I,J) = INT(XSUR(I,J))
+                SURFVL(IFMD,I,J) = XSUR(I,J)
                 FMLOAD(IFMD,I,J) = XFML(I,J)
               ENDDO
             ENDDO
@@ -260,14 +266,14 @@ csb: moved to fmcfmd3
 C      CALL FMPOCR(IYR)
 
 csb: moved to fmcfmd3
-c     &    VARACD .EQ. 'SN')) CALL FMCFMD (IYR, FMD)
+c     &    VVER(1:2) .EQ. 'SN')) CALL FMCFMD (IYR, FMD)
 c        CALL FMCFMD2 (IYR, FMD)
-
 C----------
 C  CALCULATE AND PRINT THE POTENTIAL FLAME LENGTH REPORT
 C----------
-csb: move to end of routine
-C      CALL FMPOFL (IYR, FMD, LNMOUT)
+ C     CALL FMPOFL (IYR, FMD, LNMOUT)
+ C     CALL fvsGetRtnCode(IRTNCD)
+ C     IF (IRTNCD.NE.0) RETURN 
 C----------
 C  CHECK WHETHER A FIRE IS SCHEDULED FOR THIS YEAR (KEYWORD SIMFIRE)
 C  IF NOT, OR IF THE COVER TYPE IS 0 (NO TREES IN THE STAND), THEN
@@ -284,8 +290,8 @@ C----------
 C  GET THE SIMFIRE PARAMETER VALUES.
 C----------
           SWIND = CPRMS(1)
-          FMOIS = INT(CPRMS(2))
-          ATEMP = INT(CPRMS(3))
+          FMOIS = CPRMS(2)
+          ATEMP = CPRMS(3)
           MKODE = NINT(CPRMS(4))
           PSBURN = CPRMS(5)
           BURNSEAS = NINT(CPRMS(6))
@@ -397,11 +403,17 @@ C  MOISTURES ARE KNOWN.
 C  TT ADDED TO THIS SINCE THE EXPANDED VARIANT NOW MODELS JUNIPER. 06/03/10
 C----------
       IF (IFLOGIC .EQ. 0) THEN
-        SELECT CASE (VARACD)
-          CASE ('CR','CS','LS','ON','SN','TT','UT')
-            CALL FMCFMD (IYR, FMD)
-          CASE DEFAULT
-        END SELECT
+        CALL VARVER(VVER)      
+        IF (VVER(1:2) .EQ. 'UT' .OR.
+     &      VVER(1:2) .EQ. 'TT' .OR.
+     &      VVER(1:2) .EQ. 'SM' .OR.
+     &      VVER(1:2) .EQ. 'SP' .OR.
+     &      VVER(1:2) .EQ. 'BP' .OR.
+     &      VVER(1:2) .EQ. 'SF' .OR.
+     &      VVER(1:2) .EQ. 'LP' .OR.
+     &      VVER(1:2) .EQ. 'LS' .OR.
+     &      VVER(1:2) .EQ. 'CS' .OR.
+     &      VVER(1:2) .EQ. 'SN') CALL FMCFMD (IYR, FMD)
       ENDIF
 C
       IF (DEBUG) WRITE (JOSTND,60) SWIND,FWIND,WMULT,PERCOV
@@ -511,7 +523,7 @@ C----------
 C  DON'T NEED TO DO CROWN FIRE CALCS IN THE SN/CS FFE.  JUST NEED TO SET
 C  CRBURN AND FIRTYPE TO CORRESPOND TO A SURFACE FIRE
 C----------
-      IF ((VARACD .EQ. 'SN') .OR. (VARACD .EQ. 'CS')) THEN
+      IF ((VVER(1:2) .EQ. 'SN') .OR. (VVER(1:2) .EQ. 'CS')) THEN
         FIRTYPE = 3
         CRBURN = 0
         CFTMP = 'SURFACE'
@@ -550,7 +562,8 @@ C--------
           ENDIF
 C
         ENDIF
-      ENDIF ! VARACD eq sn / cs
+      ENDIF ! vver eq sn / cs
+
 C----------
 C  MODIFY FLAME LENGTH AND SCORCH HEIGHT TO ACCOUNT FOR
 C  CROWN FIRE BEHAVIOR.
@@ -605,7 +618,7 @@ C  CALL FMCBA IF A FIRE OCCURED AND USING THE SN VARIANT SO THAT LIVE FUELS
 C  (HERB AND SHRUB) VALUES CAN BE UPDATED SINCE THEY ARE BASED ON TIME
 C  SINCE LAST FIRE.
 C----------
-      IF (BURNYR .EQ. IYR .AND. VARACD .EQ. 'SN') THEN
+      IF (BURNYR .EQ. IYR .AND. VVER(1:2) .EQ. 'SN') THEN
         CALL FMCBA (IYR,0)
       ENDIF
 C----------
@@ -640,5 +653,4 @@ C
       IF (LNMOUT) CALL FMFOUT(IYR, FLAME, FMD, IFIRE, CFTMP)
 C
       RETURN
-
       END

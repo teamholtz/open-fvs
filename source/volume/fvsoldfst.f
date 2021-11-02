@@ -1,8 +1,8 @@
-C----------
-C VOLUME $Id: fvsoldfst.f 2458 2018-07-22 19:09:30Z gedixon $
-C----------
       SUBROUTINE FVSOLDFST(ISPC,VN,D,H)
       IMPLICIT NONE
+C----------
+C VOLUME $Id: fvsoldfst.f 2364 2018-05-18 17:49:31Z lancedavid $
+C----------
 C
 C  FSTGRO COMPUTES CUBIC FOOT VOLUMES FOR TREES WITH (D LT 4 OR H LT 18)
 C----------

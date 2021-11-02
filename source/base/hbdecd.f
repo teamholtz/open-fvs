@@ -1,7 +1,7 @@
       SUBROUTINE HBDECD (IHB,CNHB,MAXHB,ARRAY2,KARD2)
       IMPLICIT NONE
 C----------
-C BASE $Id: hbdecd.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: hbdecd.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C  CALLED FROM SUBROUTINE **HABTYP**.

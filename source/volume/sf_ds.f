@@ -1,6 +1,3 @@
-C----------
-C VOLUME $Id: sf_ds.f 2458 2018-07-22 19:09:30Z gedixon $
-C----------
 !== last modified  4-9-2002
       SUBROUTINE SF_DS(JSP,GEOSUB,NEXTRA,SETOPT,ineedsl,slope,DBH,
      >                 TOTALH,HTUP,HEX,ZEX,RHFW,RFLW,TAPCOE,F,FMOD,

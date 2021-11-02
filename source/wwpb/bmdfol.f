@@ -1,7 +1,5 @@
       SUBROUTINE BMDFOL (ISTD,IYR)
-C----------
-C WWPB $Id: bmdfol.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+      
 c     CALLED FROM BMDRV
 ***********************************************************************
 * **BMDFOL    Date of last revision:  June 14, 1994

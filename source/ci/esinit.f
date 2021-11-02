@@ -1,7 +1,7 @@
       SUBROUTINE ESINIT
       IMPLICIT NONE
 C----------
-C CI $Id: esinit.f 2561 2018-11-17 00:28:06Z lancedavid $
+C   **ESINIT--CI DATE OF LAST REVISION:   02/16/12
 C----------
 C     CALLED FROM INITRE, ONLY ONCE, TO INITIALIZE REGEN. MODEL.
 C----------
@@ -62,6 +62,7 @@ C    17 = BLACK COTTONWOOD (CW)            POPULUS BALSAMIFERA VAR. TRICHOCARPA
 C    18 = OTHER SOFTWOODS (OS)
 C    19 = OTHER HARDWOODS (OH)
 C----------
+      CALL PPEATV (LTEMP)
       DO 10 I=1,MAXSP
       HTADJ(I)=0.0
       XESMLT(I)=1.0
@@ -75,6 +76,7 @@ C----------
       LAUTAL=.FALSE.
       LSPRUT=.TRUE.
       IPRINT=1
+      IF(LTEMP) IPRINT=0
       INADV=0
       LOAD=0
       IBLK=0

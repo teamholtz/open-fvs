@@ -1,6 +1,6 @@
 CODE SEGMENT MPBCOM
 C----------
-C LPMPB $Id: MPBCOM.F77 2450 2018-07-11 17:28:41Z gedixon $
+C  **MPBCOM        DATE OF LAST REVISION:  08/22/14
 C----------
 C
 C Revision History

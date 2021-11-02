@@ -1,7 +1,7 @@
       SUBROUTINE ESUCKR
       IMPLICIT NONE
 C----------
-C UT $Id: esuckr.f 2456 2018-07-22 14:50:53Z gedixon $
+C  **ESUCKR--UT   DATE OF LAST REVISION:  01/27/11
 C----------
 COMMONS
 C

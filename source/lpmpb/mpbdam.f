@@ -1,7 +1,7 @@
       SUBROUTINE MPBDAM (II,ICODES)
       IMPLICIT NONE
 C----------
-C LPMPB $Id: mpbdam.f 2450 2018-07-11 17:28:41Z gedixon $
+C  **MPBDAM        DATE OF LAST REVISION:  07/02/10
 C----------
 C
 C     PROCESS THE MPB DAMAGE CODES.

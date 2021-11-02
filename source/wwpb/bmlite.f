@@ -1,7 +1,5 @@
       SUBROUTINE BMLITE (ISTD,IYR)
-C----------
-C WWPB $Id: bmlite.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+      
 C     CALLED FROM: BMDRV  
 C     CALLS:  BMRANN
 C             SPLAAR

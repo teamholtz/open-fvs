@@ -1,7 +1,7 @@
       SUBROUTINE RRPPPT (WK3, IPNT, ILIMIT)
-C----------
-C WWPB $Id: bmrrpt.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+***********************************************************************
+*  **RRPPPT--WWPB   DATE OF LAST REVISION:  06/22/94
+*----------------------------------------------------------------------
 *  Purpose:
 *     Write the quick root rot and stem rust model data for a given stand.
 *  This is part of the Parallel Processing Extension, and freely 

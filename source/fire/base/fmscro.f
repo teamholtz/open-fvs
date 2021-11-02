@@ -1,7 +1,7 @@
       SUBROUTINE FMSCRO (I,SP,DEADYR,DSNAGS,ICALL)
       IMPLICIT NONE
 C----------
-C FIRE-BASE $Id: fmscro.f 2561 2018-11-17 00:28:06Z lancedavid $
+C FIRE-BASE $Id: fmscro.f 2359 2018-05-18 17:35:04Z lancedavid $
 C----------
 C     SINGLE-STAND VERSION
 C     CALLED FROM: FMSADD
@@ -49,11 +49,13 @@ C.... Parameter statements.
 
 C.... Parameter include files.   
       INCLUDE 'PRGPRM.F77'
+Cppe  INCLUDE 'PPEPRM.F77'
       INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
       INCLUDE 'FMCOM.F77'
       INCLUDE 'CONTRL.F77'
+Cppe  INCLUDE 'PPCNTL.F77'
       INCLUDE 'ARRAYS.F77'
       INCLUDE 'PLOT.F77'
 
@@ -62,6 +64,7 @@ C.... Variable declarations.
       REAL    DSNAGS, TSOFT, RLIFE, ANNUAL, NEWBOT, OLDBOT, X
       INTEGER ICALL
       REAL    YRSCYC
+      CHARACTER VVER*7
       LOGICAL  DEBUG
 C
 C     CHECK FOR DEBUG.
@@ -74,11 +77,14 @@ C.... Begin routine.
 
       YRSCYC = FLOAT( IY(ICYC+1)-DEADYR )
 Csng  YRSCYC = FLOAT( IY(ICYC+1)-DEADYR )
+Cppe  YRSCYC = FLOAT( MIY(MICYC)-DEADYR )
       
 C     find out how long it will be between the year of death and the 
 C     next year simulated, so that only crown material to fall in that 
 C     year or later is added to CWD2B2 or CWD2B.  
 
+Cppe  IF (DEADYR .LT. MIY(1)) THEN
+Cppe    YNEXTY = MIY(1) - DEADYR
 Csng  IF (DEADYR .LT. IY(1)) THEN
 Csng    YNEXTY = IY(1) - DEADYR
 
@@ -96,10 +102,11 @@ C     the simulation begins.
 C     Call FMSNGDK to predict years, since death, for snag to become
 C     soft.
 
-      CALL FMSNGDK(VARACD,SP,DBH(I),TSOFT)
-      IF (DEBUG) WRITE(JOSTND,7) ICYC, TSOFT, KODFOR, VARACD
+      CALL VARVER(VVER)
+      CALL FMSNGDK(VVER,SP,DBH(I),TSOFT)
+      IF (DEBUG) WRITE(JOSTND,7) ICYC, TSOFT, KODFOR, VVER(1:2)
     7 FORMAT(' FMSCRO CYCLE=',I2,' TSOFT=',F10.1,' KODFOR=',I5,
-     &       ' VARACD=',A2)
+     &       ' VVER=',A2)
       
 C     If called from CUTS, then OLDCRW will be holding last year's
 C     crown info, not the dead part of the crown. Thus, we need to do

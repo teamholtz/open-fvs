@@ -1,8 +1,8 @@
       SUBROUTINE BRCGRO(K,PROP,BRHT,BRHTG,BRDG,NLCAN,HNEW,DNEW)
       IMPLICIT NONE
-C----------
-C WPBR $Id: brcgro.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **BRCGRO       DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C  BRCGRO grows cankers for one year and determines if any active
 C  cankers will become inactive based on the specified inactivation

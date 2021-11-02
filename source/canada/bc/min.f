@@ -1,6 +1,6 @@
        SUBROUTINE MIN(ISC,AGE,FIZ,DBH,HT,SH,TD,HTRUNC,GROSIMP,TVOLIMP)
 C----------
-C CANADA-BC $Id: min.f 3783 2021-09-13 22:08:32Z donrobinson $
+C  $Id: min.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
 C----------
 C
 CC  -by Tim Hammond.
@@ -135,7 +135,7 @@ C
         IM = 1
       ENDIF
 
-      IFZ = int(FIZ,2)
+	IFZ = FIZ
 
 C     Initialize log length
 
@@ -153,6 +153,6 @@ C     Initialize log length
       GROSIMP = GROS * M3toFT3
       TVOLIMP = TVOL * M3toFT3
 c     HMRIMP  = HMERC * MtoFT
-      if (debug) write (jostnd,'('' Leaving MIN'')' )
+    8 if (debug) write (jostnd,'('' Leaving MIN'')' )
       RETURN
       END

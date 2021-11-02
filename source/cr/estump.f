@@ -1,7 +1,7 @@
       SUBROUTINE ESTUMP (JSSP,DBH,PREM,JPLOT,ISHAG)
       IMPLICIT NONE
 C----------
-C CR $Id: estump.f 2444 2018-07-09 16:00:55Z gedixon $
+C CR $Id$
 C----------
 C
 COMMONS

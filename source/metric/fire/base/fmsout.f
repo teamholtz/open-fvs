@@ -1,8 +1,7 @@
       SUBROUTINE FMSOUT (IYR)
       IMPLICIT NONE
 C----------
-C METRIC-FIRE-BASE $Id: fmsout.f 3803 2021-09-14 08:05:54Z donrobinson $
-C----------
+C  **FMSOUT--FIRE/M   DATE OF LAST REVISION:  04/08/14
 *     SINGLE-STAND VERSION
 *     CALLED FROM: FMMAIN
 *     CALLS:   FMSVOL
@@ -34,8 +33,10 @@ C.... PARAMETER STATEMENTS.
 C.... PARAMETER INCLUDE FILES.
 
       INCLUDE 'PRGPRM.F77'
+Cppe      INCLUDE 'PPEPRM.F77'
+Cppe      INCLUDE 'PPCNTL.F77'
       INCLUDE 'FMPARM.F77'
-      INCLUDE 'METRIC.F77'
+	INCLUDE 'METRIC.F77'
 
 C.... COMMON INCLUDE FILES.
 
@@ -49,35 +50,16 @@ C
 C.... VARIABLE DECLARATIONS.
       INTEGER  YRLAST, JYR, II
       REAL     SNVOLS, SNVOLH, TEMPV
-      
-c      REAL     TOTDH(MAXSP,100,6), TOTDS(MAXSP,100,6)
-c      REAL     TOTHTH(MAXSP,100,6), TOTHTS(MAXSP,100,6)
-c      REAL     TOTVLS(MAXSP,100,6), TOTVLH(MAXSP,100,6)
-c      REAL     TOTDBH(MAXSP,100,6)
-
-      REAL, ALLOCATABLE:: TOTDH(:,:,:)
-      REAL, ALLOCATABLE:: TOTDS(:,:,:)
-      REAL, ALLOCATABLE:: TOTHTH(:,:,:)
-      REAL, ALLOCATABLE:: TOTHTS(:,:,:)
-      REAL, ALLOCATABLE:: TOTVLS (:,:,:)
-      REAL, ALLOCATABLE:: TOTVLH(:,:,:)
-      REAL, ALLOCATABLE:: TOTDBH (:,:,:)
-      
+      REAL     TOTDH(MAXSP,100,6), TOTDS(MAXSP,100,6)
+      REAL     TOTHTH(MAXSP,100,6), TOTHTS(MAXSP,100,6)
+      REAL     TOTVLS(MAXSP,100,6), TOTVLH(MAXSP,100,6)
+      REAL     TOTDBH(MAXSP,100,6)
       REAL     TOTN
       REAL     PRMS(4)
       LOGICAL  DEBUG, LOK
       INTEGER MYACT(1)
       DATA MYACT/2512/
       INTEGER  IYR,NTODO,JDO,NPRM,IACTK,IDC,JCL,DBSKODE
-      
-      ALLOCATE(TOTDH(MAXSP,100,6))
-      ALLOCATE(TOTDS(MAXSP,100,6))
-      ALLOCATE(TOTHTH(MAXSP,100,6))
-      ALLOCATE(TOTHTS(MAXSP,100,6))
-      ALLOCATE(TOTVLS(MAXSP,100,6))
-      ALLOCATE(TOTVLH(MAXSP,100,6))
-      ALLOCATE(TOTDBH(MAXSP,100,6))
-
 C
 C-----------
 C     CHECK FOR DEBUG.
@@ -94,7 +76,7 @@ C     FIRST CHECK TO SEE IF THE SNAG LIST IS TO BE PRINTED.
          CALL OPGET(JDO,4,JYR,IACTK,NPRM,PRMS)
 C         IF (JYR .NE. IYR) GOTO 5
             ISNAGB = IYR
-            ISNAGE = INT(REAL(IYR) + PRMS(1))
+            ISNAGE = IYR + PRMS(1)
             JSNOUT = INT(PRMS(3))
             LSHEAD = PRMS(4).EQ.0
             CALL OPDONE(JDO,IYR)
@@ -108,7 +90,7 @@ C     CHECK TO MAKE SURE THAT THIS YEAR IS WITHIN THE REQUESTED REPORTING
 C     PERIOD AND THAT IT IS A VALID YEAR (IF WE ARE USING A PRINTING INTERVAL)
 
       IF (IYR .EQ. 0 .AND. IYR.EQ. ISNAGB) GOTO 10
-      IF (IYR .LT. ISNAGB .OR. IYR .GT. ISNAGE) goto 999
+      IF (IYR .LT. ISNAGB .OR. IYR .GT. ISNAGE) RETURN
 
  10   CONTINUE
 
@@ -220,35 +202,18 @@ C        ...and add all its snags to the appropriate class totals.
   110       CONTINUE
   120    CONTINUE
   130 CONTINUE
-
-C Convert units to metric equivalents, prior to sending to the DBS and/or sending 
-C to a text file. Note that the text file version trims TOTVLH and TOTVLS to integers
-
-      DO 140 JYR= 1,YRLAST
-        DO 141 IDC= 1,MAXSP
-          DO 142 JCL= 1,6
-            TOTDBH(IDC,JYR,JCL) = TOTDBH(IDC,JYR,JCL) * INtoCM
-            TOTHTH(IDC,JYR,JCL) = TOTHTH(IDC,JYR,JCL) * FTtoM
-            TOTHTS(IDC,JYR,JCL) = TOTHTS(IDC,JYR,JCL) * FTtoM
-            TOTVLH(IDC,JYR,JCL) = TOTVLH(IDC,JYR,JCL) * FT3toM3
-            TOTVLS(IDC,JYR,JCL) = TOTVLS(IDC,JYR,JCL) * FT3toM3
-            TOTDH(IDC,JYR,JCL)  = TOTDH(IDC,JYR,JCL)  / ACRtoHA
-            TOTDS(IDC,JYR,JCL)  = TOTDS(IDC,JYR,JCL)  / ACRtoHA
-  142     CONTINUE
-  141   CONTINUE
-  140 CONTINUE
 C
 C     CALL THE DBS MODULE TO OUTPUT DETAILED SNAG REPORT TO A DATABASE
 C
       DBSKODE = 1
-      CALL DBSFMDSNAG(IYR,TOTDBH,TOTHTH,TOTHTS,
-     &  TOTVLH,TOTVLS,TOTDH,TOTDS,YRLAST,DBSKODE)
+      CALL DBSFMDSNAG(IYR,TOTDBH*INtoCM,TOTHTH*FTtoM,TOTHTS*FTtoM,
+     &  INT(TOTVLH*FT3toM3),INT(TOTVLS*FT3toM3),TOTDH/ACRtoHA,
+     &  TOTDS/ACRtoHA,YRLAST,DBSKODE)
       IF (DBSKODE.EQ.0) GOTO 500
 
-C     Make sure JSNOUT is opened.
-
-      CALL openIfClosed (JSNOUT,"sng",LOK)
-      IF (.NOT.LOK) goto 999
+C     MAKE SURE JSNOUT IS OPEN
+      CALL openIfClosed (JSNOUT,"sng",lok)
+      if (.not.lok) goto 500
 
 C     Print the snag output headings.
 
@@ -259,13 +224,12 @@ C     Print the snag output headings.
          WRITE(JSNOUT,211)
          WRITE(JSNOUT,220)
          WRITE(JSNOUT,222)
-  200    FORMAT(' ESTIMATED SNAG CHARACTERISTICS '
-     &          '(BASED ON STOCKABLE AREA), STAND ID=',A)
+  200    FORMAT(' ESTIMATED SNAG CHARACTERISTICS, STAND ID=',A)
   210    FORMAT(13X,'DEATH CURR',
      &         ' HEIGHT CURR VOLUME (M3)       ',
      &         '    DENSITY (SNAGS/HA)   ')
   211    FORMAT(9X,'DBH  DBH ',1X,
-     &         4('-'),' (M)',3('-'),1X,17('-'),1X,'YEAR',1X,23('-'))
+     &         4('-'),'(M)',4('-'),1X,17('-'),1X,'YEAR',1X,23('-'))
   220    FORMAT(' YEAR SP  CL  (CM)',1X,
      &         ' HARD  SOFT  HARD  SOFT TOTAL',
      &         1X,'DIED   HARD    SOFT    TOTAL')
@@ -273,7 +237,7 @@ C     Print the snag output headings.
          LSHEAD = .FALSE.
       ENDIF
 
-C     Print information on each snag printing-class, first dividing
+C     Print information on each snag printing-class, first dividing the
 C     the total heights and dbhs to get the class-averages.
 
       DO 430 JYR= 1,YRLAST
@@ -281,33 +245,22 @@ C     the total heights and dbhs to get the class-averages.
             DO 410 JCL= 1,6
                TOTN = TOTDH(IDC,JYR,JCL) + TOTDS(IDC,JYR,JCL)
                IF (TOTN .EQ. 0.0) GOTO 410
+
                WRITE(JSNOUT,300) IYR,JSP(IDC),JCL,
-     &           TOTDBH(IDC,JYR,JCL),
-     &           TOTHTH(IDC,JYR,JCL),
-     &           TOTHTS(IDC,JYR,JCL),
-     &           INT(TOTVLH(IDC,JYR,JCL)), 
-     &           INT(TOTVLS(IDC,JYR,JCL)),
-     &           INT(TOTVLH(IDC,JYR,JCL)+TOTVLS(IDC,JYR,JCL)),
-     &           (IYR-JYR+1),
-     &           TOTDH(IDC,JYR,JCL), 
-     &           TOTDS(IDC,JYR,JCL), TOTN
+     &             TOTDBH(IDC,JYR,JCL)*INtoCM,
+     &             TOTHTH(IDC,JYR,JCL)*FTtoM, TOTHTS(IDC,JYR,JCL)*FTtoM,
+     &             INT(TOTVLH(IDC,JYR,JCL)*FT3toM3), 
+     &             INT(TOTVLS(IDC,JYR,JCL)*FT3toM3),
+     &           INT((TOTVLH(IDC,JYR,JCL)+TOTVLS(IDC,JYR,JCL))*FT3toM3),
+     &             (IYR-JYR+1), TOTDH(IDC,JYR,JCL)/ACRtoHA, 
+     &             TOTDS(IDC,JYR,JCL)/ACRtoHA,TOTN/ACRtoHA
   300          FORMAT(1X,I4,1X,A2,1X,I3,1X,3(F5.1,1X),
-     &           3(I5,1X),I4,1X,3(F7.2,1X))
+     &                3(I5,1X),I4,1X,3(F7.2,1X))
   410       CONTINUE
   420    CONTINUE
   430 CONTINUE
   500 CONTINUE
 
-  999 CONTINUE
-     
-      DEALLOCATE(TOTDH)
-      DEALLOCATE(TOTDS)
-      DEALLOCATE(TOTHTH)
-      DEALLOCATE(TOTHTS)
-      DEALLOCATE(TOTVLS)
-      DEALLOCATE(TOTVLH)
-      DEALLOCATE(TOTDBH)
-     
       RETURN
       END
 

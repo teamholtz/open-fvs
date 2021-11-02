@@ -1,7 +1,8 @@
       SUBROUTINE BMISTD (ISTD,IYR)
-C----------
-C WWPB $Id: bmistd.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+      
+***********************************************************************
+*  **BMISTD  Date of last revision:  26 May 1994
+*----------------------------------------------------------------------
 *
 * Calculates the within plot dynamics of choosing a host, and determining 
 * whether it is a kill, strip-kill, or pitchout.  One or more special trees 

@@ -1,7 +1,5 @@
       SUBROUTINE BMTRIP(ITFN,I,WEIGHT)
-C----------
-C WWPB $Id: bmtrip.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+      
       INCLUDE 'PRGPRM.F77'
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'BMPRM.F77'

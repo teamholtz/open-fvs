@@ -1,7 +1,7 @@
       SUBROUTINE DMNTRD
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: dmntrd.f 3787 2021-09-13 22:47:08Z donrobinson $
+C  $Id: dmntrd.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 C **DMNTRD -- NISI  Date of last revision: April 10 1994 
 C----------------------------------------------------------------------
@@ -25,7 +25,7 @@ C Other routines called:
 C
 C     DMRANN
 C
-C Argument list definitions:
+C Argument list definitions:                        
 C
 C     [none]
 C
@@ -50,7 +50,7 @@ C                          and individual record. Array is
 C                          dimensioned (1:CRTHRD) for each crown
 C                          third, and (1:ACTIVE) for each life history
 C                          pool.
-C     REAL      NewVal     Array of infection loads after growth.
+C     REAL      NewVal    Array of infection loads after growth.
 C                          Array is dimensioned like 'OldVal()'.
 C
 C Common block variables and parameters:
@@ -68,16 +68,11 @@ C**********************************************************************
       INCLUDE 'DMCOM.F77'
 
       INTEGER   i, j, k, L,u, v
-      REAL      x, Wt, Mult, TINY
+      REAL      x, Wt, Mult
       REAL      OldVal(CRTHRD,DEAD_BC)
       REAL      NewVal(CRTHRD,DEAD_BC)
       REAL      OldVal_BC(CRTHRD,ACTIVE,MAXBC)
       REAL      NewVal_BC(CRTHRD,ACTIVE,MAXBC)
-
-C     Protect against arithmetic underflow (gfortran crash)
-C     during multiplication of small numbers.
-
-      DATA TINY / 1.0E-25 /
 
 C LOOP OVER ALL TREES, REGARDLESS OF SPECIES OR INFECTION STATUS
 
@@ -145,7 +140,7 @@ C POSITION.
                   NewVal(k,v) = NewVal(k,v) + OldVal(i,v)
                 ENDDO
                 DO v = 1,ACTIVE
-                  DO L = 1,MAXBC
+	            DO L = 1,MAXBC
                     NewVal_BC(k,v,L) = NewVal_BC(k,v,L)
      >                 + OldVal_BC(i,v,L)
                   ENDDO
@@ -154,28 +149,23 @@ C POSITION.
                 Wt = (PBrkPt(u,i) - BrkPnt(u,k+1)) /
      >                 (PBrkPt(u,i) - PBrkPt(u,i+1))
                 DO v = 1,DEAD_BC
-                  IF (OldVal(i,v) .GT. TINY)
-     >              NewVal(k,v) = NewVal(k,v)
-     >               + (OldVal(i,v) * Wt)
+                  NewVal(k,v) = NewVal(k,v) + OldVal(i,v) * Wt
                 ENDDO
                 DO v = 1,ACTIVE
-                  DO L = 1,MAXBC
-                    IF (OldVal_BC(i,v,L) .GT. TINY) 
-     >                NewVal_BC(k,v,L) = NewVal_BC(k,v,L)
-     >                 + (OldVal_BC(i,v,L) * Wt)
+	            DO L = 1,MAXBC
+                    NewVal_BC(k,v,L) = NewVal_BC(k,v,L)
+     >                 + OldVal_BC(i,v,L) * Wt
                   ENDDO
                 ENDDO
                 IF (k .LT. CRTHRD) THEN
                   DO v = 1,DEAD_BC
-                    IF (OldVal(i,v) .GT. TINY)
-     >                NewVal(k+1,v) = NewVal(k+1,v)
-     >                + (OldVal(i,v) * (1.0 - Wt))
+                    NewVal(k+1,v) = NewVal(k+1,v)
+     >                + OldVal(i,v) * (1.0 - Wt)
                   ENDDO
                   DO v = 1,ACTIVE
-                    DO L = 1,MAXBC
-                      IF (OldVal_BC(i,v,L) .GT. TINY)
-     >                  NewVal_BC(k+1,v,L) = NewVal_BC(k+1,v,L)
-     >                  + (OldVal_BC(i,v,L) * (1.0 - Wt))
+	              DO L = 1,MAXBC
+                      NewVal_BC(k+1,v,L) = NewVal_BC(k+1,v,L)
+     >                  + OldVal_BC(i,v,L) * (1.0 - Wt)
                     ENDDO
                   ENDDO
                 ENDIF

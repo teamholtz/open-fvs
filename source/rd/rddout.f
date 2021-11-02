@@ -1,7 +1,7 @@
       SUBROUTINE RDDOUT
       IMPLICIT NONE
 C----------
-C RD $Id: rddout.f 3800 2021-09-14 00:22:52Z donrobinson $
+C RD $Id: rddout.f 2363 2018-05-18 17:46:08Z lancedavid $
 C----------
 C
 C  Purpose :
@@ -144,14 +144,12 @@ C.... Dimension statements for local variables.
       REAL     ODBHKL(IRRTRE), ODBHU(IRRTRE), ONDTRE(7), ONLTRE(7),
      &         OPROBI(MAXSP), OPROBU(MAXSP), ORRKIL(MAXSP),
      &         PCTKL(IRRTRE),  PCTU(IRRTRE), PVECKL(IRRTRE),
-     &         PVECU(IRRTRE), TMPI, X1, X2, X3, X4,
-     &         DDBHCLS(6), LDBHCLS(6), LAREA
+     &         PVECU(IRRTRE), TMPI, X1, X2, X3, X4
 
       CHARACTER*1 CHTYPE(ITOTRR)
       
       DATA CHTYPE /'P','S','A','W'/
 
-      IF (ITRN .EQ. 0) RETURN
       TMPI = 0.0
 
 C.... Initialize arrays.
@@ -182,7 +180,7 @@ C
       CALL GETLUN(IOUNIT)
 
       IF (ISTEP .GT. 1 .OR. IRRSP .NE. MINRR) GOTO 1000
-      JYR = IY(ICYC+1)
+      JYR = IY(1)
 
 C
 C     get report ID and logical unit number.
@@ -209,7 +207,7 @@ C.... Print header for detailed output table.
       GOTO 1010
 
  1000 CONTINUE
-      JYR = IY(ICYC+1)
+      JYR = IY(ISTEP)
 
  1010 CONTINUE
 
@@ -239,10 +237,10 @@ C.... Find tree species in root disease patches.
 
       IF (ITRN .GT. 0) GOTO 804
       WRITE (IOUNIT,4100) IDRDOUT(2)
- 4100 FORMAT (1X,I5,1X,'***** NO TREES IN STAND')
+ 4100 FORMAT ('***** NO TREES IN STAND')
       GOTO 4000
 
- 804  CONTINUE
+ 804  CONTINUE             
       IDI = IRRSP
       DO 800 KSP=1, MAXSP
          IF (IRRSP .LT. 3) IDI=IDITYP(IRTSPC(KSP))
@@ -306,50 +304,33 @@ C....    Write out the indicators.
   802    CONTINUE
 
   801    CONTINUE 
+         IF (LMTRIC) THEN 
+            WRITE(IOUNIT,2110) IDRDOUT(2), JSP(KSP),
+     >           (ONDTRE(I)*INTOCM,I=1,6), X1/ACRtoHA,
+     >           (ONLTRE(I)*INTOCM,I=1,6),  X2/ACRtoHA, X3/ACRtoHA, X4
 C
-C        LOAD DIAMETER CLASS ARRAYS FOR OUTPUT
+C           Call DBS for RD Detail output to database
 C
-         IF (LMTRIC) THEN
-           DO I=1,6
-             DDBHCLS(I) = ONDTRE(I)*INTOCM
-             LDBHCLS(I) = ONLTRE(I)*INTOCM
-           ENDDO
-           X1 = X1/ACRtoHA
-           X2 = X2/ACRtoHA
-           X3 = X3/ACRtoHA
-           LAREA = PAREA(IRRSP)*ACRtoHA
-
-CX            WRITE(IOUNIT,2110) IDRDOUT(2), JSP(KSP),
-CX     >           (ONDTRE(I)*INTOCM,I=1,6), X1/ACRtoHA,
-CX     >           (ONLTRE(I)*INTOCM,I=1,6),  X2/ACRtoHA, X3/ACRtoHA, X4
-CXC
-CXC           Call DBS for RD Detail output to database
-CXC
-CX            CALL DBSRD2 (JYR,NPLT,CHTYPE(IRRSP),PAREA(IRRSP)*ACRtoHA,
-CX     >        JSP(KSP), 
-CX     >        ONDTRE(1)*INTOCM, ONDTRE(2)*INTOCM, ONDTRE(3)*INTOCM,
-CX     >        ONDTRE(4)*INTOCM, ONDTRE(5)*INTOCM, ONDTRE(6)*INTOCM,
-CX     >        X1/ACRtoHA,
-CX     >        ONLTRE(1)*INTOCM, ONLTRE(2)*INTOCM, ONLTRE(3)*INTOCM, 
-CX     >        ONLTRE(4)*INTOCM, ONLTRE(5)*INTOCM, ONLTRE(6)*INTOCM, 
-CX     >        X2/ACRtoHA, X3/ACRtoHA, X4)
+            CALL DBSRD2 (JYR,NPLT,CHTYPE(IRRSP),PAREA(IRRSP)*ACRtoHA,
+     >        JSP(KSP), 
+     >        ONDTRE(1)*INTOCM, ONDTRE(2)*INTOCM, ONDTRE(3)*INTOCM,
+     >        ONDTRE(4)*INTOCM, ONDTRE(5)*INTOCM, ONDTRE(6)*INTOCM,
+     >        X1/ACRtoHA,
+     >        ONLTRE(1)*INTOCM, ONLTRE(2)*INTOCM, ONLTRE(3)*INTOCM, 
+     >        ONLTRE(4)*INTOCM, ONLTRE(5)*INTOCM, ONLTRE(6)*INTOCM, 
+     >        X2/ACRtoHA, X3/ACRtoHA, X4)
 
          ELSE
-           DO I=1,6
-             DDBHCLS(I) = ONDTRE(I)
-             LDBHCLS(I) = ONLTRE(I)
-          ENDDO
-           LAREA = PAREA(IRRSP)
-         ENDIF
+            WRITE(IOUNIT,2110) IDRDOUT(2), JSP(KSP),
+     >           (ONDTRE(I),I=1,6), X1,
+     >           (ONLTRE(I),I=1,6),  X2, X3, X4
+C
+C           Call DBS for RD Detail output to database
+C
+            CALL DBSRD2 (JYR,NPLT,CHTYPE(IRRSP),PAREA(IRRSP),
+     >           JSP(KSP),ONDTRE, X1, ONLTRE,  X2, X3, X4)
 
-         WRITE(IOUNIT,2110) IDRDOUT(2), JSP(KSP),
-     >        (DDBHCLS(I),I=1,6), X1,
-     >        (LDBHCLS(I),I=1,6), X2, X3, X4
-C
-C        Call DBS for RD Detail output to database
-C
-         CALL DBSRD2 (JYR,NPLT,CHTYPE(IRRSP),LAREA,
-     >           JSP(KSP),DDBHCLS, X1, LDBHCLS, X2, X3, X4)
+         ENDIF
 
 C        Zero out arrays.
 
@@ -365,8 +346,6 @@ C        Zero out arrays.
          DO 790 I=1,6
             ONDTRE(I) = 0.0
             ONLTRE(I) = 0.0
-            DDBHCLS(I) = 0.0
-            LDBHCLS(I) = 0.0
   790    CONTINUE
 
   800 CONTINUE
@@ -405,7 +384,7 @@ C.... Format statements for header.
 C.... Format statements for headers specific to metric.
 
  1230 FORMAT (1X,I5,7X,'DISEASE',3X,
-     >        2(6X,' %TILE POINTS BY DBH (CM)       TOTAL'),
+     >        2(6X,' %TILE POINTS BY DBH (CMS)      TOTAL'),
      >'       TOTAL')
  1240 FORMAT (1X,I5,' YEAR TYPE AREA  SP',2(5X,'10   30   50   70',
      >'   90  100   TREES/HA '),'  TREES/HA  ',2X,'INFECTED')

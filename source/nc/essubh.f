@@ -2,7 +2,7 @@
      &  TRAGE)
       IMPLICIT NONE
 C----------
-C NC $Id: essubh.f 3758 2021-08-25 22:42:32Z lancedavid $
+C NC $Id: essubh.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C
 C     ASSIGNS HEIGHTS TO SUBSEQUENT AND PLANTED TREE RECORDS
@@ -104,11 +104,6 @@ C     HT OF TALLEST SUBS. SPECIES 11 (OH)
 C
       CASE (11)
       HHT = 7.0
-C
-C     HT OF TALLEST SUBS. SPECIES 12 (RW)
-C
-      CASE (12)
-      HHT = 2.0
 C
       END SELECT
       RETURN

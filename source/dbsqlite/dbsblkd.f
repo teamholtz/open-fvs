@@ -1,6 +1,6 @@
       BLOCK DATA DBSBLKD
 C
-C DBSQLITE $Id: dbsblkd.f 2445 2018-07-09 21:23:04Z gedixon $
+C $Id: dbsblkd.f 2067 2018-01-12 00:55:53Z nickcrookston $
 C
 C     INITIALIZE DATABASE VARIABLES
 C

@@ -1,6 +1,3 @@
-C----------
-C VOLUME $Id: brk_up.f 2458 2018-07-22 19:09:30Z gedixon $
-C----------
 !== last modified  06-24-2005
       SUBROUTINE BRK_UP(JSP,GEOSUB,DBHOB,THT,DBTBH,HTUP,DIB,DOB,DBT)
 c             given a section height (HTUP) and dib, calculate the ratio:

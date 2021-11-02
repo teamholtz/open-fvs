@@ -2,7 +2,7 @@
      &                  DEBUG)
       IMPLICIT NONE
 C----------
-C CANADA-ON $Id: findag.for 2461 2018-07-24 18:00:57Z gedixon $
+C  **FINDAG--LS  DATE OF LAST REVISION:  01/14/11
 C----------
 C  THIS ROUTINE FINDS EFFECTIVE TREE AGE
 C  CALLED FROM **COMCUP

@@ -1,7 +1,7 @@
       SUBROUTINE RDOWI
       IMPLICIT NONE
 C----------
-C RD $Id: rdowi.f 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDOWI       LAST REVISION:  08/29/14
 C----------
 C
 C  Purpose :

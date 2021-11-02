@@ -1,7 +1,7 @@
       SUBROUTINE BWEBET (A0,B0,X,N,KODE)
       IMPLICIT NONE
 C----------
-C WSBWE $Id: bwebet.f 2460 2018-07-24 14:41:48Z gedixon $
+C  **BWEBET                 DATE OF LAST REVISION:  07/14/10
 C----------
 C
 C     A0   = FIRST PARAMETER OF THE BETA DISTRIBUTION: A>0.

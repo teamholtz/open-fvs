@@ -1,7 +1,7 @@
       SUBROUTINE ESPSUB
       IMPLICIT NONE
 C----------
-C IE $Id: espsub.f 2449 2018-07-11 14:53:35Z gedixon $
+C  **ESPSUB--NI23   DATE OF LAST REVISION:   04/01/08
 C----------
 C
 COMMONS

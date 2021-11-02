@@ -1,5 +1,5 @@
 //
-// FIRE-FOFEM $Id: fof_hsf.h 2463 2018-07-26 20:58:10Z gedixon $
+// $Id: fof_hsf.h 2359 2018-05-18 17:35:04Z lancedavid $
 //
 
 int HSF_Mngr  (d_CI *a_CI, d_CO *a_CO, char cr_ErrMes[]);

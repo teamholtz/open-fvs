@@ -1,7 +1,7 @@
       SUBROUTINE VOLS
       IMPLICIT NONE
 C----------
-C CANADA-BC $Id: vols.f 3783 2021-09-13 22:08:32Z donrobinson $
+C  $Id: vols.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
 C----------
 C
 C  THIS SUBROUTINE CALCULATES TREE VOLUMES TO THREE MERCHANTABILITY
@@ -15,6 +15,7 @@ C  DEFECT.
 C
 C  NATCRS, OCFVOL, AND OBFVOL ARE ENTRY POINTS IN SUBROUTINE
 C  **VARVOL**, WHICH IS VARIANT SPECIFIC.
+C
 C----------
 C
 COMMONS
@@ -84,16 +85,15 @@ C-----------
       HT2TD(I,J)=0.
       ENDDO
       ENDDO
-      IF (ITRN.GT.0) THEN
-        DO I=1,MAXSP
-          DO J=1,3
-            SPCCC(I,J)=0.0
-            SPCAC(I,J)=0.0
-            SPCMC(I,J)=0.0
-            SPCBV(I,J)=0.0
-          ENDDO
-        ENDDO
-      ENDIF
+      IF (ITRN.LE.0) GOTO 2
+      DO 1 I=1,MAXSP
+      DO 1 J=1,3
+      SPCCC(I,J)=0.0
+      SPCAC(I,J)=0.0
+      SPCMC(I,J)=0.0
+      SPCBV(I,J)=0.0
+    1 CONTINUE
+    2 CONTINUE
       IPASS=1
       ILOW=1
       IHI=ITRN
@@ -102,6 +102,7 @@ C  CALL VOLKEY TO PROCESS KEYWORDS USED TO CHANGE VOLUME STANDARDS AND
 C  EQUATIONS.
 C----------
       CALL VOLKEY (DEBUG)
+
       DO J=1,MAXSP
       IF(BFMIND(J).LT.2.0) BFMIND(J)=2.0
       IF(BFTOPD(J).LT.2.0) BFTOPD(J)=2.0
@@ -148,9 +149,9 @@ C**************************************************
 C----------
 C  INITIALIZE VOLUME ESTIMATES.
 C----------
-      VN=0.0
-      VM=0.0
-      VMAX=0.0
+      VN=0.
+      VM=0.
+      VMAX=0.
       IF(DEBUG)WRITE(JOSTND,*)' CUBIC SECTION, I,ISPC,METHC= ',
      &I,ISPC,METHC(ISPC)
 C----------
@@ -234,6 +235,7 @@ C----------
 C  RESET NEGATIVE VOLUMES TO ZERO AND COMPILE TOTAL.
 C----------
       BFV(I)=0.0
+  150 CONTINUE
       IF(IPASS .EQ. 1) SPCBV(ISPC,IM)=SPCBV(ISPC,IM)+BFV(I)*P
 C**************************************************
 C     Board feet not computed in this variant

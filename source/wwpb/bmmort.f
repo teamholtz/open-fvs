@@ -1,7 +1,5 @@
       SUBROUTINE BMMORT (ISTD,IYR,SLOW)
-C----------
-C WWPB $Id: bmmort.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+      
 c     CALLED FROM BMDRV
 ***********************************************************************
 * **BMMORT    Date of last revision:  09/28/05

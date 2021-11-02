@@ -1,7 +1,7 @@
       SUBROUTINE EXFERT
       IMPLICIT NONE
 C----------
-C BASE $Id: exfert.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: exfert.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     EXTRA EXTERNAL REFERENCES FOR FERTILIZER CALLS

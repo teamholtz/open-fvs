@@ -1,5 +1,5 @@
 C----------
-C VOLUME $Id: f_other.f 2458 2018-07-22 19:09:30Z gedixon $
+C VOLUME $Id: f_other.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
 C----------
 !== last modified  09-14-2007
 C  FILE CONTAINS THE FOLLOWING ROUTINES:

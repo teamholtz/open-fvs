@@ -1,5 +1,5 @@
 C----------
-C VOLUME $Id: fwinit.f 2458 2018-07-22 19:09:30Z gedixon $
+C VOLUME $Id: fwinit.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
 C----------
 !== last modified  04-02-2014
       SUBROUTINE FWINIT(VOLEQ,DBHOB,HTTOT,MHT,MTOPP,UPSHT1,UPSHT2,

@@ -1,7 +1,7 @@
       SUBROUTINE RDBB3
       IMPLICIT NONE
 C----------
-C RD $Id: rdbb3.f 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDBB3       LAST REVISION:  08/26/14
 C----------
 C
 C  Purpose :

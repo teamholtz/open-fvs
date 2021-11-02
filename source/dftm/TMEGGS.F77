@@ -1,5 +1,5 @@
 C-------------------------  
-C DFTM $Id: TMEGGS.F77 2446 2018-07-09 22:54:33Z gedixon $
+C  TMEGGS COMMON BLOCK -- DATE OF LAST REVISION: 00:00:00 12/29/88  
 C-------------------------  
       INTEGER IEGTYP
       REAL DFEGG(3), GFEGG(3), DFREGG(3), GFREGG(3)

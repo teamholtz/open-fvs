@@ -1,7 +1,7 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
       IMPLICIT NONE
 C----------
-C CANADA-BC $Id: habtyp.f 3783 2021-09-13 22:08:32Z donrobinson $
+C  $Id: habtyp.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
 C----------
 C
 C     TRANSLATES BEC STRINGS INTO VARIOUS USEFUL FORMATS;
@@ -22,8 +22,8 @@ C----------
       CHARACTER*3  RGN(3)
       CHARACTER*4  ZN(7)
       CHARACTER*2  SZ(19)
-      CHARACTER*20 FULL
-      INTEGER      I,J,J1,J2,K
+	CHARACTER*20 FULL
+	INTEGER      I,J,J1,J2,K
       TYPE         (BEC_DESCRIPTION) TMP
 
 C----------
@@ -70,14 +70,14 @@ C
 C
 C     MERGE FIRST 2 FIELDS AND SHIFT TO UPPERCASE
 C
-      FULL = ' '
+	FULL = ' '
       K=1
       DO J=1,20
-        IF (KARD2(J:J) .NE. ' ') THEN
-          FULL(K:K) = KARD2(J:J)
+	  IF (KARD2(J:J) .NE. ' ') THEN
+	    FULL(K:K) = KARD2(J:J)
           CALL UPCASE(FULL(K:K))
-          K = K + 1
-        ENDIF
+	    K = K + 1
+	  ENDIF
       ENDDO
 C
 C     ZERO DEFAULT WITH CURRENT BEC INFORMATION
@@ -85,37 +85,37 @@ C     POPULATE THE BEC DATA STRUCTURE
 C
       LOK = .FALSE.
       DO I = 1,3
-        J1 = INDEX(FULL,RGN(I))
-        IF (J1 .GT. 0) THEN
-          LOK = .TRUE.
+	  J1 = INDEX(FULL,RGN(I))
+	  IF (J1 .GT. 0) THEN
+	    LOK = .TRUE.
           TMP%Region = RGN(I)
           GOTO 5
-        ENDIF
+	  ENDIF
       ENDDO
     5 IF (.NOT. LOK) GOTO 3
 
       LOK = .FALSE.
       DO I = 1,7
-        K = LEN_TRIM(ZN(I))
-        J1 = INDEX(FULL,ZN(I)(:K))
-        IF (J1 .GT. 0) THEN
-          LOK = .TRUE.
+	  K = LEN_TRIM(ZN(I))
+	  J1 = INDEX(FULL,ZN(I)(1:K))
+	  IF (J1 .GT. 0) THEN
+	    LOK = .TRUE.
           TMP%Zone = ZN(I)
           GOTO 6
-        ENDIF
+	  ENDIF
       ENDDO
     6 IF (.NOT. LOK) GOTO 3
 
       LOK = .FALSE.
-      DO I = 1,19
-        J1 = INDEX(FULL,SZ(I))
-        IF (J1 .GT. 0) THEN
-          LOK = .TRUE.
+      DO I = 1,11
+	  J1 = INDEX(FULL,SZ(I))
+	  IF (J1 .GT. 0) THEN
+	    LOK = .TRUE.
           TMP%SubZone = SZ(I)
           J2 = INDEX(FULL,'/')
-          IF(J2 .EQ. J1+3) TMP%SubZone(3:3) = FULL(J1+2:J1+2)
-          GOTO 7
-        ENDIF
+	    IF(J2 .EQ. J1+3) TMP%SubZone(3:3) = FULL(J1+2:J1+2)
+	    GOTO 7
+	  ENDIF
       ENDDO
     7 IF (.NOT. LOK) GOTO 3
 C
@@ -123,26 +123,26 @@ C     LONGEST SERIES IS SOMETHING LIKE '1-YC'
 C
       LOK = .FALSE.
       J2 = INDEX(FULL,'/')
-      IF (J2 .GT. 0) THEN
-        LOK = .TRUE.
-        K = 1
+	IF (J2 .GT. 0) THEN
+	  LOK = .TRUE.
+	  K = 1
         DO I = J2+1,J2+5
           IF(FULL(I:I) .NE. ' ') THEN
             TMP%Series(K:K) = FULL(I:I)
-            K = K + 1
-          ENDIF
-       ENDDO
-      ENDIF
-      IF (.NOT. LOK) GOTO 3
+	      K = K + 1
+	    ENDIF
+	  ENDDO
+	ENDIF
+	IF (.NOT. LOK) GOTO 3
 C
 C     CONVERT SUBZONE AND SERIES TO LOWERCASE
 C
-      DO I = 1, LEN_TRIM(TMP%SubZone)
+	DO I = 1, LEN_TRIM(TMP%SubZone)
         CALL LOCASE(TMP%SubZone(I:I))
-      ENDDO
-      DO I = 1, LEN_TRIM(TMP%Series)
+	ENDDO
+	DO I = 1, LEN_TRIM(TMP%Series)
         CALL LOCASE(TMP%Series(I:I))
-      ENDDO
+	ENDDO
 C
 C     CREATE A COMBINED BEC IDENTIFIER
 C
@@ -150,31 +150,31 @@ C
       K=1
       DO I=1,4
         IF (TMP%Zone(I:I) .NE. ' ') THEN
-          TMP%FullName(K:K) = TMP%Zone(I:I)
+	    TMP%FullName(K:K) = TMP%Zone(I:I)
           K = K + 1
-        ENDIF
-      ENDDO
+	  ENDIF
+	ENDDO
       DO I=1,3
         IF (TMP%SubZone(I:I) .NE. ' ') THEN
-          TMP%FullName(K:K) = TMP%SubZone(I:I)
+	    TMP%FullName(K:K) = TMP%SubZone(I:I)
           K = K + 1
-        ENDIF
-      ENDDO
-      TMP%PrettyName = TMP%FullName
+	  ENDIF
+	ENDDO
+	TMP%PrettyName = TMP%FullName
 
       TMP%PrettyName(K:K)   = '/'
       TMP%PrettyName(K+1:K+5) = TMP%Series(1:5)
 C
 C     COPY THE TEMPORARY DESCRIPTION TO THE GLOBAL VARIABLE
 C
-      BEC = TMP
+	BEC = TMP
 
-      GOTO 2
+	GOTO 2
     3 CALL ERRGRO (.TRUE.,3)
     2 CONTINUE
 
       RETURN
-      END
+	END
 
 C--------------------------------------------------------------------
 C

@@ -1,7 +1,7 @@
       SUBROUTINE TMDAM (II, ICODES)
       IMPLICIT NONE
 C----------
-C DFTM $Id: tmdam.f 2446 2018-07-09 22:54:33Z gedixon $
+C  **TMDAM         DATE OF LAST REVISION:  06/30/10
 C----------
 C
 C     CALLED BY PROGNOSIS VERSION 6.0

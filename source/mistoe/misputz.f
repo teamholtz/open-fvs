@@ -1,6 +1,6 @@
       SUBROUTINE MISPUTZ(ITREE,IDMR)
 ***********************************************************************
-C MISTOE $Id: misputz.f 2451 2018-07-11 18:10:16Z gedixon $
+*  **MISPUTZ--MS  Date of last revision:  01/21/94
 *----------------------------------------------------------------------
 *  Purpose:
 *     Sets dwarf mistletoe rating (stored in array IMIST) for the

@@ -1,7 +1,7 @@
       SUBROUTINE SICHG(ISISP,SSITE,SIAGE)
       IMPLICIT NONE
 C----------
-C CA $Id: sichg.f 3758 2021-08-25 22:42:32Z lancedavid $
+C  **SICHG--CA   DATE OF LAST REVISION:  02/22/08
 C----------
 COMMONS
 C
@@ -43,13 +43,13 @@ C  1=PC  2=IC  3=RC  4=WF  5=RF  6=SH  7=DF  8=WH  9=MH 10=WB
 C 11=KP 12=LP 13=CP 14=LM 15=JP 16=SP 17=WP 18=PP 19=MP 20=GP
 C 21=JU 22=BR 23=GS 24=PY 25=OS 26=LO 27=CY 28=BL 29=EO 30=WO
 C 31=BO 32=VO 33=IO 34=BM 35=BU 36=RA 37=MA 38=GC 39=DG 40=FL
-C 41=WN 42=TO 43=SY 44=AS 45=CW 46=WI 47=CN 48=CL 49=OH 50=RW
+C 41=WN 42=TO 43=SY 44=AS 45=CW 46=WI 47=CN 48=CL 49=OH
 C----------
       DATA INDEX/ 3,  3,  3,  3,  5,  5,  3,  3,  5,  6,
      &            6,  6,  6,  6,  4,  3,  4,  4,  4,  4,
      &            6,  3,  3,  7,  3,  9,  9,  9,  9,  7,
      &            7,  7,  9, 10,  7, 10,  9,  9,  7,  7,
-     &           10,  8, 10, 10, 10, 10, 10, 10, 10,  3/
+     &           10,  8, 10, 10, 10, 10, 10, 10, 10/
 C
       DATA REFLOC/'B','B','B','B','B','T','B','T','T','T'/
       DATA REFAGE/ 50, 50, 50, 50, 50, 50, 50, 50, 50, 50/

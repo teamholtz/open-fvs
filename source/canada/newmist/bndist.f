@@ -1,7 +1,7 @@
       SUBROUTINE BNDIST(M, V, err, UBound, PDF, End) 
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: bndist.f 3787 2021-09-13 22:47:08Z donrobinson $
+C  $Id: bndist.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 C **BNDIST -- NISI  Date of last revision: April 15 1994 
 C--------------------------------------------------------------------
@@ -110,20 +110,20 @@ C If mean or variance is very small, RETURN.
       err = .FALSE.
       IF ((M .LT. tol) .OR. (V .LT. tol)) THEN
         err = .TRUE.
-        RETURN
-      END IF
-
+        RETURN 
+      END IF      
+            
 C Choose the method and compute constant terms.
 
 C Poisson.
-
+      
       IF (ABS(V - M) .LT. tol) THEN
       
-        method =  1
+        method =  1       
         
         t1 = -(M)
         t2 = LOG(M)
-
+                        
 C Negative Binomial.
 
       ELSE IF (V .GT. M) THEN
@@ -131,27 +131,27 @@ C Negative Binomial.
         method = 2
                   
         p = (V / M) - 1.0
-        k = M / p
-
+        k = M / p        
+ 		
 C kpq = variance
 C kp  = mean
 C q   = kpq/kp
 C q-p = 1
 C p   = q-1
-
+      
         t1 = -k * LOG(1. + (M / k))
         t2 = GAMMLN(k)
         t3 = LOG(M / (M + k))
 
 C Binomial.
-
+      
       ELSE 
-
+      
         method = 3
         
         p = 1. - (V / M)
-        k = M / p
-
+        k = M / p                       
+        
 C kpq = variance
 C kp  = mean
 C q+p = 1
@@ -160,19 +160,19 @@ C p   = 1-q
         t1 = GAMMLN(k + 1.0)
         t2 = LOG(p)
         t3 = LOG(1.0 - p) 
-
+        
       END IF
-
+      
       sum = 0.
       DO 1000 j = 0, UBound
 
 C The 'jp' indexing circumvents the 0:UBound error in variable length
 C arrays.
-
+        
         jp = j + 1
-
+      
         x = FLOAT(j)
-
+        
 C The order here is Poisson (100), Negative Binomial (200),
 C Binomial (300).
 
@@ -200,15 +200,16 @@ C    >    + x * LOG(M / (M + k))
   200   CONTINUE
         z =  t1 + GAMMLN(k + x) - GAMMLN(x + 1.) - t2 + (x * t3)
         GOTO 400
-
+              
 C Binomial if if variance < mean. Note precomputed terms. The old
 C form of the equation is:
 C
 C     z = GAMMLN(k + 1.) - GAMMLN(x + 1.) - GAMMLN(k - x + 1.)
 C    >    + (x * LOG(p)) + ((k - x) * LOG(1. - p)) 
 
-  300   CONTINUE
-
+              
+  300	  CONTINUE  
+  
         IF ((k - x + 1.0) .LT. 0.0) THEN
           z = -99.
         ELSE
@@ -217,62 +218,62 @@ C    >    + (x * LOG(p)) + ((k - x) * LOG(1. - p))
         END IF
 
   400   CONTINUE
-
+   
 C Convert logarithms back to real values. If 'v' is less than -75,
 C the result is nearly zero (in single precision), so no assignment
 C is made: PDF(j) is 0.0 prior to assignment. The 'jp' indexing gets
 C around the 0:UBound problem described above.
 
         IF (z .GT. -75.) PDF(jp) = EXP(z)
-
+        
         sum = sum + PDF(jp)
 
 C Set 'plast' for the n=0 case
-
+        
         IF (j .EQ. 0) THEN 
-
+        
           plast = PDF(jp) 
-
+          
         ELSE 
 
 C Stop computing if a) the value is less than 1e-6 on the descending
 C limb; or b) the sum has passed 1.0 (this happens for pathological
 C binomial cases, and some adjustment is needed... even then it is
 C biased); or c) the end of the PDF array has been reached.
-
+        
           pnow = PDF(jp)
-
+          
           IF ((pnow .LT. plast) .AND. (pnow .LT. tol)) THEN
-            End = j
+            End = j                                     
             GOTO 1001
           END IF
-
+          
           IF (sum .GE. 1.0) THEN
-            End = j
+            End = j 
             PDF(jp) = PDF(jp) - (sum - 1.0)
 C SHOULD CALL ERROR HANDLER TO SIGNAL UNRELIABLE RESULTS
             GOTO 1001
-          END IF
-
+          END IF       
+            
           IF (j .EQ. UBound) THEN
             End = j
 C SHOULD CALL ERROR HANDLER TO SIGNAL UNRELIABLE RESULTS
             GOTO 1001
-          END IF
-
+          END IF              
+            
         plast = pnow
-
+        
         END IF
-
+            
  1000 CONTINUE
  1001 CONTINUE
-
+ 
       RETURN
       END
 C
 C
       FUNCTION GAMMLN(Arg)
-
+      
 C********************************************************************
 C **GAMMLN -- NISI  Date of last revision: April 15 1994 
 C--------------------------------------------------------------------
@@ -289,7 +290,7 @@ C Other routines called:
 C
 C     [none]
 C
-C Argument list definitions:
+C Argument list definitions:                        
 C
 C     REAL    Arg (I) The argument to the gamma function.
 C
@@ -317,26 +318,26 @@ C Local variables
       INTEGER   j
       REAL      SqPI, x, tmp, ser
       REAL      cof(6)
-
+      
       DATA cof / 76.18009173,
      >          -86.50532033,
      >           24.01409822,
      >           -1.231739516,
      >            0.12085003e-2,
-     >           -0.536382e-5 /
+     >           -0.536382e-5 /  
 
       DATA SqPI / 2.50662827465 /
 
       x = Arg - 1.0
       tmp = x + 5.5
       tmp = tmp - (x + 0.5) * LOG(tmp)
-
+      
       ser = 1.0
       do 10 j = 1, 6
         x = x + 1.0
         ser = ser + cof(j) / x
    10 continue
-
+   
       GAMMLN = (-tmp + LOG(SqPI * ser))
-
+      
       END

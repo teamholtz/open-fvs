@@ -1,7 +1,7 @@
       SUBROUTINE SITSET
       IMPLICIT NONE
 C----------
-C CANADA-BC $Id: sitset.f 3783 2021-09-13 22:08:32Z donrobinson $
+C  $Id: sitset.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
 C----------
 C  THIS SUBROUTINE IS USED TO SET SIMULATION CONTROLLING VALUES
 C  THAT HAVE NOT BEEN SET USING THE KEYWORDS --- SDIMAX, BAMAX.
@@ -9,42 +9,33 @@ C----------
 C
 COMMONS
 C
-C
       INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'VOLSTD.F77'
-C
-C
       INCLUDE 'BCPLOT.F77'
-C
-C
       INCLUDE 'METRIC.F77'
 C
 COMMONS
 C
       INTEGER IFIASP, ERRFLAG
-      CHARACTER FORST*2,DIST*2,PROD*2,VAR*2,VOLEQ*10
+      CHARACTER FORST*2,DIST*2,PROD*2,VAR*2,VOLEQ*10,VVER*7
       LOGICAL LBAMX
       INTEGER I,ISPC,INTFOR,IREGN,J,JJ,K,iSeries
         
 C     ASSIGN VERSION 2 PARAMETERS (MS,ESSF,PP)
       CALL BECSET
       
+      CALL VARVER(VVER)
+
       LBAMX = .TRUE.
       IF (BAMAX .GT. 0.) THEN
         LBAMX = .FALSE.
         GOTO 40
       ENDIF
-C----------
+
 C  SET SDIDEF AND BAMAX VALUES WHICH HAVE NOT BEEN SET BY KEYWORD.
-C----------
+
       BAMAX = -1.
 
 C     SOME ODD SITE SERIES CASES "01-ys, 01a, 01b" NEED SPECIAL ATTENTION
@@ -59,188 +50,162 @@ C     SOME ODD SITE SERIES CASES "01-ys, 01a, 01b" NEED SPECIAL ATTENTION
       ENDIF
      
       SELECT CASE (BEC%Zone)
-        CASE ("IDF")                 ! IDF: dk differ in V2 - becset.for
-        SELECT CASE (BEC%SubZone)
-          CASE ("dk1")
-            SELECT CASE (iSeries)
-              CASE (1)
-                BAMAX = 60.
-              CASE (2,4:7)
-                BAMAX = 58.
-              CASE (3)
-                BAMAX = 55.
-            END SELECT
-          CASE ("dk2")
-            SELECT CASE (iSeries)
-              CASE (1,3:7)
-                BAMAX = 89.
-            END SELECT
-          CASE ("dk3")
-            SELECT CASE (iSeries)
-              CASE DEFAULT
-                BAMAX = 53.
-            END SELECT
-          CASE ("dk4")
-            BAMAX = 40.    ! needs review
-          CASE ("dm1")
-            SELECT CASE (iSeries)
-              CASE (1,3:7)
-                BAMAX = 43.
-            END SELECT
-          CASE ("dm2")
-            SELECT CASE (iSeries)
-              CASE (1,3,5:7)
-                BAMAX = 53.
-              CASE (4)
-                BAMAX = 52.
-            END SELECT
-          CASE ("mw1","mw2")
-            BAMAX = 47.
-          CASE ("xh1")
-            SELECT CASE (iSeries)
-              CASE (4)
-                BAMAX = 32. ! advice from Walt Klenner (July 2021)
-              CASE DEFAULT
-                BAMAX = 48.
-            END SELECT
-          CASE ("xh2")
-            SELECT CASE (iSeries)
-              CASE (1)
-                BAMAX = 42. ! advice from Walt Klenner (July 2021)
-              CASE DEFAULT
-                BAMAX = 48.
-            END SELECT
-          CASE ("xm")
-c          advice from David Rusch Chilcotin (June 2021)
-c          advice from Walt Klenner Kamloops (July 2021)
-c          discord: BAMAX also depends on leading species:
-c          FD on /03 => 25, but PL on /03 => 30; ** using 25 ** 
-            SELECT CASE (iSeries)
-              CASE (1,5,6,7)
-                BAMAX = 30.
-              CASE (2,3,4)
-                BAMAX = 25.
-              CASE (8)
-                BAMAX = 40.
-            END SELECT
+
+	  CASE ("IDF")                      ! IDF: dk differ in V2 - becset.for
+	    SELECT CASE (BEC%SubZone)
+	      CASE ("dk1")
+	        SELECT CASE (iSeries)    
+	          CASE (1)
+	            BAMAX = 60.
+                CASE (2,4:7)
+	            BAMAX = 58.
+                CASE (3)
+	            BAMAX = 55.
+	        END SELECT
+	      CASE ("dk2")
+	        SELECT CASE (iSeries)
+	          CASE (1,3:7)
+	            BAMAX = 89.
+	        END SELECT
+	      CASE ("dk3")
+	        SELECT CASE (iSeries)
+                CASE DEFAULT
+	            BAMAX = 53.
+	        END SELECT
+	      CASE ("dm1")
+	        SELECT CASE (iSeries)
+	          CASE (1,3:7)
+	            BAMAX = 43.
+	        END SELECT
+	      CASE ("dm2")
+	        SELECT CASE (iSeries)
+	          CASE (1,3,5:7)
+	            BAMAX = 53.
+                CASE (4)
+	            BAMAX = 52.
+	        END SELECT
+            CASE ("mw1","mw2")
+              BAMAX = 47.
+            CASE ("xh1","xh2")
+	        BAMAX = 48.
           END SELECT 
           
-      CASE ("ICH")                         ! ICH
-        SELECT CASE (BEC%SubZone)
-          CASE ("mk1")
-            SELECT CASE (iSeries)
-              CASE (1)
-                BAMAX = 59.
-              CASE (2)
-                BAMAX = 50.
-              CASE (3)
-                BAMAX = 46.
-              CASE (4)
-                BAMAX = 42.
-              CASE (5:7)
-                BAMAX = 50.
-            END SELECT
-          CASE ("mw2")
-            SELECT CASE (iSeries)
-              CASE (1:7)
-                BAMAX = 89.
-             END SELECT
-          CASE ("mw3")
-            SELECT CASE (iSeries)
-              CASE (1)
-                BAMAX = 81.
-              CASE (2,3,6,7)
-                BAMAX = 76.
-              CASE (4,5)
-                BAMAX = 69.
-            END SELECT
-          CASE ("wk1")
-            SELECT CASE (iSeries)
-              CASE (1,3:7)
-                BAMAX = 67.
-            END SELECT
-          CASE ("dw")
-            BAMAX = 50.
+	  CASE ("ICH")                   ! ICH
+	    SELECT CASE (BEC%SubZone)
+	      CASE ("mk1")
+	        SELECT CASE (iSeries)
+	          CASE (1)
+	            BAMAX = 59.
+                CASE (2)
+	            BAMAX = 50.
+                CASE (3)
+	            BAMAX = 46.
+                CASE (4)
+	            BAMAX = 42.
+                CASE (5:7)
+	            BAMAX = 50.
+	        END SELECT
+	      CASE ("mw2")
+	        SELECT CASE (iSeries)
+	          CASE (1:7)
+	            BAMAX = 89.
+	        END SELECT
+	      CASE ("mw3")
+	        SELECT CASE (iSeries)
+	          CASE (1)
+	            BAMAX = 81.
+                CASE (2,3,6,7)
+	            BAMAX = 76.
+                CASE (4,5)
+	            BAMAX = 69.
+	        END SELECT
+	      CASE ("wk1")
+	        SELECT CASE (iSeries)
+	          CASE (1,3:7)
+	            BAMAX = 67.
+	        END SELECT
+	      CASE ("dw")
+	        BAMAX = 50.
           END SELECT
-
-      CASE ("ESSF")                        ! ESSF
-        SELECT CASE (BEC%SubZone)
-          CASE ("dk")
-            SELECT CASE (iSeries)
-              CASE (1)
-                BAMAX = 64.
+          
+	  CASE ("ESSF")                         ! ESSF
+		  SELECT CASE (BEC%SubZone)
+	    CASE ("dk")
+	      SELECT CASE (iSeries)
+	        CASE (1)
+	          BAMAX = 64.
               CASE (2)
-                BAMAX = 62.
+	          BAMAX = 62.
               CASE (3)
-                BAMAX = 61.
+	          BAMAX = 61.
               CASE (4:7)
-                BAMAX = 62.
-            END SELECT
-          CASE ("wc4","wm")
-            BAMAX =  62.
+	          BAMAX = 62.
+	      END SELECT
+	    CASE ("wc4","wm")
+	      BAMAX =  62.
           END SELECT 
-
-      CASE ("MS")                          ! MS
-        SELECT CASE (BEC%SubZone)
-          CASE ("dk")
-            SELECT CASE (iSeries)
-              CASE (1)
-                BAMAX = 48.  ! advice for SI 20, Walt Klenner (July 2021), formerly 57
+          
+	  CASE ("MS")                          ! MS
+		  SELECT CASE (BEC%SubZone)
+	    CASE ("dk")
+	      SELECT CASE (iSeries)
+	        CASE (1)
+	          BAMAX = 57.
               CASE (2,3)
-                BAMAX = 55.
+	          BAMAX = 55.
               CASE (4)
-                BAMAX = 38.  ! advice for SI 15, Walt Klenner (July 2021), formerly 46
+	          BAMAX = 46.
               CASE (5:7)
-                BAMAX = 55.
-             END SELECT
-          CASE ("dm1")
-            SELECT CASE (iSeries)
-              CASE (1,4)
-                BAMAX = 63.
+	          BAMAX = 55.
+	      END SELECT
+	    CASE ("dm1")
+	      SELECT CASE (iSeries)
+	        CASE (1,4)
+	          BAMAX = 63.
               CASE (2,3,7)
-                BAMAX = 62.
+	          BAMAX = 62.
               CASE (5)
-                BAMAX = 57.
+	          BAMAX = 57.
               CASE (6)
-                BAMAX = 64.
-              END SELECT
+	          BAMAX = 64.
+	      END SELECT
           END SELECT 
 
-      CASE ("PP")                             ! PP
-        SELECT CASE (BEC%SubZone)
-          CASE ("dh2")
-            SELECT CASE (iSeries)
-              CASE (1,3:7)
-                BAMAX = 32.
-            END SELECT
-          CASE ("xh2")
-            SELECT CASE (iSeries)
-              CASE (1:4)
-                BAMAX = 32.
+	  CASE ("PP")                             ! PP
+		  SELECT CASE (BEC%SubZone)
+	    CASE ("dh2")
+	      SELECT CASE (iSeries)
+	        CASE (1,3:7)
+	          BAMAX = 32.
+	      END SELECT
+	    CASE ("xh2")
+	      SELECT CASE (iSeries)
+	        CASE (1:4)
+	          BAMAX = 32.
               CASE (6,7)
-                BAMAX = 21.
-              END SELECT
+	          BAMAX = 21.
+	      END SELECT
           END SELECT
 
-      CASE ("SBS")               ! SBS
-        BAMAX = 55.
-        SELECT CASE (BEC%SubZone)
-          CASE ("dw1","dw2")
+	  CASE ("SBS")               ! SBS
+          BAMAX = 55.
+		  SELECT CASE (BEC%SubZone)
+	    CASE ("dw1","dw2")
             BAMAX = 55.
-          CASE ("mh")
-            BAMAX = 60.
+	    CASE ("mh")
+	      BAMAX = 60.
           END SELECT 
 
-      CASE ("SBPS")              ! SBPS
-        BAMAX = 50.
-        SELECT CASE (BEC%SubZone)
-          CASE ("dc")
+	  CASE ("SBPS")              ! SBPS
+          BAMAX = 50.
+		  SELECT CASE (BEC%SubZone)
+	    CASE ("dc")
             BAMAX = 50.
-          CASE ("mk")
-            BAMAX = 55.
+	    CASE ("mk")
+	      BAMAX = 55.
           END SELECT
         END SELECT 
-
+      
       IF (BAMAX .LE. 0.) THEN
         BAMAX = 10.
         CALL RCDSET(2,.TRUE.)
@@ -248,7 +213,7 @@ c          FD on /03 => 25, but PL on /03 => 30; ** using 25 **
      >    ' MAXIMUM BASAL AREA UNDEFINED FOR ', A,': SET T0 ', F6.1)")
      >    BEC%prettyname, BAMAX
       ENDIF
-      BAMAX = BAMAX * M2pHAtoFT2pACR
+	BAMAX = BAMAX * M2pHAtoFT2pACR
 C
    40 IF (LBAMX) THEN
         WRITE(JOSTND, 56) BEC%prettyname, BAMAX * FT2pACRtoM2pHA
@@ -277,9 +242,9 @@ C
    93 CONTINUE
 C
 C     RESOLVE BEC/SITE INFORMATION (VERSION 2)
-C
-      CALL BECSET
-
+C      
+      CALL BECSET      
+         
 C----------
 C  SET METHB & METHC DEFAULTS.  DEFAULTS ARE INITIALIZED TO 999 IN
 C  **GRINIT**.  IF THEY HAVE A DIFFERENT VALUE NOW, THEY WERE CHANGED
@@ -298,7 +263,7 @@ C----------
       IREGN = KODFOR/100
       DIST='  '
       PROD='  '
-      VAR=VARACD
+      VAR=VVER(:2)
       DO ISPC=1,MAXSP
       READ(FIAJSP(ISPC),'(I4)')IFIASP
       IF(((METHC(ISPC).EQ.6).OR.(METHC(ISPC).EQ.9)).AND.
@@ -318,14 +283,14 @@ C---------
       IF(LFIA) THEN
         CALL FIAHEAD(JOSTND)
         WRITE(JOSTND,211) (NSP(I,1)(1:2),FIAJSP(I),I=1,MAXSP)
- 211    FORMAT ((T12,8(A3,'=',A6,:,'; '),A,'=',A6))
+ 211    FORMAT ((T13,8(A3,'=',A6,:,'; '),A,'=',A6))
       ENDIF
 C----------
 C  WRITE VOLUME EQUATION NUMBER TABLE
 C----------
       CALL VOLEQHEAD(JOSTND)
       WRITE(JOSTND,230)(NSP(J,1)(1:2),VEQNNC(J),VEQNNB(J),J=1,MAXSP)
- 230  FORMAT(4(2X,A2,4X,A10,1X,A10))
+ 230  FORMAT(4(3X,A2,4X,A10,1X,A10))
 C     
       RETURN
       END

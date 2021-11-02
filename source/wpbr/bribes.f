@@ -1,8 +1,8 @@
       SUBROUTINE BRIBES(REDFAC,LREDF)
       IMPLICIT NONE
-C----------
-C WPBR $Id: bribes.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **BRIBES       DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C  BRIBES calculates the reduction factor to be applied to the each
 C  tree's RI as a result of the change in ribes populations, if both

@@ -1,7 +1,7 @@
       BLOCK DATA BLKDAT
       IMPLICIT NONE
 C----------
-C WS $Id: blkdat.f 3758 2021-08-25 22:42:32Z lancedavid $
+C  **BLKDAT--WS   DATE OF LAST REVISION:  05/09/12
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
@@ -55,7 +55,7 @@ C     1 = SUGAR PINE (SP)                   PINUS LAMBERTIANA
 C     2 = DOUGLAS-FIR (DF)                  PSEUDOTSUGA MENZIESII
 C     3 = WHITE FIR (WF)                    ABIES CONCOLOR
 C     4 = GIANT SEQUOIA (GS)                SEQUOIADENDRON GIGANTEAUM
-C     5 = INCENSE CEDAR (IC)                CALOCEDRUS DECURRENS
+C     5 = INCENSE CEDAR (IC)                LIBOCEDRUS DECURRENS
 C     6 = JEFFREY PINE (JP)                 PINUS JEFFREYI
 C     7 = CALIFORNIA RED FIR (RF)           ABIES MAGNIFICA
 C     8 = PONDEROSA PINE (PP)               PINUS PONDEROSA
@@ -69,7 +69,8 @@ C    15 = FOXTAIL PINE (FP)                 PINUS BALFOURIANA
 C    16 = COULTER PINE (CP)                 PINUS COULTERI
 C    17 = LIMBER PINE (LM)                  PINUS FLEXILIS
 C    18 = MONTEREY PINE (MP)                PINUS RADIATA
-C    19 = CALIFORNIA FOOTHILL PINE (GP)     PINUS SABINIANA
+C    19 = GRAY PINE (GP)                    PINUS SABINIANA
+C         (OR CALIFORNIA FOOTHILL PINE)
 C    20 = WASHOE PINE (WE)                  PINUS WASHOENSIS
 C    21 = GREAT BASIN BRISTLECONE PINE (GB) PINUS LONGAEVA
 C    22 = BIGCONE DOUGLAS-FIR (BD)          PSEUDOTSUGA MACROCARPA
@@ -83,18 +84,18 @@ C    29 = CANYON LIVE OAK (CY)              QUERCUS CHRYSOLEPSIS
 C    30 = BLUE OAK (BL)                     QUERCUS DOUGLASII
 C    31 = CALIFORNIA BLACK OAK (BO)         QUERQUS KELLOGGII
 C    32 = VALLEY OAK (VO)                   QUERCUS LOBATA
+C         (OR CALIFORNIA WHITE OAK)
 C    33 = INTERIOR LIVE OAK (IO)            QUERCUS WISLIZENI
 C    34 = TANOAK (TO)                       LITHOCARPUS DENSIFLORUS
-C    35 = GIANT CHINQUAPIN (GC)             CHRYSOLEPIS CHRYSOPHYLLA 
-C                                           VAR. CHRYSOPHYLLA
+C    35 = GIANT CHINQUAPIN (GC)             CHRYSOLEPIS CHRYSOPHYLLA
 C    36 = QUAKING ASPEN (AS)                POPULUS TREMULOIDES
 C    37 = CALIFORNIA-LAUREL (CL)            UMBELLULARIA CALIFORNICA
 C    38 = PACIFIC MADRONE (MA)              ARBUTUS MENZIESII
 C    39 = PACIFIC DOGWOOD (DG)              CORNUS NUTTALLII
 C    40 = BIGLEAF MAPLE (BM)                ACER MACROPHYLLUM
-C    41 = CURL-LEAF MOUNTAIN MAHOGANY (MC)  CERCOCARPUS LEDIFOLIUS
-C    42 = OTHER SOFTWOOD (OS)
-C    43 = OTHER HARDWOOD (OH)
+C    41 = CURLLEAF MOUNTAIN-MAHOGANY (MC)   CERCOCARPUS LEDIFOLIUS
+C    42 = OTHER SOFTWOODS (OS)
+C    43 = OTHER HARDWOODS (OH)
 C
 C  SURROGATE EQUATION ASSIGNMENT:
 C
@@ -197,7 +198,7 @@ C
      & '065',   '062',   '801',   '805',   '807',   
      & '818',   '821',   '839',   '631',   '431',   
      & '746',   '981',   '361',   '492',   '312',   
-     & '475',   '299',   '998'/
+     & '475',   '298',   '998'/
 C
       DATA PLNJSP /
      & 'PILA  ','PSME  ','ABCO  ','SEGI2 ','CADE27',   
@@ -208,7 +209,7 @@ C
      & 'JUOS  ','JUCA7 ','QUAG  ','QUCH2 ','QUDO  ',   
      & 'QUKE  ','QULO  ','QUWI2 ','LIDE3 ','CHCHC4',   
      & 'POTR5 ','UMCA  ','ARME  ','CONU4 ','ACMA3 ',   
-     & 'CELE3 ','2TN   ','2TB   '/
+     & 'CELE3 ','2TE   ','2TD   '/
 C
       DATA JTYPE /130,170,250,260,280,290,310,320,330,420,
      &            470,510,520,530,540,550,570,610,620,640,
@@ -232,11 +233,11 @@ C
      & 'MC3','OS3','OH3'/
 C
       DATA SIGMAR/
-     &  0.347,  0.407,  0.347, 0.6178,  0.433,   
+     &  0.347,  0.407,  0.347, 0.4408,  0.433,   
      &  0.289, 0.4182,  0.371, 0.4169, 0.4169,   
      &  0.347, 0.4392,  0.347, 0.4392, 0.4392,   
      & 0.4392, 0.4392,  0.371, 0.4392, 0.4392,   
-     &    0.2,  0.407, 0.6178,  0.347, 0.4392,   
+     &    0.2,  0.407, 0.4408,  0.347, 0.4392,   
      & 0.4392, 0.4392, 0.4721, 0.4721, 0.4721,   
      & 0.4721, 0.4721, 0.4721, 0.4744, 0.4744,   
      & 0.4744, 0.4744, 0.4744, 0.4744, 0.4721,   
@@ -245,22 +246,22 @@ C----------
 C   COMMON STATEMENT FOR COEFFS VARIABLES
 C----------
       DATA HT1/
-     & 4.86039, 4.86039, 4.86039, 5.3401, 4.86039, 
+     & 4.86039, 4.86039, 4.86039, 4.86039, 4.86039, 
      & 4.86039, 4.86039, 4.86039,  4.8358,  4.8358, 
      & 4.86039,  4.6843, 4.86039,  4.6843,  4.6843, 
      &  4.6843,  4.6843, 4.86039,  4.6843,  4.6843, 
-     &  4.1920, 4.86039, 5.3401, 4.86039,  4.6843, 
+     &  4.1920, 4.86039, 4.86039, 4.86039,  4.6843, 
      &  4.6843,  4.6843, 4.80420, 4.80420, 4.80420, 
      & 4.80420, 4.80420, 4.80420, 4.80420, 4.80420, 
      & 4.80420, 4.80420, 4.80420, 4.80420, 4.80420, 
      &  5.1520, 4.86039, 4.80420/
 C 
       DATA HT2/
-     & -9.32795, -9.32795, -9.32795, -15.9354, -9.32795, 
+     & -9.32795, -9.32795, -9.32795, -9.32795, -9.32795, 
      & -9.32795, -9.32795, -9.32795,  -9.2077,  -9.2077, 
      & -9.32795,  -6.5516, -9.32795,  -6.5516,  -6.5516, 
      &  -6.5516,  -6.5516, -9.32795,  -6.5516,  -6.5516, 
-     &  -5.1651, -9.32795, -15.9354, -9.32795,  -6.5516, 
+     &  -5.1651, -9.32795, -9.32795, -9.32795,  -6.5516, 
      &  -6.5516,  -6.5516, -9.92422, -9.92422, -9.92422, 
      & -9.92422, -9.92422, -9.92422, -9.92422, -9.92422, 
      & -9.92422, -9.92422, -9.92422, -9.92422, -9.92422, 

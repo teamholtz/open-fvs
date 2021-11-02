@@ -1,8 +1,8 @@
       SUBROUTINE I4PBSR (N,A,IORD,F,IP)
       IMPLICIT NONE
-C----------
-C WPBR $Id: i4pbsr.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **I4PBSR       DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C  This is an INTEGER*4 keyed binary search.
 C  Part of the Stand Prognisis Model (Forest Vegetation Simulator)

@@ -1,7 +1,7 @@
       BLOCK DATA FMCBLK
       IMPLICIT NONE
 C----------
-C FIRE-CI $Id: fmcblk.f 2462 2018-07-26 14:39:59Z gedixon $
+C   **FMCBLK--FIRE-CI  DATE OF LAST REVISION:   06/28/11
 C----------
 COMMONS
 C

@@ -1,5 +1,5 @@
 C----------
-C VOLUME $Id: pnwtarif.f 2458 2018-07-22 19:09:30Z gedixon $
+C VOLUME $Id: pnwtarif.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C  12/17/2012
 C  The tarif volume equation used by FIA PNW

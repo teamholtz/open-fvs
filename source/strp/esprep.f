@@ -1,7 +1,7 @@
       SUBROUTINE ESPREP (ISER,PNONE,PMECH,PBURN)
       IMPLICIT NONE
 C----------
-C STRP $Id: esprep.f 2456 2018-07-22 14:50:53Z gedixon $
+C STRP $Id: esprep.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C     PREDICT DEFAULT SITE PREP PROBABILITIES.
 C

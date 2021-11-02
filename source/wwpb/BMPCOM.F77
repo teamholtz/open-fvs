@@ -1,7 +1,5 @@
-CODE SEGMENT BMPCOM
-C----------
-C WWPB $Id: BMPCOM.F77 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+C.... Code segment BMPCOM.
+
 ************************************************************************
 *  **BMPCOM  Completely re-written AJ McMahan, ITX, Inc.;  Sept, 2005.
 *            Date of last revision: 12/08/05 

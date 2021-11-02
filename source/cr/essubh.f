@@ -2,7 +2,7 @@
      &  TRAGE)
       IMPLICIT NONE
 C----------
-C CR $Id: essubh.f 2444 2018-07-09 16:00:55Z gedixon $
+C CR $Id: essubh.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C
 C     ASSIGNS HEIGHTS TO SUBSEQUENT AND PLANTED TREE RECORDS

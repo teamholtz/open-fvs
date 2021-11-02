@@ -1,7 +1,7 @@
       SUBROUTINE FMFINT (IYR, BYRAM, FLAME, FTYP, HPA, ICALL)
       IMPLICIT NONE
 C----------
-C FIRE-BASE $Id: fmfint.f 2561 2018-11-17 00:28:06Z lancedavid $
+C FIRE-BASE $Id: fmfint.f 2359 2018-05-18 17:35:04Z lancedavid $
 C----------
 *     CALLED FROM FMBURN
 *                 FMPOFL
@@ -41,6 +41,7 @@ C----------
 
 C.... PARAMETER INCLUDE FILES.
       INCLUDE 'PRGPRM.F77'
+C      INCLUDE 'PPEPRM.F77'
       INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.

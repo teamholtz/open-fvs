@@ -1,6 +1,6 @@
       SUBROUTINE MSPPGT (WK3, IPNT, ILIMIT)
 ***********************************************************************
-C MISTOE $Id: msppgt.f 2451 2018-07-11 18:10:16Z gedixon $
+*  **MSPPGT--MS  DATE OF LAST REVISION:  06/25/13
 *----------------------------------------------------------------------
 *  Purpose:
 *     Get the mistletoe model data for a given stand.

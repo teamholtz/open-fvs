@@ -1,7 +1,7 @@
       SUBROUTINE SDEFLN (LNOTBK,ARRAY,KEYWRD,B0,B1,KARD,IS)
       IMPLICIT NONE
 C----------
-C BASE $Id: sdefln.f 2879 2019-12-07 00:03:48Z lancedavid $
+C  $Id: sdefln.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 COMMONS
 C
@@ -46,7 +46,7 @@ C----------
         IF (LNOTBK(2)) B0(IGSP)=ARRAY(2)
         IF (LNOTBK(3)) B1(IGSP)=ARRAY(3)
  25     CONTINUE
-        ILEN=ISPGRP(-IS,92)
+        ILEN=ISPGRP(-IS,52)
         WRITE (JOSTND,30) KARD(1)(1:ILEN),IS,B0(IGSP),B1(IGSP)
 C----------
 C     IF (IS=0) ALL SPECIES WILL BE CHANGED IN FOLLOWING CODE:

@@ -1,5 +1,5 @@
 C----------
-C VOLUME $Id: r10tapo.f 2458 2018-07-22 19:09:30Z gedixon $
+C VOLUME $Id: r10tapo.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
 C----------
 !== last modified  4-9-2002
       SUBROUTINE R10TAPO(DBHOB,HT2,LTYPE,MTOPP,CHK,NLOG,HMERCH,CL,SH,

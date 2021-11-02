@@ -1,7 +1,7 @@
       SUBROUTINE FMSDIT
       IMPLICIT NONE
 C----------
-C FIRE-BASE $Id: fmsdit.f 2561 2018-11-17 00:28:06Z lancedavid $
+C  $Id: fmsdit.f 2359 2018-05-18 17:35:04Z lancedavid $
 C----------
 C
 C     PART OF THE FIRE MODEL EXTENSION. THIS ROUTINE IS ENTERED
@@ -29,7 +29,7 @@ C
 
       INTEGER I, J
       REAL    CYCLEN, NEWBOT, OLDBOT
-      LOGICAL DEBUG
+      LOGICAL DEBUG,LPPE
       REAL    TONREM, X
 
 C-----------
@@ -125,7 +125,10 @@ C     snags that are picked up during the inventory.  Set the year
 C     of death equal to the mortality measurement period.  These
 C     trees include "OLD" dead and "RECENT" mortlity.
 
-      IF (LFMON2) CALL FMSADD (IY(1)-IFIX(FINTM),3)
+C     Only make this call when the PPE is not being used.
+
+      CALL PPEATV (LPPE)
+      IF (.NOT.LPPE .AND. LFMON2) CALL FMSADD (IY(1)-IFIX(FINTM),3)
  
       RETURN
       END

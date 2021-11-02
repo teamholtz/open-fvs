@@ -1,7 +1,7 @@
       SUBROUTINE HTONT(ISPC,D_IN,Q_IN,BA_FT,HT_FT)
-      IMPLICIT NONE
+	IMPLICIT NONE
 C----------
-C CANADA-ON $Id: htont.f 3788 2021-09-13 23:08:03Z donrobinson $
+C  **HTONT--ON  DATE OF LAST REVISION:   19-Jun-08
 C----------
 C  THIS SUBROUTINE DOES THE ACTUAL HEIGHT CALCULATIONS FOR 
 C  THE ONTARIO VARIANT. THE EQUATIONS WERE MOVED FROM
@@ -23,20 +23,20 @@ COMMONS
       PARAMETER (MAXEQ_SP =  8)
 
       INTEGER   ISPC,ISPC2
-      REAL      D_IN,Q_IN,BA_FT,HT_FT
-      REAL      D2_IN,Q2_IN, BA2_FT,HT2_FT,NEWDBH_IN
+	REAL      D_IN,Q_IN,BA_FT,HT_FT
+	REAL      D2_IN,Q2_IN, BA2_FT,HT2_FT,NEWDBH_IN
 
       LOGICAL   DEBUG,LSPOK
-      INTEGER   OSPMAP_P(MAXSP),OSPMAP_SP(MAXSP)
-      INTEGER   KSP
-      REAL      BAM,DBHM,DBHQM,SIM,HTM,SHTM,TPHM,X
-      REAL      NUM,DEN
-    
-      REAL      B0(MAXEQ_P),B1(MAXEQ_P),B2(MAXEQ_P)
-      REAL      BSI(MAXEQ_P),BDBHQ(MAXEQ_P),BBA(MAXEQ_P)
-    
-      REAL      ALPHA(MAXEQ_SP),DELTA(MAXEQ_SP),BETA(MAXEQ_SP)
-      REAL      PHI(MAXEQ_SP),GAMMA(MAXEQ_SP)
+	INTEGER   OSPMAP_P(MAXSP),OSPMAP_SP(MAXSP)
+	INTEGER   KSP
+	REAL      BAM,DBHM,DBHQM,SIM,HTM,SHTM,TPHM,X
+	REAL      NUM,DEN
+	
+	REAL      B0(MAXEQ_P),B1(MAXEQ_P),B2(MAXEQ_P)
+	REAL      BSI(MAXEQ_P),BDBHQ(MAXEQ_P),BBA(MAXEQ_P)
+	
+	REAL      ALPHA(MAXEQ_SP),DELTA(MAXEQ_SP),BETA(MAXEQ_SP)
+	REAL      PHI(MAXEQ_SP),GAMMA(MAXEQ_SP)
 
 C  INDEX TO SPECIES SPECIFIC COEFFICIENTS FOR HEIGHT EQUATIONS
 C  USING PENNER (_P) DIAMETER-HEIGHT MODELS. THESE CORRESPOND
@@ -153,35 +153,35 @@ C     VARIABLES TO CONVERT TO METRIC EQUIVALENTS
 
       DBHM   = D_IN  * INtoCM
       BAM    = BA_FT * FT2pACRtoM2pHA
-      DBHQM  = Q_IN * INtoCM
+	DBHQM  = Q_IN * INtoCM
 
       SIM    = SITEAR(ISISP) * FTtoM
-      TPHM   = TPROB * HAtoACR
-      SHTM   = AVH * FTtoM
+	TPHM   = TPROB * HAtoACR
+	SHTM   = AVH * FTtoM
 
 C     NOTE THAT THE SHARMA-PARTON MODEL IS NOT USED IN CYCLE 1, AVOIDING
 C     THE NON-DEFINITION OF STAND AVERAGE HEIGHT
-    
+	
       KSP = OSPMAP_SP(ISPC)
       IF (ICYC.GT.1 .AND. KSP.NE.0) THEN  ! Sharma-Parton height model
-      HTM = 1.3 + (ALPHA(KSP)*(SHTM**DELTA(KSP)))
+	  HTM = 1.3 + (ALPHA(KSP)*(SHTM**DELTA(KSP)))
      >  * (1.0-EXP(-BETA(KSP)*((TPHM/BAM)**PHI(KSP))* DBHM))**GAMMA(KSP)
-          HT_FT = HTM  * MtoFT
+     	  HT_FT = HTM  * MtoFT
       ELSE ! Penner height model
         KSP = OSPMAP_P(ISPC)
         IF (KSP.GT.0) THEN
-          HTM =   1.3
+	    HTM =   1.3
      >            + (B0(KSP)
      >            + (BSI(KSP)   * SIM)
      >            + (BDBHQ(KSP) * DBHQM )
      >            + (BBA(KSP)   * BAM ))
      >            * (1.0 - EXP(-B1(KSP) * DBHM**B2(KSP)))
-          HT_FT = HTM  * MtoFT
+	    HT_FT = HTM  * MtoFT
         ELSE  ! don't grow
-          HT_FT = HT_FT + 0.001
-        ENDIF
-      ENDIF
-    
+	    HT_FT = HT_FT + 0.001
+	  ENDIF
+	ENDIF
+	
       RETURN
 C
 C     ENTRY POINT TO COMPUTE DIAMETER GIVEN HEIGHT (FROM RGNTSW)
@@ -192,24 +192,23 @@ C
       ENTRY ONHTDBH (ISPC2,D2_IN,BA2_FT,HT2_FT,Q2_IN,  NEWDBH_IN)
 
       DBHM  = D2_IN  * INtoCM
-      BAM   = BA2_FT * FT2pACRtoM2pHA
-      HTM   = HT2_FT * FTtoM
-      DBHQM = Q2_IN  * INtoCM
-    
+	BAM   = BA2_FT * FT2pACRtoM2pHA
+	HTM   = HT2_FT * FTtoM
+	DBHQM = Q2_IN  * INtoCM
+	
       SIM   = SITEAR(ISISP) * FTtoM
-      TPHM  = TPROB * HAtoACR
-      SHTM  = AVH   * FTtoM
-    
+	TPHM  = TPROB * HAtoACR
+	SHTM  = AVH   * FTtoM
+	
 c     Pre-compute numerator and denominator terms of inverted Sharma-Parton model.
 c     If NUM is <0 the equation has broken down; revert to Penner model      
       KSP = OSPMAP_SP(ISPC2)
       IF (KSP.NE.0) THEN
-        NUM = 1.0-
-     >    ((HTM-1.3)/(ALPHA(KSP)*SHTM**DELTA(KSP)))**(1.0/GAMMA(KSP))
+	  NUM = 1.0-((HTM-1.3)/(ALPHA(KSP)*SHTM**DELTA(KSP)))**(1.0/GAMMA(KSP))
         DEN = (BETA(KSP)*(TPHM/BAM)**PHI(KSP))
-        LSPOK = .TRUE.
-        IF (NUM .LT. 1.0E-3) LSPOK = .FALSE.
-      ENDIF
+      	LSPOK = .TRUE.
+	  IF (NUM .LT. 1.0E-3) LSPOK = .FALSE.
+	ENDIF
 
       IF (ICYC.GT.1 .AND. KSP.NE.0 .AND .LSPOK) THEN ! inverse S-P ht model
         X = (-LOG(NUM)/DEN) * CMtoIN
@@ -226,5 +225,5 @@ c            of its assymptotic value, to prevent negative diameter prediction
       ENDIF
       NEWDBH_IN = X
 
-      RETURN
+ 	RETURN
       END

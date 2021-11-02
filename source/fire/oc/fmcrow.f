@@ -1,7 +1,7 @@
       SUBROUTINE FMCROW
       IMPLICIT NONE
 C----------
-C FIRE-OC $Id: fmcrow.f 3758 2021-08-25 22:42:32Z lancedavid $
+C  **FMCROW  FIRE-OC DATE OF LAST REVISION:  06/15/15
 C----------
 C     CALLED FROM: FMSDIT, FMPRUN
 C     CALLS        RDPSRT
@@ -110,7 +110,7 @@ C    49 = OTHER HARDWOODS          Cal black oak    21
      >             11,11,11,11,15,15,15,13,13,11,
      >             16,18,19, 7,11,17,17,21,17,21,
      >             21,21,17, 5,44,23,10,17,56,29,
-     >             46,17,60,41,17,64,17,17,21,19/
+     >             46,17,60,41,17,64,17,17,21/
 
 
 C     CHECK FOR DEBUG

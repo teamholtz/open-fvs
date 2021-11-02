@@ -1,7 +1,7 @@
       SUBROUTINE CHGET
       IMPLICIT NONE
 C----------
-C PG $Id: chget.f 2944 2020-02-03 22:59:12Z lancedavid $
+C  $Id: chget.f 2362 2018-05-18 17:43:47Z lancedavid $
 C----------
 C
 C     READ THE ALL-DATA CHARACTER DATA FROM THE DA FILE.
@@ -99,11 +99,11 @@ C
    60 CONTINUE
    
 C
-      DO J=1,6
-        DO I=1,3
-          CALL CHREAD(CBUFF,IPNT,LNCBUF,IONSP(J)(I:I),2)
-        ENDDO
-      ENDDO
+      DO 80 J=1,6
+      DO 70 I=1,3
+      CALL CHREAD(CBUFF,IPNT,LNCBUF,IONSP(J)(I:I),2)
+   70 CONTINUE
+   80 CONTINUE
 C
       DO 85 I=1,6
          CALL CHREAD (CBUFF,IPNT,LNCBUF,ALLSUB(I:I),2)
@@ -116,11 +116,10 @@ C
       ENDIF
 C
       IF (ITST5.GT.0) THEN
-         DO J=1,ITST5
-           DO I=1,8
-             CALL CHREAD (CBUFF,IPNT,LNCBUF,CTSTV5(J)(I:I),2)
-           ENDDO
-         ENDDO
+         DO 95 J=1,ITST5
+         DO 95 I=1,8
+         CALL CHREAD (CBUFF,IPNT,LNCBUF,CTSTV5(J)(I:I),2)
+   95    CONTINUE
       ENDIF
       IF (ICACT.GT.0) THEN
          DO I=1,ICACT
@@ -159,23 +158,14 @@ C
       CALL CHREAD(CBUFF,IPNT,LNCBUF,PTGNAME(J)(I:I),2)
   111 CONTINUE
   112 CONTINUE
-C
-      DO 114 I=1,2
-      CALL CHREAD(CBUFF,IPNT,LNCBUF,VARACD(I:I),2)
-  114 CONTINUE
-C
-      DO 115 I=1,7
-      CALL CHREAD(CBUFF,IPNT,LNCBUF,CALCSDI(I:I),2)
-  115 CONTINUE
-C
+
       CALL DBSCHGET(CBUFF,IPNT,LNCBUF)
       CALL VARCHGET(CBUFF,IPNT,LNCBUF)
       CALL MSCHGET(CBUFF,IPNT,LNCBUF)
-C
+
 C     Read dummy character as last read and finalize character 
 C     variable retrieval, last parameter is 3 to specify.
-C
       CALL CHREAD(CBUFF,IPNT,LNCBUF,CDMB,3)
-C
+
       RETURN
       END

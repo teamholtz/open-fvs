@@ -1,7 +1,7 @@
       SUBROUTINE FMDYN (SM,LG,ITYP,XPTS,EQWT,IPTR,ICLSS,LDYN,FMD)
       IMPLICIT NONE
 C----------
-C FIRE-BASE $Id: fmdyn.f 2462 2018-07-26 14:39:59Z gedixon $
+C  $Id: fmdyn.f 2359 2018-05-18 17:35:04Z lancedavid $
 C----------
 C     CALLED FROM: FMCFMD
 C

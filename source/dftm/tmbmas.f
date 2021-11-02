@@ -1,7 +1,7 @@
       SUBROUTINE TMBMAS 
       IMPLICIT NONE
 C---------- 
-C DFTM $Id: tmbmas.f 2446 2018-07-09 22:54:33Z gedixon $
+C  **TMBMAS DATE OF LAST REVISION:  04/01/13 
 C---------- 
 C     
 C     CALCULATES BIOMASS  OF THE NOMINAL BRANCHES     

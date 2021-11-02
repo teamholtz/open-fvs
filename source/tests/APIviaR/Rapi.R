@@ -1,9 +1,21 @@
 ## R code to test the FVS api
 
-library(rFVS)
+# find and get the R code
+cwd = getwd()
+while(TRUE)
+{
+  if (length(dir(pattern="rFVS")) > 0) break
+  setwd("..")
+  if (nchar(getwd()) < 4) {setwd(cwd);stop("Cannot find R code.")}
+}
+setwd("rFVS/R")
+
+# fetching R code
+for (rf in dir ()) source (rf)
+setwd(cwd)
 
 # load the FVS library
-fvsLoad("FVSie","../../bin")
+fvsLoad("qFVSie","../../bin")
 
 # define tree attribute list names
 treeAttrs = c("id","species","mort","tpa","dbh","dg","ht",
@@ -28,9 +40,7 @@ fvsRun(2,2030)
 fvsGetStandIDs()
 
 # get and output some event monitor vars
-fvsGetEventMonitorVariables(c("year","atpa","aba","mybba","myaba"))
-fvsSetEventMonitorVariables(c("myaba"=100,"another"=40))
-fvsGetEventMonitorVariables(c("myaba","another"))
+fvsGetEventMonitorVariables(c("year","atpa","aba"))
 
 # get and output tree attributes
 fvsGetTreeAttrs(treeAttrs)
@@ -43,7 +53,6 @@ cat ("rtn = ",rtn,"\n")
 
 # run to 2060 stop prior to adding increments
 fvsRun(5,2060)
-
 trees=fvsGetTreeAttrs(treeAttrs)
 #set mortality and growth to zero
 trees$mort = 0

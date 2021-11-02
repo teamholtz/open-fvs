@@ -1,7 +1,7 @@
       SUBROUTINE FMCONS(FMOIS,BTYPE,PLAREA,IYR,ICALL,PSMOKE,PSBURN)
       IMPLICIT NONE
 C----------
-C FIRE-SO $Id: fmcons.f 2561 2018-11-17 00:28:06Z lancedavid $
+C FIRE-SO $Id: fmcons.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 *     CALLED FROM: FMBURN
 *                  FMPOFL
@@ -30,6 +30,7 @@ C.... PARAMETER STATEMENTS.
 C.... PARAMETER INCLUDE FILES.
 
       INCLUDE 'PRGPRM.F77'
+C      INCLUDE 'PPEPRM.F77'
       INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.
@@ -116,7 +117,7 @@ C
         ENDDO
       ENDDO
 C
-C     SEPARATE OUT THE CALCULATIONS:
+C     LET'S SEPARATE OUT THE CALCULATIONS:
 C
 C     FIRST, BURN UNPILED FUELS, IF A 'NATURAL' OR PRESCRIBED FIRE:
 C
@@ -216,12 +217,8 @@ c                  uses 0-1 scaled prburn: OK??
           YDIA(4) = YDIA(3)
           DFRED = ALGSLP(DEPTH, XDIA2, YDIA, 4)
 
-          IF (BURNZ(1,11).LE.1E-20) THEN
-            PRBURN(1,11) = 0.0
-          ELSE
-            PRBURN(1,11) = (DFRED * 12.1) / BURNZ(1,11)
-            PRBURN(1,11) = MAX(0.,MIN(PRBURN(1,11),1.)) ! PRBURN 0<=X<=1
-          ENDIF
+          PRBURN(1,11) = (DFRED * 12.1) / BURNZ(1,11)
+          PRBURN(1,11) = MAX(0.,MIN(PRBURN(1,11),1.)) ! PRBURN 0<=X<=1
           PRDUF = PRBURN(1,11) * 100.
 
         ENDIF                     ! NON-ACTIVITY FUELS / ACTIVITY FUELS
@@ -372,7 +369,7 @@ C
         ENDDO
 C
 C       Only calculate smoke from live stuff if it is a 'proper' fire.
-C       We are not burning live stuff from a fuel treatment fire.
+C       We aren't burning live stuff from a fuel treatment fire.
 C
         IF (BTYPE .EQ. 0) THEN
           DO IL=1,2

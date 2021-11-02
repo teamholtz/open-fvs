@@ -1,7 +1,7 @@
       SUBROUTINE FORMCL(ISPC,IFOR,D,FC)
       IMPLICIT NONE
 C----------
-C SN $Id: formcl.f 2455 2018-07-19 19:58:41Z gedixon $
+C  **FORMCL--SN     DATE OF LAST REVISION:  06/05/08
 C----------
 C
       INTEGER IFOR,ISPC

@@ -1,7 +1,7 @@
       SUBROUTINE CLAUESTB
       IMPLICIT NONE
 C----------
-C CLIM-BASE $Id: clauestb.f 2442 2018-07-09 14:51:05Z gedixon $
+C  $Id: clauestb.f 2208 2018-04-17 16:19:09Z gedixon $
 C----------
 C
 C     CLIMATE EXTENSION--AUTOMATIC ESTABLISHMENT ROUTINE 

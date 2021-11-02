@@ -1,7 +1,7 @@
       BLOCK DATA BLKDAT
       IMPLICIT NONE
 C----------
-C KT $Id: blkdat.f 2449 2018-07-11 14:53:35Z gedixon $
+C  **BLKDAT--KT   DATE OF LAST REVISION:  02/22/11
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.

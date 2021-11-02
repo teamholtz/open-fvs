@@ -1,7 +1,7 @@
       SUBROUTINE BWEDAM (TOTP,TOTR,AVPRBO)
       IMPLICIT NONE
 C----------
-C WSBWE $Id: bwedam.f 2460 2018-07-24 14:41:48Z gedixon $
+C  **BWEDAM             DATE OF LAST REVISION:  06/17/13
 C----------
 C
 C     ANNUAL FOLIAGE DAMAGE MODEL.

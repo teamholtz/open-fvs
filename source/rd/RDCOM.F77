@@ -1,6 +1,6 @@
 CODE SEGMENT RDCOM
 C----------
-C RD $Id: RDCOM.F77 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDCOM       LAST REVISION:  03/24/15
 C----------
 C REVISION HISTORY:
 C   27-JUNE-2002 Lance David

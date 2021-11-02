@@ -1,7 +1,7 @@
       SUBROUTINE MISPUTZ(ITREE,IDMR)
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: misputz.f 2461 2018-07-24 18:00:57Z gedixon $
+C  $Id: misputz.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 *  **MISPUTZ--MS  Date of last revision:  03/06/01
 *----------------------------------------------------------------------

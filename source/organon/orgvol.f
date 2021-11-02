@@ -1,6 +1,6 @@
-C----------
-C ORGANON $Id: orgvol.f 2453 2018-07-12 22:20:53Z gedixon $
-C----------
+C
+C ORGANON $Id: orgvol.f 0000 2018-02-14 00:00:00Z gedixon $
+C
       SUBROUTINE VOLCAL(VERSION,SPP,CFTD,CFSH,LOGLL,LOGML,LOGTD,LOGSH,
      1                  LOGTA,DBH,HT,CR,VERROR,TERROR,VWARNING,
      2                  TWARNING,IERROR,CFVOL,BFVOL)

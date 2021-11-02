@@ -1,7 +1,7 @@
       SUBROUTINE SVESTB (I1)
       IMPLICIT NONE
 C----------
-C BASE $Id: svestb.f 2438 2018-07-05 16:54:21Z gedixon $
+C  $Id: svestb.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C     STAND VISUALIZATION GENERATION
 C     N.L.CROOKSTON -- RMRS MOSCOW -- NOVEMBER 1998

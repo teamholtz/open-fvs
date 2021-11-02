@@ -1,7 +1,7 @@
       SUBROUTINE PTSSC(IPLTNO)
       IMPLICIT NONE
 C----------
-C LPMPB $Id: ptssc.f 2450 2018-07-11 17:28:41Z gedixon $
+C  **PTSSC         DATE OF LAST REVISION:  07/02/10
 C----------
 C
 C     LIBRARY ROUTINE TO SET SCALES

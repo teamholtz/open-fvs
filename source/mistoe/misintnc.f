@@ -1,6 +1,6 @@
       SUBROUTINE MISINT
 ***********************************************************************
-C MISTOE $Id: misintnc.f 3758 2021-08-25 22:42:32Z lancedavid $
+C MISTOE $Id: misint.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
 *----------------------------------------------------------------------
 *  Purpose:
 *     Mistletoe parameter initialization routine. This routine is
@@ -59,12 +59,12 @@ C.... Data statements.
 C.... Species character representations
 
       DATA (ACSP(I),I=1,MAXSP)
-     &   /'OS','SP','DF','WF','MA','IC','BO','TO','RF','PP','OH', 'RW'/
+     &   /'OS','SP','DF','WF','MA','IC','BO','TO','RF','PP','OH'/
 
 C.... Species affected by mistletoe
 
       DATA (AFIT(I),I=1,MAXSP)
-     &   /  0,   1,   1,   1,   0,   0,   0,   0,   1,   1,   0,   0/
+     &   /  0,   1,   1,   1,   0,   0,   0,   0,   1,   1,   0/
 
 C.... Diameter growth rates
 
@@ -79,7 +79,6 @@ C.... Diameter growth rates
      &   1.0,1.0,1.0,1.0,1.0,1.0,1.0,
      &   1.0,1.0,1.0,.98,.95,.70,.50,
      &   1.0,1.0,1.0,.98,.86,.73,.50,
-     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0,
      &   1.0,1.0,1.0,1.0,1.0,1.0,1.0/
 
 C.... Height growth potential rates
@@ -111,7 +110,6 @@ C.... set here.
      &   1.0,1.0,1.0,1.0,1.0,1.0,1.0,
      &   1.0,1.0,1.0,1.0,1.0,1.0,1.0,
      &   1.0,1.0,1.0,1.0,1.0,1.0,1.0,
-     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0,
      &   1.0,1.0,1.0,1.0,1.0,1.0,1.0/
 
 C.... Mortality coefficients
@@ -127,7 +125,6 @@ C.... Mortality coefficients
      &   0.0,0.0,0.0,
      &   0.0,0.00159,0.00508,
      &   0.00681,-0.00580,0.00935,
-     &   0.0,0.0,0.0,
      &   0.0,0.0,0.0/
 
 C.... Check for debug.

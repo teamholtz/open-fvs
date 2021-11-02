@@ -1,6 +1,6 @@
       SUBROUTINE MISRAN(IARRAY,ISIZE)
 ***********************************************************************
-C MISTOE $Id: misran.f 2451 2018-07-11 18:10:16Z gedixon $
+*  **MISRAN--MS  Date of last revision:  06/16/00
 *----------------------------------------------------------------------
 *  Purpose:
 *     Randomly inserts integers from 1 to ISIZE into the first ISIZE

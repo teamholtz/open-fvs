@@ -1,7 +1,7 @@
       SUBROUTINE LOG(IO,IZ,IM,DBH,HT,SH,TD,GOL,NL,VLOG,TDL,HLL,DBT,TVOL,
      1               GROS,BAR,HTRUNC)
 C----------
-C CANADA-BC $Id: log.f 3783 2021-09-13 22:08:32Z donrobinson $
+C  $Id: log.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
 C----------
 C
 CC         ***** V E R S I O N    # 4.1   F E B R U A R Y    1 9 9 4 *****
@@ -202,7 +202,7 @@ c     IZ=IM
 C
 CC  CALCULATE DIB AT STUMP HEIGHT
 C
-      PER=1.0-SQRT(ZZZ)
+2     PER=1.0-SQRT(ZZZ)
       DH=DBH/HT
       FF=B(1)*DBH**B(2)*B(3)**DBH
       DDD=DBH
@@ -227,7 +227,7 @@ c>
 C
 CC    calculate the diameter at the point of top kill (if any)
 C
-      DIAM = 0.0
+	DIAM = 0.0
       IF (HTRUNC .LT. HT) THEN
         Y=HTRUNC/HT
         X=(1-SQRT(Y))/PER
@@ -257,7 +257,7 @@ C
 c>        
       IF (HTRUNC .LT. HM) HM=HTRUNC
 c>      
-      NL=INT((HM-SH)/GOL+1.0,2)
+      NL=(HM-SH)/GOL+1.0
       HLL=HM-(NL-1.0)*GOL-SH
 C
 CC  CALCULATE TOP DIAMETERS AND VOLUMES FOR EACH LOG
@@ -269,15 +269,15 @@ C
       X2=0.3
       IF (X1.GT.HM) X1=HM
       K1=2
-      Y=X2/HT
-      X=(1.0-SQRT(Y))/PER
-      EXPO=EX(B(4),B(5),B(6),B(7),B(8),Y,DH)
-      DI3=FF*X**EXPO
+       Y=X2/HT
+       X=(1.0-SQRT(Y))/PER
+       EXPO=EX(B(4),B(5),B(6),B(7),B(8),Y,DH)
+       DI3=FF*X**EXPO
       Y=X1/HT
-      X=(1.0-SQRT(Y))/PER
-      EXPO=EX(B(4),B(5),B(6),B(7),B(8),Y,DH)
-      TDL(1)=FF*X**EXPO
-      VLOG(1)=CONS*DI3**2*(0.3-SH)+VLM(X2,X1,DI3,TDL(1))
+       X=(1.0-SQRT(Y))/PER
+       EXPO=EX(B(4),B(5),B(6),B(7),B(8),Y,DH)
+       TDL(1)=FF*X**EXPO
+       VLOG(1)=CONS*DI3**2*(0.3-SH)+VLM(X2,X1,DI3,TDL(1))
       TVOL=TVOL+VLOG(1)
       IF (NL.LT.2) GO TO 15
 9     DO 5 I=K1,NL
@@ -310,7 +310,7 @@ C
       STMV=CONS*DI3**2*0.3+VLM(HL,HU,DI3,DBT)
       GO TO 7
 6     STMV=CONS*DI3**2*SH
-7     DD=TD
+7    	DD=TD
       IF (DI3.LT.TD) DD=DI3
 c>      
       TOPV = 0.0

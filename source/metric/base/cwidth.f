@@ -1,7 +1,7 @@
       SUBROUTINE CWIDTH
       IMPLICIT NONE
 C----------
-C METRIC-BASE $Id: cwidth.f 3806 2021-09-14 18:50:24Z donrobinson $
+C  $Id: cwidth.f 2361 2018-05-18 17:40:40Z lancedavid $
 C----------
 C  THIS SUBROUTINE COMPUTES A CROWN WIDTH FOR EACH TREE RECORD USING
 C  EITHER USER-DEFINED EQUATIONS OR DEFAULT EQUATIONS. IT ALSO
@@ -11,19 +11,10 @@ C  WIDTHS, AND FROM **UPDATE** TO LOAD THE END-OF-CYCLE VALUES.
 C----------
 COMMONS
 C
-C
       INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
-C
       INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'CWDCOM.F77'
-C
-C
       INCLUDE 'METRIC.F77'
 C
 COMMONS
@@ -40,7 +31,7 @@ C----------
       INTEGER IG,IULIM,IGRP,ISPCC,IDATE,IACTK,NP,ITODO,NTODO,IWHO,IICR
       INTEGER ISPC,I
       REAL P,D,H,CR,CW
-      REAL DM
+	REAL    DM
 
 C----------
 C  DATA STATEMENTS.
@@ -64,9 +55,9 @@ C----------
       ISPC=ISP(I)
       P=PROB(I)
       D=DBH(I)
-      DM=DBH(I)*INtoCM
+	DM=DBH(I)*INtoCM
       H=HT(I)
-      CR=FLOAT(ICR(I))
+	CR=FLOAT(ICR(I))
       IICR=ICR(I)
       CRWDTH(I)=0.0
       IF(LSPCWE(ISPC))THEN
@@ -79,9 +70,9 @@ C----------
         ENDIF
         CRWDTH(I) = CW*MtoFT
       ELSE
-        IWHO=0
+	  IWHO=0
         CALL CWCALC(ISPC,P,D,H,CR,IICR,CW,IWHO,JOSTND)
-        CRWDTH(I) = CW
+	  CRWDTH(I) = CW
       ENDIF
       IF(DEBUG)WRITE(JOSTND,*)' LIVE: I,ISPC,D,H,CW= ',
      &I,ISPC,D,CR,CW 
@@ -98,7 +89,7 @@ C----------
       ISPC=ISP(I)
       P=PROB(I)
       D=DBH(I)
-      DM=DBH(I)*INtoCM
+	DM=DBH(I)*INtoCM
       H=HT(I)
       CR=FLOAT(ICR(I))
       CRWDTH(I)=0.0
@@ -115,7 +106,7 @@ C----------
       ELSE
         IWHO=0
         CALL CWCALC(ISPC,P,D,H,CR,IICR,CW,IWHO,JOSTND)
-        CRWDTH(I) = CW
+	  CRWDTH(I) = CW
       ENDIF
 
       IF(DEBUG)WRITE(JOSTND,*)' DEAD: I,ISPC,D,H,CW= ',

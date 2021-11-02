@@ -1,7 +1,7 @@
       SUBROUTINE FVS(IRTNCD)
       IMPLICIT NONE
 C----------
-C BASE $Id: fvs.f 3751 2021-08-19 15:02:28Z lancedavid $
+C  $Id: fvs.f 2355 2018-05-18 17:21:33Z lancedavid $
 C----------
 C
 C     THE PROGNOSIS MODEL FOR STAND DEVELOPMENT
@@ -50,15 +50,14 @@ C
 !DEC$ ATTRIBUTES DLLEXPORT, C, DECORATE, ALIAS : "FVS" :: FVS
 !DEC$ ATTRIBUTES REFERENCE :: IRTNCD
 
-Cx      INTEGER I,IA,N,K,NTODO,ITODO,IACTK,IDAT,NP                  !Remove these
-      INTEGER I,IA,N,K
+      INTEGER I,IA,N,K,NTODO,ITODO,IACTK,IDAT,NP
       REAL STAGEA,STAGEB
       LOGICAL DEBUG,LCVGO
       INTEGER IBA
-Cx      CHARACTER*150 SYSCMD                                        !Remove these
-Cx      INTEGER MYACT(1)                                            !Remove these
-Cx      REAL PRM(1)                                                 !Remove these
-Cx      DATA MYACT/100/                                             !Remove these
+      CHARACTER*150 SYSCMD
+      INTEGER MYACT(1)
+      REAL PRM(1)
+      DATA MYACT/100/
       INTEGER IRSTRTCD,ISTOPDONE,IRTNCD,lenCl
 C
 C     ******************     EXECUTION BEGINS     ******************
@@ -285,6 +284,10 @@ C     LOAD OLD VOLUME VARIABLES WITH CYCLE 0 VOLUMES
 C
       CALL FVSSTD (1)
 C
+C     IF NAT CRUISE OUTPUT IS REQUESTED ... CALL NATCRZ PRINTER.
+C
+      CALL NATCRZ (1)
+C
 C     DONE WITH DEAD TREES THAT WERE PRESENT IN THE INVENTORY. PURGE
 C     THEM FROM THE LIST (VIA RESET POINTER)
 C
@@ -364,19 +367,23 @@ C     IF RUNNING FVSSTAND POST-PROCESSOR, CALL FILE PRINTER.
 C
       CALL FVSSTD (1)
 C
+C     IF NAT CRUISE OUTPUT IS REQUESTED ... CALL NATCRZ PRINTER.
+C
+      CALL NATCRZ (1)
+C
 C     FIND AND RUN ANY SCHEDULED SYSTEM CALLS.
 C
-Cx      CALL OPFIND (1,MYACT,NTODO)                                        !Remove these
-Cx      IF (NTODO.GT.0) THEN                                               !Remove these
-Cx         DO ITODO=1,NTODO                                                !Remove these
-Cx            CALL OPGET(ITODO,1,IDAT,IACTK,NP,PRM)                        !Remove these
-Cx            IF (IACTK.EQ.MYACT(1)) THEN                                  !Remove these
-Cx               CALL OPGETC (ITODO,SYSCMD)                                !Remove these
-Cx               CALL OPDONE (ITODO,IY(ICYC+1)-1)                          !Remove these
-Cx               IF (SYSCMD.NE.' ') CALL SYSTEM(SYSCMD)                    !Remove these
-Cx            ENDIF                                                        !Remove these
-Cx         ENDDO                                                           !Remove these
-Cx      ENDIF                                                              !Remove these
+      CALL OPFIND (1,MYACT,NTODO)
+      IF (NTODO.GT.0) THEN
+         DO ITODO=1,NTODO
+            CALL OPGET(ITODO,1,IDAT,IACTK,NP,PRM)
+            IF (IACTK.EQ.MYACT(1)) THEN
+               CALL OPGETC (ITODO,SYSCMD)
+               CALL OPDONE (ITODO,IY(ICYC+1)-1)
+               IF (SYSCMD.NE.' ') CALL SYSTEM(SYSCMD)
+            ENDIF
+         ENDDO
+      ENDIF
 C
       IF ( ICYC .LT. NCYC ) THEN
         CALL ClearRestartCode

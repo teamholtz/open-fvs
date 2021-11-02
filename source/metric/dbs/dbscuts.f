@@ -1,7 +1,7 @@
       SUBROUTINE DBSCUTS(IWHO,KODE)
       IMPLICIT NONE
 C----------
-C METRIC-DBS $Id: dbscuts.f 2464 2018-07-27 15:36:37Z gedixon $
+C  $Id: dbscuts.f 2361 2018-05-18 17:40:40Z lancedavid $
 C----------
 C     PURPOSE: TO OUTPUT THE CUTS LIST DATA TO THE DATABASE
 C 

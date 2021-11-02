@@ -1,7 +1,7 @@
       BLOCK DATA ESBLKD
       IMPLICIT NONE
 C----------
-C STRP $Id: esblkd.f 2456 2018-07-22 14:50:53Z gedixon $
+C   **ESBLKD--STRP   DATE OF LAST REVISION:   09/17/08
 C----------
 COMMONS
 C

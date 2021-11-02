@@ -1,7 +1,7 @@
       SUBROUTINE BWEIN(LKECHO)
       IMPLICIT NONE
 C----------
-C WSBWE $Id: bwein.f 2460 2018-07-24 14:41:48Z gedixon $
+C  $Id: bwein.f 1842 2016-06-30 22:20:31Z ldavid $
 C  **BWEIN                  DATE OF LAST REVISION:  03/23/17
 C----------
 C

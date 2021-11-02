@@ -1,7 +1,7 @@
       SUBROUTINE MISTOE
       IMPLICIT NONE
 C----------
-C CANADA-NEWMIST $Id: mistoe.f 2461 2018-07-24 18:00:57Z gedixon $
+C  $Id: mistoe.f 2319 2018-05-16 16:16:00Z gedixon $
 C----------
 *  **MISTOE--MS  Date of last revision:  03/10/05
 *----------------------------------------------------------------------

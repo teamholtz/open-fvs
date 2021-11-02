@@ -1,8 +1,8 @@
       SUBROUTINE BRTDEL(IVAC,IREC)
       IMPLICIT NONE
-C----------
-C WPBR $Id: brtdel.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **BRTDEL       DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C  This Blister Rust model subroutine is called from the FVS routine
 C  TREDEL.  It deletes and packs the blister rust tree lists.

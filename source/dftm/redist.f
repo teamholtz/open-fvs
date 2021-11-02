@@ -1,7 +1,7 @@
       SUBROUTINE REDIST(KP, INUM)   
       IMPLICIT NONE
 C---------- 
-C DFTM $Id: redist.f 2446 2018-07-09 22:54:33Z gedixon $
+C  **REDIST DATE OF LAST REVISION:  04/01/13
 C---------- 
 C     
 C     DFTM MODEL SUBROUTINE - JIM COLBERT - JAN 1978. 

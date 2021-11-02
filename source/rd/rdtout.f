@@ -1,7 +1,7 @@
       SUBROUTINE RDTOUT
       IMPLICIT NONE
 C----------
-C RD $Id: rdtout.f 3800 2021-09-14 00:22:52Z donrobinson $
+C  **RDTOUT      LAST REVISION:  09/04/14
 C----------
 C
 C  PRINTS A SUMMARY OF THE DISEASE INFORMATION WHICH WAS READ IN
@@ -104,8 +104,8 @@ C
             ENDIF  
  1070       FORMAT (12X,I2,'-',I3,'"',6X,F5.0,10X,F5.0)
  1080       FORMAT (12X,'  >',I3,'"',6X,F5.0,10X,F5.0)
- 1071       FORMAT (12X,I3,'-',I3,' CM',5X,F5.0,10X,F5.0)
- 1081       FORMAT (12X,'   >',I3,' CM',5X,F5.0,10X,F5.0)
+ 1071       FORMAT (11X,I3,'-',I3,' CM',5X,F5.0,10X,F5.0)
+ 1081       FORMAT (11X,'   >',I3,' CM',5X,F5.0,10X,F5.0)
    50    CONTINUE
 
    90 CONTINUE

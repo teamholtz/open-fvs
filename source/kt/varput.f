@@ -1,7 +1,7 @@
       SUBROUTINE VARPUT (WK3,IPNT,ILIMIT,REALS,LOGICS,INTS)
       IMPLICIT NONE
 C----------
-C KT $Id: varput.f 2449 2018-07-11 14:53:35Z gedixon $
+C KT $Id: varput.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C
 C     WRITE THE VARIANT SPECIFIC VARIABLES.

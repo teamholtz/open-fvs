@@ -1,7 +1,5 @@
       SUBROUTINE BMCNUM(ISTD,IYR)
-C----------
-C WWPB $Id: bmcnum.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+      
 c      CALLED BY: BMDRV
 ***********************************************************************
 *  **BMCNUM  Date of last revision: Aug, 1999 (AJM)

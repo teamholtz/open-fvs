@@ -1,6 +1,3 @@
-C----------
-C VOLUME $Id: segmnt.f 2458 2018-07-22 19:09:30Z gedixon $
-C----------
 !== last modified 03-25-2014
       SUBROUTINE SEGMNT(OPT,EVOD,LMERCH,MAXLEN,MINLEN,
      >  TRIM,NUMSEG,LOGLEN)

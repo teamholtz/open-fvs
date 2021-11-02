@@ -1,7 +1,5 @@
       SUBROUTINE BMSLSH (ISPC,TTREE,TVL,ISTD)                              
-C----------
-C WWPB $Id: bmslsh.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+      
 *     CALLED FROM: CUTS   [PROGNOSIS]
 *                  BMSANI [BEETLE]
 *                  BMSALV [BEETLE]  

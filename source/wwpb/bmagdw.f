@@ -1,7 +1,7 @@
       SUBROUTINE BMAGDW (ISTD,IYR)
-C----------
-C WWPB $Id: bmagdw.f 2460 2018-07-24 14:41:48Z gedixon $
-C----------
+***********************************************************************
+*  **BMAGDW  Date of last revision:  June 23, 1994
+*----------------------------------------------------------------------
 *  Purpose:
 *     Transfer some SDWP() to DDWP (falldown)
 *     Age 'SDWP()' and 'DDWP()' compartments by one year, using decay rates

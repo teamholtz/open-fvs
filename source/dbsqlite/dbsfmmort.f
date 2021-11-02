@@ -2,7 +2,7 @@
      -  VOKILL,KODE)
       IMPLICIT NONE
 C
-C DBSQLITE $Id: dbsfmmort.f 3793 2021-09-13 23:58:52Z donrobinson $
+C $Id: dbsfmmort.f 2377 2018-06-01 09:28:24Z nickcrookston $
 C
 C     PURPOSE: TO POPULATE A DATABASE WITH THE MORTALITY REPORT
 C              INFORMATION
@@ -26,51 +26,6 @@ C
 C
       INCLUDE 'PLOT.F77'
 C
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_ADDCOLIFABSENT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_BIND_DOUBLE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_BIND_INT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_BIND_TEXT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_CLOSE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLCNT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLDOUBLE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLINT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLISNULL
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLNAME
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLREAL
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLTEXT
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_COLTYPE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_ERRMSG
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_EXEC
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_FINALIZE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_OPEN
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_PREPARE
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_RESET
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_STEP
-  !DEC$ ATTRIBUTES DLLIMPORT :: FSQL3_TABLEEXISTS
-#if !(_WIN64)
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_ADDCOLIFABSENT' :: FSQL3_ADDCOLIFABSENT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_BIND_DOUBLE'    :: FSQL3_BIND_DOUBLE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_BIND_INT'       :: FSQL3_BIND_INT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_BIND_TEXT'      :: FSQL3_BIND_TEXT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_CLOSE'          :: FSQL3_CLOSE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLCNT'         :: FSQL3_COLCNT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLDOUBLE'      :: FSQL3_COLDOUBLE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLINT'         :: FSQL3_COLINT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLISNULL'      :: FSQL3_COLISNULL
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLNAME'        :: FSQL3_COLNAME
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLREAL'        :: FSQL3_COLREAL
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLTEXT'        :: FSQL3_COLTEXT
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_COLTYPE'        :: FSQL3_COLTYPE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_ERRMSG'         :: FSQL3_ERRMSG
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_EXEC'           :: FSQL3_EXEC
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_FINALIZE'       :: FSQL3_FINALIZE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_OPEN'           :: FSQL3_OPEN
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_PREPARE'        :: FSQL3_PREPARE
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_RESET'          :: FSQL3_RESET
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_STEP'           :: FSQL3_STEP
-  !DEC$ ATTRIBUTES ALIAS:'_FSQL3_TABLEEXISTS'    :: FSQL3_TABLEEXISTS
-#endif
-
 COMMONS
 C---
       INTEGER MXSP1
@@ -83,7 +38,7 @@ C---
       DIMENSION BAKILL(MXSP1),VOKILL(MXSP1),BAKILLB(MXSP1),
      -          VOKILLB(MXSP1)
       CHARACTER*2000 SQLStmtStr
-      CHARACTER(LEN=8) CSP1,CSP2,CSP3
+      CHARACTER(LEN=8) CSPECIES
 
       integer fsql3_tableexists,fsql3_exec,fsql3_bind_int,
      >        fsql3_prepare,fsql3_bind_double,fsql3_finalize,
@@ -92,7 +47,7 @@ C---
 
       IF(IMORTF.EQ.0) RETURN
       IF(IMORTF.EQ.2) KODE = 0
-
+      
       CALL DBSCASE(1)
       iRet = fsql3_exec (IoutDBref,"Begin;"//Char(0))
       iRet = fsql3_tableexists(IoutDBref,
@@ -102,9 +57,7 @@ C---
      -              'CaseID text not null,'//
      -              'StandID text not null,'//
      -              'Year Int null,'//
-     -              'SpeciesFVS text null,'//
-     -              'SpeciesPLANTS text null,'//
-     -              'SpeciesFIA text null,'//
+     -              'Species char null,'//
      -              'Killed_class1 real null,'//
      -              'Total_class1 real null,'//
      -              'Killed_class2 real null,'//
@@ -128,34 +81,38 @@ C---
          ENDIF
       ENDIF
         SQLStmtStr ='INSERT INTO FVS_Mortality (CaseID,'//
-     -    'StandID,Year,SpeciesFVS,SpeciesPLANTS,SpeciesFIA,'//
-     -    'Killed_class1,Total_class1,'//
+     -    'StandID,Year,Species,Killed_class1,Total_class1,'//
      -    'Killed_class2,'//
      -    'Total_class2,Killed_class3,Total_class3,Killed_class4,'//
      -    'Total_class4,Killed_class5,Total_class5,Killed_class6,'//
      -    'Total_class6,Killed_class7,Total_class7,Bakill,Volkill)'//
      -    " VALUES ('"//CASEID//"','"//TRIM(NPLT)//
-     -    "',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"//CHAR(0)
-
+     -    "',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"//CHAR(0)
+     
       iRet = fsql3_prepare(IoutDBref, SQLStmtStr)
       IF (iRet .NE. 0) THEN
          IMORTF = 0
          RETURN
       ENDIF
-
+      
       DO J = 1,MXSP1
         IF (TOTAL(J,8) .LE. 0) CYCLE 
         IF (J.EQ.MXSP1) THEN
-          CSP1='ALL'
-          CSP2='ALL'
-          CSP3='ALL'
+          CSPECIES='ALL'
         ELSE
+          IF(JSPIN(J).EQ.1)THEN
+            CSPECIES=ADJUSTL(JSP(J))
+          ELSEIF(JSPIN(J).EQ.2)THEN
+            CSPECIES=ADJUSTL(FIAJSP(J))
+          ELSEIF(JSPIN(J).EQ.3)THEN
+            CSPECIES=ADJUSTL(PLNJSP(J))
+          ELSE
+            CSPECIES=ADJUSTL(PLNJSP(J))
+          ENDIF
 C
-C     ASSIGN FVS, PLANTS AND FIA SPECIES CODES
-C
-          CSP1 = JSP(J)
-          CSP2 = PLNJSP(J)
-          CSP3 = FIAJSP(J)
+          IF(ISPOUT21.EQ.1)CSPECIES=ADJUSTL(JSP(J))
+          IF(ISPOUT21.EQ.2)CSPECIES=ADJUSTL(FIAJSP(J))
+          IF(ISPOUT21.EQ.3)CSPECIES=ADJUSTL(PLNJSP(J))
 
         ENDIF
 C
@@ -173,16 +130,8 @@ C
         iRet = fsql3_bind_int(IoutDBref,ColNumber,IYEAR)
         
         ColNumber=ColNumber+1
-        iRet = fsql3_bind_text(IoutDBref,ColNumber,CSP1,
-     >                                    len_trim(CSP1))
-
-        ColNumber=ColNumber+1
-        iRet = fsql3_bind_text(IoutDBref,ColNumber,CSP2,
-     >                                    len_trim(CSP2))
-
-        ColNumber=ColNumber+1
-        iRet = fsql3_bind_text(IoutDBref,ColNumber,CSP3,
-     >                                    len_trim(CSP3))
+        iRet = fsql3_bind_text(IoutDBref,ColNumber,CSPECIES,
+     >               len_trim(CSPECIES))              
 
         ColNumber=ColNumber+1
         iRet = fsql3_bind_double(IoutDBref,ColNumber,KILLEDB(J,1))
@@ -233,7 +182,7 @@ C
 
         iRet = fsql3_step(IoutDBref)
         iRet = fsql3_reset(IoutDBref)
-
+  
       ENDDO
       iRet = fsql3_finalize(IoutDBref)
       if (iRet.ne.0) then

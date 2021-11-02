@@ -1,7 +1,7 @@
       SUBROUTINE GRINIT
       IMPLICIT NONE
 C----------
-C OP $Id: grinit.f 2561 2018-11-17 00:28:06Z lancedavid $
+C OP $Id: grinit.f 2362 2018-05-18 17:43:47Z lancedavid $
 C----------
 C
 C  INITIALIZE PROGNOSIS MODEL VARIABLES
@@ -67,7 +67,6 @@ C
       DATA DBLK/'                          '/
       DATA NONE/'NONE'/
 C----------
-      VARACD = 'OP'
       CALL LNKINT
       DO 5 I=1,MAXSP
       SDIDEF(I) = 0.0
@@ -122,7 +121,6 @@ C----------
       LFLAGV = .FALSE.
       LBAMAX = .FALSE.
       LZEIDE = .FALSE.
-      CALCSDI = ' '
       CFMIN = 0.
       TCFMIN = 0.
       BFMIN = 0.
@@ -344,7 +342,7 @@ C
       INDS(2) = 1     ! HEIGHT-TO-CROWN BASE CALIBRATION ON
       INDS(3) = 1     ! DIAMETER GROWTH CALIBRATION ON
       INDS(4) = 1     ! STAND IS EVEN-AGED      
-      INDS(5) = 0     ! ORGANON TRIPLING OFF
+      INDS(5) = 0     ! ORGANON TRIPPLING OFF
       INDS(6) = 0     ! STAND HAS NOT BEEN PRUNED
       INDS(7) = 0     ! STAND HAS NOT BEEN THINNED
       INDS(8) = 0     ! STAND HAS NOT BEEN FERTILIZED      

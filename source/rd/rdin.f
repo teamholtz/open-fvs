@@ -1,7 +1,7 @@
       SUBROUTINE RDIN(PASKEY,ARRAY,LNOTBK,LKECHO)
       IMPLICIT NONE
 C----------
-C RD $Id: rdin.f 3134 2020-06-17 15:03:17Z lancedavid $
+C  **RDIN                         LAST REVISION:  01/08/16
 C----------
 C
 C  Purpose :
@@ -2172,9 +2172,8 @@ C
       K = 0
       LONECT(IDI) = 2
 
-C 2601 READ (IREAD,2602) IDSPLT
-C 2602 FORMAT (I4)
- 2601 READ (IREAD,*) IDSPLT
+ 2601 READ (IREAD,2602) IDSPLT
+ 2602 FORMAT (I4)
 
       IF (IDSPLT .EQ. -999) GOTO 2610
       K = K + 1

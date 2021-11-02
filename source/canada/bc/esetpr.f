@@ -3,7 +3,7 @@
      &                   IDSDAT,KDT,IP)
       IMPLICIT NONE
 C----------
-C CANADA-BC $Id: esetpr.f 2461 2018-07-24 18:00:57Z gedixon $
+C  $Id: esetpr.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
 C----------
 C
 C     SET SITE PREPARATION FOR THE REGENERATION MODEL.

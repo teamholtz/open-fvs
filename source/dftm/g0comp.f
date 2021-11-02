@@ -1,7 +1,7 @@
       SUBROUTINE G0COMP 
       IMPLICIT NONE
 C---------- 
-C DFTM $Id: g0comp.f 2446 2018-07-09 22:54:33Z gedixon $
+C  **G0COMP DATE OF LAST REVISION:  04/01/13
 C---------- 
 C     
 C     DFTM MODEL SUBROUTINE - JIM COLBERT - JAN 1978. 

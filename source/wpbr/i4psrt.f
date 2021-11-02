@@ -1,8 +1,8 @@
       SUBROUTINE I4PSRT(N,A,INDXBR,LSEQ)
       IMPLICIT NONE
-C----------
-C WPBR $Id: i4psrt.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **I4PSRT       DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C  I4PSRT is an INTEGER*4 ascending identification sort.
 C

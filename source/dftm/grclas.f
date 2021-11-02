@@ -2,7 +2,7 @@
      >                   PROB,IMPROB,IPOS,MAXCLS,ITWO)
       IMPLICIT NONE
 C----------
-C DFTM $Id: grclas.f 2446 2018-07-09 22:54:33Z gedixon $
+C  **GRCLAS  DATE OF LAST REVISION:  11:00:00 04/03/02
 C----------
 C
 C     CALLED FROM 'GARBEL'   N.L. CROOKSTON  JAN 1978 & JAN 1981

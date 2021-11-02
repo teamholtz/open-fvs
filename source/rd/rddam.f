@@ -1,7 +1,7 @@
       SUBROUTINE RDDAM (II,ICODES)
       IMPLICIT NONE
 C----------
-C RD $Id: rddam.f 2454 2018-07-18 23:01:17Z gedixon $
+C  **RDDAM       LAST REVISION:  08/28/14
 C----------
 C
 C  Purpose :

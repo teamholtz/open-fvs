@@ -1,6 +1,6 @@
       Subroutine uuidgen(uuid)
 
-C DBSQLITE $Id: uuidgen.f 2445 2018-07-09 21:23:04Z gedixon $
+C $Id: uuidgen.f 2067 2018-01-12 00:55:53Z nickcrookston $
 
 
 C     Generates a version 4 uuid as 32 lowercase hexadecimal digits

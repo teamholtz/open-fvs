@@ -5,7 +5,7 @@
      &      forestValueCalculated,reprodValue, reprodValueCalculated,
      &      ft3Volume, bfVolume,discountRate, sevInput, sevInputUsed)
 
-C DBSQLITE $Id: dbsecsum.f 3134 2020-06-17 15:03:17Z lancedavid $
+C $Id: dbsecsum.f 2377 2018-06-01 09:28:24Z nickcrookston $
              
       IMPLICIT NONE
 
@@ -44,8 +44,8 @@ C DBSQLITE $Id: dbsecsum.f 3134 2020-06-17 15:03:17Z lancedavid $
       iRet = fsql3_tableexists(IoutDBref,"FVS_EconSummary"//CHAR(0))
       IF(iRet.EQ.0) THEN
          SQLStmtStr = 'CREATE TABLE FVS_EconSummary ('
-     &          // 'CaseID text not null, '
-     &          // 'StandID text not null, '
+     &          // 'CaseID text, '
+     &          // 'StandID text, '
      &          // 'Year int null, '
      &          // 'Period int null, '
      &          // 'Pretend_Harvest text null, '

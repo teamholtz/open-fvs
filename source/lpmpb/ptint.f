@@ -1,7 +1,7 @@
       SUBROUTINE PTINT(IPLTNO, NINC, XAXIS, ANEW)
       IMPLICIT NONE
 C----------
-C LPMPB $Id: ptint.f 2450 2018-07-11 17:28:41Z gedixon $
+C  **PTINT         DATE OF LAST REVISION:  08/22/14
 C----------
 C
 C

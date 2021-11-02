@@ -1,6 +1,3 @@
-C----------
-C ORGANON $Id: whphg.f 2453 2018-07-12 22:20:53Z gedixon $
-C----------
 C     Subroutines required for the calculation of
 C     height growth using the western hemlock top height curves of
 C     Flewelling.  These subroutines are required:

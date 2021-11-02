@@ -2,7 +2,7 @@
      >                   ARRAY,KARD)
       IMPLICIT NONE
 C----------
-C CANADA-BC $Id: keyopn.f 3783 2021-09-13 22:08:32Z donrobinson $
+C  $Id: keyopn.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
 C----------
 C
 C     PROCESSES THE OPEN KEYWORD.
@@ -38,7 +38,7 @@ C
          IZNUL=1
          CFOUR='NULL'
       ENDIF
-      IS=INT(ARRAY(3)+1.)
+      IS=ARRAY(3)+1
       IF (IS.LE.0.OR.IS.GT.4) THEN
          CALL KEYDMP (JOSTND,IRECNT,KEYWRD,ARRAY,KARD)
          CALL ERRGRO (.TRUE.,4)
@@ -51,7 +51,7 @@ C
          CSTAT='FRESH'
          IS=5
       ENDIF
-      IF (ARRAY(4).GT.0) IM=INT(ARRAY(4))
+      IF (ARRAY(4).GT.0) IM=ARRAY(4)
       IFORM=1
       IF (ARRAY(5).GT.0) IFORM=2
       IF(IFORM .EQ. 1 .AND. IM .LT. 150) IM=150
@@ -72,16 +72,16 @@ C----------
 C
 C     CALL MYOPEN TO OPEN THE FILE.  MACHINE SPECIFIC CODE IS IN MYOPEN
 C
-      CALL MYOPEN (IUNIT,RECORD,IS,IM,IZNUL,IFORM,1,0,KODE)  ! US style
-!     CALL MYOPEN (IUNIT,RECORD,IS,IM,IZNUL,IFORM,1,1,KODE)  ! BC/ON style (assume deprecated 2020)
+!     CALL MYOPEN (IUNIT,RECORD,IS,IM,IZNUL,IFORM,1,0,KODE) ! US style
+      CALL MYOPEN (IUNIT,RECORD,IS,IM,IZNUL,IFORM,1,1,KODE) ! BC/ON style
 C
       WRITE (JOSTND,40) KEYWRD,IUNIT,CFOUR,CSTAT,IM,IFORM,
-     >                  TRIM(RECORD(1:IRLEN))
-   40 FORMAT (/A8,'   DATA SET REFERENCE NUMBER = ',I5,'; BLANK=',A4,
-     >       '; STATUS=',A7/T12,
+     >                  RECORD(1:IRLEN)
+   40 FORMAT (/1X,A8,'   DATA SET REFERENCE NUMBER = ',I5,'; BLANK=',A4,
+     >       '; STATUS=',A7/T13,
      >       'MAXIMUM RECORD LENGTH (IGNORED ON SOME MACHINES) =',I4,
      >       '; FILE FORM=',I2,' (1=FORMATTED, 2=UNFORMATTED)',
-     >       /T12,'DATA SET NAME = ',A)
+     >       /T13,'DATA SET NAME = ',A)
 C
       IF(((KODE.EQ.1).AND.(EXTENSION.EQ.'KCP')).OR.
      &  ((KODE.EQ.1).AND.(EXTENSION.EQ.'ADD'))) THEN
@@ -89,7 +89,7 @@ C
       ELSE IF (KODE.EQ.1)THEN
         WRITE (JOSTND,50)
       ENDIF
-   50 FORMAT (/T12,'**********   OPEN FAILED   **********')
+   50 FORMAT (/T13,'**********   OPEN FAILED   **********')
       RETURN
    80 CONTINUE
       CALL ERRGRO (.FALSE.,2)

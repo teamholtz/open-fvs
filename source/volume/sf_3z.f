@@ -1,5 +1,5 @@
 C----------
-C VOLUME $Id: sf_3z.f 2458 2018-07-22 19:09:30Z gedixon $
+C VOLUME $Id: sf_3z.f 0000 2018-02-14 00:00:00Z gary.dixon24@gmail.com $
 C----------
 !== last modified  10-30-2003
       SUBROUTINE SF_3Z(JSP,GEOSUB,SETOPT,NEXTRA,DBH,TOTALH,HEX,ZEX,

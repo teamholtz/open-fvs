@@ -1,8 +1,8 @@
       SUBROUTINE BRUPDT
       IMPLICIT NONE
-C----------
-C WPBR $Id: brupdt.f 2459 2018-07-22 22:04:44Z gedixon $
-C----------
+C**********************************************************************
+C  **BRUPDT       DATE OF LAST REVISION:  06/05/2014
+C----------------------------------------------------------------------
 C  Purpose:
 C  Updates tree ground diameter and converts it to centimeters
 C  for each cycle in the Blister Rust model.

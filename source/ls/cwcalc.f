@@ -1,7 +1,7 @@
       SUBROUTINE CWCALC(ISPC,P,D,H,CR,IICR,CW,IWHO,JOSTND)
       IMPLICIT NONE
 C----------
-C LS $Id: cwcalc.f 3751 2021-08-19 15:02:28Z lancedavid $
+C LS $Id: cwcalc.f 0000 2018-02-14 00:00:00Z gedixon $
 C----------
 C  THIS ROUTINE CONTAINS A LIBRARY OF CROWN WIDTH EQUATIONS AVAILABLE
 C  FOR USE IN THE EASTERN UNITED STATES.
@@ -196,7 +196,7 @@ C----------
         ELSE
           CWEQ='40701'
         ENDIF
-      CASE('BW ','BD ') !AMERICAN BASSWOOD (951) AND BASSWOOD (950)
+      CASE('BW ')     !AMERICAN BASSWOOD (951)
           CWEQ='95101'
       CASE('BY ')     !BALDCYPRESS (221)
           CWEQ='22101'
@@ -206,6 +206,8 @@ C----------
           CWEQ='81201'
       CASE('CC ')     !CHOKECHERRY (763)                              MAPPED TO PR
           CWEQ='76102'
+      CASE('CH ')     !OTHER COMMERCIAL HARDWOODS (na)                MAPPED TO BW
+          CWEQ='60201'
       CASE('CK ')     !CHINKAPIN OAK (826)
           CWEQ='82601'
       CASE('CM ')     !CHALK MAPLE (323)                              MAPPED TO SM
@@ -292,6 +294,12 @@ C----------
           CWEQ='55201'
       CASE('HM ')     !HEMLOCK (260)                                  MAPPED TO EH
         CWEQ='26101'
+      CASE('HS ')     !SELECT HICKORY (na)                            MAPPED TO SH
+        IF(IWHO.EQ.1)THEN
+          CWEQ='40703'
+        ELSE
+          CWEQ='40701'
+        ENDIF
       CASE('HT ')     !HAWTHORN (500)                                 MAPPED TO DW
           CWEQ='49101'
       CASE('HY ')     !AMERICAN HOLLY (591)
@@ -346,6 +354,8 @@ C----------
           CWEQ='65301'
       CASE('MV ')     !SWEETBAY (653)
           CWEQ='65301'
+      CASE('NC ')     !NON-COMMERCIAL SPECIES (na)                    MAPPED TO DW
+          CWEQ='49101'
       CASE('NK ')     !NUTALL OAK (828)                               MAPPED TO SK
           CWEQ='81201'
       CASE('NP ')     !NORTHERN PIN OAK (809)
@@ -374,6 +384,8 @@ C----------
         ELSE
           CWEQ='80201'
         ENDIF
+      CASE('OL ')     !OTHER LOWLAND SPECIES (na)                     MAPPED TO SY
+          CWEQ='73101'
       CASE('OO ')     !OSAGE ORANGE (641)                             MAPPED TO SS
           CWEQ='93101'
       CASE('OP ')     !OTHER PINES (100 obs)                          MAPPED TO WP
@@ -382,7 +394,7 @@ C----------
         ELSE
           CWEQ='12901'
         ENDIF
-      CASE('OS ')     !OTHER SOFTWOODS (299 fmsc)                     MAPPED TO RC
+      CASE('OS ')     !OTHER SOFTWOODS (298 fmsc)                     MAPPED TO RC
           CWEQ='06801'
       CASE('OT ')     !OTHER (999 FIA, UNKNOWN DEAD)                  MAPPED TO RM
         IF(IWHO.EQ.1)THEN
@@ -588,6 +600,8 @@ C----------
           CWEQ='69401'
       CASE('UA ')     !BLUE ASH (546)                                 MAPPED TO WA
           CWEQ='54101'
+      CASE('UH ')     !OTHER UPLAND HARDWOODS (na)                    MAPPED TO SS
+          CWEQ='93101'
       CASE('VP ')     !VIRGINIA PINE (132)
           CWEQ='13201'
       CASE('WA ')     !WHITE ASH (541)

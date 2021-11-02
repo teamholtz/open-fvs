@@ -1,7 +1,10 @@
       BLOCK DATA FMCBLK
       IMPLICIT NONE
+C
+C  $Id: fmcblk.f 2290 2018-05-16 15:53:09Z gedixon $
+C
 C----------
-C CANADA-FIRE-BC $Id: fmcblk.f 3785 2021-09-13 22:24:56Z donrobinson $
+C   **FMCBLK--FIRE-BC
 C----------
 COMMONS
 C
