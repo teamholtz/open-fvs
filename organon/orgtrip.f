@@ -1,0 +1,24 @@
+      SUBROUTINE ORGTRIP(I,ITFN)
+      IMPLICIT NONE
+C----------
+C ORGANON $Id: orgtrip.f 2453 2018-07-12 22:20:53Z gedixon $
+C----------
+C
+C     TRIPLES TREE VARIABLES NEEDED FOR ORGANON PROCESSING.
+C
+COMMONS
+C
+      INCLUDE 'PRGPRM.F77'
+C
+C
+      INCLUDE 'ORGANON.F77'
+C
+COMMONS
+C----------
+C
+      INTEGER I,ITFN
+C
+      IORG(ITFN)=IORG(I)
+C
+      RETURN
+      END       

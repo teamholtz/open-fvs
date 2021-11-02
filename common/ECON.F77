@@ -1,0 +1,19 @@
+CODE SEGMENT ECON
+C----------
+C COMMON $Id: ECON.F77 2494 2018-09-12 20:34:17Z lancedavid $
+C----------
+C
+      LOGICAL LECBUG,LECON
+C
+      INTEGER JOSUME
+C
+      COMMON /ECON/ JOSUME,LECBUG,LECON
+C
+C----------
+C  VARIABLE DEFINITIONS:
+C----------
+C  JOSUME --
+C  LECBUG --
+C   LECON --
+C
+C-----END SEGMENT
